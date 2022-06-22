@@ -6,5 +6,3 @@ $posts = getPosts();
 
 require('templates/homepage.php');
 
-?>
-
