@@ -2,10 +2,11 @@
 
 namespace Application\Controllers\Comment;
 
+use Application\Controllers\Controller;
 use Application\Lib\DatabaseConnection;
 use Application\Model\CommentRepository;
 
-class UpdateComment
+class UpdateComment extends Controller
 {
     public function execute(string $identifier, ?array $input)
     {
@@ -38,6 +39,8 @@ class UpdateComment
             throw new \Exception("Le commentaire $identifier n'existe pas.");
         }
 
-        require('templates/update_comment.php');
+        $this->twig->display('update_comment.twig', [
+            'comment' => $comment,
+        ]);
     }
 }

@@ -6,7 +6,7 @@ use Application\Lib\DatabaseConnection;
 use Application\Model\CommentRepository;
 use Application\Model\PostRepository;
 
-class Post
+class Post extends Controller
 {
     public function execute(string $identifier)
     {
@@ -20,6 +20,9 @@ class Post
         $commentRepository->connection = $connection;
         $comments = $commentRepository->getComments($identifier);
 
-        require('templates/post.php');
+        $this->twig->display('post.twig', [
+            'post' => $post,
+            'comments' => $comments,
+        ]);
     }
 }

@@ -5,7 +5,7 @@ namespace Application\Controllers;
 use Application\Lib\DatabaseConnection;
 use Application\Model\PostRepository;
 
-class Homepage
+class Homepage extends Controller
 {
     public function execute()
     {
@@ -13,6 +13,8 @@ class Homepage
         $postRepository->connection = new DatabaseConnection();
         $posts = $postRepository->getPosts();
 
-        require('templates/homepage.php');
+        $this->twig->display('homepage.twig', [
+            'posts' => $posts,
+        ]);
     }
 }

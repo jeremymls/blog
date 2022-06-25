@@ -2,10 +2,13 @@
 
 require_once 'vendor/autoload.php';
 
+define('ROOT', __DIR__);
+
 use Application\Controllers\Comment\AddComment;
 use Application\Controllers\Comment\UpdateComment;
 use Application\Controllers\Homepage;
 use Application\Controllers\Post;
+use Application\Controllers\ErrorException;
 
 try {
     if (isset($_GET['action']) && $_GET['action'] !== '') {
@@ -46,6 +49,5 @@ try {
     }
 } catch (Exception $e) {
     $errorMessage = $e->getMessage();
-
-    require('templates/error.php');
+    (new ErrorException())->execute($errorMessage);
 }

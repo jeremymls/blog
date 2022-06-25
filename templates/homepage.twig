@@ -1,0 +1,23 @@
+{% extends "/base.twig" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block main %}
+	<p>Derniers billets du blog :</p>
+	{% for post in posts %}
+		<div class="news">
+			<h3>
+				{{ post.title }}
+				<em>le
+					{{ post.frenchCreationDate }}</em>
+			</h3>
+			<p>
+				{{ post.content | nl2br }}
+				<br/>
+				<em>
+					<a href="index.php?action=post&id={{  post.identifier }}">Commentaires</a>
+				</em>
+			</p>
+		</div>
+	{% endfor %}
+{% endblock %}

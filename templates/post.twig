@@ -1,0 +1,43 @@
+{% extends "/base.twig" %}
+
+{% block title %}
+	{{ post.title }}
+{% endblock %}
+
+{% block main %}
+	<p>
+		<a href="index.php">Retour à la liste des billets</a>
+	</p>
+
+	<div class="news">
+		<h3>
+            {{ post.title }} <em>le {{ post.frenchCreationDate }}</em>
+		</h3>
+
+		<p>
+            {{ post.content | nl2br }}
+        </p>
+	</div>
+
+	<h2>Commentaires</h2>
+
+	<form action="index.php?action=addComment&id={{ post.identifier }}" method="post">
+		<div>
+			<label for="author">Auteur</label><br/>
+			<input type="text" id="author" name="author"/>
+		</div>
+		<div>
+			<label for="comment">Commentaire</label><br/>
+			<textarea id="comment" name="comment"></textarea>
+		</div>
+		<div>
+			<input type="submit"/>
+		</div>
+	</form>
+
+	{% for comment in comments %}
+		<p><strong>{{ comment.author }}</strong> le {{comment.frenchCreationDate }} (<a href="index.php?action=updateComment&id={{ comment.identifier }}">modifier</a>)</p>
+		<p>{{ comment.comment | nl2br }}</p>
+	{% endfor %}
+
+{% endblock %}
