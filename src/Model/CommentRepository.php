@@ -1,10 +1,8 @@
 <?php
 
-namespace Application\Model\Comment;
+namespace Application\Model;
 
-require_once('src/lib/database.php');
-
-use Application\Lib\Database\DatabaseConnection;
+use Application\Lib\DatabaseConnection;
 
 class Comment
 {
