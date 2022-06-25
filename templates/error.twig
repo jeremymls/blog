@@ -1,7 +1,29 @@
 {% extends "/base.twig" %}
 
-{% block title %}Erreur!!{% endblock %}
+{% block title %}
+	Erreur
+	{% if error.code > 0 %}
+		{{ error.code }}
+	{% endif %}
+	!!
+{% endblock %}
 
 {% block main %}
-    {{ errorMessage }}
+	<div class="alert alert-danger" role="alert">
+		<dl class="dl-horizontal">
+			{% if error.code > 0 %}
+				<dt>Code</dt>
+				<dd>{{ error.code }}</dd>
+			{% endif %}
+
+			<dt>Message</dt>
+			<dd>{{ error.message }}</dd>
+			{% if error.code != 404 %}
+				<dt>Fichier</dt>
+				<dd>{{ error.file }} <strong>(line:{{ error.line }})</strong></dd>
+				<textarea readonly class="form-control" rows="15">{{ error.trace }}</textarea>
+			{% endif %}
+		</dl>
+	</div>
+
 {% endblock %}

@@ -42,12 +42,11 @@ try {
                 throw new Exception('Aucun identifiant de commentaire envoyé');
             }
         } else {
-            throw new Exception("La page que vous recherchez n'existe pas.");
+            throw new Exception("La page que vous recherchez n'existe pas.", 404);
         }
     } else {
         (new Homepage())->execute();
     }
-} catch (Exception $e) {
-    $errorMessage = $e->getMessage();
-    (new ErrorException())->execute($errorMessage);
+} catch (Exception $err) {
+    (new ErrorException())->execute($err);
 }
