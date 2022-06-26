@@ -11,9 +11,6 @@
 		<!-- Theme CSS -->
 		<link href="assets/css/freelancer.min.css" rel="stylesheet">
 
-		<!-- Custom CSS -->
-		<link href="assets/css/style.css" rel="stylesheet"/>
-
 		<!-- Custom Fonts -->
 		<link href="assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -32,7 +29,9 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12">
-						<img class="img-responsive" src="img/profile.png" alt="">
+						{% if block('imageSrc') %}
+							<img class="img-responsive" src="{% block imageSrc %}{% endblock %}" alt="">
+						{% endif %}
 						<div class="intro-text">
 							<h1 class="name">{{ block('title') }}</h1>
 							<hr class="star-light">
@@ -43,11 +42,18 @@
 			</div>
 		</header>
 
-		<main class="container">
-			{% block main %}{% endblock %}
-		</main>
+		{% block main %}{% endblock %}
 
 		{% include ('partials/_footer.twig') %}
+
+		<!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+		<div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
+			<a class="btn btn-primary" href="#page-top">
+				<i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+
+		{% block script %}{% endblock %}
 
 		<!-- jQuery -->
 		<script src="assets/vendor/jquery/jquery.min.js"></script>
