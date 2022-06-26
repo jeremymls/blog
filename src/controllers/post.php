@@ -8,7 +8,19 @@ use Application\Model\PostRepository;
 
 class Post extends Controller
 {
-    public function execute(string $identifier)
+
+    public function Index()
+    {
+        $postRepository = new PostRepository();
+        $postRepository->connection = new DatabaseConnection();
+        $posts = $postRepository->getPosts();
+
+        $this->twig->display('post/index.twig', [
+            'posts' => $posts,
+        ]);
+    }
+
+    public function show(string $identifier)
     {
         $connection = new DatabaseConnection();
 
@@ -20,7 +32,7 @@ class Post extends Controller
         $commentRepository->connection = $connection;
         $comments = $commentRepository->getComments($identifier);
 
-        $this->twig->display('post.twig', [
+        $this->twig->display('post/show.twig', [
             'post' => $post,
             'comments' => $comments,
         ]);
