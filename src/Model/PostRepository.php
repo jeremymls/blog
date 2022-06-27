@@ -16,6 +16,16 @@ class PostRepository
 {
     public DatabaseConnection $connection;
 
+    public function addPost(string $title, string $content): bool
+    {
+        $statement = $this->connection->getConnection()->prepare(
+            'INSERT INTO posts(title, content, creation_date) VALUES(?, ?, NOW())'
+        );
+        $affectedLines = $statement->execute([$title, $content]);
+
+        return ($affectedLines > 0);
+    }
+
     public function getPost(string $identifier): Post
     {
         $statement = $this->connection->getConnection()->prepare(

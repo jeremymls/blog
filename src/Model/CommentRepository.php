@@ -61,7 +61,7 @@ class CommentRepository
         return $comment;
     }
 
-    public function createComment(string $post, string $author, string $comment): bool
+    public function addComment(string $post, string $author, string $comment): bool
     {
         $statement = $this->connection->getConnection()->prepare(
             'INSERT INTO comments(post_id, author, comment, comment_date) VALUES(?, ?, ?, NOW())'

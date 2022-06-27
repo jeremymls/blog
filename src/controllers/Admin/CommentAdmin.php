@@ -1,12 +1,12 @@
 <?php
 
-namespace Application\Controllers\Comment;
+namespace Application\Controllers\Admin;
 
 use Application\Controllers\Controller;
 use Application\Lib\DatabaseConnection;
 use Application\Model\CommentRepository;
 
-class UpdateComment extends Controller
+class CommentAdmin extends Controller
 {
     public function execute(string $identifier, ?array $input)
     {

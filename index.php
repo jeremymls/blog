@@ -5,8 +5,9 @@ require_once 'vendor/autoload.php';
 define('ROOT', __DIR__);
 
 use Application\Controllers\Admin\Dashboard;
+use Application\Controllers\Admin\PostAdmin;
 use Application\Controllers\Comment\AddComment;
-use Application\Controllers\Comment\UpdateComment;
+use Application\Controllers\CommentAdmin;
 use Application\Controllers\Homepage;
 use Application\Controllers\Post;
 use Application\Controllers\ErrorException;
@@ -48,10 +49,18 @@ try {
                     $input = $_POST;
                 }
 
-                (new UpdateComment())->execute($identifier, $input);
+                (new CommentAdmin())->update($identifier, $input);
             } else {
                 throw new Exception('Aucun identifiant de commentaire envoyé');
             }
+        } elseif ($_GET['action'] === 'addPost') {
+            // It sets the input only when the HTTP method is POST (ie. the form is submitted).
+            $input = null;
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $input = $_POST;
+            }
+
+            (new PostAdmin())->add($input);
         } else {
             throw new Exception("La page que vous recherchez n'existe pas.", 404);
         }

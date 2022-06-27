@@ -20,7 +20,7 @@ class AddComment
 
         $commentRepository = new CommentRepository();
         $commentRepository->connection = new DatabaseConnection();
-        $success = $commentRepository->createComment($post, $author, $comment);
+        $success = $commentRepository->addComment($post, $author, $comment);
         if (!$success) {
             throw new \Exception('Impossible d\'ajouter le commentaire !');
         } else {
