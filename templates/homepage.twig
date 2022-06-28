@@ -2,7 +2,7 @@
 
 {% block title %}Bienvenue sur mon blog{% endblock %}
 {% block subtitle %}" Je conçois vos besoins "{% endblock %}
-{% block imageSrc %}assets/img/profile.png{% endblock %}
+{% block imageSrc %}assets/img/logo.png{% endblock %}
 
 {% block main %}
 
@@ -17,7 +17,7 @@
             </div>
             <div class="row text-center">
                 <div class="col-sm-12 portfolio-item">
-                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
+                    <a href="" class="portfolio-link" >
                         <div class="caption">
                             <div class="caption-content">
                                 <i class="fa fa-search-plus fa-3x"></i>
@@ -65,11 +65,7 @@
 					<p>Je partage sur ce blog quelqu'uns de mes projets</p>
                     <p>N'hesitez pas à télécharger mon CV</p>
 					<div class="row">
-						<div class="col-lg-8 col-lg-offset-2 text-center">
-							<a href="#" class="btn btn-lg btn-outline">
-								<i class="fa fa-download"></i> Télécharger mon CV
-							</a>
-						</div>
+                        <a href="assets/CV.pdf" target="_blank" class="btn btn-sm btn-outline">CV <i class="fa fa-download"></i></a>
 					</div>
                 </div>
                 <div class="col-lg-4">
@@ -154,7 +150,7 @@
 {% endblock %}
 
 {% block script %}
-<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="portfolio-modal modal fade" id="cvModal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-content">
 		<div class="close-modal" data-dismiss="modal">
 			<div class="lr">
@@ -166,8 +162,9 @@
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
 					<div class="modal-body">
-						<h2>Project Title</h2>
+						<h2>Mon CV</h2>
 						<hr class="star-primary">
+                        <object data="assets/CV.pdf" height="500" width="100%"></object>
 						<img src="img/portfolio/cabin.png" class="img-responsive img-centered" alt="">
 						<p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
 						<ul class="list-inline item-details">
