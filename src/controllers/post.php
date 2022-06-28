@@ -9,7 +9,7 @@ use Application\Model\PostRepository;
 class Post extends Controller
 {
 
-    public function Index()
+    public function index()
     {
         $postRepository = new PostRepository();
         $postRepository->connection = new DatabaseConnection();

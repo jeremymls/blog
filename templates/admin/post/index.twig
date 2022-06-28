@@ -1,0 +1,70 @@
+{% extends "/base.twig" %}
+
+{% block title %}Administration des projets{% endblock %}
+
+{% block main %}
+
+    <section>
+
+	<p><a href="index.php?action=postAdd" class="btn btn-success" role="button">Ajouter un projet</a></p>
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Châpo</th>
+                                <th>Date de création</th>
+                                <th>Actions</th>
+                            <tr>
+                        </thead>
+                        <tbody>
+                            {% for post in posts %}
+                                <tr>
+                                    <td>{{ post.title }}</td>
+                                    {# <td>{{ post.content }}</td> #}
+                                    <td></td>
+                                    <td>{{ post.frenchCreationDate }}</td>
+                                    <td>
+                                        <a href="?action=postUpdate&id={{ post.identifier }}" class="btn btn-warning">Editer</a>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ post.identifier }}" data-title="{{ post.title }} (id:{{ post.identifier }})" data-target="#confirmDelete">Supprimer</button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Voulez-vous vraiment supprimer ce post?</h4>
+			</div>
+			<div class="modal-body"></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+				<a href="" class="btn btn-danger">Supprimer</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+	
+{% endblock %}
+
+{% block script %}
+<script src="assets/js/post_admin.js"></script>
+{% endblock %}
