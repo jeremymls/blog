@@ -4,8 +4,8 @@ namespace Application\Controllers\Admin;
 
 use Application\Controllers\Controller;
 use Application\Lib\DatabaseConnection;
-use Application\Model\CommentRepository;
-use Application\Model\PostRepository;
+use Application\Models\CommentRepository;
+use Application\Models\PostRepository;
 
 class PostAdmin extends Controller
 {

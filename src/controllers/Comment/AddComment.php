@@ -3,7 +3,7 @@
 namespace Application\Controllers\Comment;
 
 use Application\Lib\DatabaseConnection;
-use Application\Model\CommentRepository;
+use Application\Models\CommentRepository;
 
 class AddComment
 {

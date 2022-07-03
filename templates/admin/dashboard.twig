@@ -3,9 +3,45 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block main %}
-<section>
+
+<section id="portfolio">
 	<div class="container">
-	<p><a href="index.php?action=postAdmin" class="btn btn-success" role="button">Liste des projets</a></p>
+		<div class="row text-center">
+
+			<div class="col-sm-4 portfolio-item">
+				<a href="index.php?action=profilAdmin" class="portfolio-link" >
+					<div class="caption">
+						<div class="caption-content">
+							<i class="fa fa-wrench fa-3x"></i>
+						</div>
+					</div>
+					<img src="assets/img/dashboard/profil.png" class="img-responsive" alt="">
+				</a>
+			</div>
+
+			<div class="col-sm-4 portfolio-item">
+				<a href="index.php?action=postAdmin" class="portfolio-link" >
+					<div class="caption">
+						<div class="caption-content">
+							<i class="fa fa-wrench fa-3x"></i>
+						</div>
+					</div>
+					<img src="assets/img/dashboard/projets.png" class="img-responsive" alt="">
+				</a>
+			</div>
+
+			<div class="col-sm-4 portfolio-item">
+				<a href="index.php?action=commentAdmin" class="portfolio-link" >
+					<div class="caption">
+						<div class="caption-content">
+							<i class="fa fa-wrench fa-3x"></i>
+						</div>
+					</div>
+					<img src="assets/img/dashboard/commentaires.png" class="img-responsive" alt="">
+				</a>
+			</div>
+
+		</div>
 	</div>
-</section>
+    </section>
 {% endblock %}

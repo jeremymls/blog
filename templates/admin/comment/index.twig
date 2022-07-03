@@ -1,0 +1,108 @@
+{% extends "/base.twig" %}
+
+{% block title %}Modération des commentaires{% endblock %}
+
+{% block main %}
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="index.php?action=dashboard" class="btn btn-primary btn-lg">Retour au dashbord</a>
+            </div>
+        </div>
+        
+        <section>
+
+            <div class="row">
+                <div class="col">
+                    <div role="tabpanel" class="tab-pane active" id="date">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Auteur</th>
+                                    <th>Commentaire</th>
+                                    <th>Projet</th>
+                                    <th>Date de création</th>
+                                    <th>Actions</th>
+                                <tr>
+                            </thead>
+                            <tbody>
+                                {% for comment in comments %}
+                                    <tr>
+                                        <td>{{ comment.author }}</td>
+                                        <td>{{ comment.comment | u.truncate(50, '...')}}</td>
+                                        <td>{{ comment.postTitle | u.truncate(40, '...')}}</td>
+                                        <td>{{ comment.frenchCreationDate }}</td>
+                                        <td><a href="?action=commentShowAdmin&id={{ comment.identifier }}" class="btn btn-primary"><i class="fa fa-eye"></i></a></td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author }} (id:{{ comment.identifier }})" data-target="#confirmValidateComment"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author }} (id:{{ comment.identifier }})" data-target="#confirmDeleteComment"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                            <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                            <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                            {# <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li> #}
+                            <li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+
+
+    <!-- Modals -->
+    <div class="modal fade" id="confirmDeleteComment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Voulez-vous vraiment supprimer ce commentaire?</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <a href="" class="btn btn-primary">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="confirmValidateComment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Voulez-vous vraiment valider ce commentaire?</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <a href="" class="btn btn-primary">Valider</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	
+{% endblock %}
+
+{% block script %}
+<script src="assets/js/admin.js"></script>
+{% endblock %}

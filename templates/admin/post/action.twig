@@ -1,6 +1,6 @@
 {% extends "/base.twig" %}
 
-{% block title %}Ajout d'un projet{% endblock %}
+{% block title %}{% if action == "add" %}Ajout{% else %}Modification{% endif %} d'un projet{% endblock %}
 
 {% block main %}
 	<p>

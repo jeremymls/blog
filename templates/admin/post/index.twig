@@ -29,7 +29,7 @@
                                     <td>{{ post.frenchCreationDate }}</td>
                                     <td>
                                         <a href="?action=postUpdate&id={{ post.identifier }}" class="btn btn-warning">Editer</a>
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ post.identifier }}" data-title="{{ post.title }} (id:{{ post.identifier }})" data-target="#confirmDelete">Supprimer</button>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ post.identifier }}" data-title="{{ post.title }} (id:{{ post.identifier }})" data-target="#confirmDeletePost">Supprimer</button>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -44,7 +44,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="confirmDeletePost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -66,5 +66,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="assets/js/post_admin.js"></script>
+<script src="assets/js/admin.js"></script>
 {% endblock %}

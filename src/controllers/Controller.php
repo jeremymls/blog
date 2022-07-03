@@ -2,6 +2,9 @@
 
 namespace Application\Controllers;
 
+use Twig\Extension\DebugExtension;
+use Twig\Extra\String\StringExtension;
+
 abstract class Controller
 {
     private $loader;
@@ -13,6 +16,7 @@ abstract class Controller
         $this->twig = new \Twig\Environment($this->loader, [
             'debug' => true,
         ]);
-        $this->twig->addExtension(new \Twig\Extension\DebugExtension());
+        $this->twig->addExtension(new DebugExtension());
+        $this->twig->addExtension(new StringExtension());
     }
 }

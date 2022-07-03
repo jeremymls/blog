@@ -1,0 +1,41 @@
+{% extends "/base.twig" %}
+
+{% block title %}Détails du commentaire{% endblock %}
+{% block subtitle %}
+	<h2>de {{ comment.author }}</h2>
+	<em>le {{ comment.frenchCreationDate }}</em><br>
+	<em>projet : {{ comment.postTitle }}</em>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<a href="index.php?action=commentAdmin"  class="btn btn-primary btn-lg">Retour à la liste des commentaires</a>
+			{# <a href="?action=updateComment&id={{ comment.identifier }}" class="btn btn-primary btn-lg"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modifier</a> #}
+			<a href="?action=validateComment&id={{ comment.identifier }}" class="btn btn-primary btn-lg"><i class="fa fa-check-square-o" aria-hidden="true"></i> Valider</a>
+			<a href="?action=deleteComment&id={{ comment.identifier }}" class="btn btn-primary btn-lg"><i class="fa fa-trash" aria-hidden="true"></i> Supprimer</a>
+		</div>
+	</div>
+	<section class="container">
+		<p>{{ comment.comment | nl2br }}</p>
+	</section>
+    <section>
+	<h2>Autres commentaires du projet</h2>
+	{% if comments is empty %}
+		<em>Aucun commentaire pour le moment</em>
+	{% else %}
+		{% for comment in comments %}
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<p><strong>{{ comment.author }}</strong> le {{comment.frenchCreationDate }}</p>  
+				</div>
+				<div class="panel-body">
+					<p>{{ comment.comment | nl2br }}</p>
+				</div>
+			</div>
+		{% endfor %}
+	{% endif %}
+    </section>
+</div>
+{% endblock %}
