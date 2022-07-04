@@ -20,7 +20,7 @@ class Post extends Controller
         ]);
     }
 
-    public function show(string $identifier)
+    public function show(string $identifier, string $flush = NULL )
     {
         $connection = new DatabaseConnection();
 
@@ -35,6 +35,28 @@ class Post extends Controller
         $this->twig->display('post/show.twig', [
             'post' => $post,
             'comments' => $comments,
+            'alert' => $flush,
         ]);
+    }
+
+    public function addComment(string $post, array $input)
+    {
+        $author = null;
+        $comment = null;
+        if (!empty($input['author']) && !empty($input['comment'])) {
+            $author = $input['author'];
+            $comment = $input['comment'];
+        } else {
+            throw new \Exception('Les données du formulaire sont invalides.');
+        }
+
+        $commentRepository = new CommentRepository();
+        $commentRepository->connection = new DatabaseConnection();
+        $success = $commentRepository->addComment($post, $author, $comment);
+        if (!$success) {
+            throw new \Exception('Impossible d\'ajouter le commentaire !');
+        } else {
+            header('Location: index.php?action=post&id=' . $post.'&flush=commentSubmitted');
+        }
     }
 }

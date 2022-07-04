@@ -7,7 +7,6 @@ define('ROOT', __DIR__);
 use Application\Controllers\Admin\Dashboard;
 use Application\Controllers\Admin\PostAdmin;
 use Application\Controllers\Admin\CommentAdmin;
-use Application\Controllers\Comment\AddComment;
 use Application\Controllers\Homepage;
 use Application\Controllers\Post;
 use Application\Controllers\ErrorException;
@@ -21,7 +20,11 @@ try {
         } elseif ($_GET['action'] === 'post') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = $_GET['id'];
-                (new Post())->show($identifier);
+                if (isset($_GET['flush'])) {
+                    (new Post())->show($identifier, $_GET['flush']);
+                } else {
+                    (new Post())->show($identifier);
+                }
             } else {
                 throw new Exception('Aucun identifiant de billet envoyé');
             }
@@ -32,7 +35,7 @@ try {
         } elseif ($_GET['action'] === 'addComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = $_GET['id'];
-                (new AddComment())->execute($identifier, $_POST);
+                (new Post())->addComment($identifier, $_POST);
             } else {
                 throw new Exception('Aucun identifiant de billet envoyé');
             }
@@ -40,7 +43,6 @@ try {
         } elseif ($_GET['action'] === 'updateComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = $_GET['id'];
-                // It sets the input only when the HTTP method is POST (ie. the form is submitted).
                 $input = null;
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $input = $_POST;

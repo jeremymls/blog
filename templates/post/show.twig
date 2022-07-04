@@ -1,4 +1,5 @@
 {% extends "/base.twig" %}
+{% import "/macros/alerts.twig" as alerts %}
 
 {% block title %}Projet{% endblock %}
 {% block subtitle %}
@@ -7,6 +8,11 @@
 {% endblock %}
 
 {% block main %}
+	<div class="container">
+		{% if alert == "commentSubmitted" %}
+			{{ alerts.commentSubmitted() }}
+		{% endif %}
+	</div>
 	<section class="container">
 		<p>
 			<a href="index.php?action=posts">Retour à la liste des projets</a>
@@ -16,63 +22,62 @@
 	</section>
 
 	<section class="container">
-
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h3>Laisser un commentaire</h3>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                {# <form name="sentMessage" id="contactForm" novalidate> #}
-				<form action="index.php?action=addComment&id={{ post.identifier }}" method="post">
-					<div class="row control-group">
-						<div class="form-group col-xs-12 floating-label-form-group controls">
-							<label>Auteur</label>
-							<input type="text" class="form-control" placeholder="Auteur" id="author" name="author" required data-validation-required-message="Please enter your name.">
-							<p class="help-block text-danger"></p>
-						</div>
-					</div>
-					<div class="row control-group">
-						<div class="form-group col-xs-12 floating-label-form-group controls">
-							<label>Commentaire</label>
-							<textarea rows="5" class="form-control" placeholder="Commentaire" id="comment" name="comment" required data-validation-required-message="Please enter a comment."></textarea>
-							<p class="help-block text-danger"></p>
-						</div>
-					</div>
-					<br>
-					<div id="success"></div>
-					<div class="row">
-						<div class="form-group col-xs-12 text-center">
-							<button type="submit" class="btn btn-success btn-lg">Envoyer</button>
-						</div>
-					</div>
-				</form>
-            </div>
-        </div>
-
-	</section>
-	<section class="container">
-
-		<div class="row">
-            <div class="col-lg-12 text-center">
-                <h2>Commentaires</h2>
-                <hr class="star-primary">
-            </div>
-        </div>
-
-		{% for comment in comments %}
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<p><strong>{{ comment.author }}</strong> le {{comment.frenchCreationDate }}</p>  
-				</div>
-				<div class="panel-body">
-					<p>{{ comment.comment | nl2br }}</p>
+		<div id="addComment">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<h3>Laisser un commentaire</h3>
 				</div>
 			</div>
-		{% endfor %}
 
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					{# <form name="sentMessage" id="contactForm" novalidate> #}
+					<form action="index.php?action=addComment&id={{ post.identifier }}" method="post">
+						<div class="row control-group">
+							<div class="form-group col-xs-12 floating-label-form-group controls">
+								<label>Auteur</label>
+								<input type="text" class="form-control" placeholder="Auteur" id="author" name="author" required data-validation-required-message="Please enter your name.">
+								<p class="help-block text-danger"></p>
+							</div>
+						</div>
+						<div class="row control-group">
+							<div class="form-group col-xs-12 floating-label-form-group controls">
+								<label>Commentaire</label>
+								<textarea rows="3" class="form-control" placeholder="Commentaire" id="comment" name="comment" required data-validation-required-message="Please enter a comment."></textarea>
+								<p class="help-block text-danger"></p>
+							</div>
+						</div>
+						<br>
+						<div id="success"></div>
+						<div class="row">
+							<div class="form-group col-xs-12 text-center">
+								<button type="submit" class="btn btn-success btn-lg">Envoyer</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		{% if comments is not empty %}
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<h3>Commentaires</h3>
+					<hr class="star-primary">
+				</div>
+			</div>
+
+			{% for comment in comments %}
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<p><strong>{{ comment.author }}</strong> le {{comment.frenchCreationDate }}</p>  
+					</div>
+					<div class="panel-body">
+						<p>{{ comment.comment | nl2br }}</p>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
     </section>
 
 {% endblock %}
