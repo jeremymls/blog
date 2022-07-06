@@ -1,0 +1,50 @@
+{% extends "/base.twig" %}
+
+{% block title %}Authentification{% endblock %}
+
+{% block main %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    {% if isConnected %}
+                      <div class="row">
+                        <div class="form-group col-xs-12 text-center">
+                            <a href="?action=logout">Déconection</a>
+                        </div>
+                    </div>
+
+                    {% else %}
+                  
+
+                    					<form action="index.php?action=login" method="post">
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Identifiant</label>
+                                <input type="text" class="form-control" placeholder="Identifiant" id="user" name="user" required data-validation-required-message="Please enter idendifant.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Mot de passe</label>
+                                <input type="password" class="form-control" placeholder="Mot de passe" id="password" name="password" required data-validation-required-message="Please enter password.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <br>
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group col-xs-12 text-center">
+                                <button type="submit" class="btn btn-success btn-lg">Connexion</button>
+                            </div>
+                        </div>
+                    </form>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+	
+{% endblock %}

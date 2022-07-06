@@ -1,0 +1,68 @@
+{% extends "/base.twig" %}
+
+{% block title %}{% if action == "register" %}Inscription{% else %}Modification du profil{% endif %}{% endblock %}
+
+{% block main %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+					<form action={% if action == "register" %}"index.php?action=register"{% else %}"index.php?action=updateUser"{% endif %} method="post">
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Email</label>
+                                <input type="email" class="form-control" placeholder="Email" name="email" value="{{ user.email }}" required data-validation-required-message="Veuillez entrer votre email.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Mot de passe</label>
+                                <input type="password" class="form-control" placeholder="Mot de passe" name="password" value="{{ user.password }}" required data-validation-required-message="Veuillez entrer votre mot de passe.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Confirmation du mot de passe</label>
+                                <input type="password" class="form-control" placeholder="Confirmation du mot de passe" name="passwordConfirm" value="{{ user.password }}" required data-validation-required-message="Veuillez entrer votre mot de passe.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Pseudo</label>
+                                <input type="text" class="form-control" placeholder="Pseudo *" name="username" value="{{ user.username }}" >
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Nom</label>
+                                <input type="text" class="form-control" placeholder="Nom" name="last" value="{{ user.last }}" required data-validation-required-message="Veuillez entrer votre nom.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Prénom</label>
+                                <input type="text" class="form-control" placeholder="Prénom" name="first" value="{{ user.first }}" required data-validation-required-message="Veuillez entrer votre prénom.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <br>
+                        <em>* facultatif</em>
+                        <br>
+                        <br>
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" class="btn btn-success btn-lg">{% if action == "register" %}Inscription{% else %}Modification{% endif %}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

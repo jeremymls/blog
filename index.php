@@ -1,9 +1,12 @@
 <?php
-
+if(! isset($_SESSION)){
+    session_start();
+}
 require_once 'vendor/autoload.php';
 
 define('ROOT', __DIR__);
 
+use Application\Controllers\Security\User;
 use Application\Controllers\Admin\Dashboard;
 use Application\Controllers\Admin\PostAdmin;
 use Application\Controllers\Admin\CommentAdmin;
@@ -13,6 +16,7 @@ use Application\Controllers\ErrorException;
 
 try {
     if (isset($_GET['action']) && $_GET['action'] !== '') {
+
         // show posts
         if ($_GET['action'] === 'posts') {
             (new Post())->index();
@@ -28,9 +32,43 @@ try {
             } else {
                 throw new Exception('Aucun identifiant de billet envoyé');
             }
+
+            // Register user
+        } elseif ($_GET['action'] === 'register') {
+            $input = null;
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $input = $_POST;
+            }
+            (new User())->action('register', $input);
+        // Profil user
+        } elseif ($_GET['action'] === 'profil') {
+                (new User())->show();
+        // Login form
+        } elseif ($_GET['action'] === 'login') {
+            $input = null;
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $input = $_POST;
+            }
+            (new User())->login($input);
+        // Update user
+        } elseif ($_GET['action'] === 'updateUser') {
+            // if (isset($_GET['id']) && $_GET['id'] > 0) {  $_session
+            $input = null;
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $input = $_POST;
+            }
+            (new User())->action('edit', $input);
+            // } else {
+            //     throw new Exception('Aucun identifiant de profil envoyé');
+            // }
+        // Logout
+        } elseif ($_GET['action'] === 'logout') {
+            (new User())->logout();
+
         // Dashboard
         } elseif ($_GET['action'] === 'dashboard') {
                 (new Dashboard())->execute();
+
         // Add comment
         } elseif ($_GET['action'] === 'addComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -67,6 +105,7 @@ try {
             } else {
                 throw new Exception('Aucun identifiant de commentaire envoyé');
             }
+
         // Add post
         } elseif ($_GET['action'] === 'postAdd') {
             // It sets the input only when the HTTP method is POST (ie. the form is submitted).
@@ -107,10 +146,12 @@ try {
             } else {
                 throw new Exception('Aucun identifiant de commentaire envoyé');
             }
-        // Error
+
+        // Error 404
         } else {
             throw new Exception("La page que vous recherchez n'existe pas.", 404);
         }
+
     } else {
         // show homepage
         (new Homepage())->execute();
