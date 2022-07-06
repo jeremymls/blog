@@ -1,12 +1,11 @@
 {% extends "/base.twig" %}
 
 {% block title %}{% if action == "add" %}Ajout{% else %}Modification{% endif %} d'un projet{% endblock %}
+{% block subtitle %}
+	<a id="retour" href="index.php?action=postAdmin" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+{% endblock %}
 
 {% block main %}
-	<p>
-		<a href="index.php?action=postAdmin">Retour au projets</a>
-	</p>
-
     <section>
         <div class="container">
             <div class="row">

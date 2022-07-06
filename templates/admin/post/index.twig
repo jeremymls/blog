@@ -1,13 +1,14 @@
 {% extends "/base.twig" %}
 
 {% block title %}Administration des projets{% endblock %}
+{% block subtitle %}
+	<a id="retour" href="index.php?action=dashboard" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+	<a id="oneTool" href="index.php?action=postAdd" ><i class="fa fa-plus" aria-hidden="true"></i></a>
+{% endblock %}
 
 {% block main %}
 
     <section>
-
-	<p><a href="index.php?action=postAdd" class="btn btn-success" role="button">Ajouter un projet</a></p>
-
         <div class="container">
             <div class="row">
                 <div class="col">

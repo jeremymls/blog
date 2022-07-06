@@ -17,7 +17,7 @@
 			{% endif %}
 
 			<dt>Message</dt>
-			<dd>{{ error.message }}</dd>
+			<dd>{{ error.message | nl2br }}</dd>
 			{% if error.code != 404 %}
 				<dt>Fichier</dt>
 				<dd>{{ error.file }} <strong>(line:{{ error.line }})</strong></dd>
