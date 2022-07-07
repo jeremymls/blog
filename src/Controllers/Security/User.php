@@ -4,8 +4,8 @@ namespace Application\Controllers\Security;
 
 use Application\Controllers\Controller;
 use Application\Lib\DatabaseConnection;
-use Application\Models\CommentRepository;
-use Application\Models\UserRepository;
+use Application\Repositories\CommentRepository;
+use Application\Repositories\UserRepository;
 
 class User extends Controller
 {

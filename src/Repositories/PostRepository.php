@@ -1,22 +1,15 @@
 <?php
 
-namespace Application\Models;
+namespace Application\Repositories;
 
 use Application\Lib\DatabaseConnection;
-
-class Post
-{
-    public string $title;
-    public string $frenchCreationDate;
-    public string $content;
-    public string $identifier;
-}
+use Application\Models\PostModel;
 
 class PostRepository
 {
     public DatabaseConnection $connection;
 
-    public function getPost(string $identifier): Post
+    public function getPost(string $identifier): PostModel
     {
         $statement = $this->connection->getConnection()->prepare(
             "SELECT id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%i') AS french_creation_date FROM posts WHERE id = ?"
@@ -24,7 +17,7 @@ class PostRepository
         $statement->execute([$identifier]);
 
         $row = $statement->fetch();
-        $post = new Post();
+        $post = new PostModel();
         $post->title = $row['title'];
         $post->frenchCreationDate = $row['french_creation_date'];
         $post->content = $row['content'];
@@ -40,7 +33,7 @@ class PostRepository
         );
         $posts = [];
         while (($row = $statement->fetch())) {
-            $post = new Post();
+            $post = new PostModel();
             $post->title = $row['title'];
             $post->frenchCreationDate = $row['french_creation_date'];
             $post->content = $row['content'];

@@ -1,20 +1,9 @@
 <?php
 
-namespace Application\Models;
+namespace Application\Repositories;
 
 use Application\Lib\DatabaseConnection;
-
-class User
-{
-    public string $username;
-    public string $password;
-    public string $email;
-    public string $first;
-    public string $last;
-    public string $role;
-    public int $id;
-    public string $validated_email;
-}
+use Application\Models\UserModel;
 
 class UserRepository
 {
@@ -29,7 +18,7 @@ class UserRepository
         return $affectedLines > 0;
     }
 
-    public function getUser(int $id): User
+    public function getUser(int $id): UserModel
     {
         $statement = $this->connection->getConnection()->prepare(
             'SELECT * FROM users WHERE id = ?'
@@ -37,7 +26,7 @@ class UserRepository
         $statement->execute([$id]);
         $row = $statement->fetch();
 
-        $user = new User();
+        $user = new UserModel();
         $user->username = $row['username']?$row['username'] : "";
         $user->password = $row['password'];
         $user->email = $row['email'];
@@ -59,7 +48,7 @@ class UserRepository
         return $affectedLines > 0;
     }
 
-    public function getUserByUsername($user): User
+    public function getUserByUsername($user): UserModel
     {
         $statement = $this->connection->getConnection()->prepare(
             'SELECT * FROM users WHERE username = ? OR email = ?'
@@ -69,7 +58,7 @@ class UserRepository
         if ($row === false) {
             throw new \Exception("Impossible de trouver l'utilisateur !\n Vérifiez votre identifiant ou votre mot de passe.");
         }
-        $user = new User();
+        $user = new UserModel();
         $user->username = $row['username']?$row['username'] : "";
         $user->password = $row['password'];
         $user->email = $row['email'];

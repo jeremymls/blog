@@ -1,18 +1,9 @@
 <?php
 
-namespace Application\Models;
+namespace Application\Repositories;
 
 use Application\Lib\DatabaseConnection;
-
-class Comment
-{
-    public string $identifier;
-    public string $author;
-    public string $frenchCreationDate;
-    public string $comment;
-    public string $post;
-    public string $postTitle;
-}
+use Application\Models\CommentModel;
 
 class CommentRepository
 {
@@ -27,7 +18,7 @@ class CommentRepository
 
         $comments = [];
         while (($row = $statement->fetch())) {
-            $comment = new Comment();
+            $comment = new CommentModel();
             $comment->identifier = $row['id'];
             $comment->author = $row['author'];
             $comment->frenchCreationDate = $row['french_creation_date'];
@@ -49,7 +40,7 @@ class CommentRepository
 
         $comments = [];
         while (($row = $statement->fetch())) {
-            $comment = new Comment();
+            $comment = new CommentModel();
             $comment->identifier = $row['id'];
             $comment->author = $row['author'];
             $comment->frenchCreationDate = $row['french_creation_date'];
@@ -71,7 +62,7 @@ class CommentRepository
 
         $comments = [];
         while (($row = $statement->fetch())) {
-            $comment = new Comment();
+            $comment = new CommentModel();
             $comment->identifier = $row['id'];
             $comment->author = $row['author'];
             $comment->frenchCreationDate = $row['french_creation_date'];
@@ -84,7 +75,7 @@ class CommentRepository
         return $comments;
     }
 
-    public function getComment(string $identifier): ?Comment
+    public function getComment(string $identifier): ?CommentModel
     {
         $statement = $this->connection->getConnection()->prepare(
             "SELECT p.title AS post_title, c.id, author, comment, DATE_FORMAT(comment_date, '%d/%m/%Y à %Hh%i') AS french_creation_date, post_id FROM comments c left join posts p on c.post_id = p.id  WHERE c.id = ?"
@@ -96,7 +87,7 @@ class CommentRepository
             return null;
         }
 
-        $comment = new Comment();
+        $comment = new CommentModel();
         $comment->identifier = $row['id'];
         $comment->author = $row['author'];
         $comment->frenchCreationDate = $row['french_creation_date'];

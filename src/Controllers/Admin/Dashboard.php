@@ -4,7 +4,7 @@ namespace Application\Controllers\Admin;
 
 use Application\Controllers\Controller;
 use Application\Lib\DatabaseConnection;
-use Application\Models\CommentRepository;
+use Application\Repositories\CommentRepository;
 
 class Dashboard extends Controller
 {

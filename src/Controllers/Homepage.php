@@ -3,7 +3,7 @@
 namespace Application\Controllers;
 
 use Application\Lib\DatabaseConnection;
-use Application\Models\PostRepository;
+use Application\Repositories\PostRepository;
 
 class Homepage extends Controller
 {
