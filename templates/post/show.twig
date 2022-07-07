@@ -6,7 +6,7 @@
 	<h2>{{ post.title }}</h2>
 	<em>le {{ post.frenchCreationDate }}</em><br>
 	<a id="retour" href="index.php?action=posts" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
-	<a id="oneTool" href="#addComment" ><i class="fa fa-comment-o" aria-hidden="true"></i></a>
+	<a id="oneTool" href="#comment" ><i class="fa fa-comment-o" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
@@ -20,7 +20,7 @@
 		<p>{{ post.content | nl2br }}</p>
 	</section>
 
-	<section class="container">
+	<section id="comment" class="container">
 		<div id="addComment">
 			{% if session.user %}
 				<div class="row">
