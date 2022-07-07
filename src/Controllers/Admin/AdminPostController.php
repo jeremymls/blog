@@ -7,7 +7,7 @@ use Application\Lib\DatabaseConnection;
 use Application\Repositories\CommentRepository;
 use Application\Repositories\PostRepository;
 
-class PostAdmin extends Controller
+class AdminPostController extends Controller
 {
     public function index()
     {

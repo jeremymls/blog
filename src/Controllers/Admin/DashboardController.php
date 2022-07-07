@@ -6,7 +6,7 @@ use Application\Controllers\Controller;
 use Application\Lib\DatabaseConnection;
 use Application\Repositories\CommentRepository;
 
-class Dashboard extends Controller
+class DashboardController extends Controller
 {
     public function execute()
     {

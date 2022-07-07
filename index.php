@@ -6,28 +6,28 @@ require_once 'vendor/autoload.php';
 
 define('ROOT', __DIR__);
 
-use Application\Controllers\Security\User;
-use Application\Controllers\Admin\Dashboard;
-use Application\Controllers\Admin\PostAdmin;
-use Application\Controllers\Admin\CommentAdmin;
-use Application\Controllers\Homepage;
-use Application\Controllers\Post;
-use Application\Controllers\ErrorException;
+use Application\Controllers\Admin\AdminCommentController;
+use Application\Controllers\Admin\AdminPostController;
+use Application\Controllers\Admin\DashboardController;
+use Application\Controllers\ErrorExceptionController;
+use Application\Controllers\HomeController;
+use Application\Controllers\PostController;
+use Application\Controllers\Security\UserController;
 
 try {
     if (isset($_GET['action']) && $_GET['action'] !== '') {
 
         // show posts
         if ($_GET['action'] === 'posts') {
-            (new Post())->index();
+            (new PostController())->index();
         // show post
         } elseif ($_GET['action'] === 'post') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = $_GET['id'];
                 if (isset($_GET['flush'])) {
-                    (new Post())->show($identifier, $_GET['flush']);
+                    (new PostController())->show($identifier, $_GET['flush']);
                 } else {
-                    (new Post())->show($identifier);
+                    (new PostController())->show($identifier);
                 }
             } else {
                 throw new Exception('Aucun identifiant de billet envoyé');
@@ -39,17 +39,17 @@ try {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $input = $_POST;
             }
-            (new User())->action('register', $input);
+            (new UserController())->action('register', $input);
         // Profil user
         } elseif ($_GET['action'] === 'profil') {
-                (new User())->show();
+                (new UserController())->show();
         // Login form
         } elseif ($_GET['action'] === 'login') {
             $input = null;
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $input = $_POST;
             }
-            (new User())->login($input);
+            (new UserController())->login($input);
         // Update user
         } elseif ($_GET['action'] === 'updateUser') {
             // if (isset($_GET['id']) && $_GET['id'] > 0) {  $_session
@@ -57,23 +57,23 @@ try {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $input = $_POST;
             }
-            (new User())->action('edit', $input);
+            (new UserController())->action('edit', $input);
             // } else {
             //     throw new Exception('Aucun identifiant de profil envoyé');
             // }
         // Logout
         } elseif ($_GET['action'] === 'logout') {
-            (new User())->logout();
+            (new UserController())->logout();
 
         // Dashboard
         } elseif ($_GET['action'] === 'dashboard') {
-                (new Dashboard())->execute();
+                (new DashboardController())->execute();
 
         // Add comment
         } elseif ($_GET['action'] === 'addComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = $_GET['id'];
-                (new Post())->addComment($identifier, $_POST);
+                (new PostController())->addComment($identifier, $_POST);
             } else {
                 throw new Exception('Aucun identifiant de billet envoyé');
             }
@@ -85,7 +85,7 @@ try {
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $input = $_POST;
                 }
-                (new CommentAdmin())->update($identifier, $input);
+                (new AdminCommentController())->update($identifier, $input);
             } else {
                 throw new Exception('Aucun identifiant de commentaire envoyé');
             }
@@ -93,7 +93,7 @@ try {
         } elseif ($_GET['action'] === 'validateComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = $_GET['id'];
-                (new CommentAdmin())->validate($identifier);
+                (new AdminCommentController())->validate($identifier);
             } else {
                 throw new Exception('Aucun identifiant de commentaire envoyé');
             }
@@ -101,7 +101,7 @@ try {
         } elseif ($_GET['action'] === 'deleteComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = $_GET['id'];
-                (new CommentAdmin())->delete($identifier);
+                (new AdminCommentController())->delete($identifier);
             } else {
                 throw new Exception('Aucun identifiant de commentaire envoyé');
             }
@@ -113,18 +113,18 @@ try {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $input = $_POST;
             }
-            (new PostAdmin())->add($input);
+            (new AdminPostController())->add($input);
         // Post admin
         } elseif ($_GET['action'] === 'postAdmin') {
-            (new PostAdmin())->index();
+            (new AdminPostController())->index();
         // Comment admin
         } elseif ($_GET['action'] === 'commentAdmin') {
-            (new CommentAdmin())->index();
+            (new AdminCommentController())->index();
         // show comment admin
         } elseif ($_GET['action'] === 'commentShowAdmin') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = $_GET['id'];
-                (new CommentAdmin())->show($identifier);
+                (new AdminCommentController())->show($identifier);
             } else {
                 throw new Exception('Aucun identifiant de commentaire envoyé');
             }
@@ -132,7 +132,7 @@ try {
         } elseif ($_GET['action'] === 'postDelete') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = $_GET['id'];
-                (new PostAdmin())->delete($identifier);
+                (new AdminPostController())->delete($identifier);
             }
         // Update post
         } elseif ($_GET['action'] === 'postUpdate') {
@@ -142,7 +142,7 @@ try {
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $input = $_POST;
                 }
-                (new PostAdmin())->update($identifier, $input);
+                (new AdminPostController())->update($identifier, $input);
             } else {
                 throw new Exception('Aucun identifiant de commentaire envoyé');
             }
@@ -154,9 +154,9 @@ try {
 
     } else {
         // show homepage
-        (new Homepage())->execute();
+        (new HomeController())->execute();
     }
     // If the exception is thrown, it displays the error page.
 } catch (Exception $err) {
-    (new ErrorException())->execute($err);
+    (new ErrorExceptionController())->execute($err);
 }

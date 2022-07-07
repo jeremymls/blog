@@ -6,7 +6,7 @@ use Application\Lib\DatabaseConnection;
 use Application\Repositories\CommentRepository;
 use Application\Repositories\PostRepository;
 
-class Post extends Controller
+class PostController extends Controller
 {
 
     public function index()

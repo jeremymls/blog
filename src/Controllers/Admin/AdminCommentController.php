@@ -8,7 +8,7 @@ use Application\Repositories\CommentRepository;
 use Application\Repositories\PostRepository;
 
 
-class CommentAdmin extends Controller
+class AdminCommentController extends Controller
 {
     public function index()
     {

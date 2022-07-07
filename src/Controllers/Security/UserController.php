@@ -7,7 +7,7 @@ use Application\Lib\DatabaseConnection;
 use Application\Repositories\CommentRepository;
 use Application\Repositories\UserRepository;
 
-class User extends Controller
+class UserController extends Controller
 {
     public function action(string $action, ?array $input)
     {

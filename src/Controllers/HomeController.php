@@ -5,7 +5,7 @@ namespace Application\Controllers;
 use Application\Lib\DatabaseConnection;
 use Application\Repositories\PostRepository;
 
-class Homepage extends Controller
+class HomeController extends Controller
 {
     public function execute()
     {
