@@ -51,23 +51,27 @@ class User extends Controller
                 $_SESSION['user']->first = $user->first;
                 $_SESSION['user']->last = $user->last;
                 $_SESSION['user']->role = 'user';
-                header('Location: index.php?action=profil');
-            }
-        }
 
-        if ($action === 'edit') {
-            // Otherwise, it displays the form.
-            $userRepository = new UserRepository();
-            $userRepository->connection = new DatabaseConnection();
-            $user = $userRepository->getUser($_SESSION['user']->id);
-            $this->twig->display('security/action.twig', [
-                'user' => $user,
-                'action' => $action,
-            ]);
-        } elseif ($action === "register" ) {
-            $this->twig->display('security/action.twig', [
-                'action' => $action,
-            ]);
+                $this->twig->display('security/redirect.twig', [
+                    'target' => ($action === "register")?'/': '/index.php?action=profil',
+                ]);
+            }
+        } else {
+
+            if ($action === 'edit') {
+                // Otherwise, it displays the form.
+                $userRepository = new UserRepository();
+                $userRepository->connection = new DatabaseConnection();
+                $user = $userRepository->getUser($_SESSION['user']->id);
+                $this->twig->display('security/action.twig', [
+                    'user' => $user,
+                    'action' => $action,
+                ]);
+            } elseif ($action === "register" ) {
+                $this->twig->display('security/action.twig', [
+                    'action' => $action,
+                ]);
+            }
         }
     }
 
@@ -102,17 +106,15 @@ class User extends Controller
                 $_SESSION['user']->last = $user->last;
                 $_SESSION['user']->role = $user->role;
 
-                header('Location: index.php');
+                $this->twig->display('security/redirect.twig', [
+                    'target' => '/',
+                ]);
             } else {
                 throw new \Exception('Identifiant ou mot de passe incorrect.');
             }
+        } else {
+            $this->twig->display('security/login.twig', []);
         }
-
-        $isConnected = isset($_SESSION['user']);
-
-        $this->twig->display('security/login.twig', [
-            'isConnected' => $isConnected,
-        ]);
     }
 
     public function logout()
@@ -121,6 +123,4 @@ class User extends Controller
         header('Location: index.php?action=login');
     }
 
-    
-    
 }

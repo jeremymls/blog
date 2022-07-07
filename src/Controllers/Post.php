@@ -43,8 +43,7 @@ class Post extends Controller
     {
         $author = null;
         $comment = null;
-        if (!empty($input['author']) && !empty($input['comment'])) {
-            $author = $input['author'];
+        if (!empty($input['comment'])) {
             $comment = $input['comment'];
         } else {
             throw new \Exception('Les données du formulaire sont invalides.');
@@ -52,7 +51,7 @@ class Post extends Controller
 
         $commentRepository = new CommentRepository();
         $commentRepository->connection = new DatabaseConnection();
-        $success = $commentRepository->addComment($post, $author, $comment);
+        $success = $commentRepository->addComment($post, $comment);
         if (!$success) {
             throw new \Exception('Impossible d\'ajouter le commentaire !');
         } else {

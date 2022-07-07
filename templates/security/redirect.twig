@@ -1,0 +1,247 @@
+{% extends '/base.twig' %}
+
+{% block title %}Redirection{% endblock %}
+
+{% block main %}
+    <section id="redirect">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+
+                    <div id="master-wrap">
+                        <div id="logo-box">
+                            <div class="animated fast fadeInUp">
+                                <img class="icon" src='assets/img/wait.gif'/>
+                                <h1>Veuillez patienter</h1>
+                            </div>
+                            <div class="notice animated fadeInUp">
+                                <p id="timer"></p>
+                                <p class="redirect-message">
+                                    Si vous n'êtes pas redirigé automatiquement,<br>
+                                    veuillez cliquer sur le bouton ci-dessous.
+                                </p>
+                                <a class="btn animation" href="/">
+                                    Accueil
+                                </a>
+                            </div>
+                            <div class="footer animated slow fadeInUp">
+                                <p class="copyright">
+                                    &copy; JM projets
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block head %}
+    <style>
+        /* Button */
+
+        a {
+            -webkit-transition: all 200ms ease;
+            -moz-transition: all 200ms ease;
+            transition: all 200ms ease;
+            -webkit-transform: translate3d(0, 0, 0);
+            /* Webkit Hardware Acceleration */
+            -webkit-backface-visibility: hidden;
+            /* Animation fix */
+        }
+
+        a,
+        a:visited,
+        a:active {
+            text-decoration: none;
+        }
+
+        .btn {
+            display: block;
+            margin: 30px auto;
+            padding: 10px;
+            border: 2px solid #333;
+            text-transform: uppercase;
+            font-weight: bold;
+            background: #333;
+            color: #fff;
+            width: 60%;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: #333;
+        }
+
+        #timer {
+            font-size: 2rem;
+        }
+
+        .redirect-message {
+            font-size: 1.5rem;
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            font-size: 14px;
+            font-size: 0.875rem;
+            text-align: center;
+        }
+
+
+        /* Animation */
+
+        .animated {
+            -webkit-animation-duration: 1.2s;
+            -moz-animation-duration: 1.2s;
+            -ms-animation-duration: 1.2s;
+            -o-animation-duration: 1.2s;
+            animation-duration: 1.2s;
+            -webkit-transform: translate3d(0, 0, 0);
+            -webkit-backface-visibility: hidden;
+        }
+
+        .animated.fast {
+            -webkit-animation-duration: 800ms;
+            -moz-animation-duration: 800ms;
+            -ms-animation-duration: 800ms;
+            -o-animation-duration: 800ms;
+            animation-duration: 800ms;
+        }
+
+        .animated.slow {
+            -webkit-animation-duration: 1.4s;
+            -moz-animation-duration: 1.4s;
+            -ms-animation-duration: 1.4s;
+            -o-animation-duration: 1.4s;
+            animation-duration: 1.4s;
+        }
+
+        @-webkit-keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            -webkit-transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            -webkit-transform: translateY(0);
+        }
+        }
+
+        @-moz-keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            -moz-transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            -moz-transform: translateY(0);
+        }
+        }
+
+        @-o-keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            -o-transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            -o-transform: translateY(0);
+        }
+        }
+
+        @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        }
+
+        .fadeInUp {
+            -webkit-animation-name: fadeInUp;
+            -moz-animation-name: fadeInUp;
+            -o-animation-name: fadeInUp;
+            animation-name: fadeInUp;
+        }
+
+
+        /* Layout: center box */
+
+        #logo-box {
+            text-align: center;
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 30px;
+            margin: 0 auto;
+        }
+
+
+        /* Desktop only */
+
+        @media (min-width: 481px) {
+            #logo-box {
+                position: relative;
+                margin-top: -50px;
+                margin-bottom: -50px;
+                text-align: center;
+                font-size: 20px;
+                border: 3px solid #999;
+                box-shadow: 6px 6px 0px #333;
+            }
+            h1 {
+                font-size: 36px;
+            }
+        }
+
+        .icon {
+            margin: auto;
+            width: 90px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block script %}
+    <!-- Redirection Counter -->
+    <script type="text/javascript">
+        var count = 3; // Timer 
+        var redirect = ' {{ target }} '; // Target URL
+
+        function countDown() { 
+            var timer = document.getElementById("timer"); // Timer ID 
+            if (count > 0) { 
+                count--;
+                timer.innerHTML = "Vous serez redirigé·e dans <strong>" + count + "</strong> secondes."; // Timer Message
+                count == 0 ? setTimeout("countDown()", 3800):setTimeout("countDown()", 1000);
+                
+            } else { 
+                window.location.href = redirect; 
+            }
+        }
+        countDown();
+
+
+        // createPageTransition();
+        setInterval(createPageTransition, 3000);
+
+        function createPageTransition() {
+        const el = document.createElement('div');
+        el.className = 'page-transition';
+        const overlay = document.createElement('div');
+        overlay.className = 'page-transition__overlay';
+        el.appendChild(overlay);
+        document.body.appendChild(el);
+        setTimeout(() => {
+            el.className = 'page-transition page-transition--in';
+        }, 100);
+        }
+    </script>
+{% endblock %}
