@@ -5,7 +5,7 @@
 {% block subtitle %}
 	<h2>{{ post.title }}</h2>
 	<em>le {{ post.frenchCreationDate }}</em><br>
-	<a id="retour" href="javascript:history.back()" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+	<a id="retour" href="?action=posts" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 	<a id="oneTool" href="#comment" ><i class="fa fa-comment-o" aria-hidden="true"></i></a>
 {% endblock %}
 
@@ -16,7 +16,10 @@
 		{% endif %}
 	</div>
 	<section class="container">
-		<p>{{ post.content | nl2br }}</p>
+		<h3>Description</h3>
+		<div id="postContent">
+			<p>{{ post.content | nl2br }}</p>
+		</div>
 		{% if post.url is not empty %}
 			<iframe id="SiteFrame"
 				title="{{ post.title }}"
@@ -61,6 +64,7 @@
 				<div class="row">
 					<div class="col text-center not-connected">
 						<p>Vous devez être connecté pour pouvoir laisser un commentaire.</p>
+						<a class="btn btn-sm btn-primary" href="?action=login" role="button">Se connecter</a>
 					</div>
 				</div>
 			{% endif %}
