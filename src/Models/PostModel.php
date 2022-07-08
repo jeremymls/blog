@@ -8,4 +8,5 @@ class PostModel
     public string $frenchCreationDate;
     public string $content;
     public string $identifier;
+    public string $url;
 }

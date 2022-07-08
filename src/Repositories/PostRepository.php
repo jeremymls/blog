@@ -12,7 +12,7 @@ class PostRepository
     public function getPost(string $identifier): PostModel
     {
         $statement = $this->connection->getConnection()->prepare(
-            "SELECT id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%i') AS french_creation_date FROM posts WHERE id = ?"
+            "SELECT id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%i') AS french_creation_date, url FROM posts WHERE id = ?"
         );
         $statement->execute([$identifier]);
 
@@ -22,6 +22,7 @@ class PostRepository
         $post->frenchCreationDate = $row['french_creation_date'];
         $post->content = $row['content'];
         $post->identifier = $row['id'];
+        $post->url = $row['url'] != null ? $row['url'] : '';
 
         return $post;
     }
@@ -29,7 +30,7 @@ class PostRepository
     public function getPosts(): array
     {
         $statement = $this->connection->getConnection()->query(
-            "SELECT id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%i') AS french_creation_date FROM posts ORDER BY creation_date DESC LIMIT 0, 5"
+            "SELECT id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%i') AS french_creation_date, url FROM posts ORDER BY creation_date DESC LIMIT 0, 5"
         );
         $posts = [];
         while (($row = $statement->fetch())) {
@@ -38,6 +39,7 @@ class PostRepository
             $post->frenchCreationDate = $row['french_creation_date'];
             $post->content = $row['content'];
             $post->identifier = $row['id'];
+            $post->url = $row['url'] != null ? $row['url'] : '';
 
             $posts[] = $post;
         }
@@ -45,22 +47,22 @@ class PostRepository
         return $posts;
     }
 
-    public function add(string $title, string $content): bool
+    public function add(string $title, string $content, string $url): bool
     {
         $statement = $this->connection->getConnection()->prepare(
-            'INSERT INTO posts(title, content, creation_date) VALUES(?, ?, NOW())'
+            'INSERT INTO posts(title, content, url, creation_date) VALUES(?, ?, ?, NOW())'
         );
-        $affectedLines = $statement->execute([$title, $content]);
+        $affectedLines = $statement->execute([$title, $content, $url]);
 
         return ($affectedLines > 0);
     }
 
-    public function update(string $identifier, string $title, string $content): bool
+    public function update(string $identifier, string $title, string $content, string $url): bool
     {
         $statement = $this->connection->getConnection()->prepare(
-            'UPDATE posts SET title = ?, content = ? WHERE id = ?'
+            'UPDATE posts SET title = ?, content = ?, url = ? WHERE id = ?'
         );
-        $affectedLines = $statement->execute([$title, $content, $identifier]);
+        $affectedLines = $statement->execute([$title, $content, $url, $identifier]);
 
         return ($affectedLines > 0);
     }

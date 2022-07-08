@@ -41,7 +41,6 @@ class PostController extends Controller
 
     public function addComment(string $post, array $input)
     {
-        $author = null;
         $comment = null;
         if (!empty($input['comment'])) {
             $comment = $input['comment'];

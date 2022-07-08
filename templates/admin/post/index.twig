@@ -2,7 +2,7 @@
 
 {% block title %}Administration des projets{% endblock %}
 {% block subtitle %}
-	<a id="retour" href="index.php?action=dashboard" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+	<a id="retour" href="javascript:history.back()" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 	<a id="oneTool" href="index.php?action=postAdd" ><i class="fa fa-plus" aria-hidden="true"></i></a>
 {% endblock %}
 
@@ -16,7 +16,7 @@
                         <thead>
                             <tr>
                                 <th>Titre</th>
-                                <th>Châpo</th>
+                                <th>Url</th>
                                 <th>Date de création</th>
                                 <th>Actions</th>
                             <tr>
@@ -25,10 +25,10 @@
                             {% for post in posts %}
                                 <tr>
                                     <td>{{ post.title }}</td>
-                                    {# <td>{{ post.content }}</td> #}
-                                    <td></td>
+                                    <td>{{ post.url }}</td>
                                     <td>{{ post.frenchCreationDate }}</td>
                                     <td>
+                                        <a href="?action=post&id={{ post.identifier }}" class="btn btn-primary">Voir</a>
                                         <a href="?action=postUpdate&id={{ post.identifier }}" class="btn btn-warning">Editer</a>
                                         <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ post.identifier }}" data-title="{{ post.title }} (id:{{ post.identifier }})" data-target="#confirmDeletePost">Supprimer</button>
                                     </td>

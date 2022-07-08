@@ -2,9 +2,7 @@
 
 {% block title %}Profil{% endblock %}
 {% block subtitle %}
-    {% if session.user.role == "admin" %}
-	<a id="retour" href="index.php?action=dashboard" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
-    {% endif %}
+	<a id="retour" href="javascript:history.back()" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 	<a id="oneTool" href="index.php?action=updateUser" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 {% endblock %}
 
