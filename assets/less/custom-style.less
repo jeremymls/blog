@@ -22,7 +22,8 @@
     a, a:focus,a:hover {
         color: @theme-primary;
     }
-    #right-col{
+    #intro{
+        margin-bottom: 3rem;
         p{
             font-size: 22px;
             margin-bottom: 3rem;
@@ -38,10 +39,22 @@
             }
         }    
     }
+    @media screen and (max-width: 1200px) {
+        img{
+            width: 50%;
+            margin-bottom: 5rem;
+        }
+    }
 
     @media screen and (max-width: 768px) {
         .dl-horizontal{
             text-align: center;
+            div {
+                margin: 1rem !important;
+                dd{
+                    margin: 0 auto;
+                }
+            }
         }
     }
 }
@@ -66,6 +79,9 @@
     .footer-col{
         .dl-horizontal{
             text-align: center;
+            dd{
+                margin: 0 auto;
+            }
         }
     }
 }
