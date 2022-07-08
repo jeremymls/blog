@@ -32,7 +32,7 @@
 				<div class="row">
 					<div class="col-lg-12">
 						{% if block('imageSrc') %}
-							<img class="img-responsive" src="{% block imageSrc %}{% endblock %}" alt="">
+							<img id="imageSrc" class="img-responsive" src="{% block imageSrc %}{% endblock %}" alt="">
 						{% endif %}
 						<div class="intro-text">
 							<h1 class="name">{{ block('title') }}</h1>
