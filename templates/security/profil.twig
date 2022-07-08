@@ -1,0 +1,43 @@
+{% extends "/base.twig" %}
+
+{% block title %}Profil{% endblock %}
+{% block subtitle %}
+    {% if session.user.role == "admin" %}
+	<a id="retour" href="index.php?action=dashboard" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+    {% endif %}
+	<a id="oneTool" href="index.php?action=updateUser" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+{% endblock %}
+
+{% block main %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1">
+
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <dl id="profilInfos" class="dl-horizontal">
+                                <dt><strong>Nom:</strong></dt>
+                                <dd>{{ user.first }}</dd>
+                                <dt><strong>Prénom:</strong></dt>
+                                <dd>{{ user.last }}</dd>
+                                <dt><strong>Email:</strong></dt>
+                                <dd>{{ user.email }}</dd>
+                                <dt>Commentaires:</dt>
+                                <dd>0</dd>
+                            </dl>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <img src="/assets/img/profile.png" class="img-responsive" alt="{{ user.first }} {{ user.last }}">
+                        </div>
+                    </div>
+                    <h3>Commentaires</h3>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+	
+{% endblock %}
