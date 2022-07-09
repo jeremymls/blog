@@ -5,7 +5,15 @@
 		<div class="navbar-header page-scroll">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 				<span class="sr-only">Toggle navigation</span>
-				{% if session.user.username == null or session.user.username == "" %}{{ session.user.first | first | upper }}{{ session.user.last | first | upper }}{% else %}{{ session.user.username }}{% endif %} 
+				{% if session.user %}
+					{% if session.user.username == null or session.user.username == "" %}
+						{{ session.user.first | first | upper }}{{ session.user.last | first | upper }}
+					{% else %}
+						{{ session.user.username }}
+					{% endif %} 
+				{% else %}
+					MENU
+				{% endif %}
 				<i class="fa fa-bars"></i>
 			</button>
 			<a class="navbar-brand" href="/">JM Projets</a>
