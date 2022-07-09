@@ -1,7 +1,7 @@
 function countDown() {
     var timer = document.getElementById("timer"); // Timer ID 
     if (count > 0) {
-        // count--; 
+        count--; 
         timer.innerHTML = "Vous serez redirigé·e dans <strong>" + count + "</strong> secondes."; // Timer Message
         setTimeout("countDown()", 1000);
         //count == 0 ? setTimeout("countDown()", 3800):setTimeout("countDown()", 1000);
