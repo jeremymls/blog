@@ -17,11 +17,11 @@
 	</div>
 	<section class="container">
 		<h2>Résumé</h2>
-		<div id="postContent">
-			{% if post.chapo %}
-			<p>{{ post.chapo | nl2br }}</p>
-			{% endif %}
-		</div>
+		{% if post.chapo %}
+			<div id="postContent">
+				<p>{{ post.chapo | nl2br }}</p>
+			</div>
+		{% endif %}
 		{% if post.url is not empty %}
 			<div id="section-preview" class="row text-center">
                 <div class="col-sm-12 preview-item">
