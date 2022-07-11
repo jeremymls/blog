@@ -7,16 +7,19 @@ $("#confirmDeletePost").on("show.bs.modal", function (event) {
     modal.find(".modal-footer a").attr("href", "?action=postDelete&id=" + identifier);
     setTimeout(()=>scrollTo(0, 0), 500);
 });
+
 $("#postPreview").on("show.bs.modal", function (event) {
     scrollTo(0, 0);
     var button = $(event.relatedTarget); // Button that triggered the modal
     var title = button.data("title"); // Extract info from data-* attributes
-    var content = button.data("content"); // Extract info from data-* attributes
+    var chapo = button.data("chapo"); // Extract info from data-* attributes
     var url = button.data("url"); // Extract info from data-* attributes
     var identifier = button.data("identifier"); // Extract info from data-* attributes
     var modal = $(this);
     modal.find(".modal-title").text(title);
-    modal.find(".modal-description").html('<div id="postContent"><p>' + content +'</p></div>');
+    if (chapo != "") {
+        modal.find(".modal-chapo").html('<div id="postContent"><p>' + chapo +'</p></div>');
+    }
     if (url != "") {
         modal.find(".modal-iframe").html('<iframe src="' + url + '" width="100%" height="100%"></iframe>');
         modal.find(".modal-footer .externalLink").removeClass("sr-only");

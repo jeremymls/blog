@@ -16,18 +16,35 @@
 		{% endif %}
 	</div>
 	<section class="container">
-		<h3>Description</h3>
+		<h2>Résumé</h2>
 		<div id="postContent">
-			<p>{{ post.content | nl2br }}</p>
+			{% if post.chapo %}
+			<p>{{ post.chapo | nl2br }}</p>
+			{% endif %}
 		</div>
 		{% if post.url is not empty %}
-			<iframe id="SiteFrame"
-				title="{{ post.title }}"
-				width="100%"
-				src="{{ post.url }}">
-			</iframe>
+			<div id="section-preview" class="row text-center">
+                <div class="col-sm-12 preview-item">
+                    <a href="{{ post.url }}" target="_blank" class="preview-link" >
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="fa fa-external-link fa-3x"></i>
+                            </div>
+                        </div>
+						<iframe id="SiteFrame"
+							title="{{ post.title }}"
+							width="100%"
+							src="{{ post.url }}">
+						</iframe>
+                    </a>
+                </div>
+            </div>
+			
 		{% endif %}
-		
+		<h2>Description</h2>
+		<div>
+			<p>{{ post.content | nl2br }}</p>
+		</div>
 	</section>
 
 	<section id="comment" class="container">

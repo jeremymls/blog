@@ -30,7 +30,7 @@
                                     <td>
                                         <a href="?action=postUpdate&id={{ post.identifier }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i></a>
                                         <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ post.identifier }}" data-title="{{ post.title }} (id:{{ post.identifier }})" data-target="#confirmDeletePost"><i class="fa fa-trash"></i></button>
-                                        <button type="button" class="btn btn-primary lunchPreview" data-toggle="modal" data-identifier="{{ post.identifier }}" data-title="{{ post.title }} (id:{{ post.identifier }})" data-content="{{ post.content }}" data-url="{{ post.url }}" data-target="#postPreview"><i class="fa fa-info"></i></button>
+                                        <button type="button" class="btn btn-primary lunchPreview" data-toggle="modal" data-identifier="{{ post.identifier }}" data-title="{{ post.title }} (id:{{ post.identifier }})" data-chapo="{{ post.chapo }}" data-url="{{ post.url }}" data-target="#postPreview"><i class="fa fa-info"></i></button>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -73,8 +73,8 @@
 				<h4 class="modal-title" id="myModalLabel"></h4>
 			</div>
 			<div class="modal-body">
+                <div class="modal-chapo"></div>
                 <div class="modal-iframe"></div>
-                <div class="modal-description"></div>
             </div>
 			<div class="modal-footer">
 

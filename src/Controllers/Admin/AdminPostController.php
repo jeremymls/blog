@@ -30,13 +30,14 @@ class AdminPostController extends Controller
                 $title = $input['title'];
                 $content = $input['content'];
                 $url = $input['url'];
+                $chapo = $input['chapo'];
             } else {
                 throw new \Exception('Les données du formulaire sont invalides.');
             }
 
             $postRepository = new PostRepository();
             $postRepository->connection = new DatabaseConnection();
-            $success = $postRepository->add($title, $content, $url);
+            $success = $postRepository->add($title, $content, $url, $chapo);
             if (!$success) {
                 throw new \Exception('Impossible de modifier le commentaire !');
             } else {
@@ -59,13 +60,14 @@ class AdminPostController extends Controller
                 $title = $input['title'];
                 $content = $input['content'];
                 $url = $input['url'];
+                $chapo = $input['chapo'];
             } else {
                 throw new \Exception('Les données du formulaire sont invalides.');
             }
 
             $postRepository = new PostRepository();
             $postRepository->connection = new DatabaseConnection();
-            $success = $postRepository->update($identifier, $title, $content, $url);
+            $success = $postRepository->update($identifier, $title, $content, $url, $chapo);
             if (!$success) {
                 throw new \Exception('Impossible de modifier le commentaire !');
             } else {
