@@ -14,7 +14,8 @@ class HomeController extends Controller
         $posts = $postRepository->getPosts();
 
         $this->twig->display('homepage.twig', [
-            'posts' => $posts,
+            'posts' => $posts['data'],
+            'nbPage' => $posts['nbPage']
         ]);
     }
 }

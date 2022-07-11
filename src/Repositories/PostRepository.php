@@ -30,8 +30,16 @@ class PostRepository
 
     public function getPosts(): array
     {
+        if (isset($_GET['page'])) {
+            $page = $_GET['page'];
+        } else {
+            $page = 1;
+        }
+        $nbpp=3;
+        $allPosts = $this->connection->getConnection()->query("SELECT id FROM posts");
+        $nbPages = ceil($allPosts->rowCount() / $nbpp);
         $statement = $this->connection->getConnection()->query(
-            "SELECT id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%i') AS french_creation_date, url, chapo FROM posts ORDER BY creation_date DESC LIMIT 0, 5"
+            "SELECT id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%i') AS french_creation_date, url, chapo FROM posts ORDER BY creation_date DESC LIMIT " . ($page - 1) * $nbpp . ", " . $page * $nbpp
         );
         $posts = [];
         while (($row = $statement->fetch())) {
@@ -46,7 +54,10 @@ class PostRepository
             $posts[] = $post;
         }
 
-        return $posts;
+        return [
+            "data" => $posts, 
+            "nbPage" => $nbPages
+        ];
     }
 
     public function add(string $title, string $content, string $url, string $chapo): bool

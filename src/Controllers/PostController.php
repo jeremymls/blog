@@ -16,7 +16,8 @@ class PostController extends Controller
         $posts = $postRepository->getPosts();
 
         $this->twig->display('post/index.twig', [
-            'posts' => $posts,
+            'posts' => $posts['data'],
+            'nbPage' => $posts['nbPage']
         ]);
     }
 

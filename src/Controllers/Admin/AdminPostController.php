@@ -16,7 +16,8 @@ class AdminPostController extends Controller
         $posts = $postRepository->getPosts();
 
         $this->twig->display('admin/post/index.twig', [
-            'posts' => $posts,
+            'posts' => $posts['data'],
+            'nbPage' => $posts['nbPage']
         ]);
     }
 

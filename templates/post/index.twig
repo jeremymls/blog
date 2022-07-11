@@ -28,17 +28,20 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li>
-                        <a href="#" aria-label="Previous">
+                        <a href="?action=posts" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
+                    {% for page in 1.. nbPage %}
+                    {% if get.page is defined %}
+                        {% set currentPage = get.page %}
+                    {% else %}
+                        {% set currentPage = 1 %}
+                    {% endif %}
+                        <li {% if currentPage == page %} class="active"{% endif %}><a href="?action=posts&page={{ page }}">{{ page }}</a></li>
+                    {% endfor %}
                     <li>
-                        <a href="#" aria-label="Next">
+                        <a href="?action=posts&page={{ nbPage }}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
