@@ -9,6 +9,7 @@ define('ROOT', __DIR__);
 use Application\Controllers\Admin\AdminCommentController;
 use Application\Controllers\Admin\AdminPostController;
 use Application\Controllers\Admin\DashboardController;
+use Application\Controllers\CommentController;
 use Application\Controllers\ErrorExceptionController;
 use Application\Controllers\HomeController;
 use Application\Controllers\PostController;
@@ -73,7 +74,7 @@ try {
         } elseif ($_GET['action'] === 'addComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = $_GET['id'];
-                (new PostController())->addComment($identifier, $_POST);
+                (new CommentController())->addComment($identifier, $_POST);
             } else {
                 throw new Exception('Aucun identifiant de billet envoyé');
             }

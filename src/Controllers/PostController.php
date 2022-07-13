@@ -3,59 +3,26 @@
 namespace Application\Controllers;
 
 use Application\Lib\DatabaseConnection;
-use Application\Repositories\CommentRepository;
-use Application\Repositories\PostRepository;
-
+use Application\Services\PostService;
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->postService = new PostService();
+    }
 
     public function index()
     {
-        $postRepository = new PostRepository();
-        $postRepository->connection = new DatabaseConnection();
-        $posts = $postRepository->getPosts();
-
-        $this->twig->display('post/index.twig', [
-            'posts' => $posts['data'],
-            'nbPage' => $posts['nbPage']
-        ]);
+        $params = $this->postService->getPosts();
+        $this->twig->display('post/index.twig', $params);
     }
 
     public function show(string $identifier, string $flush = NULL )
     {
-        $connection = new DatabaseConnection();
-
-        $postRepository = new PostRepository();
-        $postRepository->connection = $connection;
-        $post = $postRepository->getPost($identifier);
-
-        $commentRepository = new CommentRepository();
-        $commentRepository->connection = $connection;
-        $comments = $commentRepository->getComments($identifier);
-
-        $this->twig->display('post/show.twig', [
-            'post' => $post,
-            'comments' => $comments,
-            'alert' => $flush,
-        ]);
+        $params = $this->postService->getPostWithComments($identifier);
+        $params['alert'] = $flush;
+        $this->twig->display('post/show.twig', $params);
     }
 
-    public function addComment(string $post, array $input)
-    {
-        $comment = null;
-        if (!empty($input['comment'])) {
-            $comment = $input['comment'];
-        } else {
-            throw new \Exception('Les données du formulaire sont invalides.');
-        }
-
-        $commentRepository = new CommentRepository();
-        $commentRepository->connection = new DatabaseConnection();
-        $success = $commentRepository->addComment($post, $comment);
-        if (!$success) {
-            throw new \Exception('Impossible d\'ajouter le commentaire !');
-        } else {
-            header('Location: index.php?action=post&id=' . $post.'&flush=commentSubmitted');
-        }
-    }
 }
