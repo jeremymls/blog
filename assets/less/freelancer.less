@@ -222,7 +222,9 @@ section.success {
 #section-preview{
     margin: 3rem auto 5rem;
 }
+
 #section-preview,
+.preview-index,
 #portfolio {
     .preview-item,
     .portfolio-item {
@@ -274,6 +276,42 @@ section.success {
     * {
         z-index: 2;
     }
+}
+
+.preview-col {
+	margin-top: 2rem;
+	height: 25rem;
+	overflow: hidden;
+
+	.preview-index {
+		.preview-link {
+			height: 100%;
+
+			.caption {
+				height: 18.5% !important;
+				border-radius: 0 !important;
+			}
+
+			iframe {
+				width: 786px;
+				height: 1150px;
+				border: 0;
+				-ms-transform: scale(0.185);
+				-moz-transform: scale(0.185);
+				-o-transform: scale(0.185);
+				-webkit-transform: scale(0.185);
+				transform: scale(0.185);
+
+				-ms-transform-origin: 0 0;
+				-moz-transform-origin: 0 0;
+				-o-transform-origin: 0 0;
+				-webkit-transform-origin: 0 0;
+				transform-origin: 0 0;
+
+			}
+		}
+	}
+
 }
 
 @media(min-width:767px) {
