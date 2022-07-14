@@ -13,9 +13,9 @@ class AdminCommentController extends Controller
         $this->commentService = new CommentService();
     }
 
-    public function index()
+    public function index($filter = "unmoderated")
     {
-        $params = $this->commentService->getUnmoderatedComments();
+        $params = $this->commentService->getComments($filter);
         $this->twig->display('admin/comment/index.twig', $params);
     }
 
@@ -28,13 +28,13 @@ class AdminCommentController extends Controller
     public function validate(string $identifier)
     {
         $this->commentService->validateComment($identifier);
-        header('Location: index.php?action=commentAdmin#date');
+        header('Location: index.php?action=commentAdmin#moderate');
     }
 
     public function delete(string $identifier)
     {
         $this->commentService->delete($identifier);
-        header('Location: index.php?action=commentAdmin#date');
+        header('Location: index.php?action=commentAdmin#moderate');
     }
 
     public function update(string $identifier, ?array $input)

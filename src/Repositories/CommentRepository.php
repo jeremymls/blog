@@ -9,7 +9,7 @@ class CommentRepository
 {
     public DatabaseConnection $connection;
 
-    public function getComments(string $post): array
+    public function getCommentsByPost(string $post): array
     {
         $statement = $this->connection->getConnection()->prepare(
             "SELECT id, author, comment, DATE_FORMAT(comment_date, '%d/%m/%Y à %Hh%i') AS french_creation_date, post_id FROM comments WHERE post_id = ? and moderate = 1 ORDER BY comment_date DESC"
@@ -25,6 +25,40 @@ class CommentRepository
             $comment->comment = $row['comment'];
             $comment->post = $row['post_id'];
 
+            $comments[] = $comment;
+        }
+
+        return $comments;
+    }
+
+    public function getComments($filter): array
+    {
+        $sql = 
+        "SELECT comments.id, author, comment, DATE_FORMAT(comment_date, '%d/%m/%Y à %Hh%i') AS french_creation_date, post_id, posts.title, moderate 
+        FROM comments 
+        left join posts 
+        on comments.post_id = posts.id";
+        if ($filter === "unmoderated") {
+            $sql .= " WHERE moderate = 0";
+        } elseif ($filter === "moderated") {
+            $sql .= " WHERE moderate = 1";
+        } elseif ($filter === "all") {
+            $sql .= "";
+        }
+        $sql .= " ORDER BY comment_date DESC";
+        $statement = $this->connection->getConnection()->prepare($sql);
+        $statement->execute();
+
+        $comments = [];
+        while (($row = $statement->fetch())) {
+            $comment = new CommentModel();
+            $comment->identifier = $row['id'];
+            $comment->author = $row['author'];
+            $comment->frenchCreationDate = $row['french_creation_date'];
+            $comment->comment = $row['comment'];
+            $comment->postId = $row['post_id'];
+            $comment->postTitle = $row['title'];
+            $comment->moderate = $row['moderate'];
             $comments[] = $comment;
         }
 

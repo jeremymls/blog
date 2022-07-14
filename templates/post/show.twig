@@ -99,7 +99,8 @@
 			{% for comment in comments %}
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<p><strong>{{ comment.author }}</strong> le {{comment.frenchCreationDate }}</p>  
+					{# ! INCORRECT ! #}
+						<p><strong>{{ comment.author }}</strong> le {{comment.frenchCreationDate }} {% if comment.author == (session.user.first ~ " " ~ session.user.last) %}<a href="?action=updateComment&id={{ comment.identifier }}">(modifier)</a>  {% endif %}</p>  
 					</div>
 					<div class="panel-body">
 						<p>{{ comment.comment | nl2br }}</p>

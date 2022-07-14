@@ -1,6 +1,5 @@
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
-	<div
-		class="container">
+	<div class="container">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header page-scroll">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -23,29 +22,29 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
 				<li class="page-scroll">
-					<a href="/">Accueil</a>
+					<a href="/"><i class="fa fa-home" aria-hidden="true"></i> Accueil</a>
 				</li>
 				<li class="page-scroll">
-					<a href="?action=posts">Projets</a>
+					<a href="?action=posts"><i class="fa fa-folder" aria-hidden="true"></i> Projets</a>
 				</li>
 				{% if session.user %}
 					<li class="dropdown desktop">
 						<a id="initiales" href="#" class="dropdown-toggle btn-social" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% if session.user.username == null or session.user.username == "" %}{{ session.user.first | first | upper }}{{ session.user.last | first | upper }}{% else %}{{ session.user.username }}{% endif %} <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							{% if session.user.role == "admin" %}
-								<li class="page-scroll"><a href="?action=dashboard">Back office</a></li>
+								<li class="page-scroll"><a href="?action=dashboard"><i class="fa fa-cogs" aria-hidden="true"></i> Back office</a></li>
 							{% endif %}
-							<li class="page-scroll"><a href="?action=profil">Profil</a></li>
+							<li class="page-scroll"><a href="?action=profil"><i class="fa fa-user" aria-hidden="true"></i> Profil</a></li>
 							<li role="separator" class="divider"></li>
-							<li class="page-scroll"><a href="?action=logout">Déconnexion</a></li>
+							<li class="page-scroll"><a href="?action=logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Déconnexion</a></li>
 						</ul>
 					</li>
 					{# Mobile #}
 					{% if session.user.role == "admin" %}
-						<li class="page-scroll mobile"><a href="?action=dashboard">Back office</a></li>
+						<li class="page-scroll mobile"><a href="?action=dashboard"><i class="fa fa-cogs" aria-hidden="true"></i> Back office</a></li>
 					{% endif %}
-					<li class="page-scroll mobile"><a href="?action=profil">Profil</a></li>
-					<li class="page-scroll mobile"><a href="?action=logout">Déconnexion</a></li>
+					<li class="page-scroll mobile"><a href="?action=profil"><i class="fa fa-user" aria-hidden="true"></i> Profil</a></li>
+					<li class="page-scroll mobile"><a href="?action=logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Déconnexion</a></li>
 					{# /Mobile #}
 				{% else %}
 					<li class="page-scroll"><a href="?action=login">Connexion</a></li>

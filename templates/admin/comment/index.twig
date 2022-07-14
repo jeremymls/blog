@@ -2,39 +2,57 @@
 
 {% block title %}Modération des commentaires{% endblock %}
 {% block subtitle %}
-	<a id="retour" href="javascript:history.back()" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+	<a id="retour" href="?action=dashboard" ><i class="fa fa-cogs" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
 
 
     <div class="container">
-        <section>
+        <section id="moderate">
 
             <div class="row">
                 <div class="col">
+                    <div>
+                        <span>Filtres:</span>
+                        <select id="filter">
+                            <option {% if filter == "all" %}selected{% endif %} value="all">Tous</option>
+                            <option {% if filter == "unmoderated" %}selected{% endif %} value="unmoderated">Non publiés</option>
+                            <option {% if filter == "moderated" %}selected{% endif %} value="moderated">Publiés</option>
+                        </select>
+                    </div>
+
                     <div role="tabpanel" class="tab-pane active" id="date">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
+                                    <th class="text-center">Modération</th>
                                     <th>Auteur</th>
                                     <th>Commentaire</th>
                                     <th>Projet</th>
                                     <th>Date de création</th>
                                     <th>Actions</th>
+                                    <th></th>
                                 <tr>
                             </thead>
                             <tbody>
                                 {% for comment in comments %}
                                     <tr>
+                                        <td class="text-center">
+                                        {% if comment.moderate %}
+                                            <i class="fa fa-check" style="color:green;" aria-hidden="true"></i>
+                                        {% else %}
+                                            <i class="fa fa-hourglass-half" style="color:orange;" aria-hidden="true"></i>
+                                        {% endif %}
+                                        </td>
                                         <td>{{ comment.author }}</td>
                                         <td>{{ comment.comment | u.truncate(50, '...')}}</td>
-                                        <td>{{ comment.postTitle | u.truncate(40, '...')}}</td>
+                                        <td>{{ comment.postTitle | u.truncate(25, '...')}}</td>
                                         <td>{{ comment.frenchCreationDate }}</td>
-                                        <td><a href="?action=commentShowAdmin&id={{ comment.identifier }}" class="btn btn-primary"><i class="fa fa-eye"></i></a></td>
+                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-content="{{ comment.comment }}" data-post="{{ comment.postTitle }}" data-postid="{{ comment.postId }}" data-title="de {{ comment.author }} (id:{{ comment.identifier }})" data-target="#commentPreview"><i class="fa fa-eye"></i></button></td>
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author }} (id:{{ comment.identifier }})" data-target="#confirmValidateComment"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author }} (id:{{ comment.identifier }})" data-target="#confirmDeleteComment"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author }} (id:{{ comment.identifier }})" data-target="#confirmDeleteComment"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                            {% if comment.moderate == 0 %}<button type="button" class="btn btn-success" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author }} (id:{{ comment.identifier }})" data-target="#confirmValidateComment"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>{% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -97,9 +115,47 @@
         </div>
     </div>
 
-	
+	<div class="modal fade" id="commentPreview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel"></h4>
+			</div>
+			<div class="modal-body">
+                <h5 class="modal-post"></h5>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <img style="transform: rotate(0.5turn);" src="assets/img/quotation-marks.jpg" class="img-responsive" alt="">
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="modal-comment-content text-center"></div>
+                    </div>
+                    <div class="col-lg-2">
+                        <img src="assets/img/quotation-marks.jpg" class="img-responsive" alt="">
+                    </div>
+                </div>
+            </div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary lunchActionModal" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author }} (id:{{ comment.identifier }})" data-target="#confirmValidateComment"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-primary lunchActionModal" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author }} (id:{{ comment.identifier }})" data-target="#confirmDeleteComment"><i class="fa fa-trash" aria-hidden="true"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock %}
 
 {% block script %}
 <script src="assets/js/admin.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#filter').change(function(){
+            var filter = $(this).val();
+            window.location.href = '?action=commentAdmin&filter=' + filter;
+        });
+    });
+</script>
 {% endblock %}

@@ -120,7 +120,12 @@ try {
             (new AdminPostController())->index();
         // Comment admin
         } elseif ($_GET['action'] === 'commentAdmin') {
-            (new AdminCommentController())->index();
+            if (isset($_GET['filter'])) {
+                $filter = $_GET['filter'];
+            } else {
+                $filter = "unmoderated";
+            }
+            (new AdminCommentController())->index($filter);
         // show comment admin
         } elseif ($_GET['action'] === 'commentShowAdmin') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {

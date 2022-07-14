@@ -37,7 +37,7 @@ class PostService
     public function getPostWithComments($identifier)
     {
         $post = $this->postRepository->getPost($identifier);
-        $comments = $this->commentRepository->getComments($identifier);
+        $comments = $this->commentRepository->getCommentsByPost($identifier);
         return [
             'post' => $post,
             'comments' => $comments,

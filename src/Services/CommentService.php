@@ -14,18 +14,19 @@ class CommentService
         $this->commentRepository->connection = new DatabaseConnection();
     }
 
-    public function getUnmoderatedComments()
+    public function getComments($filter)
     {
-        $comments = $this->commentRepository->getUnmoderatedComments();
+        $comments = $this->commentRepository->getComments($filter);
         return [
             'comments' => $comments,
+            'filter' => $filter
         ];
     }
 
     public function getCommentsForModeration($identifier)
     {
         $comment = $this->commentRepository->getComment($identifier);
-        $comments = $this->commentRepository->getComments($comment->post);
+        $comments = $this->commentRepository->getCommentsByPost($comment->post);
         return [
             'comment' => $comment,
             'comments' => $comments,

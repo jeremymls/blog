@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                             {% if post.url is not empty %}
-                            <div class="col-lg-2 preview-col">
+                            <div class="col-xs-4 col-xs-offset-4 col-lg-2 col-lg-offset-0 preview-col">
                                 <div class="row text-center preview-index">
                                     <div class="col-sm-12 preview-item">
                                         <a href="{{ post.url }}" target="_blank" class="preview-link" >
@@ -38,6 +38,7 @@
                                                     <i class="fa fa-external-link fa-3x"></i>
                                                 </div>
                                             </div>
+                                            <div class="backgroundDiv"></div>
                                             <iframe 
                                                 title="{{ post.title }}"
                                                 width="100%"
