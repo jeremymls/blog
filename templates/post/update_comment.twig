@@ -1,23 +1,43 @@
 {% extends "/base.twig" %}
 
 {% block title %}Modification du commentaire{% endblock %}
+{% block subtitle %}
+	<a id="retour" href="javascript:history.back()" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+{% endblock %}
 
 {% block main %}
-	<p>
-		<a href="index.php?action=post&id={{ comment.post }}">Retour au billet</a>
-	</p>
-
-	<form action="index.php?action=updateComment&id={{ comment.identifier }}" method="post">
-		<div>
-			<label for="author">Auteur</label><br/>
-			<input type="text" id="author" name="author" value="{{ comment.author }}"/>
-		</div>
-		<div>
-			<label for="comment">Commentaire</label><br/>
-			<textarea id="comment" name="comment">{{ comment.comment }}</textarea>
-		</div>
-		<div>
-			<input type="submit"/>
-		</div>
-	</form>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+					<form action="index.php?action=updateComment&id={{ comment.identifier }}" method="post">
+						<input type="hidden" id="post" name="post" value="{{ comment.post.identifier }}">
+                        <div class="row control-group">
+							<label for="basic-url">Auteur</label>
+							<div class="input-group">
+								<div class="input-group col-xs-12 controls">
+									<span class="input-group-addon" id="basic-addon3">{{ comment.author.username }}</span>
+									<input type="text" class="form-control" id="author" readonly name="author" value="{{ comment.author.identifier }}">
+								</div>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+							<label>Commentaire</label>
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <textarea rows="3" class="form-control" placeholder="Commentaire" id="comment" name="comment" required data-validation-required-message="Please enter a comment.">{{ comment.comment }}</textarea>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <br>
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" class="btn btn-success btn-lg">Enregistrer</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

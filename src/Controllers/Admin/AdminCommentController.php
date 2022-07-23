@@ -13,16 +13,10 @@ class AdminCommentController extends Controller
         $this->commentService = new CommentService();
     }
 
-    public function index($filter = "unmoderated")
+    public function index($filter = "pending")
     {
-        $params = $this->commentService->getComments($filter);
+        $params = $this->commentService->getCommentsForBo($filter);
         $this->twig->display('admin/comment/index.twig', $params);
-    }
-
-    public function show(string $identifier)
-    {
-        $params = $this->commentService->getCommentsForModeration($identifier);
-        $this->twig->display('admin/comment/show.twig', $params);
     }
 
     public function validate(string $identifier)
@@ -35,17 +29,6 @@ class AdminCommentController extends Controller
     {
         $this->commentService->delete($identifier);
         header('Location: index.php?action=commentAdmin#moderate');
-    }
-
-    public function update(string $identifier, ?array $input)
-    {
-        if ($input !== null) {
-            $this->commentService->update($identifier, $input);
-            header('Location: index.php?action=updateComment&id=' . $identifier);
-        }
-
-        $params = $this->commentService->getCommentsForModeration($identifier);
-        $this->twig->display('update_comment.twig', $params);
     }
 }
 

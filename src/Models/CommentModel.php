@@ -2,13 +2,14 @@
 
 namespace Application\Models;
 
-class CommentModel
+use Application\Repositories\UserRepository;
+
+class CommentModel extends Model
 {
-    public string $identifier;
-    public string $postId;
-    public string $postTitle;
-    public string $author;
+    const TABLE = 'comments';
+
+    public $post;
+    public $author;
     public string $comment;
-    public string $frenchCreationDate;
     public string $moderate;
 }

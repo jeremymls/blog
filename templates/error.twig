@@ -7,6 +7,9 @@
 	{% endif %}
 	!!
 {% endblock %}
+{% block subtitle %}
+	<a id="retour" href="javascript:history.back()" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+{% endblock %}
 
 {% block main %}
 	<div class="alert alert-danger" role="alert">
@@ -21,7 +24,7 @@
 			{% if error.code != 404 %}
 				<dt>Fichier</dt>
 				<dd>{{ error.file }} <strong>(line:{{ error.line }})</strong></dd>
-				<textarea readonly class="form-control" rows="15">{{ error.trace }}</textarea>
+				{# <textarea readonly class="form-control" rows="15">{{ error.trace }}</textarea> #}
 			{% endif %}
 		</dl>
 	</div>

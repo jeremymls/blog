@@ -2,7 +2,6 @@
 
 namespace Application\Controllers;
 
-use Application\Lib\DatabaseConnection;
 use Application\Services\PostService;
 class PostController extends Controller
 {

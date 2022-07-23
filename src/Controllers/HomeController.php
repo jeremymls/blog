@@ -2,20 +2,19 @@
 
 namespace Application\Controllers;
 
-use Application\Lib\DatabaseConnection;
-use Application\Repositories\PostRepository;
+use Application\Services\PostService;
 
 class HomeController extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->postService = new PostService();
+    }
+
     public function execute()
     {
-        $postRepository = new PostRepository();
-        $postRepository->connection = new DatabaseConnection();
-        $posts = $postRepository->getPosts();
-
-        $this->twig->display('homepage.twig', [
-            'posts' => $posts['data'],
-            'nbPage' => $posts['nbPage']
-        ]);
+        $params = $this->postService->getPosts();
+        $this->twig->display('homepage.twig', $params);
     }
 }

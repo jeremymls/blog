@@ -5,11 +5,7 @@
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 				<span class="sr-only">Toggle navigation</span>
 				{% if session.user %}
-					{% if session.user.username == null or session.user.username == "" %}
-						{{ session.user.first | first | upper }}{{ session.user.last | first | upper }}
-					{% else %}
-						{{ session.user.username }}
-					{% endif %} 
+					{{ session.user.initials }}
 				{% else %}
 					MENU
 				{% endif %}
@@ -29,7 +25,9 @@
 				</li>
 				{% if session.user %}
 					<li class="dropdown desktop">
-						<a id="initiales" href="#" class="dropdown-toggle btn-social" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% if session.user.username == null or session.user.username == "" %}{{ session.user.first | first | upper }}{{ session.user.last | first | upper }}{% else %}{{ session.user.username }}{% endif %} <span class="caret"></span></a>
+						<a id="initiales" href="#" class="dropdown-toggle btn-social" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							{{ session.user.initials }} <span class="caret"></span>
+						</a>
 						<ul class="dropdown-menu">
 							{% if session.user.role == "admin" %}
 								<li class="page-scroll"><a href="?action=dashboard"><i class="fa fa-cogs" aria-hidden="true"></i> Back office</a></li>
@@ -47,8 +45,8 @@
 					<li class="page-scroll mobile"><a href="?action=logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Déconnexion</a></li>
 					{# /Mobile #}
 				{% else %}
-					<li class="page-scroll"><a href="?action=login">Connexion</a></li>
-					<li class="page-scroll"><a href="?action=register">Inscription</a></li>
+					<li class="page-scroll"><a href="?action=login"><i class="fa fa-sign-in" aria-hidden="true"></i> Connexion</a></li>
+					<li class="page-scroll"><a href="?action=register"><i class="fa fa-user-plus" aria-hidden="true"></i> Inscription</a></li>
 				{% endif %}
 
 			</ul>

@@ -25,7 +25,6 @@ class AdminPostController extends Controller
             $this->postService->add($input);
             header('Location: index.php?action=postAdmin');
         }
-
         $this->twig->display('admin/post/action.twig', ['action' => 'add',]);
     }
 
@@ -35,7 +34,6 @@ class AdminPostController extends Controller
             $this->postService->update($identifier, $input);
             header('Location: index.php?action=postAdmin');
         }
-
         $params = $this->postService->getPost($identifier);
         $this->twig->display('admin/post/action.twig', $params);
     }

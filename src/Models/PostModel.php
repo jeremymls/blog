@@ -2,12 +2,12 @@
 
 namespace Application\Models;
 
-class PostModel
+class PostModel extends Model
 {
+    const TABLE = 'posts';
+    
     public string $title;
-    public string $frenchCreationDate;
-    public string $chapo;
     public string $content;
-    public string $identifier;
     public string $url;
+    public string $chapo;
 }

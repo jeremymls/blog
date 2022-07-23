@@ -15,9 +15,6 @@ class ErrorExceptionController extends Controller
         $error->file = $err->getFile();
         $error->line = $err->getLine();
         $error->trace = $err->getTraceAsString();
-
-        $this->twig->display('error.twig', [
-            'error' => $error,
-        ]);
+        $this->twig->display('error.twig', ['error' => $error,]);
     }
 }

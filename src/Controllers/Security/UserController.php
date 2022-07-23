@@ -12,30 +12,26 @@ class UserController extends Controller
         $this->userService = new UserService();
     }
 
-    public function action(string $action, ?array $input)
-    {
-        if ($input !== null) {
-            $this->userService->registerOrUpdateUser($action, $input);
-            $target = ($action === "register") ? '/' : '/index.php?action=profil';
-            $this->twig->display('security/redirect.twig', [
-                'target' => $target
-            ]);
-        } else {
-
-            if ($action === 'edit') {
-                $params = $this->userService->getUser($_SESSION['user']->id);
-                $params["action"] = $action;
-                $this->twig->display('security/action.twig', $params);
-            } elseif ($action === "register" ) {
-                $this->twig->display('security/action.twig', ['action' => $action,]);
-            }
-        }
-    }
-
     public function show()
     {
         $params = $this->userService->getUser($_SESSION['user']->id);
         $this->twig->display('security/profil.twig', $params);
+    }
+
+    public function action(string $action, ?array $input)
+    {
+        if ($input !== null) {
+            $params = $this->userService->registerOrUpdateUser($action, $input);
+            $this->twig->display('security/redirect.twig', $params);
+        } else {
+            if ($action === 'edit') {
+                $params = $this->userService->getUser($_SESSION['user']->id);
+                $params["action"] = $action;
+                $this->twig->display('security/action.twig', $params);
+            } else {
+                $this->twig->display('security/action.twig', ['action' => $action,]);
+            }
+        }
     }
 
     public function login(?array $input)

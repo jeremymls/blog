@@ -4,33 +4,32 @@ namespace Application\Services;
 
 use Application\Repositories\CommentRepository;
 use Application\Lib\DatabaseConnection;
+use Application\Models\CommentModel;
 
-class CommentService
+class CommentService extends Service
 {
-
     public function __construct()
     {
-        $this->commentRepository = new CommentRepository();
-        $this->commentRepository->connection = new DatabaseConnection();
+        parent::__construct();
+        $this->model = new CommentModel();
+    }
+    public function getCommentsForBo($filter)
+    {
+        $params['comments'] = $this->commentRepository->getCommentsForBo($filter);
+        if (!$params) {
+            throw new \Exception('Impossible de récupérer les commentaires !');
+        }
+        $params['filter'] = $filter;
+        return $params;
     }
 
-    public function getComments($filter)
+    public function getComment($identifier)
     {
-        $comments = $this->commentRepository->getComments($filter);
-        return [
-            'comments' => $comments,
-            'filter' => $filter
-        ];
-    }
-
-    public function getCommentsForModeration($identifier)
-    {
-        $comment = $this->commentRepository->getComment($identifier);
-        $comments = $this->commentRepository->getCommentsByPost($comment->post);
-        return [
-            'comment' => $comment,
-            'comments' => $comments,
-        ];
+        $params['comment'] = $this->commentRepository->getComment($identifier);
+        if ($params === null) {
+            throw new \Exception("Le commentaire $identifier n'existe pas.");
+        }
+        return $params;
     }
 
     public function validateComment($identifier)
@@ -43,7 +42,7 @@ class CommentService
 
     public function delete($identifier)
     {
-        $success = $this->commentRepository->deleteComment($identifier);
+        $success = $this->commentRepository->delete($identifier);
         if (!$success) {
             throw new \Exception('Impossible de supprimer le commentaire !');
         }
@@ -51,45 +50,20 @@ class CommentService
 
     public function update($identifier, $input)
     {
-        $comment = null;
-        if (!empty($input['comment'])) {
-            $comment = $input['comment'];
-        } else {
-            throw new \Exception('Les données du formulaire sont invalides.');
-        }
-
-        $success = $this->commentRepository->updateComment($identifier, $comment);
+        $comment = $this->validateForm($input,["comment"]);
+        $success = $this->commentRepository->update($identifier, $comment);
+        $success = $this->commentRepository->setPending($identifier);
         if (!$success) {
             throw new \Exception('Impossible de modifier le commentaire !');
         }
     }
 
-    public function getComment($identifier)
+    public function add(string $post, array $input)
     {
-        $comment = $this->commentRepository->getComment($identifier);
-        if ($comment === null) {
-            throw new \Exception("Le commentaire $identifier n'existe pas.");
-        }
-        return [
-            'comment' => $comment,
-        ];
-    }
-
-    public function addComment(string $post, array $input)
-    {
-        $comment = null;
-        if (!empty($input['comment'])) {
-            $comment = $input['comment'];
-        } else {
-            throw new \Exception('Les données du formulaire sont invalides.');
-        }
-
-        $commentRepository = new CommentRepository();
-        $commentRepository->connection = new DatabaseConnection();
-        $success = $commentRepository->addComment($post, $comment);
+        $comment = $this->validateForm($input,["comment"]);
+        $success = $this->commentRepository->addComment($post, $comment->comment);
         if (!$success) {
             throw new \Exception('Impossible d\'ajouter le commentaire !');
         }
     }
-
 }

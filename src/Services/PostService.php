@@ -2,83 +2,51 @@
 
 namespace Application\Services;
 
-use Application\Repositories\PostRepository;
-use Application\Repositories\CommentRepository;
-use Application\Lib\DatabaseConnection;
+use Application\Models\PostModel;
 
-class PostService
+class PostService extends Service
 {
 
     public function __construct()
     {
-        $this->postRepository = new PostRepository();
-        $this->postRepository->connection = new DatabaseConnection();
-        $this->commentRepository = new CommentRepository();
-        $this->commentRepository->connection = new DatabaseConnection();
+        parent::__construct();
+        $this->model = new PostModel();
     }
 
     public function getPosts()
     {
-        $posts = $this->postRepository->getPosts();
-        return [
-            'posts' => $posts['data'],
-            'nbPage' => $posts['nbPage']
-        ];
+        $params['posts'] = $this->postRepository->findAll();
+        return $params;
     }
 
     public function getPost($identifier)
     {
-        $post = $this->postRepository->getPost($identifier);
-        return [
-            'post' => $post,
-        ];
+        $params['posts'] = $this->postRepository->findOne($identifier);
+        return $params;
     }
 
     public function getPostWithComments($identifier)
     {
-        $post = $this->postRepository->getPost($identifier);
-        $comments = $this->commentRepository->getCommentsByPost($identifier);
-        return [
-            'post' => $post,
-            'comments' => $comments,
-        ];
+        $params['post'] = $this->postRepository->findOne($identifier);
+        $params['comments'] = $this->commentRepository->getCommentsByPost($identifier);
+        return $params;
     }
 
     public function add($input)
     {
-        $title = null;
-        $content = null;
-        if (!empty($input['title']) && !empty($input['content'])) {
-            $title = $input['title'];
-            $content = $input['content'];
-            $url = $input['url'];
-            $chapo = $input['chapo'];
-        } else {
-            throw new \Exception('Les données du formulaire sont invalides.');
-        }
-
-        $success = $this->postRepository->add($title, $content, $url, $chapo);
+        $post = $this->validateForm($input,["title", "content"]);
+        $success = $this->postRepository->add($post);
         if (!$success) {
-            throw new \Exception('Impossible de modifier le commentaire !');
+            throw new \Exception('Impossible de d\'ajouter le projet !');
         } 
     }
 
     public function update($identifier, $input)
     {
-        $title = null;
-        $content = null;
-        if (!empty($input['title']) && !empty($input['content'])) {
-            $title = $input['title'];
-            $content = $input['content'];
-            $url = $input['url'];
-            $chapo = $input['chapo'];
-        } else {
-            throw new \Exception('Les données du formulaire sont invalides.');
-        }
-
-        $success = $this->postRepository->update($identifier, $title, $content, $url, $chapo);
+        $post = $this->validateForm($input,["title", "content"]);
+        $success = $this->postRepository->update($identifier, $post);
         if (!$success) {
-            throw new \Exception('Impossible de modifier le commentaire !');
+            throw new \Exception('Impossible de modifier le projet !');
         } 
     }
 
@@ -89,6 +57,4 @@ class PostService
             throw new \Exception('Impossible de supprimer le projet !');
         } 
     }
-
-
 }

@@ -4,7 +4,7 @@
 {% block title %}Projet{% endblock %}
 {% block subtitle %}
 	<h2>{{ post.title }}</h2>
-	<em>le {{ post.frenchCreationDate }}</em><br>
+	<em>{{ post.frenchCreationDate }}</em><br>
 	<a id="retour" href="?action=posts" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 	<a id="oneTool" href="#comment" ><i class="fa fa-comment-o" aria-hidden="true"></i></a>
 {% endblock %}
@@ -56,7 +56,6 @@
 						<h3>Laisser un commentaire</h3>
 					</div>
 				</div>
-
 				<div class="row">
 					<div class="col-lg-8 col-lg-offset-2">
 						{# <form name="sentMessage" id="contactForm" novalidate> #}
@@ -95,12 +94,10 @@
 					<hr class="star-primary">
 				</div>
 			</div>
-
 			{% for comment in comments %}
-				<div class="panel panel-primary">
+				<div class="panel panel-default">
 					<div class="panel-heading">
-					{# ! INCORRECT ! #}
-						<p><strong>{{ comment.author }}</strong> le {{comment.frenchCreationDate }} {% if comment.author == (session.user.first ~ " " ~ session.user.last) %}<a href="?action=updateComment&id={{ comment.identifier }}">(modifier)</a>  {% endif %}</p>  
+						<p><strong>{{ comment.author.username }}</strong> le {{comment.frenchCreationDate }} {% if comment.author.identifier == (session.user.id) %}<a href="?action=updateComment&id={{ comment.identifier }}">(modifier)</a>  {% endif %}</p>  
 					</div>
 					<div class="panel-body">
 						<p>{{ comment.comment | nl2br }}</p>

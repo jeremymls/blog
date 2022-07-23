@@ -2,86 +2,67 @@
 
 namespace Application\Services;
 
-use Application\Repositories\UserRepository;
-use Application\Lib\DatabaseConnection;
+use Application\Models\UserModel;
+use stdClass;
 
-class UserService
+class UserService extends Service
 {
 
     public function __construct()
     {
-        $this->userRepository = new UserRepository();
-        $this->userRepository->connection = new DatabaseConnection();
+        parent::__construct();
+        $this->model = new UserModel();
     }
 
-    public function getUser(int $id)
+    public function getUser($id)
     {
-        $user = $this->userRepository->getUser($id);
-        return [
-            "user" => $user,
-        ];
+        $params['user'] = $this->userRepository->findOne($id);
+        return $params;
     }
 
     public function registerOrUpdateUser(string $action, array $input)
     {
-        $username = null;
-        $password = null;
-        $email = null;
-        $first = null;
-        $last = null;
-
-        if (!empty($input['first']) && !empty($input['last']) && !empty($input['email']) && !empty($input['password'])) {
-            $username = !empty($input['username']) ? $input['username'] : null;
-            $password = $input['password'];
-            $email = $input['email'];
-            $first = $input['first'];
-            $last = $input['last'];
-        } else {
-            throw new \Exception('Les données du formulaire sont invalides.');
+        if ($input['password'] !== $input['passwordConfirm']) {
+            throw new \Exception('Les mots de passe ne correspondent pas.');
         }
-
-        $success = ($action === "register") ?
-        $this->userRepository->addUser($username, $password, $email, $first, $last) :
-        $this->userRepository->updateUser($_SESSION['user']->id, $username, $password, $email, $first, $last);
+        $user = $this->validateForm($input,["email","password","first","last"]);
+        $success = ($action === "register") ? 
+            $this->userRepository->add($user) : 
+            $this->userRepository->update($_SESSION['user']->id, $user);
         if (!$success) {
-            throw new \Exception("Impossible d'ajouter un utilisateur !");
+            throw new \Exception($action === "register" ? 'Impossible de créer l\'utilisateur !' : 'Impossible de modifier l\'utilisateur !');
         }
-
-        $this->setUserSession($email);
+        $user = $this->userRepository->getUserByUsername($input['email']);
+        $this->setUserSession($user);
+        $target = ($action === "register") ? '/' : '/index.php?action=profil';
+        return ['target' => $target];
     }
 
     public function login(array $input)
     {
-        $user = $input['user'];
-        $password = $input['password'];
-
-        $user = $this->userRepository->getUserByUsername($user);
-        if ($user !== null && $user->password === $password) {
-            $this->setUserSession($user->email);
-        } else {
-            throw new \Exception('Identifiants invalides !');
+        $user = $this->validateForm($input,["identifiant", "password"]);
+        $user = $this->userRepository->getUserByUsername($input['identifiant']);
+        if ($user->password !== $input['password']) {
+            throw new \Exception("Mot de passe incorrect !");
         }
+        $this->setUserSession($user);
     }
 
-    public function setUserSession(string $username)
+    public function setUserSession(UserModel $user)
     {
-        $user = $this->userRepository->getUserByUsername($username);
-        if ($user !== null) {
-            if (!isset($_SESSION)){
-                session_start();
-            } else {
-                session_destroy();
-                session_start();
-            }
-            $_SESSION['user']->id = $user->id;
-            $_SESSION['user']->username = $user->username;
-            $_SESSION['user']->email = $user->email;
-            $_SESSION['user']->first = $user->first;
-            $_SESSION['user']->last = $user->last;
-            $_SESSION['user']->role = $user->role;
+        if (!isset($_SESSION)){
+            session_start();
         } else {
-            throw new \Exception("Impossible de récupérer l'utilisateur !");
+            session_destroy();
+            session_start();
         }
+        $_SESSION['user'] = new stdClass();
+        $_SESSION['user']->id = $user->identifier;
+        $_SESSION['user']->username = $user->username;
+        $_SESSION['user']->email = $user->email;
+        $_SESSION['user']->first = $user->first;
+        $_SESSION['user']->last = $user->last;
+        $_SESSION['user']->role = $user->role;
+        $_SESSION['user']->initials = $user->initials;
     }
-
 }

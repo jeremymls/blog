@@ -74,7 +74,7 @@ try {
         } elseif ($_GET['action'] === 'addComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = $_GET['id'];
-                (new CommentController())->addComment($identifier, $_POST);
+                (new CommentController())->add($identifier, $_POST);
             } else {
                 throw new Exception('Aucun identifiant de billet envoyé');
             }
@@ -86,7 +86,7 @@ try {
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $input = $_POST;
                 }
-                (new AdminCommentController())->update($identifier, $input);
+                (new CommentController())->update($identifier, $input);
             } else {
                 throw new Exception('Aucun identifiant de commentaire envoyé');
             }
@@ -123,17 +123,9 @@ try {
             if (isset($_GET['filter'])) {
                 $filter = $_GET['filter'];
             } else {
-                $filter = "unmoderated";
+                $filter = "pending";
             }
             (new AdminCommentController())->index($filter);
-        // show comment admin
-        } elseif ($_GET['action'] === 'commentShowAdmin') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                $identifier = $_GET['id'];
-                (new AdminCommentController())->show($identifier);
-            } else {
-                throw new Exception('Aucun identifiant de commentaire envoyé');
-            }
         // delete post
         } elseif ($_GET['action'] === 'postDelete') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
