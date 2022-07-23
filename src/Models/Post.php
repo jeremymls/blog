@@ -2,7 +2,7 @@
 
 namespace Application\Models;
 
-class PostModel extends Model
+class Post extends Model
 {
     const TABLE = 'posts';
     

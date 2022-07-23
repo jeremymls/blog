@@ -4,14 +4,14 @@ namespace Application\Services;
 
 use Application\Repositories\CommentRepository;
 use Application\Lib\DatabaseConnection;
-use Application\Models\CommentModel;
+use Application\Models\Comment;
 
 class CommentService extends Service
 {
     public function __construct()
     {
         parent::__construct();
-        $this->model = new CommentModel();
+        $this->model = new Comment();
     }
     public function getCommentsForBo($filter)
     {

@@ -4,8 +4,8 @@ namespace Application\Services;
 
 use Application\Repositories\CommentRepository;
 use Application\Lib\DatabaseConnection;
-use Application\Models\CommentModel;
-use Application\Models\PostModel;
+use Application\Models\Comment;
+use Application\Models\Post;
 use Application\Repositories\PostRepository;
 use Application\Repositories\UserRepository;
 
@@ -16,11 +16,11 @@ class Service
     {
         $this->postRepository = new PostRepository();
         $this->postRepository->connection = new DatabaseConnection();
-        $this->post = new PostModel();
+        $this->post = new Post();
 
         $this->commentRepository = new CommentRepository();
         $this->commentRepository->connection = new DatabaseConnection();
-        $this->comment = new CommentModel();
+        $this->comment = new Comment();
         
         $this->userRepository = new UserRepository();
         $this->userRepository->connection = new DatabaseConnection();

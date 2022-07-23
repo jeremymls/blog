@@ -2,14 +2,14 @@
 
 namespace Application\Controllers;
 
-use Application\Models\ErrorModel;
+use Application\Models\Error;
 
 class ErrorExceptionController extends Controller
 {
     
     public function execute($err)
     {
-        $error = new ErrorModel();
+        $error = new Error();
         $error->code = $err->getCode();
         $error->message = $err->getMessage();
         $error->file = $err->getFile();

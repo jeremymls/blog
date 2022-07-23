@@ -2,13 +2,13 @@
 
 namespace Application\Repositories;
 
-use Application\Models\CommentModel;
+use Application\Models\Comment;
 
 class CommentRepository extends Repository
 {
     public function __construct()
     {
-        $this->model = new CommentModel();
+        $this->model = new Comment();
     }
 
     public function getCommentsByPost(string $post): array

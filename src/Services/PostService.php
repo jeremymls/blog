@@ -2,7 +2,7 @@
 
 namespace Application\Services;
 
-use Application\Models\PostModel;
+use Application\Models\Post;
 
 class PostService extends Service
 {
@@ -10,7 +10,7 @@ class PostService extends Service
     public function __construct()
     {
         parent::__construct();
-        $this->model = new PostModel();
+        $this->model = new Post();
     }
 
     public function getPosts()

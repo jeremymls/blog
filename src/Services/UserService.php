@@ -2,7 +2,7 @@
 
 namespace Application\Services;
 
-use Application\Models\UserModel;
+use Application\Models\User;
 use stdClass;
 
 class UserService extends Service
@@ -11,7 +11,7 @@ class UserService extends Service
     public function __construct()
     {
         parent::__construct();
-        $this->model = new UserModel();
+        $this->model = new User();
     }
 
     public function getUser($id)
@@ -48,7 +48,7 @@ class UserService extends Service
         $this->setUserSession($user);
     }
 
-    public function setUserSession(UserModel $user)
+    public function setUserSession(User $user)
     {
         if (!isset($_SESSION)){
             session_start();

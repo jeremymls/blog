@@ -2,16 +2,16 @@
 
 namespace Application\Repositories;
 
-use Application\Models\UserModel;
+use Application\Models\User;
 
 class UserRepository extends Repository
 {
     public function __construct()
     {
-        $this->model = new UserModel();
+        $this->model = new User();
     }
 
-    public function getUserByUsername($user): UserModel
+    public function getUserByUsername($user): User
     {
         $statement = $this->getSelectStatementByModel("WHERE username = ? OR email = ?", [$user, $user]);
         $row = $statement->fetch();

@@ -4,7 +4,7 @@ namespace Application\Models;
 
 use Application\Repositories\UserRepository;
 
-class CommentModel extends Model
+class Comment extends Model
 {
     const TABLE = 'comments';
 

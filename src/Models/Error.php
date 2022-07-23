@@ -2,7 +2,7 @@
 
 namespace Application\Models;
 
-class ErrorModel
+class Error
 {
     public $code;
     public $message;

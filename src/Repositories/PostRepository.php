@@ -2,12 +2,12 @@
 
 namespace Application\Repositories;
 
-use Application\Models\PostModel;
+use Application\Models\Post;
 
 class PostRepository extends Repository
 {
     public function __construct()
     {
-        $this->model = new PostModel();
+        $this->model = new Post();
     }
 }

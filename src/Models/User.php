@@ -4,7 +4,7 @@ namespace Application\Models;
 
 use Application\Repositories\UserRepository;
 
-class UserModel extends Model
+class User extends Model
 {
     const TABLE = 'users';
 
