@@ -35,7 +35,7 @@ class Repository
         $sql .= "INSERT INTO " . $entity::TABLE . " (";
         foreach ($entity as $key => $value) {
             if ($key !== "passwordConfirm") {
-                $values[] = $value=="" ? "NULL" : $value;
+                $values[] = $value=="" ? NULL : $value;
                 $sql .= $key . ", ";
             }
         }
