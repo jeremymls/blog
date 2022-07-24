@@ -11,7 +11,7 @@
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Email</label>
-                                <input type="email" class="form-control" {% if action != "register" %}disabled{% endif %} placeholder="Email" name="email" value="{{ user.email }}" required data-validation-required-message="Veuillez entrer votre email.">
+                                <input type="email" class="form-control" {% if action != "register" %}readonly{% endif %} placeholder="Email" name="email" value="{{ user.email }}" required data-validation-required-message="Veuillez entrer votre email.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
