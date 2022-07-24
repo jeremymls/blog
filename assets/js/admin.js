@@ -56,22 +56,24 @@ $("#commentPreview").on("show.bs.modal", function (event) {
         scrollTo(0, 0);
     });
 });
-$("#confirmDeleteComment").on("show.bs.modal", function (event) {
+$("#confirmcommentDelete").on("show.bs.modal", function (event) {
+    scrollTo(0, 0)
     var button = $(event.relatedTarget); // Button that triggered the modal
     var recipient = button.data("title"); // Extract info from data-* attributes
     var identifier = button.data("identifier"); // Extract info from data-* attributes
     var modal = $(this);
     modal.find(".modal-body").text(recipient);
-    modal.find(".modal-footer a").attr("href", "?action=deleteComment&id=" + identifier);
+    modal.find(".modal-footer a").attr("href", "?action=commentDelete&id=" + identifier);
     setTimeout(()=>scrollTo(0, 0), 500);
 });
-$("#confirmValidateComment").on("show.bs.modal", function (event) {
+$("#confirmcommentValidate").on("show.bs.modal", function (event) {
+    scrollTo(0, 0)
     var button = $(event.relatedTarget); // Button that triggered the modal
     var recipient = button.data("title"); // Extract info from data-* attributes
     var identifier = button.data("identifier"); // Extract info from data-* attributes
     var modal = $(this);
     modal.find(".modal-body").text(recipient);
-    modal.find(".modal-footer a").attr("href", "?action=validateComment&id=" + identifier);
+    modal.find(".modal-footer a").attr("href", "?action=commentValidate&id=" + identifier);
     // modal.find('.modal-title').text(recipient)
     // modal.find('.modal-body input').val(recipient)
     setTimeout(()=>scrollTo(0, 0), 500);

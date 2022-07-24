@@ -32,9 +32,9 @@ class CommentService extends Service
         return $params;
     }
 
-    public function validateComment($identifier)
+    public function commentValidate($identifier)
     {
-        $success = $this->commentRepository->validateComment($identifier);
+        $success = $this->commentRepository->commentValidate($identifier);
         if (!$success) {
             throw new \Exception('Impossible de valider le commentaire !');
         }
@@ -61,7 +61,7 @@ class CommentService extends Service
     public function add(string $post, array $input)
     {
         $comment = $this->validateForm($input,["comment"]);
-        $success = $this->commentRepository->addComment($post, $comment->comment);
+        $success = $this->commentRepository->commentAdd($post, $comment->comment);
         if (!$success) {
             throw new \Exception('Impossible d\'ajouter le commentaire !');
         }

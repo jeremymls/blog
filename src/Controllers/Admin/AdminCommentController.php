@@ -21,7 +21,7 @@ class AdminCommentController extends Controller
 
     public function validate(string $identifier)
     {
-        $this->commentService->validateComment($identifier);
+        $this->commentService->commentValidate($identifier);
         header('Location: index.php?action=commentAdmin#moderate');
     }
 

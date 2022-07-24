@@ -51,8 +51,8 @@
                                         <td>{{ comment.frenchCreationDate }}</td>
                                         <td><button type="button" class="btn btn-primary" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-content="{{ comment.comment }}" data-post="{{ comment.post.title }}" data-postid="{{ comment.post.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#commentPreview"><i class="fa fa-eye"></i></button></td>
                                         <td>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmDeleteComment"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                                            {% if comment.moderate != 1 %}<button type="button" class="btn btn-success" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmValidateComment"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>{% endif %}
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmcommentDelete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                            {% if comment.moderate != 1 %}<button type="button" class="btn btn-success" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmcommentValidate"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>{% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -80,7 +80,7 @@
 
 
     <!-- Modals -->
-    <div class="modal fade" id="confirmDeleteComment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="confirmcommentDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -97,7 +97,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="confirmValidateComment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="confirmcommentValidate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -140,8 +140,8 @@
             </div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                <button type="button" class="btn btn-primary lunchActionModal" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmValidateComment"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>
-                <button type="button" class="btn btn-primary lunchActionModal" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmDeleteComment"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-primary lunchActionModal" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmcommentValidate"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-primary lunchActionModal" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmcommentDelete"><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</div>
 		</div>
 	</div>
