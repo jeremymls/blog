@@ -21,7 +21,7 @@ class PostService extends Service
 
     public function getPost($identifier)
     {
-        $params['posts'] = $this->postRepository->findOne($identifier);
+        $params['post'] = $this->postRepository->findOne($identifier);
         return $params;
     }
 
