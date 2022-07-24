@@ -42,12 +42,14 @@ class Router
       if (isset($_GET['filter'])) {
         return ["found",(new $ctrl())->$fx($_GET['filter'])];
       }
+      if ($opt != null) {
+        return ["found",(new $ctrl())->$fx($opt)];
+      }
       /* if (isset($_GET['flush'])) {
         $params[] = $_GET['flush'];
       }*/
       // default case
-      $option = $opt?($opt):null;
-      return ["found",(new $ctrl())->$fx($option)];
+      return ["found",(new $ctrl())->$fx()];
     } else {
       return "not found";
     }
