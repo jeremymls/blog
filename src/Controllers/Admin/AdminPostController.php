@@ -28,7 +28,7 @@ class AdminPostController extends Controller
         $this->twig->display('admin/post/action.twig', ['action' => 'add',]);
     }
 
-    public function update(string $identifier, ?array $input)
+    public function update(string $identifier, array $input = null)
     {
         if ($input !== null) {
             $this->postService->update($identifier, $input);

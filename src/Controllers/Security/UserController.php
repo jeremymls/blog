@@ -18,7 +18,7 @@ class UserController extends Controller
         $this->twig->display('security/profil.twig', $params);
     }
 
-    public function action(string $action, ?array $input)
+    public function action(string $action, array $input = null)
     {
         if ($input !== null) {
             $params = $this->userService->registerOrUpdateUser($action, $input);

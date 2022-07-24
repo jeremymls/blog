@@ -18,7 +18,7 @@ class CommentController extends Controller
         header('Location: index.php?action=post&id=' . $post.'&flush=commentSubmitted');
     }
 
-    public function update(string $identifier, ?array $input)
+    public function update(string $identifier, array $input = null)
     {
         if ($input !== null) {
             $this->commentService->update($identifier, $input);
