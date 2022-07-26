@@ -15,4 +15,5 @@ class User extends Model
     public string $last;
     public string $role;
     public string $validated_email;
+    public string $picture;
 }

@@ -20,6 +20,22 @@
         background-color: @theme-success;
     }
 }
+
+#divOverview{
+    display: flex;
+    aspect-ratio: 1/1;
+    border: 1px solid @theme-success;
+    background: @theme-success;
+    border-radius: 50%;
+    overflow: hidden;
+
+    #thumbnailOverview {
+        width: 100%;
+        object-fit: contain;
+        min-height: 200px;
+    }
+}
+
 #imageSrc{
     position: absolute;
     top: -80px;

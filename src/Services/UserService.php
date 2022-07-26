@@ -14,7 +14,7 @@ class UserService extends Service
         $this->model = new User();
     }
 
-    public function getUser($id)
+    public function show($id)
     {
         $params['user'] = $this->userRepository->findOne($id);
         return $params;

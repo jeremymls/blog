@@ -14,7 +14,7 @@ class UserController extends Controller
 
     public function show()
     {
-        $params = $this->userService->getUser($_SESSION['user']->id);
+        $params = $this->userService->show($_SESSION['user']->id);
         $this->twig->display('security/profil.twig', $params);
     }
 
@@ -25,7 +25,7 @@ class UserController extends Controller
             $this->twig->display('security/redirect.twig', $params);
         } else {
             if ($action === 'edit') {
-                $params = $this->userService->getUser($_SESSION['user']->id);
+                $params = $this->userService->show($_SESSION['user']->id);
                 $params["action"] = $action;
                 $this->twig->display('security/action.twig', $params);
             } else {
@@ -34,7 +34,7 @@ class UserController extends Controller
         }
     }
 
-    public function login(?array $input)
+    public function login(array $input = null)
     {
         if ($input !== null) {
             $this->userService->login($input);

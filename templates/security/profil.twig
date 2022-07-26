@@ -27,7 +27,9 @@
                         </div>
 
                         <div class="col-lg-4">
-                            <img src="/assets/img/profile.png" class="img-responsive" alt="{{ user.first }} {{ user.last }}">
+							<div id="divOverview">
+                                <img id="thumbnailOverview" src={% if user.picture is empty %}"assets/img/profile.png"{% else %}{{ user.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
+                            </div>
                         </div>
                     </div>
                     <h3>Commentaires</h3>
