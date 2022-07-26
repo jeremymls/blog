@@ -1,4 +1,6 @@
 {% extends "/base.twig" %}
+{% set pendingList = comments | filter((c,k) => c.moderate == false) %}
+{% set pending = pendingList | length %}
 
 {% block title %}Profil{% endblock %}
 {% block subtitle %}
@@ -22,7 +24,7 @@
                                 <dt><strong>Email:</strong></dt>
                                 <dd>{{ user.email }}</dd>
                                 <dt>Commentaires:</dt>
-                                <dd>0</dd>
+                                <dd>{{ comments | length }} {% if pending > 0 %} <em>(dont {{ pending }} en attente de modération)</em>{% endif %}</dd>
                             </dl>
                         </div>
 
@@ -33,7 +35,22 @@
                         </div>
                     </div>
                     <h3>Commentaires</h3>
-
+                    {% for comment in comments %}
+                        <div class="panel panel-{% if comment.moderate or session.user.role == "admin" %}default{% else %}danger{% endif %}">
+                            <div class="panel-heading commentHeader">
+                                <p>Le {{comment.frenchCreationDate }} dans <a href="?action=post&id={{ comment.post.identifier }}#comment">{{ comment.post.title }}</a>  {% if not comment.moderate  and session.user.role != "admin" %}<strong>(Non Approuvé)</strong>{% endif %}</p>
+                                <a href="?action=commentUpdate&id={{comment.identifier }}" ><i class="fa fa-2x fa-edit" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{ comment.comment | nl2br }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+<pre>
+    {{ dump(session.user.role)  }}
+    {{ dump(comments)  }}
+    {{ dump(pendingCommentList | length)  }}
+</pre>
                 </div>
             </div>
         </div>

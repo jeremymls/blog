@@ -17,6 +17,7 @@ class UserService extends Service
     public function show($id)
     {
         $params['user'] = $this->userRepository->findOne($id);
+        $params['comments'] = $this->commentRepository->getCommentsByUser($id);
         return $params;
     }
 
@@ -30,7 +31,7 @@ class UserService extends Service
             $this->userRepository->add($user) : 
             $this->userRepository->update($_SESSION['user']->id, $user);
         if (!$success) {
-            throw new \Exception($action === "register" ? 'Impossible de créer l\'utilisateur !' : 'Impossible de modifier l\'utilisateur !');
+            throw new \Exception($action === "register" ? "Impossible de créer l'utilisateur ! <br>L'adresse e-mail est peut-être déjà utilisée" : "Impossible de modifier l'utilisateur !");
         }
         $user = $this->userRepository->getUserByUsername($input['email']);
         $this->setUserSession($user);

@@ -13,10 +13,19 @@ class CommentRepository extends Repository
 
     public function getCommentsByPost(string $post): array
     {
-        $comments = $this->findAll("WHERE post = ? and moderate = 1", [$post]);
+        $comments = $this->findAll("WHERE post = ? and (moderate = 1 or author = 1)", [$post]);
         foreach ($comments as $comment) {
             $comment->with('post', PostRepository::class);
             $comment->with('author', UserRepository::class);
+        }
+        return $comments;
+    }
+
+    public function getCommentsByUser(string $user): array
+    {
+        $comments = $this->findAll("WHERE author = ?", [$user]);
+        foreach ($comments as $comment) {
+            $comment->with('post', PostRepository::class);
         }
         return $comments;
     }

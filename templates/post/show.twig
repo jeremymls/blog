@@ -96,8 +96,11 @@
 			</div>
 			{% for comment in comments %}
 				<div class="panel panel-default">
-					<div class="panel-heading">
-						<p><strong>{{ comment.author.username }}</strong> le {{comment.frenchCreationDate }} {% if comment.author.identifier == (session.user.id) %}<a href="?action=commentUpdate&id={{ comment.identifier }}">(modifier)</a>  {% endif %}</p>  
+					<div class="panel-heading commentHeader">
+						<p><strong>{{ comment.author.username }}</strong> le {{comment.frenchCreationDate }}</p>  
+						{% if comment.author.identifier == (session.user.id) %}
+							<a href="?action=commentUpdate&id={{comment.identifier }}" ><i class="fa fa-2x fa-edit" aria-hidden="true"></i></a>
+						{% endif %}
 					</div>
 					<div class="panel-body">
 						<p>{{ comment.comment | nl2br }}</p>
