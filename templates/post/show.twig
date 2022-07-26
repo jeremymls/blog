@@ -1,4 +1,5 @@
 {% extends "/base.twig" %}
+{% import "macros/utils.twig" as utils %}
 {% import "/macros/alerts.twig" as alerts %}
 
 {% block title %}Projet{% endblock %}
@@ -88,7 +89,7 @@
 		</div>
 
 		{% if comments is not empty %}
-			<div class="row">
+			<div id="commentList" class="row">
 				<div class="col-lg-12 text-center">
 					<h3>Commentaires</h3>
 					<hr class="star-primary">
@@ -107,6 +108,7 @@
 					</div>
 				</div>
 			{% endfor %}
+            {{ utils.pagination(nbPage,"#commentList") }}
 		{% endif %}
     </section>
 

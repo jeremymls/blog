@@ -16,6 +16,7 @@ class PostService extends Service
     public function getPosts()
     {
         $params['posts'] = $this->postRepository->findAll();
+        $params= $this->pagination($params, 'posts');
         return $params;
     }
 
@@ -29,6 +30,7 @@ class PostService extends Service
     {
         $params['post'] = $this->postRepository->findOne($identifier);
         $params['comments'] = $this->commentRepository->getCommentsByPost($identifier);
+        $params= $this->pagination($params, 'comments', 4);
         return $params;
     }
 

@@ -1,4 +1,5 @@
 {% extends "/base.twig" %}
+{% import "macros/utils.twig" as utils %}
 
 {% block title %}Projets{% endblock %}
 {% block subtitle %}
@@ -54,28 +55,7 @@
                     </div>
                 </div>
             {% endfor %}
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li>
-                        <a href="?action=posts" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    {% for page in 1.. nbPage %}
-                    {% if get.page is defined %}
-                        {% set currentPage = get.page %}
-                    {% else %}
-                        {% set currentPage = 1 %}
-                    {% endif %}
-                        <li {% if currentPage == page %} class="active"{% endif %}><a href="?action=posts&page={{ page }}">{{ page }}</a></li>
-                    {% endfor %}
-                    <li>
-                        <a href="?action=posts&page={{ nbPage }}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            {{ utils.pagination(nbPage) }}
         </div>
     </section>
 {% endblock %}

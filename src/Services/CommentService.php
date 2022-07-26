@@ -20,6 +20,7 @@ class CommentService extends Service
             throw new \Exception('Impossible de récupérer les commentaires !');
         }
         $params['filter'] = $filter;
+        $params= $this->pagination($params, 'comments', 10);
         return $params;
     }
 

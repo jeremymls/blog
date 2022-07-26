@@ -1,4 +1,5 @@
 {% extends "/base.twig" %}
+{% import "macros/utils.twig" as utils %}
 
 {% block title %}Administration des projets{% endblock %}
 {% block subtitle %}
@@ -37,6 +38,7 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                    {{ utils.pagination(nbPage) }}
                 </div>
             </div>
         </div>

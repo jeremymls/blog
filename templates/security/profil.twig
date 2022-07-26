@@ -1,4 +1,5 @@
 {% extends "/base.twig" %}
+{% import "macros/utils.twig" as utils %}
 {% set pendingList = comments | filter((c,k) => c.moderate == false) %}
 {% set pending = pendingList | length %}
 
@@ -34,7 +35,7 @@
                             </div>
                         </div>
                     </div>
-                    <h3>Commentaires</h3>
+                    <h3 id="commentPage">Commentaires</h3>
                     {% for comment in comments %}
                         <div class="panel panel-{% if comment.moderate or session.user.role == "admin" %}default{% else %}danger{% endif %}">
                             <div class="panel-heading commentHeader">
@@ -46,6 +47,7 @@
                             </div>
                         </div>
                     {% endfor %}
+                    {{ utils.pagination(nbPage,"#commentPage") }}
                 </div>
             </div>
         </div>

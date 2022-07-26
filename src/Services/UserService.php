@@ -18,6 +18,7 @@ class UserService extends Service
     {
         $params['user'] = $this->userRepository->findOne($id);
         $params['comments'] = $this->commentRepository->getCommentsByUser($id);
+        $params= $this->pagination($params, 'comments', 5);
         return $params;
     }
 
