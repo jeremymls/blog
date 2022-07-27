@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Core;
+namespace Core;
 
 use Application\Controllers\ErrorExceptionController;
 use Application\Controllers\HomeController;

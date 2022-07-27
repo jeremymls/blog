@@ -6,7 +6,7 @@ require_once 'vendor/autoload.php';
 require_once 'config/routes.php';
 define('ROOT', __DIR__);
 
-use Application\Core\Router;
+use Core\Router;
 
 $r = new Router();
 $r->getRoute($routes);
