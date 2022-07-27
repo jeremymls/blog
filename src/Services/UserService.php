@@ -18,11 +18,20 @@ class UserService extends Service
     {
         $params['user'] = $this->userRepository->findOne($id);
         $params['comments'] = $this->commentRepository->getCommentsByUser($id);
+        $params['commentsCount'] = count($params['comments']);
+        $params['commentsPendingCount'] = count(array_filter($params['comments'], function($obj){return $obj->moderate == 0;}));
         $params= $this->pagination($params, 'comments', 5);
         return $params;
     }
 
-    public function registerOrUpdateUser(string $action, array $input)
+    public function getUsers()
+    {
+        $params['users'] = $this->userRepository->findAll();
+        $params= $this->pagination($params, 'users', 5);
+        return $params;
+    }
+
+    public function registerOrUpdateUser(string $action, array $input, $userId = null)
     {
         if ($input['password'] !== $input['passwordConfirm']) {
             throw new \Exception('Les mots de passe ne correspondent pas.');
@@ -30,14 +39,19 @@ class UserService extends Service
         $user = $this->validateForm($input,["email","password","first","last"]);
         $success = ($action === "register") ? 
             $this->userRepository->add($user) : 
-            $this->userRepository->update($_SESSION['user']->id, $user);
+            $this->userRepository->update($userId?$userId : $_SESSION['user']->id, $user);
         if (!$success) {
             throw new \Exception($action === "register" ? "Impossible de créer l'utilisateur ! <br>L'adresse e-mail est peut-être déjà utilisée" : "Impossible de modifier l'utilisateur !");
         }
-        $user = $this->userRepository->getUserByUsername($input['email']);
-        $this->setUserSession($user);
-        $target = ($action === "register") ? '/' : '/index.php?action=profil';
-        return ['target' => $target];
+        if (isset($_SESSION['user']) && $_SESSION['user']->role === "admin" && (isset($userId) || $action === "register") ){
+            $target = ($action === "register") ? 'userAdmin&flush=success' : ('profil&id=' . $userId);
+            header('Location: index.php?action='.$target);
+        } else {
+            $user = $this->userRepository->getUserByUsername($input['email']);
+            $this->setUserSession($user);
+            $target = ($action === "register") ? '/' : '/index.php?action=profil';
+            return ['target' => $target];
+        }
     }
 
     public function login(array $input)
@@ -48,6 +62,14 @@ class UserService extends Service
             throw new \Exception("Mot de passe incorrect !");
         }
         $this->setUserSession($user);
+    }
+
+    public function delete($identifier)
+    {
+        $success = $this->userRepository->delete($identifier);
+        if (!$success) {
+            throw new \Exception("Impossible de supprimer l'utilisateur !");
+        } 
     }
 
     public function setUserSession(User $user)

@@ -19,7 +19,7 @@ class AdminPostController extends Controller
         $this->twig->display('admin/post/index.twig', $params);
     }
 
-    public function add(?array $input)
+    public function add(array $input = null)
     {
         if ($input !== null) {
             $this->postService->add($input);

@@ -1,12 +1,10 @@
 {% extends "/base.twig" %}
 {% import "macros/utils.twig" as utils %}
-{% set pendingList = comments | filter((c,k) => c.moderate == false) %}
-{% set pending = pendingList | length %}
 
 {% block title %}Profil{% endblock %}
 {% block subtitle %}
 	<a id="retour" href="/" ><i class="fa fa-home" aria-hidden="true"></i></a>
-	<a id="oneTool" href="index.php?action=updateUser" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+	<a id="oneTool" href="index.php?action=updateUser{% if get.id %}&userId={{ get.id }}{% endif %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
@@ -24,8 +22,12 @@
                                 <dd>{{ user.last }}</dd>
                                 <dt><strong>Email:</strong></dt>
                                 <dd>{{ user.email }}</dd>
+                                <dt><strong>Identifiant:</strong></dt>
+                                <dd>{{ user.username }}</dd>
                                 <dt>Commentaires:</dt>
-                                <dd>{{ comments | length }} {% if pending > 0 %} <em>(dont {{ pending }} en attente de modération)</em>{% endif %}</dd>
+                                <dd>{{ commentsCount }} 
+                                {% if commentsPendingCount > 0 %} <em>(dont {{ commentsPendingCount }} en attente de modération)</em>{% endif %}
+                                </dd>
                             </dl>
                         </div>
 

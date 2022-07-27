@@ -7,6 +7,15 @@ $("#confirmDeletePost").on("show.bs.modal", function (event) {
     modal.find(".modal-footer a").attr("href", "?action=postDelete&id=" + identifier);
     setTimeout(()=>scrollTo(0, 0), 500);
 });
+$("#confirmDeleteUser").on("show.bs.modal", function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var recipient = button.data("title"); // Extract info from data-* attributes
+    var identifier = button.data("identifier"); // Extract info from data-* attributes
+    var modal = $(this);
+    modal.find(".modal-body").text(recipient);
+    modal.find(".modal-footer a").attr("href", "?action=userDelete&id=" + identifier);
+    setTimeout(()=>scrollTo(0, 0), 500);
+});
 
 $("#postPreview").on("show.bs.modal", function (event) {
     scrollTo(0, 0);

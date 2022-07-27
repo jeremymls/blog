@@ -2,6 +2,7 @@
 
 use Application\Controllers\Admin\AdminCommentController;
 use Application\Controllers\Admin\AdminPostController;
+use Application\Controllers\Admin\AdminUserController;
 use Application\Controllers\Admin\DashboardController;
 use Application\Controllers\CommentController;
 use Application\Controllers\PostController;
@@ -43,4 +44,7 @@ $routes = array(
   'commentAdmin' => ['ctrl' => AdminCommentController::class, 'fx' => 'index'],         // comment admin
   'commentDelete' => ['ctrl' => AdminCommentController::class, 'fx' => 'delete'],       // delete comment (methods-> GET:id)
   'commentValidate' => ['ctrl' => AdminCommentController::class, 'fx' => 'validate'],   // validate comment (methods-> GET:id)
+  #AdminUser
+  'userAdmin' => ['ctrl' => AdminUserController::class, 'fx' => 'index'],               // user admin
+  'userDelete' => ['ctrl' => AdminUserController::class, 'fx' => 'delete'],             // delete user (methods-> GET:id)
 );
