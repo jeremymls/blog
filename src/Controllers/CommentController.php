@@ -2,6 +2,7 @@
 
 namespace Application\Controllers;
 
+use Core\Controller;
 use Application\Services\CommentService;
 
 class CommentController extends Controller

@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Models;
+namespace Core;
 
 use Application\Lib\DatabaseConnection;
 

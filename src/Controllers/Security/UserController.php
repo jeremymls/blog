@@ -2,8 +2,9 @@
 
 namespace Application\Controllers\Security;
 
-use Application\Controllers\Controller;
+use Core\Controller;
 use Application\Services\UserService;
+
 class UserController extends Controller
 {
     public function __construct()

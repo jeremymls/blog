@@ -2,6 +2,7 @@
 
 namespace Application\Controllers;
 
+use Core\Controller;
 use Application\Services\PostService;
 
 class HomeController extends Controller

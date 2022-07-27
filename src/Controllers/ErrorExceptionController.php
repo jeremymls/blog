@@ -2,6 +2,7 @@
 
 namespace Application\Controllers;
 
+use Core\Controller;
 use Application\Models\Error;
 
 class ErrorExceptionController extends Controller

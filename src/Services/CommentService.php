@@ -2,8 +2,7 @@
 
 namespace Application\Services;
 
-use Application\Repositories\CommentRepository;
-use Application\Lib\DatabaseConnection;
+use Core\Service;
 use Application\Models\Comment;
 
 class CommentService extends Service

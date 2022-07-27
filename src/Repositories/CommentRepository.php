@@ -2,6 +2,7 @@
 
 namespace Application\Repositories;
 
+use Core\Repository;
 use Application\Models\Comment;
 
 class CommentRepository extends Repository

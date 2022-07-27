@@ -2,7 +2,7 @@
 
 namespace Application\Models;
 
-use Application\Repositories\UserRepository;
+use Core\Model;
 
 class Comment extends Model
 {

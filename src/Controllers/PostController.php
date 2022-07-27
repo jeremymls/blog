@@ -2,7 +2,9 @@
 
 namespace Application\Controllers;
 
+use Core\Controller;
 use Application\Services\PostService;
+
 class PostController extends Controller
 {
     public function __construct()

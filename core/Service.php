@@ -1,11 +1,9 @@
 <?php
 
-namespace Application\Services;
+namespace Core;
 
 use Application\Repositories\CommentRepository;
 use Application\Lib\DatabaseConnection;
-use Application\Models\Comment;
-use Application\Models\Post;
 use Application\Repositories\PostRepository;
 use Application\Repositories\UserRepository;
 
@@ -16,15 +14,10 @@ class Service
     {
         $this->postRepository = new PostRepository();
         $this->postRepository->connection = new DatabaseConnection();
-        $this->post = new Post();
-
         $this->commentRepository = new CommentRepository();
         $this->commentRepository->connection = new DatabaseConnection();
-        $this->comment = new Comment();
-        
         $this->userRepository = new UserRepository();
         $this->userRepository->connection = new DatabaseConnection();
-        $this->user = new UserRepository();
     }
 
     public function validateForm(array $input, array $requiredFields = [])

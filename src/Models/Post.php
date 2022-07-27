@@ -2,6 +2,8 @@
 
 namespace Application\Models;
 
+use Core\Model;
+
 class Post extends Model
 {
     const TABLE = 'posts';

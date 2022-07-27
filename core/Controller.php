@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Controllers;
+namespace Core;
 
 use Twig\Extension\DebugExtension;
 use Twig\Extra\String\StringExtension;

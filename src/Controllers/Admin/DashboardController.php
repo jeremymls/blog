@@ -2,9 +2,7 @@
 
 namespace Application\Controllers\Admin;
 
-use Application\Controllers\Controller;
-use Application\Lib\DatabaseConnection;
-use Application\Repositories\CommentRepository;
+use Core\Controller;
 
 class DashboardController extends Controller
 {
