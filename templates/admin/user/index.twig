@@ -13,29 +13,55 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <table class="table table-hover">
+                    <table id="userBO" class="table table-hover">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th scope="col">Username</th>
-                                <th>Mail</th>
-                                <th>Role</th>
-                                <th>Date de création</th>
+                                <th>Avatar</th>
+                                <th>Infos</th>
                                 <th>Actions</th>
                             <tr>
                         </thead>
                         <tbody>
                             {% for user in users %}
                                 <tr>
-                                    <td>{{ user.identifier }}</td>
-                                    <th>{{ user.username }}</th>
-                                    <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
-                                    <td>{{ user.role }}</td>
-                                    <td>{{ user.frenchCreationDate }}</td>
                                     <td>
-                                        <a href="/profil/{{ user.identifier }}" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i></a>
-                                        <a href="/action/edit&userId={{ user.identifier }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i></a>
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ user.identifier }}" data-title="{{ user.username }} (id:{{ user.identifier }})" data-target="#confirmDeleteUser"><i class="fa fa-trash"></i></button>
+                                        <div id="divOverview" style="width: 15rem;">
+                                            <img id="thumbnailOverview" src={% if user.picture is empty %}"/assets/img/profile.png"{% else %}{{ user.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <dl class="dl-horizontal text-left ">
+                                            <dt>ID</dt>
+                                            <dd>{{ user.identifier }}</dd>
+                                            <dt>Nom</dt>
+                                            <dd>{{ user.last }}</dd>
+                                            <dt>Prénom</dt>
+                                            <dd>{{ user.first }}</dd>
+                                            <dt>Pseudo</dt>
+                                            <dd>{{ user.username }}</dd>
+                                            <dt>Mail</dt>
+                                            <dd>
+                                                <a href="mailto:{{ user.email }}">{{ user.email }}</a> 
+                                                {% if user.validated_email is empty %}
+                                                    <span class="label label-default"><i class="fa fa-hourglass-half" aria-hidden="true"></i> Non-validée</span>
+                                                {% else %}
+                                                    <span class="label label-info"><i class="fa fa-sign-in" aria-hidden="true"> Validé</i></span>
+                                                {% endif %}
+                                            </dd>
+                                            <dt>Date d'inscription</dt>
+                                            <dd>{{ user.frenchCreationDate }}</dd>
+                                        </dl>
+                                    </td>
+                                    <td class="action">
+                                    <div class="row">
+                                        <a href="/action/edit&userId={{ user.identifier }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Modifier</a>
+                                    </div>
+                                    <div class="row">
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ user.identifier }}" data-title="{{ user.username }} (id:{{ user.identifier }})" data-target="#confirmDeleteUser"><i class="fa fa-trash"></i> Supprimer</button>
+                                    </div>
+                                    <div class="row">
+                                        <a href="/profil/{{ user.identifier }}" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> Voir</a>
+                                    </div>
                                     </td>
                                 </tr>
                             {% endfor %}
