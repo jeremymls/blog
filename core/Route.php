@@ -33,10 +33,8 @@ class Route
             $params = explode('@', $this->callable);
             $controller = "Application\\Controllers\\" . $params[0]."Controller";
             $controller = new $controller();
-            die(var_dump(call_user_func_array([$controller, $params[1]], $this->matches)));
             return call_user_func_array([$controller, $params[1]], $this->matches);
         } else {
-            die(var_dump(call_user_func_array($this->callable, $this->matches)));
             return call_user_func_array($this->callable, $this->matches);
         }
     }

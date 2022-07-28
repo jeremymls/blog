@@ -48,7 +48,7 @@ class UserController extends Controller
 
     public function logout()
     {
-        session_destroy();
+        $this->userService->logout();
         header('Location: /login');
     }
 

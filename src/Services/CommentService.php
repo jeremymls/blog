@@ -38,6 +38,11 @@ class CommentService extends Service
         if (!$success) {
             throw new \Exception('Impossible de valider le commentaire !');
         }
+        $this->flash(
+            'success',
+            'Commentaire validé',
+            'Le commentaire a bien été validé'
+        );
     }
 
     public function delete($identifier)
@@ -46,6 +51,11 @@ class CommentService extends Service
         if (!$success) {
             throw new \Exception('Impossible de supprimer le commentaire !');
         }
+        $this->flash(
+            'danger',
+            'Commentaire supprimé',
+            'Le commentaire a bien été supprimé'
+        );
     }
 
     public function update($identifier, $input)
@@ -56,6 +66,11 @@ class CommentService extends Service
         if (!$success) {
             throw new \Exception('Impossible de modifier le commentaire !');
         }
+        $this->flash(
+            'success',
+            'Commentaire modifié',
+            'Votre commentaire sera à nouveau <strong>soumis à la modération</strong> et publié'
+        );
     }
 
     public function add(string $post, array $input)
@@ -65,5 +80,10 @@ class CommentService extends Service
         if (!$success) {
             throw new \Exception('Impossible d\'ajouter le commentaire !');
         }
+        $this->flash(
+            'success',
+            'COMMENTAIRE ENVOYÉ',
+            'Votre commentaire sera <strong>soumis à la modération</strong> avant d\'être publié'
+        );
     }
 }

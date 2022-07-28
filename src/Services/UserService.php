@@ -44,6 +44,11 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception($action === "register" ? "Impossible de créer l'utilisateur ! <br>L'adresse e-mail est peut-être déjà utilisée" : "Impossible de modifier l'utilisateur !");
         }
+        $this->flash(
+            'success',
+            $action === "register" ? 'Utilisateur créé' : 'Utilisateur modifié',
+            $action === "register" ? 'L\'utilisateur '. $input['email'] .' a bien été créé' : 'L\'utilisateur '. $input['email'] .' a bien été modifié'
+        );
         if (isset($_SESSION['user']) && $_SESSION['user']->role === "admin" && (isset($userId) || $action === "register") ){
             $target = ($action === "register") ? '/admin/users' : "/profil/$userId";
             header("Location: $target");
@@ -65,12 +70,27 @@ class UserService extends Service
         $this->setUserSession($user);
     }
 
+    public function logout()
+    {
+        session_destroy();
+        $this->flash(
+            'danger',
+            'Déconnexion',
+            'Vous êtes déconnecté'
+        ); 
+    }
+
     public function delete($identifier)
     {
         $success = $this->userRepository->delete($identifier);
         if (!$success) {
             throw new \Exception("Impossible de supprimer l'utilisateur !");
         } 
+        $this->flash(
+            'success',
+            'Utilisateur supprimé',
+            'L\'utilisateur '. $identifier .' a bien été supprimé'
+        ); 
     }
 
     public function setUserSession(User $user)

@@ -17,7 +17,7 @@ class PostService extends Service
     public function getPosts()
     {
         $params['posts'] = $this->postRepository->findAll();
-        $params= $this->pagination($params, 'posts');
+        $params= $this->pagination($params, 'posts',5);
         return $params;
     }
 
@@ -42,6 +42,11 @@ class PostService extends Service
         if (!$success) {
             throw new \Exception('Impossible de d\'ajouter le projet !');
         } 
+        $this->flash(
+            'success',
+            'Projet ajouté',
+            'Le projet '. $_POST['title'] .' a bien été ajouté'
+        );
     }
 
     public function update($identifier, $input)
@@ -51,6 +56,11 @@ class PostService extends Service
         if (!$success) {
             throw new \Exception('Impossible de modifier le projet !');
         } 
+        $this->flash(
+            'success',
+            'Projet modifié',
+            'Le projet a bien été modifié'
+        );
     }
 
     public function delete($identifier)
@@ -59,5 +69,10 @@ class PostService extends Service
         if (!$success) {
             throw new \Exception('Impossible de supprimer le projet !');
         } 
+        $this->flash(
+            'danger',
+            'Projet supprimé',
+            'Le projet a bien été supprimé'
+        );
     }
 }
