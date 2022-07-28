@@ -19,10 +19,9 @@ class PostController extends Controller
         $this->twig->display('post/index.twig', $params);
     }
 
-    public function show(string $identifier, string $flush = NULL )
+    public function show(string $identifier )
     {
         $params = $this->postService->getPostWithComments($identifier);
-        $params['alert'] = $flush;
         $this->twig->display('post/show.twig', $params);
     }
 

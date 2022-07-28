@@ -10,11 +10,11 @@
                     {% if session.user %}
                         <div class="row">
                             <div class="form-group col-xs-12 text-center">
-                                <a href="?action=logout">Déconnexion</a>
+                                <a href="/logout">Déconnexion</a>
                             </div>
                         </div>
                     {% else %}
-                        <form action="index.php?action=login" method="post">
+                        <form action="" method="post">
                             <div class="row control-group">
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <label>Identifiant</label>

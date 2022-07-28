@@ -45,12 +45,12 @@ class UserService extends Service
             throw new \Exception($action === "register" ? "Impossible de créer l'utilisateur ! <br>L'adresse e-mail est peut-être déjà utilisée" : "Impossible de modifier l'utilisateur !");
         }
         if (isset($_SESSION['user']) && $_SESSION['user']->role === "admin" && (isset($userId) || $action === "register") ){
-            $target = ($action === "register") ? 'userAdmin&flush=success' : ('profil&id=' . $userId);
-            header('Location: index.php?action='.$target);
+            $target = ($action === "register") ? '/admin/users' : "/profil/$userId";
+            header("Location: $target");
         } else {
             $user = $this->userRepository->getUserByUsername($input['email']);
             $this->setUserSession($user);
-            $target = ($action === "register") ? '/' : '/index.php?action=profil';
+            $target = ($action === "register") ? '/' : '/profil';
             return ['target' => $target];
         }
     }

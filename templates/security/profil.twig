@@ -4,7 +4,7 @@
 {% block title %}Profil{% endblock %}
 {% block subtitle %}
 	<a id="retour" href="/" ><i class="fa fa-home" aria-hidden="true"></i></a>
-	<a id="oneTool" href="index.php?action=updateUser{% if get.id %}&userId={{ get.id }}{% endif %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+	<a id="oneTool" href="/action/edit{% if user.identifier != session.user.id %}&userId={{ user.identifier }}{% endif %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
@@ -33,7 +33,7 @@
 
                         <div class="col-lg-4">
 							<div id="divOverview">
-                                <img id="thumbnailOverview" src={% if user.picture is empty %}"assets/img/profile.png"{% else %}{{ user.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
+                                <img id="thumbnailOverview" src={% if user.picture is empty %}"/assets/img/profile.png"{% else %}{{ user.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
                             </div>
                         </div>
                     </div>
@@ -41,8 +41,8 @@
                     {% for comment in comments %}
                         <div class="panel panel-{% if comment.moderate or session.user.role == "admin" %}default{% else %}danger{% endif %}">
                             <div class="panel-heading commentHeader">
-                                <p>Le {{comment.frenchCreationDate }} dans <a href="?action=post&id={{ comment.post.identifier }}#comment">{{ comment.post.title }}</a>  {% if not comment.moderate  and session.user.role != "admin" %}<strong>(Non Approuvé)</strong>{% endif %}</p>
-                                <a href="?action=commentUpdate&id={{comment.identifier }}" ><i class="fa fa-2x fa-edit" aria-hidden="true"></i></a>
+                                <p>Le {{comment.frenchCreationDate }} dans <a href="/post/{{ comment.post.identifier }}#comment">{{ comment.post.title }}</a>  {% if not comment.moderate  and session.user.role != "admin" %}<strong>(Non Approuvé)</strong>{% endif %}</p>
+                                <a href="/comment/{{comment.identifier }}" ><i class="fa fa-2x fa-edit" aria-hidden="true"></i></a>
                             </div>
                             <div class="panel-body">
                                 <p>{{ comment.comment | nl2br }}</p>

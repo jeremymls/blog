@@ -19,20 +19,20 @@ class AdminPostController extends Controller
         $this->twig->display('admin/post/index.twig', $params);
     }
 
-    public function add(array $input = null)
+    public function add()
     {
-        if ($input !== null) {
-            $this->postService->add($input);
-            header('Location: index.php?action=postAdmin');
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->postService->add($_POST);
+            header('Location: /admin/posts');
         }
         $this->twig->display('admin/post/action.twig', ['action' => 'add',]);
     }
 
-    public function update(string $identifier, array $input = null)
+    public function update(string $identifier)
     {
-        if ($input !== null) {
-            $this->postService->update($identifier, $input);
-            header('Location: index.php?action=postAdmin');
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->postService->update($identifier, $_POST);
+            header('Location: /admin/posts');
         }
         $params = $this->postService->getPost($identifier);
         $this->twig->display('admin/post/action.twig', $params);
@@ -41,6 +41,6 @@ class AdminPostController extends Controller
     public function delete(string $identifier)
     {
         $this->postService->delete($identifier);
-        header('Location: index.php?action=postAdmin&flush=success');
+        header('Location: /admin/posts');
     }
 }

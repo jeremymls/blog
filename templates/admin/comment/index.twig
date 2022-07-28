@@ -3,7 +3,7 @@
 
 {% block title %}Modération des commentaires{% endblock %}
 {% block subtitle %}
-	<a id="retour" href="?action=dashboard" ><i class="fa fa-cogs" aria-hidden="true"></i></a>
+	<a id="retour" href="/dashboard" ><i class="fa fa-cogs" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
@@ -119,13 +119,13 @@
                 <h5 class="modal-post"></h5>
                 <div class="row">
                     <div style="margin-bottom: auto;" class="col-xs-1">
-                        <img style="transform: rotate(0.5turn);" src="assets/img/quotation-marks.png" class="img-responsive" alt="">
+                        <img style="transform: rotate(0.5turn);" src="/assets/img/quotation-marks.png" class="img-responsive" alt="">
                     </div>
                     <div class="col-xs-10">
                         <div class="modal-comment-content text-center"></div>
                     </div>
                     <div style="margin-top: auto;" class="col-xs-1">
-                        <img src="assets/img/quotation-marks.png" class="img-responsive" alt="">
+                        <img src="/assets/img/quotation-marks.png" class="img-responsive" alt="">
                     </div>
                 </div>
             </div>
@@ -140,12 +140,12 @@
 {% endblock %}
 
 {% block script %}
-<script src="assets/js/admin.js"></script>
+<script src="/assets/js/admin.js"></script>
 <script>
     $(document).ready(function(){
         $('#filter').change(function(){
             var filter = $(this).val();
-            window.location.href = '?action=commentAdmin&filter=' + filter;
+            window.location.href = 'admin/comments/' + filter;
         });
     });
 </script>

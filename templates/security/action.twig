@@ -6,12 +6,12 @@
     <section>
         <div class="container">
             <div class="row">
-                <form action={% if action == "register" %} "index.php?action=register" {% else %} "index.php?action=updateUser{% if get.userId is not empty %}&userId={{ get.userId }}{% endif %}" {% endif %} method="post" enctype="multipart/form-data">
+                <form action={% if action == "register" %} "/action/register" {% else %} "/action/edit{% if get.userId is not empty %}&userId={{ get.userId }}{% endif %}" {% endif %} method="post" enctype="multipart/form-data">
 					<div class="col-lg-4">
 						<div class="form-group">
 							<label for="picture">Photo :
 								<div id="divOverview">
-                                    <img id="thumbnailOverview" src={% if user.picture is empty %}"assets/img/profile.png"{% else %}{{ user.picture }}{% endif %} alt="">
+                                    <img id="thumbnailOverview" src={% if user.picture is empty %}"/assets/img/profile.png"{% else %}{{ user.picture }}{% endif %} alt="">
                                 </div>
 							</label>
 							{# <input type="hidden" name="MAX_FILE_SIZE" value="512000"> #}
@@ -78,5 +78,5 @@
 		</section>
 	{% endblock %}
 	{% block script %}
-		<script src="assets/js/action.js"></script>
+		<script src="/assets/js/action.js"></script>
 	{% endblock %}

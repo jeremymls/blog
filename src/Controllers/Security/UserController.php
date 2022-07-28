@@ -19,11 +19,11 @@ class UserController extends Controller
         $this->twig->display('security/profil.twig', $params);
     }
 
-    public function action(string $action, array $input = null)
+    public function action(string $action)
     {
         $userId = isset($_GET["userId"]) ? $_GET["userId"] : null;
-        if ($input !== null) {
-            $params = $this->userService->registerOrUpdateUser($action, $input, $userId);
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $params = $this->userService->registerOrUpdateUser($action, $_POST, $userId);
             $this->twig->display('security/redirect.twig', $params);
         } else {
             if ($action === 'edit') {
@@ -36,10 +36,10 @@ class UserController extends Controller
         }
     }
 
-    public function login(array $input = null)
+    public function login()
     {
-        if ($input !== null) {
-            $this->userService->login($input);
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->userService->login($_POST);
             $this->twig->display('security/redirect.twig', ['target' => '/']);
         } else {
             $this->twig->display('security/login.twig', []);
@@ -49,7 +49,7 @@ class UserController extends Controller
     public function logout()
     {
         session_destroy();
-        header('Location: index.php?action=login');
+        header('Location: /login');
     }
 
 }

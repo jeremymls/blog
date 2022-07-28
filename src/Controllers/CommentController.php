@@ -13,17 +13,17 @@ class CommentController extends Controller
         $this->commentService = new CommentService();
     }
 
-    public function add(string $post, array $input)
+    public function add(string $post)
     {
-        $this->commentService->add($post, $input);
-        header('Location: index.php?action=post&id=' . $post.'&flush=commentSubmitted');
+        $this->commentService->add($post, $_POST);
+        header('Location: /post/' . $post);
     }
 
-    public function update(string $identifier, array $input = null)
+    public function update(string $identifier)
     {
-        if ($input !== null) {
-            $this->commentService->update($identifier, $input);
-            header('Location: index.php?action=post&id=' . $input['post'].'&flush=commentPending');
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->commentService->update($identifier, $_POST);
+            header('Location: /post/' . $_POST['post']);
         }
         $params = $this->commentService->getComment($identifier);
         $this->twig->display('post/update_comment.twig', $params);

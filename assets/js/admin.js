@@ -4,7 +4,7 @@ $("#confirmDeletePost").on("show.bs.modal", function (event) {
     var identifier = button.data("identifier"); // Extract info from data-* attributes
     var modal = $(this);
     modal.find(".modal-body").text(recipient);
-    modal.find(".modal-footer a").attr("href", "?action=postDelete&id=" + identifier);
+    modal.find(".modal-footer a").attr("href", "/admin/posts/delete/" + identifier);
     setTimeout(()=>scrollTo(0, 0), 500);
 });
 $("#confirmDeleteUser").on("show.bs.modal", function (event) {
@@ -13,7 +13,7 @@ $("#confirmDeleteUser").on("show.bs.modal", function (event) {
     var identifier = button.data("identifier"); // Extract info from data-* attributes
     var modal = $(this);
     modal.find(".modal-body").text(recipient);
-    modal.find(".modal-footer a").attr("href", "?action=userDelete&id=" + identifier);
+    modal.find(".modal-footer a").attr("href", "/admin/users/delete/" + identifier);
     setTimeout(()=>scrollTo(0, 0), 500);
 });
 
@@ -37,7 +37,7 @@ $("#postPreview").on("show.bs.modal", function (event) {
         modal.find(".modal-iframe").html("");
         modal.find(".modal-footer .externalLink").addClass("sr-only");
     }
-    modal.find(".modal-footer .editPost").attr("href", "?action=postUpdate&id=" + identifier);
+    modal.find(".modal-footer .editPost").attr("href", "/admin/posts/update/" + identifier);
     modal.find(".modal-footer .lunchDeleteModal").attr("data-identifier", identifier);
     modal.find(".modal-footer .lunchDeleteModal").attr("data-title", title);
     $(".lunchDeleteModal").on("click", function () {
@@ -72,7 +72,7 @@ $("#confirmcommentDelete").on("show.bs.modal", function (event) {
     var identifier = button.data("identifier"); // Extract info from data-* attributes
     var modal = $(this);
     modal.find(".modal-body").text(recipient);
-    modal.find(".modal-footer a").attr("href", "?action=commentDelete&id=" + identifier);
+    modal.find(".modal-footer a").attr("href", "/admin/comments/delete/" + identifier);
     setTimeout(()=>scrollTo(0, 0), 500);
 });
 $("#confirmcommentValidate").on("show.bs.modal", function (event) {
@@ -82,7 +82,7 @@ $("#confirmcommentValidate").on("show.bs.modal", function (event) {
     var identifier = button.data("identifier"); // Extract info from data-* attributes
     var modal = $(this);
     modal.find(".modal-body").text(recipient);
-    modal.find(".modal-footer a").attr("href", "?action=commentValidate&id=" + identifier);
+    modal.find(".modal-footer a").attr("href", "/admin/comments/validate/" + identifier);
     // modal.find('.modal-title').text(recipient)
     // modal.find('.modal-body input').val(recipient)
     setTimeout(()=>scrollTo(0, 0), 500);

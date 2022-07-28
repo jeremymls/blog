@@ -22,13 +22,13 @@ class AdminCommentController extends Controller
     public function validate(string $identifier)
     {
         $this->commentService->commentValidate($identifier);
-        header('Location: index.php?action=commentAdmin#moderate');
+        header('Location: /admin/comments#moderate');
     }
 
     public function delete(string $identifier)
     {
         $this->commentService->delete($identifier);
-        header('Location: index.php?action=commentAdmin#moderate');
+        header('Location: /admin/comments#moderate');
     }
 }
 

@@ -21,7 +21,7 @@
 					<a href="/"><i class="fa fa-home" aria-hidden="true"></i> Accueil</a>
 				</li>
 				<li class="page-scroll">
-					<a href="?action=posts"><i class="fa fa-folder" aria-hidden="true"></i> Projets</a>
+					<a href="/posts"><i class="fa fa-folder" aria-hidden="true"></i> Projets</a>
 				</li>
 				{% if session.user %}
 					<li class="dropdown desktop">
@@ -30,23 +30,23 @@
 						</a>
 						<ul class="dropdown-menu">
 							{% if session.user.role == "admin" %}
-								<li class="page-scroll"><a href="?action=dashboard"><i class="fa fa-cogs" aria-hidden="true"></i> Back office</a></li>
+								<li class="page-scroll"><a href="/dashboard"><i class="fa fa-cogs" aria-hidden="true"></i> Back office</a></li>
 							{% endif %}
-							<li class="page-scroll"><a href="?action=profil"><i class="fa fa-user" aria-hidden="true"></i> Profil</a></li>
+							<li class="page-scroll"><a href="/profil"><i class="fa fa-user" aria-hidden="true"></i> Profil</a></li>
 							<li role="separator" class="divider"></li>
-							<li class="page-scroll"><a href="?action=logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Déconnexion</a></li>
+							<li class="page-scroll"><a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Déconnexion</a></li>
 						</ul>
 					</li>
 					{# Mobile #}
 					{% if session.user.role == "admin" %}
-						<li class="page-scroll mobile"><a href="?action=dashboard"><i class="fa fa-cogs" aria-hidden="true"></i> Back office</a></li>
+						<li class="page-scroll mobile"><a href="/dashboard"><i class="fa fa-cogs" aria-hidden="true"></i> Back office</a></li>
 					{% endif %}
-					<li class="page-scroll mobile"><a href="?action=profil"><i class="fa fa-user" aria-hidden="true"></i> Profil</a></li>
-					<li class="page-scroll mobile"><a href="?action=logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Déconnexion</a></li>
+					<li class="page-scroll mobile"><a href="/profil"><i class="fa fa-user" aria-hidden="true"></i> Profil</a></li>
+					<li class="page-scroll mobile"><a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Déconnexion</a></li>
 					{# /Mobile #}
 				{% else %}
-					<li class="page-scroll"><a href="?action=login"><i class="fa fa-sign-in" aria-hidden="true"></i> Connexion</a></li>
-					<li class="page-scroll"><a href="?action=register"><i class="fa fa-user-plus" aria-hidden="true"></i> Inscription</a></li>
+					<li class="page-scroll"><a href="/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Connexion</a></li>
+					<li class="page-scroll"><a href="/action/register"><i class="fa fa-user-plus" aria-hidden="true"></i> Inscription</a></li>
 				{% endif %}
 
 			</ul>

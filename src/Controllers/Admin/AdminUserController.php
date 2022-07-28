@@ -22,7 +22,7 @@ class AdminUserController extends Controller
     public function delete(string $identifier)
     {
         $this->userService->delete($identifier);
-        header('Location: index.php?action=userAdmin&flush=success');
+        header('Location: /admin/users');
     }
 
 }

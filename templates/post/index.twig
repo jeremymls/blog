@@ -19,14 +19,14 @@
                             <div class="col-lg-12">
                             {% endif %}
                                 <div class="caption">
-                                    <a href="index.php?action=post&id={{  post.identifier }}"><h3>{{ post.title }} </h3></a>
+                                    <a href="post/{{  post.identifier }}"><h3>{{ post.title }} </h3></a>
                                         <p>mis à jour le {{ post.frenchCreationDate }}</p>
                                         {% if post.chapo %}
                                             <p>{{ post.chapo | nl2br}}</p>
                                         {% else %}
                                             <p>{{ post.content |  u.truncate(200, '...', false) | nl2br }}</p>
                                         {% endif %}
-                                    <p><a href="index.php?action=post&id={{  post.identifier }}" class="btn btn-primary" role="button">Voir plus</a></p>
+                                    <p><a href="post/{{  post.identifier }}" class="btn btn-primary" role="button">Voir plus</a></p>
                                 </div>
                             </div>
                             {% if post.url is not empty %}

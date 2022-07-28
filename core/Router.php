@@ -3,79 +3,63 @@
 namespace Core;
 
 use Application\Controllers\ErrorExceptionController;
-use Application\Controllers\HomeController;
 use Exception;
 
 class Router
 {
 
-// public function __construct($routes) {
-//   $this->registerAll($routes);
-// }
+  private $url;
+  private $routes = [];
 
-  public function add($action, $ctrl, $fx, $opt= null) {
-    if ($_GET['action'] === $action) {
-      $identifier = null;
-      if (isset($_GET['id'])) {
-        // id is set and is a number
-        if ($_GET['id'] > 0){
-          $identifier = $_GET['id'];
-        } else {
-          throw new Exception('Aucun identifiant de billet envoyé');
+  public function __construct($url)
+  {
+    $this->url = $url;
+  }
+
+  public function get($path, $callable, $name = null)
+  {
+    return $this->add($path, $callable, $name, 'GET');
+  }
+
+public function post($path, $callable, $name = null)
+  {
+    return $this->add($path, $callable, $name, 'POST');
+  }
+
+private function add($path, $callable, $name, $method)
+  {
+    $route = new Route($path, $callable);
+    $this->routes[$method][] = $route;
+    if(is_string($callable) && $name === null){
+      $name = $callable;
+    }
+    if($name){
+      $this->namedRoutes[$name] = $route;
+    }
+    return $route;
+  }
+
+  public function run()
+  {
+    try {
+      if (!isset($this->routes[$_SERVER['REQUEST_METHOD']])) {
+        throw new Exception('REQUEST_METHOD does not exist');
+      }
+      foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
+        if ($route->match($this->url)) {
+          return $route->call();
         }
-        // id and post are set
-        if (!empty($_POST)) {
-          $post = $_POST;
-          return ["found",(new $ctrl())->$fx($identifier, $post)];
-        }
-        return ["found",(new $ctrl())->$fx($identifier)];
       }
-      // post only is set
-      if (!empty($_POST)) {
-        $post = $_POST;
-        if ($opt) {
-          return ["found",(new $ctrl())->$fx($opt, $post)];
-        }
-        return ["found",(new $ctrl())->$fx($post)];
-      }
-      // filter option is set
-      if (isset($_GET['filter'])) {
-        return ["found",(new $ctrl())->$fx($_GET['filter'])];
-      }
-      if ($opt != null) {
-        return ["found",(new $ctrl())->$fx($opt)];
-      }
-      /* if (isset($_GET['flush'])) {
-        $params[] = $_GET['flush'];
-      }*/
-      // default case
-      return ["found",(new $ctrl())->$fx()];
-    } else {
-      return "not found";
+      throw new Exception("La page que vous recherchez n'existe pas.<br>( /".$this->url." )", 404);
+    } catch (Exception $e) {
+      (new ErrorExceptionController())->execute($e);
     }
   }
 
-  public function getRoute($routes) {
-    try {
-      $success = false;
-      if (isset($_GET['action']) && $_GET['action'] !== '') {
-        foreach($routes as $action => $route) {
-          $options = isset($route['opt']) ? $route['opt'] : [];
-          $success = $this->add($action, $route['ctrl'], $route['fx'], $options);
-          if ($success[0] === "found") {
-            break;
-          }
-        }
-        // Error 404
-        if ($success === "not found") {
-          throw new Exception("La page que vous recherchez n'existe pas.", 404);
-        }
-      } else {
-        // show homepage
-        return (new HomeController())->execute();
-      }
-    } catch (Exception $err) {
-      (new ErrorExceptionController())->execute($err);
+  public function url($name, $params = []){
+    if(!isset($this->namedRoutes[$name])){
+      throw new Exception("Le nom de route que vous recherchez n'existe pas.", 404);
     }
+    return $this->namedRoutes[$name]->getUrl($params);
   }
 }

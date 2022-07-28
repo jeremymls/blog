@@ -1,12 +1,11 @@
 {% extends "/base.twig" %}
 {% import "macros/utils.twig" as utils %}
-{% import "/macros/alerts.twig" as alerts %}
 
 {% block title %}Projet{% endblock %}
 {% block subtitle %}
 	<h2>{{ post.title }}</h2>
 	<em>{{ post.frenchCreationDate }}</em><br>
-	<a id="retour" href="?action=posts" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+	<a id="retour" href="/posts" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 	<a id="oneTool" href="#comment" ><i class="fa fa-comment-o" aria-hidden="true"></i></a>
 {% endblock %}
 
@@ -60,7 +59,7 @@
 				<div class="row">
 					<div class="col-lg-8 col-lg-offset-2">
 						{# <form name="sentMessage" id="contactForm" novalidate> #}
-						<form action="index.php?action=commentAdd&id={{ post.identifier }}" method="post">
+						<form action="" method="post">
 							<div class="row control-group">
 								<div class="form-group col-xs-12 floating-label-form-group controls">
 									<label>Commentaire</label>
@@ -82,7 +81,7 @@
 				<div class="row">
 					<div class="col text-center not-connected">
 						<p>Vous devez être connecté pour pouvoir laisser un commentaire.</p>
-						<a class="btn btn-sm btn-primary" href="?action=login" role="button">Se connecter</a>
+						<a class="btn btn-sm btn-primary" href="/login" role="button">Se connecter</a>
 					</div>
 				</div>
 			{% endif %}
@@ -98,9 +97,9 @@
 			{% for comment in comments %}
 				<div class="panel panel-default">
 					<div class="panel-heading commentHeader">
-						<p><strong>{{ comment.author.username }}</strong> le {{comment.frenchCreationDate }}</p>  
+						<small><strong>{{ comment.author.username }}</strong> le {{comment.frenchCreationDate }}</small>  
 						{% if comment.author.identifier == (session.user.id) %}
-							<a href="?action=commentUpdate&id={{comment.identifier }}" ><i class="fa fa-2x fa-edit" aria-hidden="true"></i></a>
+							<a href="/comment/{{comment.identifier }}" ><i class="fa fa-edit" aria-hidden="true"></i></a>
 						{% endif %}
 					</div>
 					<div class="panel-body">
