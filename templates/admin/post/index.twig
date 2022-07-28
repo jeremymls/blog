@@ -20,6 +20,7 @@
                                 <th>Url</th>
                                 <th>Date de création</th>
                                 <th>Actions</th>
+                                <th></th>
                             <tr>
                         </thead>
                         <tbody>
@@ -29,9 +30,11 @@
                                     <td><a href="{{ post.url }}" target="_blank">{{ post.url }}</a></td>
                                     <td>{{ post.frenchCreationDate }}</td>
                                     <td>
-                                        <a href="/admin/posts/update/{{ post.identifier }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i></a>
+                                        <a href="/admin/posts/update/{{ post.identifier }}" class="btn btn-info"><i class="fa fa-pencil-square-o"></i></a>
                                         <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ post.identifier }}" data-title="{{ post.title }} (id:{{ post.identifier }})" data-target="#confirmDeletePost"><i class="fa fa-trash"></i></button>
-                                        <button type="button" class="btn btn-primary lunchPreview" data-toggle="modal" data-identifier="{{ post.identifier }}" data-title="{{ post.title }} (id:{{ post.identifier }})" data-chapo="{{ post.chapo }}" data-url="{{ post.url }}" data-target="#postPreview"><i class="fa fa-search-plus"></i></button>
+                                        <button type="button" class="btn btn-success lunchPreview" data-toggle="modal" data-identifier="{{ post.identifier }}" data-title="{{ post.title }} (id:{{ post.identifier }})" data-chapo="{{ post.chapo }}" data-url="{{ post.url }}" data-target="#postPreview"><i class="fa fa-search-plus"></i></button>
+                                    </td>
+                                    <td>
                                         <a href="/post/{{ post.identifier }}" target="_blank" class="btn btn-primary"><i class="fa fa-external-link"></i></a>
                                     </td>
                                 </tr>
