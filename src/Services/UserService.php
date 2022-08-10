@@ -44,6 +44,9 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception($action === "register" ? "Impossible de créer l'utilisateur ! <br>L'adresse e-mail est peut-être déjà utilisée" : "Impossible de modifier l'utilisateur !");
         }
+        if ($action === "register") {
+            $this->sendConfirmationEmail($input['email'], $input['first'] , hash('sha256', $input['email']));
+        }
         $this->flash(
             'success',
             $action === "register" ? 'Utilisateur créé' : 'Utilisateur modifié',
