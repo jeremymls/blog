@@ -148,9 +148,11 @@ class Repository
         }
         if (isset($entity->username) || isset($entity->last) || isset($entity->first)) {
             if ($entity->username == "" || $entity->username == 'NULL') {
+                $entity->isUsername = false;
                 $entity->username = $entity->first . ' ' . $entity->last;
                 $entity->initials = substr($entity->first,0,1).substr($entity->last,0,1);
             } else {
+                $entity->isUsername = true;
                 $entity->initials = $entity->username;
             }
         }

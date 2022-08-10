@@ -43,7 +43,7 @@
 						<div class="row control-group">
 							<div class="form-group col-xs-12 floating-label-form-group controls">
 								<label>Pseudo</label>
-								<input type="text" class="form-control" placeholder="Pseudo *" name="username" value="{{ user.username }}">
+								<input type="text" class="form-control" placeholder="Pseudo *" name="username" value="{% if user.isUsername %}{{ user.username }}{% endif %}">
 								<p class="help-block text-danger"></p>
 							</div>
 						</div>

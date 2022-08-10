@@ -34,6 +34,9 @@ $router->get('login', 'Security\User@login');
 $router->post('login', 'Security\User@login');
 $router->get('logout', 'Security\User@logout');
 
+#Email Confirmation
+$router->get('confirmation/:token', 'Security\User@confirmation');
+
 ## BACKEND ##
 
 #Dashboard

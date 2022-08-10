@@ -52,4 +52,9 @@ class UserController extends Controller
         header('Location: /login');
     }
 
+    public function confirmation(string $token)
+    {
+        $this->userService->confirmation($token);
+        $this->twig->display('security/redirect.twig', ['target' => '/profil']);
+    }
 }

@@ -4,6 +4,7 @@ namespace Application\Services;
 
 use Core\Service;
 use Application\Models\User;
+use Core\Services\TokenService;
 use stdClass;
 
 class UserService extends Service
@@ -13,6 +14,7 @@ class UserService extends Service
     {
         parent::__construct();
         $this->model = new User();
+        $this->tokenService = new TokenService();
     }
 
     public function show($id)
@@ -44,9 +46,6 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception($action === "register" ? "Impossible de créer l'utilisateur ! <br>L'adresse e-mail est peut-être déjà utilisée" : "Impossible de modifier l'utilisateur !");
         }
-        if ($action === "register") {
-            $this->sendConfirmationEmail($input['email'], $input['first'] , hash('sha256', $input['email']));
-        }
         $this->flash(
             'success',
             $action === "register" ? 'Utilisateur créé' : 'Utilisateur modifié',
@@ -57,6 +56,8 @@ class UserService extends Service
             header("Location: $target");
         } else {
             $user = $this->userRepository->getUserByUsername($input['email']);
+            $token = $this->tokenService->createToken($user->identifier);
+            $this->sendConfirmationEmail($input['email'], $input['first'] , $token);
             $this->setUserSession($user);
             $target = ($action === "register") ? '/' : '/profil';
             return ['target' => $target];
@@ -96,6 +97,12 @@ class UserService extends Service
         ); 
     }
 
+    public function confirmation($token)
+    {
+        $user = $this->tokenRepository->getUserByToken($token);
+        $this->userRepository->update($user->identifier, ['validated_email' => 1]);
+    }
+
     public function setUserSession(User $user)
     {
         if (!isset($_SESSION)){
@@ -111,6 +118,7 @@ class UserService extends Service
         $_SESSION['user']->first = $user->first;
         $_SESSION['user']->last = $user->last;
         $_SESSION['user']->role = $user->role;
+        $_SESSION['user']->validated_email = $user->validated_email;
         $_SESSION['user']->initials = $user->initials;
     }
 }
