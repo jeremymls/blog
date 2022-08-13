@@ -24,6 +24,7 @@ abstract class Controller
         // flash messages
         $flash = null;
         if (isset($_COOKIE['flash'])) {
+            $flash = $_COOKIE['flash'];
             $this->twig->addGlobal('type', $_COOKIE['type']);
             $this->twig->addGlobal('title', $_COOKIE['title']);
             $this->twig->addGlobal('message', $_COOKIE['message']);
