@@ -20,6 +20,13 @@ abstract class Controller
         $this->twig->addExtension(new StringExtension());
         $this->twig->addGlobal('session', $_SESSION);
         $this->twig->addGlobal('get', $_GET);
-        $this->twig->addGlobal('flash', !empty($_COOKIE["flash"]) ? $_COOKIE["flash"] : null);
+        // flash messages
+        $flash = null;
+        if (isset($_COOKIE['flash'])) {
+            $this->twig->addGlobal('type', $_COOKIE['type']);
+            $this->twig->addGlobal('title', $_COOKIE['title']);
+            $this->twig->addGlobal('message', $_COOKIE['message']);
+        }
+        $this->twig->addGlobal('flash', $flash);
     }
 }

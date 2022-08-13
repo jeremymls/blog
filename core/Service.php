@@ -57,14 +57,10 @@ class Service
 
     public function flash(string $type, string $title, string $message)
     {
-        $html = '<div class="container"><div class="alert alert-';
-        $html .= $type;
-        $html .= ' alert-dismissible text-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><h3><strong>';
-        $html .= strtoupper($title);
-        $html .= '</strong></h3><p>';
-        $html .= $message;
-        $html .= '</p></div></div>';
-        setcookie("flash", $html, time() + 3, "/");
+        setcookie("flash", "on", time() + 3, "/");
+        setcookie("type", $type, time() + 3, "/");
+        setcookie("title", $title, time() + 3, "/");
+        setcookie("message", $message, time() + 3, "/");
     }
 
     public function sendConfirmationEmail(string $email, string $name, string $token)

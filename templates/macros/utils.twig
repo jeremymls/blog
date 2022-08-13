@@ -1,3 +1,4 @@
+{# Pagination #}
 {% macro pagination(nbPage, index = false) %}
     {% if nbPage > 1 %}
     <div class="row text-center">
@@ -23,4 +24,26 @@
         </nav>
     </div>
     {% endif %}
+{% endmacro %}
+
+{# Flash #}
+{% macro flash(type, title = null, message = null ) %}
+    {% if type == "mail_not_validated" %}
+        {% set type = "danger" %}
+        {% set title = "Vous n'avez pas validé votre e-mail!" %}
+        {% set message = "Veuillez valider votre adresse e-mail sinon vous ne pourrez pas accéder à certaines fonctionnalités" %}
+        {% set option %}
+            <a class="btn btn-default btn-sm" role="button" href="/profil#profil_section">accéder au profil</a>
+        {% endset %}
+    {% endif %}
+    
+    <div class="container">
+        <div class="alert alert-{{ type }} alert-dismissible text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h3><strong>{{ title }}</strong></h3>
+            <p>{{ message }}</p>
+            
+            {{ option }}
+        </div>
+    </div>
 {% endmacro %}
