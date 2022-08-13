@@ -15,7 +15,7 @@ class UserController extends Controller
 
     public function show($identifier = null)
     {
-        $params = $this->userService->show($identifier? $identifier : $_SESSION['user']->id);
+        $params = $this->userService->show($identifier);
         $this->twig->display('security/profil.twig', $params);
     }
 
@@ -39,8 +39,13 @@ class UserController extends Controller
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_GET['redirect']) && $_GET['redirect'] !== '') {
+                $target = $_GET['redirect'];
+            } else {
+                $target = '/';
+            }
             $this->userService->login($_POST);
-            $this->twig->display('security/redirect.twig', ['target' => '/']);
+            $this->twig->display('security/redirect.twig', ['target' => $target]);
         } else {
             $this->twig->display('security/login.twig', []);
         }

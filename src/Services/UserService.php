@@ -19,6 +19,13 @@ class UserService extends Service
 
     public function show($id)
     {
+        if (!$id) {
+            if (isset($_SESSION['user'])) {
+                $id = $_SESSION['user']->id;
+            } else {
+                header('Location: /login?redirect='.$_REQUEST['url']);
+            }
+        }
         $params['user'] = $this->userRepository->findOne($id);
         $params['comments'] = $this->commentRepository->getCommentsByUser($id);
         $params['commentsCount'] = count($params['comments']);

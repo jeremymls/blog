@@ -14,7 +14,12 @@
                             </div>
                         </div>
                     {% else %}
-                        <form action="" method="post">
+                        {% if get.redirect is defined %}
+                            <form action="?redirect={{ get.redirect }}" method="post">
+                        {% else %}
+                            <form action="" method="post">
+                            
+                        {% endif %}
                             <div class="row control-group">
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <label>Identifiant</label>
