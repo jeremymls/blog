@@ -27,6 +27,7 @@ class UserService extends Service
             }
         }
         $params['user'] = $this->userRepository->findOne($id);
+        $params['user']->withExpirationToken();
         $params['comments'] = $this->commentRepository->getCommentsByUser($id);
         $params['commentsCount'] = count($params['comments']);
         $params['commentsPendingCount'] = count(array_filter($params['comments'], function($obj){return $obj->moderate == 0;}));
@@ -107,7 +108,22 @@ class UserService extends Service
     public function confirmation($token)
     {
         $user = $this->tokenRepository->getUserByToken($token);
-        $this->userRepository->update($user->identifier, ['validated_email' => 1]);
+        if ($user->validated_email == "" || $user->validated_email == null) {
+            $this->userRepository->update($user->identifier, ['validated_email' => 1]);
+            $user->validated_email = "1";
+            $this->flash(
+                'success',
+                'Confirmation de compte',
+                'Votre email est validé !'
+            );
+        } else {
+            $this->flash(
+                'warning',
+                'Confirmation de compte',
+                'Votre email est déjà validé !'
+            );
+        }
+        $this->setUserSession($user);
     }
 
     public function setUserSession(User $user)

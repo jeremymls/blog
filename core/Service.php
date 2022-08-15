@@ -57,10 +57,10 @@ class Service
 
     public function flash(string $type, string $title, string $message)
     {
-        setcookie("flash", "on", time() + 3, "/");
-        setcookie("type", $type, time() + 3, "/");
-        setcookie("title", $title, time() + 3, "/");
-        setcookie("message", $message, time() + 3, "/");
+        setcookie("flash", "on", time() + 5, "/");
+        setcookie("type", $type, time() + 5, "/");
+        setcookie("title", $title, time() + 5, "/");
+        setcookie("message", $message, time() + 5, "/");
     }
 
     public function sendConfirmationEmail(string $email, string $name, string $token)
