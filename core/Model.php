@@ -3,6 +3,8 @@
 namespace Core;
 
 use Application\Lib\DatabaseConnection;
+use Application\Repositories\TokenRepository;
+use DateTime;
 
 class Model
 {
@@ -40,10 +42,27 @@ class Model
         return date('d/m/Y à H:i', strtotime(static::$created_at));
     }
 
-    public function with($field, $repository) {
+    public function with($field, $repository) 
+    {
         $id = $this->$field;
         $repository = new $repository();
         $repository->connection = new DatabaseConnection;
         $this->$field = $repository->findOne($id);
+    }
+
+    public function withExpirationToken()
+    {
+        $tokenRepository = new TokenRepository();
+        $tokenRepository->connection = new DatabaseConnection;
+        $token = $tokenRepository->findAll("WHERE user_id = ?", [self::$id]);
+        if (count($token) > 0) {
+            if (new DateTime($token[0]->expiration_date)>new DateTime()){
+                $this->token = $token[0]->expiration_date;
+            } else {
+                $this->token = 'expired';
+            }
+        } else {
+            var_dump('pas de token');
+        }
     }
 }
