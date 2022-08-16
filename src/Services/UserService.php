@@ -195,6 +195,19 @@ class UserService extends Service
         );
     }
 
+    public function delete_picture()
+    {
+        $success = $this->userRepository->update($_SESSION['user']->id,['picture' => null]);
+        if (!$success) {
+            throw new \Exception("Impossible de supprimer la photo de profil");
+        }
+        $this->flash(
+            'success',
+            'Photo de profil supprimée',
+            'La photo de profil a bien été supprimée'
+        );
+    }
+
     public function setUserSession(User $user)
     {
         if (!isset($_SESSION)){

@@ -45,10 +45,11 @@
                             </dl>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div id="colOverview" class="col-lg-4">
 							<div id="divOverview">
                                 <img id="thumbnailOverview" src={% if user.picture is empty %}"/assets/img/profile.png"{% else %}{{ user.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
                             </div>
+                            <button id="btnOverview" type="button" class="btn btn-danger btn-lg"><i class="fa fa-trash" aria-hidden="true"></i></button>
                         </div>
                     </div>
                     {% if comments | length > 0 %}
@@ -70,6 +71,15 @@
             </div>
         </div>
     </section>
-
-	
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function(){
+        $('#btnOverview').click(function(){
+            if (confirm("Voulez-vous vraiment supprimer votre image de profil?")){
+                window.location.href='/profil/delete/image';
+            };
+        });
+    });
+</script>
 {% endblock %}

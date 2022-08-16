@@ -33,6 +33,7 @@ $router->get('profil/edit/mail', 'Security\User@edit_mail');
 $router->post('profil/edit/mail', 'Security\User@edit_mail');
 $router->get('profil/edit/password', 'Security\User@edit_password');
 $router->post('profil/edit/password', 'Security\User@edit_password');
+$router->get('profil/delete/image', 'Security\User@delete_picture');
 $router->get('profil/register', 'Security\User@register');
 $router->post('profil/register', 'Security\User@register');
 $router->get('profil/:id', 'Security\User@show');

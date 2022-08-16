@@ -88,4 +88,11 @@ class UserController extends Controller
         $params = $this->userService->show($identifier);
         $this->twig->display('security/edit_password.twig', $params);
     }
+
+    public function delete_picture($identifier = null)
+    {
+        $this->userService->delete_picture($identifier);
+        $params = $this->userService->show($identifier);
+        $this->twig->display('security/profil.twig', $params);
+    }
 }
