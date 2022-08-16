@@ -9,13 +9,15 @@
                 <form action={% if action == "register" %} "/profil/register" {% else %} "/profil/edit{% if get.userId is not empty %}&userId={{ get.userId }}{% endif %}" {% endif %} method="post" enctype="multipart/form-data">
 					<div class="col-lg-4">
 						<div class="form-group">
-							<label for="picture">Photo :
+							<label for="picture">Photo de profil
 								<div id="divOverview">
                                     <img id="thumbnailOverview" src={% if user.picture is empty %}"/assets/img/profile.png"{% else %}{{ user.picture }}{% endif %} alt="">
                                 </div>
 							</label>
 							{# <input type="hidden" name="MAX_FILE_SIZE" value="512000"> #}
 							<input type="file" name="picture" id="picture" class="form-control" accept=".gif,.jpg,.jpeg,.png,.webp">
+							<p id="imgSize"></p>
+							<p>Taille max : 500 KB</p>
 						</div>
 					</div>
 					<div class="col-lg-8">
