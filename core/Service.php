@@ -89,7 +89,7 @@ class Service
         $this->mail->Subject = 'Validation de votre compte';
 
         //Read an HTML message body from an external file
-        $url = $_SERVER['SERVER_NAME'] . "/confirmation/$token";
+        $url = "http://" . $_SERVER['SERVER_NAME'] . "/confirmation/$token";
         $msg = file_get_contents('core/ModelMail/activate.html');
         $msg = str_replace('{{name}}', $name, $msg);
         $msg = str_replace('{{url}}', $url, $msg);
