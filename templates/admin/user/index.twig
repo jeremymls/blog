@@ -4,7 +4,7 @@
 {% block title %}Administration des Utilisateurs{% endblock %}
 {% block subtitle %}
 	<a id="retour" href="/dashboard" ><i class="fa fa-cogs" aria-hidden="true"></i></a>
-	<a id="oneTool" href="/action/register"><i class="fa fa-plus" aria-hidden="true"></i></a>
+	<a id="oneTool" href="/profil/register"><i class="fa fa-plus" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
@@ -54,7 +54,7 @@
                                     </td>
                                     <td class="action">
                                     <div class="row">
-                                        <a href="/action/edit&userId={{ user.identifier }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Modifier</a>
+                                        <a href="/profil/edit&userId={{ user.identifier }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Modifier</a>
                                     </div>
                                     <div class="row">
                                         <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ user.identifier }}" data-title="{{ user.username }} (id:{{ user.identifier }})" data-target="#confirmDeleteUser"><i class="fa fa-trash"></i> Supprimer</button>

@@ -42,33 +42,53 @@ class UserService extends Service
         return $params;
     }
 
-    public function registerOrUpdateUser(string $action, array $input, $userId = null)
+    public function register(array $input, $userId)
     {
         if ($input['password'] !== $input['passwordConfirm']) {
             throw new \Exception('Les mots de passe ne correspondent pas.');
         }
         $user = $this->validateForm($input,["email","password","first","last"]);
-        $success = ($action === "register") ? 
-            $this->userRepository->add($user) : 
-            $this->userRepository->update($userId?$userId : $_SESSION['user']->id, $user);
+        $success = $this->userRepository->add($user);
         if (!$success) {
-            throw new \Exception($action === "register" ? "Impossible de créer l'utilisateur ! <br>L'adresse e-mail est peut-être déjà utilisée" : "Impossible de modifier l'utilisateur !");
+            throw new \Exception("Impossible de créer l'utilisateur ! <br>L'adresse e-mail est peut-être déjà utilisée");
         }
         $this->flash(
             'success',
-            $action === "register" ? 'Utilisateur créé' : 'Utilisateur modifié',
-            $action === "register" ? 'L\'utilisateur '. $input['email'] .' a bien été créé' : 'L\'utilisateur '. $input['email'] .' a bien été modifié'
+            'Utilisateur créé',
+            'L\'utilisateur '. $input['email'] .' a bien été créé'
         );
-        if ((isset($_SESSION['user']) && $_SESSION['user']->role === "admin" && (isset($userId)) || $action === "register") ){
-            $target = ($action === "register") ? '/admin/users' : "/profil/$userId";
-            header("Location: $target");
-            $user = $this->userRepository->getUserByUsername($input['email']);
-            $token = $this->tokenService->createToken($user->identifier);
-            $this->sendConfirmationEmail($input['email'], $input['first'] , $token);
-            $this->setUserSession($user);
+        $user = $this->userRepository->getUserByUsername($input['email']);
+        $token = $this->tokenService->createToken($user->identifier);
+        $this->sendConfirmationEmail($input['email'], $input['first'] , $token);
+        if (isset($_SESSION['user']) && $_SESSION['user']->role === "admin"){
+            header("Location: /admin/users");
         } else {
-            $target = ($action === "register") ? '/' : '/profil';
-            return ['target' => $target];
+            $this->setUserSession($user);
+            return ['target' => "/profil"];
+        }
+    }
+
+    public function updateUser(array $input, $userId = null)
+    {
+        if ($input['password'] !== $input['passwordConfirm']) {
+            throw new \Exception('Les mots de passe ne correspondent pas.');
+        }
+        $user = $this->validateForm($input,["email","password","first","last"]);
+        $success = $this->userRepository->update($userId?$userId : $_SESSION['user']->id, $user);
+        if (!$success) {
+            throw new \Exception("Impossible de modifier l'utilisateur !");
+        }
+        $this->flash(
+            'success',
+            'Utilisateur modifié',
+            'L\'utilisateur '. $input['email'] .' a bien été modifié'
+        );
+        if (isset($_SESSION['user']) && $_SESSION['user']->role === "admin" && isset($userId)){
+            header("Location: /admin/users");
+        } else {
+            $user = $this->userRepository->getUserByUsername($input['email']);
+            $this->setUserSession($user);
+            return ['target' => "/profil"];
         }
     }
 
@@ -175,13 +195,14 @@ class UserService extends Service
         );
     }
 
-
     public function setUserSession(User $user)
     {
         if (!isset($_SESSION)){
             session_start();
         } else {
-            session_destroy();
+            session_unset();
+        }
+        if (!isset($_SESSION)){
             session_start();
         }
         $_SESSION['user'] = new stdClass();
