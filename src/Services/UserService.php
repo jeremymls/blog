@@ -59,14 +59,14 @@ class UserService extends Service
             $action === "register" ? 'Utilisateur créé' : 'Utilisateur modifié',
             $action === "register" ? 'L\'utilisateur '. $input['email'] .' a bien été créé' : 'L\'utilisateur '. $input['email'] .' a bien été modifié'
         );
-        if (isset($_SESSION['user']) && $_SESSION['user']->role === "admin" && (isset($userId) || $action === "register") ){
+        if ((isset($_SESSION['user']) && $_SESSION['user']->role === "admin" && (isset($userId)) || $action === "register") ){
             $target = ($action === "register") ? '/admin/users' : "/profil/$userId";
             header("Location: $target");
-        } else {
             $user = $this->userRepository->getUserByUsername($input['email']);
             $token = $this->tokenService->createToken($user->identifier);
             $this->sendConfirmationEmail($input['email'], $input['first'] , $token);
             $this->setUserSession($user);
+        } else {
             $target = ($action === "register") ? '/' : '/profil';
             return ['target' => $target];
         }
@@ -125,6 +125,56 @@ class UserService extends Service
         }
         $this->setUserSession($user);
     }
+
+    public function edit_mail($input)
+    {
+        if ($input['email'] !== $input['retape']) {
+            throw new \Exception('Les adresses ne correspondent pas.');
+        }
+        $success = $this->userRepository->update(
+            $_SESSION['user']->id,
+            [
+                'email' => $input['email'],
+                'validated_email' => 0
+            ]);
+        if (!$success) {
+            throw new \Exception("Impossible de modifier l'e-mail <br>Cette adresse est peut-être déjà utilisée");
+        }
+        $this->flash(
+            'success',
+            'E-mail modifiée',
+            'L\'e-mail a bien été modifiée'
+        );
+        $_SESSION['user']->validated_email = 0;
+        $user = $this->userRepository->getUserByUsername($input['email']);
+        $token = $this->tokenService->createToken($user->identifier);
+        $this->sendConfirmationEmail($input['email'], $user->first , $token);
+    }
+
+    public function edit_password(array $input)
+    {
+        $user = $this->userRepository->findOne($_SESSION['user']->id);        
+        if ($input['currentPassword'] !== $user->password) {
+            throw new \Exception('Vous n\'avez pas tapé le bon mot de passe actuel.');
+        }
+        if ($input['password'] !== $input['passwordConfirm']) {
+            throw new \Exception('Les mots de passe ne correspondent pas.');
+        }
+        $success = $this->userRepository->update(
+            $_SESSION['user']->id,
+            [
+                'password' => $input['password']
+            ]);
+        if (!$success) {
+            throw new \Exception("Impossible de modifier le mot de passe");
+        }
+        $this->flash(
+            'success',
+            'Mot de passe modifié',
+            'Le mot de passe a bien été modifié'
+        );
+    }
+
 
     public function setUserSession(User $user)
     {

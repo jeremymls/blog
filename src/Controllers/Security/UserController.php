@@ -62,4 +62,24 @@ class UserController extends Controller
         $this->userService->confirmation($token);
         $this->twig->display('security/redirect.twig', ['target' => '/profil']);
     }
+
+    public function edit_mail($identifier = null)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $this->userService->edit_mail($_POST);
+        $this->twig->display('security/redirect.twig', ['target' => '/profil']);
+        }
+        $params = $this->userService->show($identifier);
+        $this->twig->display('security/edit_mail.twig', $params);
+    }
+
+    public function edit_password($identifier = null)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->userService->edit_password($_POST);
+            $this->twig->display('security/redirect.twig', ['target' => '/profil']);
+        }
+        $params = $this->userService->show($identifier);
+        $this->twig->display('security/edit_password.twig', $params);
+    }
 }

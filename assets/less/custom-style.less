@@ -240,7 +240,18 @@
 #tools{
     max-width: 1080px;
     margin: 0 auto;
-    font-size: 16px;
+    font-size: 18px;
+    a, a:focus,a:hover {
+
+
+        text-decoration: none;
+    }
+    a:hover{
+        color: white;
+        img{
+            transform: scale(1.4);
+        }
+    }
 }
 
 .menu{
@@ -256,6 +267,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    z-index: 10;
 }
 #retour, #retour:hover{
     text-decoration: none;
@@ -290,6 +302,7 @@
 
 .menu--open{
     height: 300px;
+    width: 300px;
 }
 
 .button{
@@ -301,7 +314,7 @@
     align-items: center;
     width: 2em;
     height: 2em;
-    left: 27%;
+    right: 18px;
     top: 20px;
     opacity: 1;
 }
@@ -326,20 +339,23 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     height: 60%;
+    width: 80%;
     justify-content: space-around;
     transition: 0.3s margin ease-in-out;
+    img{
+        margin: 0 5px 8px 0;
+    }
 }
 
 
 .tools .icon{
+    display: inline;
     transition: 0.2s transform ease-in-out;
 }
 
-.tools .icon:hover{
-    transform: scale(0.8);
-}
+
 
 .tools--hidden{
     margin-top: 400px;
@@ -347,7 +363,7 @@
 }
 
 .tools--visible{
-    margin-top: 40%;
+    margin-top: 20%;
     z-index: 100;
 }
 

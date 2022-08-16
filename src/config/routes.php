@@ -27,6 +27,10 @@ $router->post('comment/:id', 'Comment@update');
 
 #User
 $router->get('profil', 'Security\User@show');
+$router->get('profil/edit/mail', 'Security\User@edit_mail');
+$router->post('profil/edit/mail', 'Security\User@edit_mail');
+$router->get('profil/edit/password', 'Security\User@edit_password');
+$router->post('profil/edit/password', 'Security\User@edit_password');
 $router->get('profil/:id', 'Security\User@show');
 $router->get('action/:action', 'Security\User@action');
 $router->post('action/:action', 'Security\User@action');

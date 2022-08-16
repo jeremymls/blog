@@ -4,7 +4,7 @@
 {% block title %}Profil{% endblock %}
 {% block subtitle %}
 	<a id="retour" href="/" ><i class="fa fa-home" aria-hidden="true"></i></a>
-	<a id="oneTool" href="/action/edit{% if user.identifier != session.user.id %}&userId={{ user.identifier }}{% endif %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+	{% include ('security/partials/_tools.twig') %}
 {% endblock %}
 
 {% block main %}
