@@ -7,6 +7,7 @@ use Application\Lib\DatabaseConnection;
 use Application\Repositories\PostRepository;
 use Application\Repositories\TokenRepository;
 use Application\Repositories\UserRepository;
+use Core\Services\Flash;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
@@ -16,6 +17,7 @@ class Service
     public function __construct()
     {
         $this->mail = new PHPMailer();
+        $this->flash = new Flash();
         $this->postRepository = new PostRepository();
         $this->postRepository->connection = new DatabaseConnection();
         $this->commentRepository = new CommentRepository();
@@ -53,14 +55,6 @@ class Service
         $params[$entities] = array_slice($params[$entities], ($page - 1) * $nbp, $nbp);
         $params['nbPage'] = $nbPage;
         return $params;
-    }
-
-    public function flash(string $type, string $title, string $message)
-    {
-        setcookie("flash", "on", time() + 5, "/");
-        setcookie("type", $type, time() + 5, "/");
-        setcookie("title", $title, time() + 5, "/");
-        setcookie("message", $message, time() + 5, "/");
     }
 
     public function sendConfirmationEmail(string $email, string $name, string $token)

@@ -42,8 +42,7 @@ class PostService extends Service
         if (!$success) {
             throw new \Exception('Impossible de d\'ajouter le projet !');
         } 
-        $this->flash(
-            'success',
+        $this->flash->success(
             'Projet ajouté',
             'Le projet '. $_POST['title'] .' a bien été ajouté'
         );
@@ -56,8 +55,7 @@ class PostService extends Service
         if (!$success) {
             throw new \Exception('Impossible de modifier le projet !');
         } 
-        $this->flash(
-            'success',
+        $this->flash->success(
             'Projet modifié',
             'Le projet a bien été modifié'
         );
@@ -69,8 +67,7 @@ class PostService extends Service
         if (!$success) {
             throw new \Exception('Impossible de supprimer le projet !');
         } 
-        $this->flash(
-            'danger',
+        $this->flash->danger(
             'Projet supprimé',
             'Le projet a bien été supprimé'
         );

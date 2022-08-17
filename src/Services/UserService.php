@@ -52,8 +52,7 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception("Impossible de créer l'utilisateur ! <br>L'adresse e-mail est peut-être déjà utilisée");
         }
-        $this->flash(
-            'success',
+        $this->flash->success(
             'Utilisateur créé',
             'L\'utilisateur '. $input['email'] .' a bien été créé'
         );
@@ -78,8 +77,7 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception("Impossible de modifier l'utilisateur !");
         }
-        $this->flash(
-            'success',
+        $this->flash->success(
             'Utilisateur modifié',
             'L\'utilisateur '. $input['email'] .' a bien été modifié'
         );
@@ -105,8 +103,7 @@ class UserService extends Service
     public function logout()
     {
         session_destroy();
-        $this->flash(
-            'danger',
+        $this->flash->danger(
             'Déconnexion',
             'Vous êtes déconnecté'
         ); 
@@ -118,8 +115,7 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception("Impossible de supprimer l'utilisateur !");
         } 
-        $this->flash(
-            'success',
+        $this->flash->success(
             'Utilisateur supprimé',
             'L\'utilisateur '. $identifier .' a bien été supprimé'
         ); 
@@ -131,14 +127,12 @@ class UserService extends Service
         if ($user->validated_email == "" || $user->validated_email == null) {
             $this->userRepository->update($user->identifier, ['validated_email' => 1]);
             $user->validated_email = "1";
-            $this->flash(
-                'success',
+            $this->flash->success(
                 'Confirmation de compte',
                 'Votre email est validé !'
             );
         } else {
-            $this->flash(
-                'warning',
+            $this->flash->warning(
                 'Confirmation de compte',
                 'Votre email est déjà validé !'
             );
@@ -160,8 +154,7 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception("Impossible de modifier l'e-mail <br>Cette adresse est peut-être déjà utilisée");
         }
-        $this->flash(
-            'success',
+        $this->flash->success(
             'E-mail modifiée',
             'L\'e-mail a bien été modifiée'
         );
@@ -188,8 +181,7 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception("Impossible de modifier le mot de passe");
         }
-        $this->flash(
-            'success',
+        $this->flash->success(
             'Mot de passe modifié',
             'Le mot de passe a bien été modifié'
         );
@@ -201,8 +193,7 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception("Impossible de supprimer la photo de profil");
         }
-        $this->flash(
-            'success',
+        $this->flash->success(
             'Photo de profil supprimée',
             'La photo de profil a bien été supprimée'
         );

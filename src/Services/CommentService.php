@@ -38,8 +38,7 @@ class CommentService extends Service
         if (!$success) {
             throw new \Exception('Impossible de valider le commentaire !');
         }
-        $this->flash(
-            'success',
+        $this->flash->success(
             'Commentaire validé',
             'Le commentaire a bien été validé'
         );
@@ -51,8 +50,7 @@ class CommentService extends Service
         if (!$success) {
             throw new \Exception('Impossible de supprimer le commentaire !');
         }
-        $this->flash(
-            'danger',
+        $this->flash->danger(
             'Commentaire supprimé',
             'Le commentaire a bien été supprimé'
         );
@@ -66,8 +64,7 @@ class CommentService extends Service
         if (!$success) {
             throw new \Exception('Impossible de modifier le commentaire !');
         }
-        $this->flash(
-            'success',
+        $this->flash->success(
             'Commentaire modifié',
             'Votre commentaire sera à nouveau <strong>soumis à la modération</strong> et publié'
         );
@@ -80,8 +77,7 @@ class CommentService extends Service
         if (!$success) {
             throw new \Exception('Impossible d\'ajouter le commentaire !');
         }
-        $this->flash(
-            'success',
+        $this->flash->success(
             'COMMENTAIRE ENVOYÉ',
             'Votre commentaire sera <strong>soumis à la modération</strong> avant d\'être publié'
         );
