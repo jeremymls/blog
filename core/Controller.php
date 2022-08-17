@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use Core\Middleware\Flash;
 use Twig\Extension\DebugExtension;
 use Twig\Extra\String\StringExtension;
 
@@ -21,14 +22,6 @@ abstract class Controller
         $this->twig->addGlobal('session', $_SESSION);
         $this->twig->addGlobal('get', $_GET);
         $this->twig->addGlobal('url_request', $_SERVER['REQUEST_URI']);
-        // flash messages
-        $flash = null;
-        if (isset($_COOKIE['flash'])) {
-            $flash = $_COOKIE['flash'];
-            $this->twig->addGlobal('type', $_COOKIE['type']);
-            $this->twig->addGlobal('title', $_COOKIE['title']);
-            $this->twig->addGlobal('message', $_COOKIE['message']);
-        }
-        $this->twig->addGlobal('flash', $flash);
+        new Flash($this->twig);
     }
 }

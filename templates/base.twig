@@ -45,10 +45,10 @@
 			</div>
 		</header>
 		<main>
-		{% if flash != null %}
+		{% if flash %}
 			{{ utils.flash(type, title, message) }}
 		{% endif %}
-		{% if session.user is defined and session.user.validated_email != "1" %}
+		{% if mail_not_validated %}
 			{{ utils.flash("mail_not_validated") }}
 		{% endif %}
 		{% block main %}{% endblock %}
