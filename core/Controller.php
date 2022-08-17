@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use Core\Middleware\ConfirmMail;
 use Core\Middleware\Flash;
 use Twig\Extension\DebugExtension;
 use Twig\Extra\String\StringExtension;
@@ -23,5 +24,6 @@ abstract class Controller
         $this->twig->addGlobal('get', $_GET);
         $this->twig->addGlobal('url_request', $_SERVER['REQUEST_URI']);
         new Flash($this->twig);
+        new ConfirmMail($this->twig);
     }
 }
