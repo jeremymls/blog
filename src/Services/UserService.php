@@ -4,6 +4,7 @@ namespace Application\Services;
 
 use Core\Service;
 use Application\Models\User;
+use Core\Services\Mail\Mailer;
 use Core\Services\TokenService;
 use stdClass;
 
@@ -15,6 +16,7 @@ class UserService extends Service
         parent::__construct();
         $this->model = new User();
         $this->tokenService = new TokenService();
+        $this->mailer = new Mailer();
     }
 
     public function show($id)
@@ -58,7 +60,7 @@ class UserService extends Service
         );
         $user = $this->userRepository->getUserByUsername($input['email']);
         $token = $this->tokenService->createToken($user->identifier);
-        $this->sendConfirmationEmail($input['email'], $input['first'] , $token);
+        $this->mailer->sendConfirmationEmail($input['email'], $input['first'] , $token);
         if (isset($_SESSION['user']) && $_SESSION['user']->role === "admin"){
             header("Location: /admin/users");
         } else {
@@ -161,7 +163,7 @@ class UserService extends Service
         $_SESSION['user']->validated_email = 0;
         $user = $this->userRepository->getUserByUsername($input['email']);
         $token = $this->tokenService->createToken($user->identifier);
-        $this->sendConfirmationEmail($input['email'], $user->first , $token);
+        $this->mailer->sendConfirmationEmail($input['email'], $user->first , $token);
     }
 
     public function edit_password(array $input)
