@@ -2,9 +2,9 @@
 
 namespace Application\Controllers\Admin;
 
-use Core\Controller;
+use Core\AdminController;
 
-class DashboardController extends Controller
+class DashboardController extends AdminController
 {
     public function execute()
     {

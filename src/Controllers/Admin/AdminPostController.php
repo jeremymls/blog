@@ -2,10 +2,10 @@
 
 namespace Application\Controllers\Admin;
 
-use Core\Controller;
+use Core\AdminController;
 use Application\Services\PostService;
 
-class AdminPostController extends Controller
+class AdminPostController extends AdminController
 {
     public function __construct()
     {

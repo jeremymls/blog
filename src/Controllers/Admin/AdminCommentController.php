@@ -2,10 +2,10 @@
 
 namespace Application\Controllers\Admin;
 
-use Core\Controller;
+use Core\AdminController;
 use Application\Services\CommentService;
 
-class AdminCommentController extends Controller
+class AdminCommentController extends AdminController
 {
     public function __construct()
     {

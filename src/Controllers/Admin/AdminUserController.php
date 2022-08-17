@@ -2,10 +2,10 @@
 
 namespace Application\Controllers\Admin;
 
-use Core\Controller;
+use Core\AdminController;
 use Application\Services\UserService;
 
-class AdminUserController extends Controller
+class AdminUserController extends AdminController
 {
     public function __construct()
     {
