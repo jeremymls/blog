@@ -13,6 +13,7 @@ $router = new Router($url);
 
 #Home
 $router->get('/', 'Home@execute');
+$router->post('/', 'Home@send');
 
 #Post
 $router->get('posts', 'Post@index');
