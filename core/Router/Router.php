@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Core\Router;
 
 use Application\Controllers\ErrorExceptionController;
 use Exception;

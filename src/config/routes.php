@@ -1,6 +1,6 @@
 <?php
 
-use Core\Router;
+use Core\Router\Router;
 
 if (isset($_GET['url'])) {
     $url = $_GET['url'];
