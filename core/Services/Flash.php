@@ -9,9 +9,9 @@ class Flash
         return $this->send('success', $title, $message);
     }
     
-    public function error(string $title, string $message)
+    public function danger(string $title, string $message)
     {
-        return $this->send('error', $title, $message);
+        return $this->send('danger', $title, $message);
     }
     
     public function info(string $title, string $message)
