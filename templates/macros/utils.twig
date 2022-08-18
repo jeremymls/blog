@@ -41,7 +41,7 @@
         <div class="alert alert-{{ type }} alert-dismissible text-center" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h3><strong>{{ title }}</strong></h3>
-            <p>{{ message }}</p>
+            <p>{{ message | raw }}</p>
             
             {{ option }}
         </div>

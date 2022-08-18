@@ -229,10 +229,6 @@ class UserService extends Service
         $user = $this->userRepository->getUserByUsername($input['email']);
         $token = $this->tokenService->createToken($user->identifier);
         $this->mailer->sendForgetPasswordEmail($user->email, $user->username, $token);
-        $this->flash->success(
-            'Mot de passe oublié',
-            'Un e-mail vous a été envoyé pour réinitialiser votre mot de passe'
-        );
     }
 
     public function getUserByToken($token)

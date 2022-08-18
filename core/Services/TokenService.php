@@ -17,7 +17,7 @@ class TokenService extends Service
     public function createToken(string $user_id)
     {
         $token = bin2hex(random_bytes(32));
-        $expiration_date = date("Y-m-d H:i:s", time() + (60 * 60 * 24 * 7));
+        $expiration_date = date("Y-m-d H:i:s", time() + (60 * 30));
         $token = $this->validateForm([
             'user_id' => $user_id,
             'token' => $token,
