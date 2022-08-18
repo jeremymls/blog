@@ -4,8 +4,10 @@ namespace Core;
 
 use Core\Middleware\ConfirmMail;
 use Core\Middleware\Flash;
+use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Extra\String\StringExtension;
+use Twig\Loader\FilesystemLoader;
 
 abstract class Controller
 {
@@ -14,8 +16,8 @@ abstract class Controller
 
     public function __construct()
     {
-        $this->loader = new \Twig\Loader\FilesystemLoader(ROOT . '/templates');
-        $this->twig = new \Twig\Environment($this->loader, [
+        $this->loader = new FilesystemLoader(ROOT . '/templates');
+        $this->twig = new Environment($this->loader, [
             'debug' => true,
         ]);
         $this->twig->addExtension(new DebugExtension());
