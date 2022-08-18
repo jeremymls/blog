@@ -222,4 +222,39 @@ class UserService extends Service
         $_SESSION['user']->validated_email = $user->validated_email;
         $_SESSION['user']->initials = $user->initials;
     }
+
+    public function forget_password(array $input)
+    {
+        $user = $this->userRepository->getUserByUsername($input['email']);
+        $token = $this->tokenService->createToken($user->identifier);
+        $this->mailer->sendForgetPasswordEmail($user->email, $user->username, $token);
+        $this->flash->success(
+            'Mot de passe oublié',
+            'Un e-mail vous a été envoyé pour réinitialiser votre mot de passe'
+        );
+    }
+
+    public function getUserByToken($token)
+    {
+        return $this->tokenRepository->getUserByToken($token);
+    }
+
+    public function reset_password($user, $post)
+    {
+        if ($post['password'] !== $post['passwordConfirm']) {
+            throw new \Exception('Les mots de passe ne correspondent pas.');
+        }
+        $user->setPassword($post['password']);
+        $success = $this->userRepository->update(
+            $user->identifier,
+            ['password' => $user->password,]
+        );
+        if (!$success) {
+            throw new \Exception("Impossible de modifier le mot de passe");
+        }
+        $this->flash->success(
+            'Mot de passe modifié',
+            'Le mot de passe a bien été modifié'
+        );
+    }
 }

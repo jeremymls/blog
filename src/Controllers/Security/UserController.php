@@ -95,4 +95,27 @@ class UserController extends Controller
         $params = $this->userService->show($identifier);
         $this->twig->display('security/profil.twig', $params);
     }
+
+    public function forget_password()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->userService->forget_password($_POST);
+            $this->twig->display('security/redirect.twig', ['target' => '/login']);
+        } else {
+            $this->twig->display('security/forget_password.twig', []);
+        }
+    }
+
+    public function reset_password($token)
+    {
+        $params['user'] = $this->userService->getUserByToken($token);
+        if ($params) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $this->userService->reset_password($params['user'], $_POST);
+                $this->twig->display('security/redirect.twig', ['target' => '/login']);
+            } else {
+                $this->twig->display('security/reset_password.twig', $params);
+            }
+        }
+    }
 }
