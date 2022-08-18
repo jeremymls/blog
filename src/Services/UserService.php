@@ -50,6 +50,7 @@ class UserService extends Service
             throw new \Exception('Les mots de passe ne correspondent pas.');
         }
         $user = $this->validateForm($input,["email","password","first","last"]);
+        $user->setPassword($input['password']);
         $success = $this->userRepository->add($user);
         if (!$success) {
             throw new \Exception("Impossible de créer l'utilisateur ! <br>L'adresse e-mail est peut-être déjà utilisée");
@@ -96,7 +97,7 @@ class UserService extends Service
     {
         $user = $this->validateForm($input,["identifiant", "password"]);
         $user = $this->userRepository->getUserByUsername($input['identifiant']);
-        if ($user->password !== $input['password']) {
+        if (!$user->comparePassword($user->password, $input['password'])) {
             throw new \Exception("Mot de passe incorrect !");
         }
         $this->setUserSession($user);
@@ -169,17 +170,17 @@ class UserService extends Service
     public function edit_password(array $input)
     {
         $user = $this->userRepository->findOne($_SESSION['user']->id);        
-        if ($input['currentPassword'] !== $user->password) {
-            throw new \Exception('Vous n\'avez pas tapé le bon mot de passe actuel.');
-        }
         if ($input['password'] !== $input['passwordConfirm']) {
             throw new \Exception('Les mots de passe ne correspondent pas.');
         }
+        if (!$user->comparePassword($user->password, $input['currentPassword'])) {
+            throw new \Exception('Ce n\'est le bon mot de passe actuel.');
+        }
+        $user->setPassword($input['password']);
         $success = $this->userRepository->update(
             $_SESSION['user']->id,
-            [
-                'password' => $input['password']
-            ]);
+            ['password' => $user->password,]
+        );
         if (!$success) {
             throw new \Exception("Impossible de modifier le mot de passe");
         }

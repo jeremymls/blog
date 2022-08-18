@@ -17,4 +17,14 @@ class User extends Model
     public string $role;
     public string $validated_email;
     public string $picture;
+
+    public function setPassword($password)
+    {
+        $this->password = hash("sha512",hash("ripemd256", $password));
+    }
+
+    public function comparePassword($passwordBDD, $passwordPOST)
+    {
+        return hash("sha512",hash("ripemd256", $passwordPOST)) == $passwordBDD;
+    }
 }
