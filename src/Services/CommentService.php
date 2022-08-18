@@ -4,6 +4,7 @@ namespace Application\Services;
 
 use Core\Service;
 use Application\Models\Comment;
+use Core\Middleware\Pagination;
 
 class CommentService extends Service
 {
@@ -19,7 +20,7 @@ class CommentService extends Service
             throw new \Exception('Impossible de récupérer les commentaires !');
         }
         $params['filter'] = $filter;
-        $params= $this->pagination($params, 'comments', 10);
+        new Pagination($params, 'comments', 10);
         return $params;
     }
 
