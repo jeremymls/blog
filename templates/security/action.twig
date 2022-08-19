@@ -28,20 +28,22 @@
 								<p class="help-block text-danger"></p>
 							</div>
 						</div>
+						{% if action == "register" %}
 						<div class="row control-group">
-							<div class="form-group col-xs-12 floating-label-form-group controls {% if action != "register" %} hidden {% endif %}">
+							<div class="form-group col-xs-12 floating-label-form-group controls">
 								<label>Mot de passe</label>
 								<input type="password" class="form-control" placeholder="Mot de passe" name="password" value="{{ user.password }}" required data-validation-required-message="Veuillez entrer votre mot de passe.">
 								<p class="help-block text-danger"></p>
 							</div>
 						</div>
 						<div class="row control-group">
-							<div class="form-group col-xs-12 floating-label-form-group controls {% if action != "register" %} hidden {% endif %}">
+							<div class="form-group col-xs-12 floating-label-form-group controls">
 								<label>Confirmation du mot de passe</label>
 								<input type="password" class="form-control" placeholder="Confirmation du mot de passe" name="passwordConfirm" value="{{ user.password }}" required data-validation-required-message="Veuillez entrer votre mot de passe.">
 								<p class="help-block text-danger"></p>
 							</div>
 						</div>
+						{% endif %}
 						<div class="row control-group">
 							<div class="form-group col-xs-12 floating-label-form-group controls">
 								<label>Pseudo</label>

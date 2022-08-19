@@ -73,10 +73,7 @@ class UserService extends Service
 
     public function updateUser(array $input, $userId = null)
     {
-        if ($input['password'] !== $input['passwordConfirm']) {
-            throw new \Exception('Les mots de passe ne correspondent pas.');
-        }
-        $user = $this->validateForm($input,["email","password","first","last"]);
+        $user = $this->validateForm($input,["email","first","last"]);
         $success = $this->userRepository->update($userId?$userId : $_SESSION['user']->id, $user);
         if (!$success) {
             throw new \Exception("Impossible de modifier l'utilisateur !");
