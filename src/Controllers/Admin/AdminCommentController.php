@@ -30,5 +30,11 @@ class AdminCommentController extends AdminController
         $this->commentService->delete($identifier);
         header('Location: /admin/comments');
     }
+
+    public function action()
+    {
+        $this->commentService->action($_POST);
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+    }
 }
 

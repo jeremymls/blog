@@ -79,6 +79,20 @@ class CommentRepository extends Repository
         return ($affectedLines > 0);
     }
 
+    public function commentInvalidate(string $identifier): bool
+    {
+        $statement = $this->connection->getConnection()->prepare('UPDATE comments SET moderate = 0 WHERE id = ?');
+        $affectedLines = $statement->execute([$identifier]);
+        return ($affectedLines > 0);
+    }
+
+    public function commentRefuse(string $identifier): bool
+    {
+        $statement = $this->connection->getConnection()->prepare('UPDATE comments SET moderate = 2 WHERE id = ?');
+        $affectedLines = $statement->execute([$identifier]);
+        return ($affectedLines > 0);
+    }
+
     public function setPending(string $identifier): bool
     {
         $statement = $this->connection->getConnection()->prepare('UPDATE comments SET moderate = 0 WHERE id = ?');

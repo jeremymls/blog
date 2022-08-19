@@ -66,6 +66,8 @@ $router->get('admin/posts/delete/:id', 'Admin\AdminPost@delete');
 #AdminComment
 $router->get('admin/comments', 'Admin\AdminComment@index');
 $router->get('admin/comments/:filter', 'Admin\AdminComment@index');
+$router->post('admin/comments/:filter', 'Admin\AdminComment@action');
+$router->post('admin/comments', 'Admin\AdminComment@action');
 $router->get('admin/comments/delete/:id', 'Admin\AdminComment@delete');
 $router->get('admin/comments/validate/:id', 'Admin\AdminComment@validate');
 

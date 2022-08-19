@@ -20,7 +20,7 @@ class CommentService extends Service
             throw new \Exception('Impossible de récupérer les commentaires !');
         }
         $params['filter'] = $filter;
-        new Pagination($params, 'comments', 10);
+        $params = $this->pagination->paginate($params, 'comments', 10);
         return $params;
     }
 
@@ -82,5 +82,46 @@ class CommentService extends Service
             'COMMENTAIRE ENVOYÉ',
             'Votre commentaire sera <strong>soumis à la modération</strong> avant d\'être publié'
         );
+    }
+
+    public function action($input)
+    {
+        foreach ($input['comment'] as $identifier) {
+            switch ($input['btnSubmit']) {
+                case 'Valider':
+                    $success = $this->commentRepository->commentValidate($identifier);
+                    break;
+                case 'Invalider':
+                    $success = $this->commentRepository->commentInvalidate($identifier);
+                    break;
+                case 'Refuser':
+                    $success = $this->commentRepository->commentRefuse($identifier);
+                    break;
+            }
+            if (!$success) {
+                throw new \Exception('Une erreur est survenue lors de la modification d\'un commentaire !');
+            }
+        }
+        switch ($input['btnSubmit']) {
+            case 'Valider':
+                $this->flash->success(
+                    'Commentaires Validés',
+                    'Les commentaires ont bien été validés'
+                );
+            break;
+            case 'Invalider':
+                $this->flash->warning(
+                    'Commentaires Invalidés',
+                    'Les commentaires ont bien été invalidés'
+                );
+            break;
+            case 'Refuser':
+                $this->flash->success(
+                    'Commentaires Refusés',
+                    'Les commentaires ont bien été refusés'
+                );
+            break;
+        }
+
     }
 }
