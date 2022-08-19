@@ -4,7 +4,6 @@ namespace Application\Services;
 
 use Core\Service;
 use Application\Models\Post;
-use Core\Middleware\Pagination;
 
 class PostService extends Service
 {
@@ -18,7 +17,7 @@ class PostService extends Service
     public function getPosts()
     {
         $params['posts'] = $this->postRepository->findAll();
-        new Pagination($params, 'posts',5);
+        $params = $this->pagination->paginate($params, 'posts',5);
         return $params;
     }
 
@@ -32,7 +31,7 @@ class PostService extends Service
     {
         $params['post'] = $this->postRepository->findOne($identifier);
         $params['comments'] = $this->commentRepository->getCommentsByPost($identifier);
-        new Pagination($params, 'comments', 4);
+        $params = $this->pagination->paginate($params, 'comments', 4);
         return $params;
     }
 

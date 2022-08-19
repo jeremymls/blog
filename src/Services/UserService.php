@@ -4,7 +4,6 @@ namespace Application\Services;
 
 use Core\Service;
 use Application\Models\User;
-use Core\Middleware\Pagination;
 use Core\Services\Mail\Mailer;
 use Core\Services\TokenService;
 use stdClass;
@@ -34,14 +33,14 @@ class UserService extends Service
         $params['comments'] = $this->commentRepository->getCommentsByUser($id);
         $params['commentsCount'] = count($params['comments']);
         $params['commentsPendingCount'] = count(array_filter($params['comments'], function($obj){return $obj->moderate == 0;}));
-        new Pagination($params, 'comments', 5);
+        $params = $this->pagination->paginate($params, 'comments', 5);
         return $params;
     }
 
     public function getUsers()
     {
         $params['users'] = $this->userRepository->findAll();
-        new Pagination($params, 'users', 5);
+        $params = $this->pagination->paginate($params, 'users', 5);
         return $params;
     }
 

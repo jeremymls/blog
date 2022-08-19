@@ -4,7 +4,7 @@ namespace Core\Middleware;
 
 class Pagination
 {
-    public function __construct($params, $entities, $nbp = 3)
+    public function paginate($params, $entities, $nbp = 3)
     {
         if (isset($_GET['page'])) {
             $page = $_GET['page'];
@@ -14,6 +14,6 @@ class Pagination
         $nbPage = ceil(count($params[$entities]) / $nbp);
         $params[$entities] = array_slice($params[$entities], ($page - 1) * $nbp, $nbp);
         $params['nbPage'] = $nbPage;
-        $this->params = $params;
+        return $params;
     }
 }

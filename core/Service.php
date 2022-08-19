@@ -7,6 +7,7 @@ use Application\Repositories\CommentRepository;
 use Application\Repositories\PostRepository;
 use Application\Repositories\TokenRepository;
 use Application\Repositories\UserRepository;
+use Core\Middleware\Pagination;
 use Core\Services\Flash;
 
 class Service
@@ -14,6 +15,7 @@ class Service
     public function __construct()
     {
         $this->flash = new Flash();
+        $this->pagination = new Pagination();
         $this->postRepository = new PostRepository();
         $this->postRepository->connection = new DatabaseConnection();
         $this->commentRepository = new CommentRepository();

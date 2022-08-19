@@ -4,7 +4,6 @@ namespace Application\Services;
 
 use Core\Service;
 use Application\Models\Comment;
-use Core\Middleware\Pagination;
 
 class CommentService extends Service
 {
