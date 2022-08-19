@@ -251,4 +251,23 @@ class UserService extends Service
             'Le mot de passe a bien été modifié'
         );
     }
+
+    public function confirm_again()
+    {
+        $user = $this->userRepository->findOne($_SESSION['user']->id);
+        $user->withExpirationToken();
+        if ($user->token == "expired") {
+            $token = $this->tokenService->createToken($user->identifier);
+            $this->mailer->sendConfirmationEmail($user->email, $user->first , $token);
+            $this->flash->success(
+                'Confirmation de compte',
+                'Un nouveau lien de confirmation a été envoyé à votre adresse e-mail.'
+            );
+        } else {
+            $this->flash->warning(
+                'Confirmation de compte',
+                'Un lien a déjà été envoyé <br> Vous ne pouvez pas faire plus d\'une demande en moins de 30mn!'
+            );
+        }
+    }
 }

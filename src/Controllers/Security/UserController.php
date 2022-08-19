@@ -118,4 +118,10 @@ class UserController extends Controller
             }
         }
     }
+
+    public function confirm_again()
+    {
+        $this->userService->confirm_again();
+        $this->twig->display('security/redirect.twig', ['target' => '/profil']);
+    }
 }

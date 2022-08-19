@@ -45,6 +45,7 @@ $router->get('forget', 'Security\User@forget_password');
 $router->post('forget', 'Security\User@forget_password');
 $router->get('reset_password/:token', 'Security\User@reset_password');
 $router->post('reset_password/:token', 'Security\User@reset_password');
+$router->get('confirm_again', 'Security\User@confirm_again');
 
 #Email Confirmation
 $router->get('confirmation/:token', 'Security\User@confirmation');
