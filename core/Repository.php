@@ -9,9 +9,9 @@ class Repository
 
     public DatabaseConnection $connection;
 
-    public function findAll(string $option = "", array $optionsData = [])
+    public function findAll(string $option = "", array $optionsData = [], string $limit = "")
     {
-        $statement = $this->getSelectStatementByModel($option ." ORDER BY created_at DESC", $optionsData);
+        $statement = $this->getSelectStatementByModel($option ." ORDER BY created_at DESC ". $limit, $optionsData);
         $entities = [];
         while (($row = $statement->fetch())) {
             $entity = $this->createEntity($row);

@@ -14,9 +14,9 @@ class PostService extends Service
         $this->model = new Post();
     }
 
-    public function getPosts()
+    public function getPosts(string $option = "", array $optionsData = [], string $limit = "")
     {
-        $params['posts'] = $this->postRepository->findAll();
+        $params['posts'] = $this->postRepository->findAll($option, $optionsData, $limit);
         $params = $this->pagination->paginate($params, 'posts',5);
         return $params;
     }
