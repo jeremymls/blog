@@ -24,7 +24,8 @@
 						<div class="row control-group">
 							<div class="form-group col-xs-12 floating-label-form-group controls">
 								<label>Email</label>
-								<input type="email" class="form-control" {% if action != "register" %} readonly {% endif %} placeholder="Email" name="email" value="{{ user.email }}" required data-validation-required-message="Veuillez entrer votre email.">
+								<input type="email" class="form-control" {% if action != "register" %} readonly {% endif %} placeholder="Email" id="email" name="email" value="{{ user.email }}" required data-validation-required-message="Veuillez entrer votre email.">
+								<p id="email_response"></p>
 								<p class="help-block text-danger"></p>
 							</div>
 						</div>
@@ -47,7 +48,8 @@
 						<div class="row control-group">
 							<div class="form-group col-xs-12 floating-label-form-group controls">
 								<label>Pseudo</label>
-								<input type="text" class="form-control" placeholder="Pseudo *" name="username" value="{% if user.isUsername %}{{ user.username }}{% endif %}">
+								<input type="text" class="form-control" placeholder="Pseudo *" id ="username" name="username" value="{% if user.isUsername %}{{ user.username }}{% endif %}">
+								<p id="uname_response"></p>
 								<p class="help-block text-danger"></p>
 							</div>
 						</div>
@@ -83,4 +85,5 @@
 	{% endblock %}
 	{% block script %}
 		<script src="/assets/js/action.js"></script>
+		<script src="/assets/js/checkUsername.js"></script>
 	{% endblock %}

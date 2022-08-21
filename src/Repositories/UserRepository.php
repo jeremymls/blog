@@ -22,4 +22,17 @@ class UserRepository extends Repository
         $user = $this->createEntity($row);
         return $user;
     }
+
+    public function checkUsername($username)
+    {
+        $sql = "SELECT * FROM " . $this->model::TABLE . " WHERE username = ? OR email = ?";
+        $statement = $this->connection->getConnection()->prepare($sql);
+        $statement->execute([$username, $username]);
+        $row = $statement->fetch();
+        if ($row === false) {
+            echo true;
+        } else {
+            echo false;
+        }
+    }
 }

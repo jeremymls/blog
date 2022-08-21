@@ -124,4 +124,9 @@ class UserController extends Controller
         $this->userService->confirm_again();
         $this->twig->display('security/redirect.twig', ['target' => '/profil']);
     }
+
+    public function checkUsername()
+    {
+        $this->userService->checkUsername($_POST['username']);
+    }
 }

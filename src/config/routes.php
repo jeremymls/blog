@@ -27,6 +27,7 @@ $router->post('comment/:id', 'Comment@update');
 ## SECURITY ##
 
 #User
+$router->post('profil/ajax/checkUsername', 'Security\User@checkUsername');
 $router->get('profil', 'Security\User@show');
 $router->get('profil/edit', 'Security\User@update');
 $router->post('profil/edit', 'Security\User@update');

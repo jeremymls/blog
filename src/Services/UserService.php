@@ -269,4 +269,17 @@ class UserService extends Service
             );
         }
     }
+
+    public function checkUsername($username)
+    {
+        if (isset($_SESSION["user"])){
+            if ($username == $_SESSION['user']->username || $username == $_SESSION['user']->email) {
+                echo true;
+            } else {
+                $this->userRepository->checkUsername($username);
+            }
+        } else {
+            $this->userRepository->checkUsername($username);
+        }
+    }
 }

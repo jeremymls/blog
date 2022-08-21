@@ -13,7 +13,8 @@
 						<div class="row control-group">
 							<div class="form-group col-xs-12 floating-label-form-group controls">
 								<label>Nouvelle adresse mail</label>
-								<input type="email" class="form-control" placeholder="Nouvelle adresse mail" name="email" required data-validation-required-message="Veuillez entrer votre email.">
+								<input type="email" class="form-control" placeholder="Nouvelle adresse mail" name="email" id="email" required data-validation-required-message="Veuillez entrer votre email.">
+								<p id="email_response"></p>
 								<p class="help-block text-danger"></p>
 							</div>
 						</div>
@@ -38,3 +39,6 @@
 			</div>
 		</section>
 	{% endblock %}
+{% block script %}
+	<script src="/assets/js/checkUsername.js"></script>
+{% endblock %}
