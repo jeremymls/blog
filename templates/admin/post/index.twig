@@ -13,29 +13,44 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <table class="table table-hover">
+                    <table id="BO_table" class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Titre</th>
-                                <th>Url</th>
-                                <th>Date de création</th>
+                                <th>Image</th>
+                                <th>Infos</th>
                                 <th>Actions</th>
-                                <th></th>
                             <tr>
                         </thead>
                         <tbody>
                             {% for post in posts %}
                                 <tr>
-                                    <td>{{ post.title }}</td>
-                                    <td><a href="{{ post.url }}" target="_blank">{{ post.url }}</a></td>
-                                    <td>{{ post.frenchCreationDate }}</td>
                                     <td>
-                                        <a href="/admin/posts/update/{{ post.identifier }}" class="btn btn-info"><i class="fa fa-pencil-square-o"></i></a>
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ post.identifier }}" data-title="{{ post.title }} (id:{{ post.identifier }})" data-target="#confirmDeletePost"><i class="fa fa-trash"></i></button>
-                                        <button type="button" class="btn btn-success lunchPreview" data-toggle="modal" data-identifier="{{ post.identifier }}" data-title="{{ post.title }} (id:{{ post.identifier }})" data-chapo="{{ post.chapo }}" data-url="{{ post.url }}" data-target="#postPreview"><i class="fa fa-search-plus"></i></button>
+                                        {% if post.picture is not empty %}
+                                            <img class="img-thumbnail" width="200px" src="{{ post.picture }}" alt='{{ post.title }} picture'>
+                                        {% endif %}
                                     </td>
                                     <td>
-                                        <a href="/post/{{ post.identifier }}" target="_blank" class="btn btn-primary"><i class="fa fa-external-link"></i></a>
+                                        <dl class="dl-horizontal text-left ">
+                                            <dt>Titre</dt>
+                                            <dd>{{ post.title }}</dd>
+                                            <dt>Chapô</dt>
+                                            <dd>{{ post.chapo }}</dd>
+                                            <dt>Url</dt>
+                                            <dd><a href="{{ post.url }}" target="_blank">{{ post.url }}</a></dd>
+                                            <dt>Date de création</dt>
+                                            <dd>{{ post.frenchCreationDate }}</dd>
+                                        </dl>
+                                    </td>
+                                    <td class="action">
+                                        <div class="row">
+                                            <a href="/admin/posts/update/{{ post.identifier }}" class="btn btn-info"><i class="fa fa-pencil-square-o"></i> Editer</a>
+                                        </div>
+                                        <div class="row">
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ post.identifier }}" data-title="{{ post.title }} (id:{{ post.identifier }})" data-target="#confirmDeletePost"><i class="fa fa-trash"></i> Supprimer</button>
+                                        </div>
+                                        <div class="row">
+                                            <a href="/post/{{ post.identifier }}" target="_blank" class="btn btn-primary"><i class="fa fa-external-link"></i> Voir</a>
+                                        </div>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -64,30 +79,6 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
 				<a href="" class="btn btn-danger">Supprimer</a>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="modal fade" id="postPreview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title" id="myModalLabel"></h4>
-			</div>
-			<div class="modal-body">
-                <div class="modal-chapo"></div>
-                <div class="modal-iframe"></div>
-            </div>
-			<div class="modal-footer">
-
-				<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                <a href="" target="_blank" class="btn btn-primary externalLink"><i class="fa fa-external-link"></i></a>
-                <a href="" class="btn btn-warning editPost"><i class="fa fa-pencil-square-o"></i></a>
-                <button type="button" class="btn btn-danger lunchDeleteModal" data-toggle="modal" data-identifier="" data-title="" data-target="#confirmDeletePost"><i class="fa fa-trash"></i></button>
 			</div>
 		</div>
 	</div>

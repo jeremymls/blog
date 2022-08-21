@@ -46,7 +46,7 @@
                         </div>
 
                         <div id="colOverview" class="col-lg-4">
-							<div id="divOverview">
+							<div id="divOverview" class="user">
                                 <img id="thumbnailOverview" src={% if user.picture is empty %}"/assets/img/profile.png"{% else %}{{ user.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
                             </div>
                             <button id="btnOverview" type="button" class="btn btn-danger btn-lg"><i class="fa fa-trash" aria-hidden="true"></i></button>

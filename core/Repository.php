@@ -33,6 +33,11 @@ class Repository
         $sql = "";
         $values = [];
         $sql .= "INSERT INTO " . $entity::TABLE . " (";
+        if (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE && $entity::TABLE != "tokens") {
+            $base64 = $this->getPicture($sql, $values);
+            $values[] = $base64;
+            $sql .= "picture, ";
+        }
         foreach ($entity as $key => $value) {
             if ($key !== "passwordConfirm") {
                 $values[] = $value=="" ? NULL : $value;
@@ -40,6 +45,9 @@ class Repository
             }
         }
         $sql .= "created_at) VALUES (";
+        if (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE && $entity::TABLE != "tokens") {
+            $sql .= "?, ";
+        }
         foreach ($entity as  $key => $val) {
             if ($key !== "passwordConfirm") {
                 $sql .= "?, ";
@@ -61,31 +69,11 @@ class Repository
                 $sql .= $key . " = ?, ";
             }
         }
-
-        if (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE) {
-            $base64="";
-            $file_exts = array('gif', 'jpeg', 'png', 'webp');
-            $file_ext = strtolower(substr($_FILES['picture']['type'],  strpos($_FILES['picture']['type'], '/') + 1));
-            $file_size = $_FILES['picture']['size'];
-            $file_temp = $_FILES['picture']['tmp_name'];
-            $file_max_size = 512000;
-            $errors = "";
-            if (!in_array($file_ext, $file_exts)) {
-                $errors .= 'Extension du fichier non autorisée : ' . implode(',', $file_exts)."<br>";
-            }
-            if ($file_size > (int) $file_max_size || $file_size === 0) {
-                $errors .= 'Fichier trop lourd : ' . ($file_max_size / 1024) . ' Ko maximum';
-            }
-            if (empty($errors)) {
-                $bin = file_get_contents($file_temp);
-                $base64 = 'data:image/' . $file_ext . ';base64,' .   base64_encode($bin);
-            } else {
-                throw new \Exception($errors);
-            }
+        if (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE && $entity::TABLE != "tokens") {
+            $base64 = $this->getPicture($sql, $values);
             $values[] = $base64;
             $sql .= "picture = ?, ";
         }
-
         $sql = substr($sql, 0, -2);
         $sql .= " WHERE id = ?";
         $values[] = $identifier;
@@ -157,5 +145,29 @@ class Repository
             }
         }
         return $entity;
+    }
+
+    public function getPicture()
+    {
+        $base64="";
+        $file_exts = array('gif', 'jpeg', 'png', 'webp');
+        $file_ext = strtolower(substr($_FILES['picture']['type'],  strpos($_FILES['picture']['type'], '/') + 1));
+        $file_size = $_FILES['picture']['size'];
+        $file_temp = $_FILES['picture']['tmp_name'];
+        $file_max_size = 512000;
+        $errors = "";
+        if (!in_array($file_ext, $file_exts)) {
+            $errors .= 'Extension du fichier non autorisée : ' . implode(',', $file_exts)."<br>";
+        }
+        if ($file_size > (int) $file_max_size || $file_size === 0) {
+            $errors .= 'Fichier trop lourd : ' . ($file_max_size / 1024) . ' Ko maximum';
+        }
+        if (empty($errors)) {
+            $bin = file_get_contents($file_temp);
+            $base64 = 'data:image/' . $file_ext . ';base64,' .   base64_encode($bin);
+        } else {
+            throw new \Exception($errors);
+        }
+        return $base64;
     }
 }

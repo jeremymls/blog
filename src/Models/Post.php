@@ -12,4 +12,5 @@ class Post extends Model
     public string $content;
     public string $url;
     public string $chapo;
+    public string $picture;
 }

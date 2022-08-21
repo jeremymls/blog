@@ -35,9 +35,7 @@
 						<div class="intro-text">
 							<h1 class="name">{{ block('title') }}</h1>
 							<hr class="star-light">
-							{% if block('imageSrc') %}
-								<img id="imageSrc" class="img-responsive" src="{% block imageSrc %}{% endblock %}" alt="">
-							{% endif %}
+							{% block imageHeader %}{% endblock %}
 							<span class="skills">{% block subtitle %}{% endblock %}</span>
 						</div>
 					</div>

@@ -10,7 +10,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-					<form action="" method="post">
+					<form action="" method="post" enctype="multipart/form-data">
+                        <div class="form-group col-lg-6 col-lg-offset-3">
+							<label for="picture">Image
+								<div id="divOverview">
+                                    <img id="thumbnailOverview" src={% if post.picture is empty %}"/assets/img/post.png"{% else %}{{ post.picture }}{% endif %} alt="">
+                                </div>
+							</label>
+							{# <input type="hidden" name="MAX_FILE_SIZE" value="512000"> #}
+							<input type="file" name="picture" id="picture" class="form-control" accept=".gif,.jpg,.jpeg,.png,.webp">
+							<p id="imgSize"></p>
+							<p>Taille max : 500 KB</p>
+						</div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Titre</label>
@@ -51,6 +62,7 @@
             </div>
         </div>
     </section>
-
-	
+{% endblock %}
+{% block script %}
+    <script src="/assets/js/action.js"></script>
 {% endblock %}

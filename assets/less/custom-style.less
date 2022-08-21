@@ -26,7 +26,7 @@
     }
 }
 
-#userBO {
+#BO_table {
     font-size: 2rem;
     .action{
         display: flex;
@@ -48,15 +48,18 @@
         right: 10px;
     }
 }
+
 #divOverview{
+    &.user{
+        border-radius: 50%;
+        background: @theme-success;
+        border: 1px solid @theme-success;
+        aspect-ratio: 1/1;
+        overflow: hidden;
+    }
     display: flex;
     width: 70%;
     margin: 0 auto;
-    aspect-ratio: 1/1;
-    border: 1px solid @theme-success;
-    background: @theme-success;
-    border-radius: 50%;
-    overflow: hidden;
 
     #thumbnailOverview {
         width: 100%;
@@ -64,14 +67,14 @@
     }
 }
 
-#imageSrc{
+#imageHeader{
     position: absolute;
     top: -80px;
     width: 15rem;
 }
 
 @media screen and (max-width: 1200px) {
-    #imageSrc{
+    #imageHeader{
         position: relative;
         top: 0px;
         width: "50%";

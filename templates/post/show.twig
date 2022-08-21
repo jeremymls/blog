@@ -8,6 +8,11 @@
 	<a id="retour" href="/posts" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 	<a id="oneTool" href="#comment" ><i class="fa fa-comment-o" aria-hidden="true"></i></a>
 {% endblock %}
+{% block imageHeader %}
+	{% if post.picture is not empty %}
+		<img id="imageHeader" class="img-responsive" src="{{ post.picture }}" alt='{{ post.title }} picture'>
+	{% endif %}
+{% endblock %}
 
 {% block main %}
 	<div class="container">
