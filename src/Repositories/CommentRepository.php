@@ -72,6 +72,13 @@ class CommentRepository extends Repository
         return ($affectedLines > 0);
     }
 
+    public function moderate(string $action, string $identifier): bool
+    {
+        $statement = $this->connection->getConnection()->prepare("UPDATE comments SET moderate = $action WHERE id = ?");
+        $affectedLines = $statement->execute([$identifier]);
+        return ($affectedLines > 0);
+    }
+
     public function commentValidate(string $identifier): bool
     {
         $statement = $this->connection->getConnection()->prepare('UPDATE comments SET moderate = 1 WHERE id = ?');

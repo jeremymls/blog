@@ -19,16 +19,16 @@ class AdminCommentController extends AdminController
         $this->twig->display('admin/comment/index.twig', $params);
     }
 
-    public function validate(string $identifier)
+    public function moderate(string $action, string $identifier)
     {
-        $this->commentService->commentValidate($identifier);
-        header('Location: /admin/comments');
+        $this->commentService->moderate($action, $identifier);
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
     public function delete(string $identifier)
     {
         $this->commentService->delete($identifier);
-        header('Location: /admin/comments');
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
     public function action()

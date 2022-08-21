@@ -30,6 +30,7 @@
                                 <tr>
                                     <th><input id="checkAll" type="checkbox"/></th>
                                     <th class="text-center">Modération</th>
+                                    <th></th>
                                     <th>Auteur</th>
                                     <th>Commentaire</th>
                                     <th>Projet</th>
@@ -54,22 +55,31 @@
                                         </td>
                                         <td class="text-center">
                                         {% if comment.moderate == null %}
-                                            <i class="fa fa-hourglass-half" style="color:orange;" aria-hidden="true"></i>
+                                            <i class="fa fa-hourglass-half fa-2x" style="color:orange;" aria-hidden="true"></i>
                                         {% elseif comment.moderate == 1 %}
-                                            <i class="fa fa-check" style="color:green;" aria-hidden="true"></i>
+                                            <i class="fa fa-check fa-2x" style="color:green;" aria-hidden="true"></i>
                                         {% elseif comment.moderate == 2 %}
-                                            <i class="fa fa-ban" style="color:red;" aria-hidden="true"></i>
+                                            <i class="fa fa-times fa-2x" style="color:red;" aria-hidden="true"></i>
                                         {% endif %}
                                         </td>
+                                        <td>
+                                        <div id="divOverview" class="user" style="width: 4rem;">
+                                            <img id="thumbnailOverview" src={% if comment.author.picture is empty %}"/assets/img/profile.png"{% else %}{{ comment.author.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
+                                        </div></td>
                                         <td>{{ comment.author.username }}</td>
-                                        <td>{{ comment.comment | u.truncate(50, '...')}}</td>
+                                        <td>{{ comment.comment | u.truncate(200, '...')}}</td>
                                         <td>{{ comment.post.title | u.truncate(25, '...')}}</td>
                                         <td>{{ comment.frenchCreationDate }}</td>
-                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-content="{{ comment.comment }}" data-post="{{ comment.post.title }}" data-postid="{{ comment.post.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#commentPreview"><i class="fa fa-eye"></i></button></td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmcommentDelete"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                                            {% if comment.moderate != 1 %}<button type="button" class="btn btn-success" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmcommentValidate"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>{% endif %}
+                                        <td class="text-center">
+                                            {# <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmCommentDelete"><i class="fa fa-trash" aria-hidden="true"></i></button> #}
+                                            {% if comment.moderate != null %}
+                                                <button type="button" class="btn btn-default" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmCommentInvalidate"><i class="fa fa-ban" aria-hidden="true"></i></button>
+                                            {% else %}
+                                                <button type="button" class="btn btn-success" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmCommentValidate"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmCommentRefuse"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                            {% endif %}
                                         </td>
+                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-content="{{ comment.comment }}" data-post="{{ comment.post.title }}" data-postid="{{ comment.post.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#commentPreview"><i class="fa fa-eye"></i></button></td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -93,24 +103,24 @@
 
 
     <!-- Modals -->
-    <div class="modal fade" id="confirmcommentDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="confirmCommentInvalidate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">Voulez-vous vraiment supprimer ce commentaire?</h4>
+                    <h4 class="modal-title" id="myModalLabel">Voulez-vous vraiment annuler?</h4>
                 </div>
                 <div class="modal-body"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                    <a href="" class="btn btn-primary">Supprimer</a>
+                    <a href="" class="btn btn-primary">Confirmer</a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="confirmcommentValidate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="confirmCommentValidate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -123,6 +133,23 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
                     <a href="" class="btn btn-primary">Valider</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="confirmCommentRefuse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Voulez-vous vraiment refuser ce commentaire?</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <a href="" class="btn btn-primary">Refuser</a>
                 </div>
             </div>
         </div>
@@ -153,8 +180,6 @@
             </div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                <button type="button" class="btn btn-primary lunchActionModal" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmcommentValidate"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>
-                <button type="button" class="btn btn-primary lunchActionModal" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmcommentDelete"><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</div>
 		</div>
 	</div>
@@ -172,8 +197,18 @@
         $('#checkAll').change(function(){
             if($(this).is(':checked')){
                 $('.checkbox').prop('checked', true);
+                $('#actions').show();
             }else{
                 $('.checkbox').prop('checked', false);
+                $('#actions').hide();
+            }
+        });
+        $('#actions').hide();
+        $('.checkbox').change(function(){
+            if($('.checkbox:checked').length > 0){
+                $('#actions').show();
+            }else{
+                $('#actions').hide();
             }
         });
     });

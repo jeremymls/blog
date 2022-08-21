@@ -54,36 +54,37 @@ $("#commentPreview").on("show.bs.modal", function (event) {
     var postid = button.data("postid"); // Extract info from data-* attributes
     var title = button.data("title"); // Extract info from data-* attributes
     var modal = $(this);
-    console.log(identifier, content, post, postid, title);
     modal.find(".modal-title").text(title);
     modal.find(".modal-post").text("Post: " + post + " (id: " + postid + ")");
     modal.find(".modal-comment-content").text(content);
-    modal.find(".modal-footer .lunchActionModal").attr("data-identifier", identifier);
-    modal.find(".modal-footer .lunchActionModal").attr("data-title", title);
-    $(".lunchActionModal").on("click", function () {
-        modal.modal("hide");
-        scrollTo(0, 0);
-    });
 });
-$("#confirmcommentDelete").on("show.bs.modal", function (event) {
+$("#confirmCommentInvalidate").on("show.bs.modal", function (event) {
     scrollTo(0, 0)
     var button = $(event.relatedTarget); // Button that triggered the modal
     var recipient = button.data("title"); // Extract info from data-* attributes
     var identifier = button.data("identifier"); // Extract info from data-* attributes
     var modal = $(this);
     modal.find(".modal-body").text(recipient);
-    modal.find(".modal-footer a").attr("href", "/admin/comments/delete/" + identifier);
+    modal.find(".modal-footer a").attr("href", "/admin/comments/moderate/0/" + identifier);
     setTimeout(()=>scrollTo(0, 0), 500);
 });
-$("#confirmcommentValidate").on("show.bs.modal", function (event) {
+$("#confirmCommentValidate").on("show.bs.modal", function (event) {
     scrollTo(0, 0)
     var button = $(event.relatedTarget); // Button that triggered the modal
     var recipient = button.data("title"); // Extract info from data-* attributes
     var identifier = button.data("identifier"); // Extract info from data-* attributes
     var modal = $(this);
     modal.find(".modal-body").text(recipient);
-    modal.find(".modal-footer a").attr("href", "/admin/comments/validate/" + identifier);
-    // modal.find('.modal-title').text(recipient)
-    // modal.find('.modal-body input').val(recipient)
+    modal.find(".modal-footer a").attr("href", "/admin/comments/moderate/1/" + identifier);
+    setTimeout(()=>scrollTo(0, 0), 500);
+});
+$("#confirmCommentRefuse").on("show.bs.modal", function (event) {
+    scrollTo(0, 0)
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var recipient = button.data("title"); // Extract info from data-* attributes
+    var identifier = button.data("identifier"); // Extract info from data-* attributes
+    var modal = $(this);
+    modal.find(".modal-body").text(recipient);
+    modal.find(".modal-footer a").attr("href", "/admin/comments/moderate/2/" + identifier);
     setTimeout(()=>scrollTo(0, 0), 500);
 });

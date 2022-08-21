@@ -32,16 +32,23 @@ class CommentService extends Service
         return $params;
     }
 
-    public function commentValidate($identifier)
+    public function moderate($action, $identifier)
     {
-        $success = $this->commentRepository->commentValidate($identifier);
+        $success = $this->commentRepository->moderate($action, $identifier);
         if (!$success) {
             throw new \Exception('Impossible de valider le commentaire !');
         }
-        $this->flash->success(
-            'Commentaire validé',
-            'Le commentaire a bien été validé'
-        );
+        switch ($action) {
+            case '0':
+                $this->flash->success('Modération annulée', 'La modération du commentaire a été annulée');
+                break;
+            case '1':
+                $this->flash->success('Modération acceptée', 'Le commentaire a été accepté');
+                break;
+            case '2':
+                $this->flash->danger('Modération refusée', 'Le commentaire a été refusé');
+                break;
+        }
     }
 
     public function delete($identifier)
