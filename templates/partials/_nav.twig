@@ -47,7 +47,7 @@
 					<li class="page-scroll">
 						<a href="/posts">
 							<div id="divOverview" class="user" style="width: 3rem;">
-								<img id="thumbnailOverview" src={% if user.picture is empty %}"/assets/img/profile.png"{% else %}{{ user.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
+								<img id="thumbnailOverview" src={% if session.user.picture is empty %}"/assets/img/profile.png"{% else %}{{ session.user.picture }}{% endif %} class="img-responsive" alt="{{ session.user.first }} {{ session.user.last }}">
 							</div>
 						</a>
 					</li>

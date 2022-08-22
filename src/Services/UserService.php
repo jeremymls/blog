@@ -218,6 +218,7 @@ class UserService extends Service
         $_SESSION['user']->role = $user->role;
         $_SESSION['user']->validated_email = $user->validated_email;
         $_SESSION['user']->initials = $user->initials;
+        $_SESSION['user']->picture = $user->picture;
     }
 
     public function forget_password(array $input)
