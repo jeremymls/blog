@@ -24,13 +24,14 @@
                             <div id="maincontent">
                                 {% for post in posts|reverse %}
                                 <div class="portfolio">
+                                    <img class="backImg" src="/assets/img/slide-background.jpg" alt="Portfolio img">
                                     <p><strong>{{ post.title }}</strong> <br> {{ post.chapo }} <br> <a target="_blank" href="{{ post.url }}">{{ post.url }}</a></p>
-                                    <img class="backImg" src="/assets/img/slide-background.jpg" alt="Portfolio img"><br>
-                                    <span class="txt">{{ post.title }} ({{ post.frenchCreationDate |slice(0, -8) }})</span><br>
-                                    <div class="ombra"></div>
                                     {% if post.picture is not empty %}
                                         <img class="postPic" src="{{ post.picture }}" alt="Portfolio img">
                                     {% endif %}
+                                    </img><br>
+                                    <span class="txt">{{ post.title }} ({{ post.frenchCreationDate |slice(0, -8) }})</span><br>
+                                    <div class="ombra"></div>
                                 </div>
                                 {% endfor %}
                             </div>

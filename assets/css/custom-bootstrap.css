@@ -7074,7 +7074,7 @@ td.visible-print {
   margin: 60px auto 0 auto;
   width: 100%;
   max-width: 1140px;
-  height: 550px;
+  height: 70vh;
   position: relative;
 }
 #all .portfolio {
@@ -7088,6 +7088,11 @@ td.visible-print {
   cursor: pointer;
   box-shadow: -2px 0 3px rgba(0, 0, 0, 0.3);
 }
+@media screen and (max-width: 768px) {
+  #all .portfolio {
+    height: 60vh;
+  }
+}
 #all .portfolio p {
   position: absolute;
   right: 5%;
@@ -7099,6 +7104,16 @@ td.visible-print {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   padding: 1rem 0;
 }
+@media screen and (max-width: 768px) {
+  #all .portfolio p {
+    right: 0;
+    top: 0;
+    width: 90%;
+    margin: 5%;
+    max-height: 50%;
+    font-size: 1.4rem;
+  }
+}
 #all .portfolio .postPic {
   position: absolute;
   left: 5%;
@@ -7109,8 +7124,27 @@ td.visible-print {
   -o-object-fit: contain;
      object-fit: contain;
 }
+@media screen and (max-width: 768px) {
+  #all .portfolio .postPic {
+    left: 0%;
+    bottom: 8rem;
+    width: 80%;
+    max-height: 30%;
+    left: 50%; /* à 50%/50% du parent référent */
+    transform: translate(-50%, -15px); /* décalage de 50% de sa propre taille */
+  }
+}
 #all .portfolio .backImg {
   width: 100%;
+}
+@media screen and (max-width: 768px) {
+  #all .portfolio .backImg {
+    -o-object-fit: cover;
+       object-fit: cover;
+    height: 100%;
+    padding-bottom: 8rem;
+    margin-bottom: -8rem;
+  }
 }
 #all .portfolio:nth-child(1) {
   left: 10px;
@@ -7186,7 +7220,7 @@ td.visible-print {
   margin: 0;
   padding-top: 10px;
   width: 98%;
-  padding-left: 2%;
+  padding-left: 1rem;
   height: 33px;
   text-align: start;
   font-weight: bold;

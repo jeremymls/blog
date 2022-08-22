@@ -25,18 +25,19 @@ $brand-success:         #dd9b0d;
 		border-bottom: 1px solid #000;
 		text-decoration: none;
 	}
-
+$height: 60vh;
 	#allcontent {
 		margin: 60px auto 0 auto;
 		width: 100%;
 		max-width: 1140px;
-		height: 550px;
+		height: $height + 10vh;
 		position: relative;
 		// -webkit-animation: comein 1.5s ease-in-out;
 		// -moz-animation: comein 1.5s ease-in-out;
 		// animation: comein 1.5s ease-in-out;
 	}
 
+	$marge: 8rem;
 	.portfolio {
 		width: 100%;
 		max-width: 1000px;
@@ -51,6 +52,9 @@ $brand-success:         #dd9b0d;
 		-webkit-box-shadow: -2px 0 3px rgba(0, 0, 0, 0.3);
 		-moz-box-shadow: -2px 0 3px rgba(0, 0, 0, 0.3);
 		box-shadow: -2px 0 3px rgba(0, 0, 0, 0.3);
+		@media screen and (max-width: 768px) {
+			height: $height;
+		}
 		p {
 			position: absolute;
 			right: 5%;
@@ -61,6 +65,14 @@ $brand-success:         #dd9b0d;
 			border-radius: 5px;
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 			padding: 1rem 0;
+			@media screen and (max-width: 768px) {
+				right: 0;
+				top: 0;
+				width: 90%;
+				margin: 5%;
+				max-height: 50%;
+				font-size: 1.4rem;
+			}
 		}
 		.postPic{
 			position: absolute;
@@ -70,9 +82,24 @@ $brand-success:         #dd9b0d;
 			max-height: 70%;
 			vertical-align: middle;
 			object-fit: contain;
+			@media screen and (max-width: 768px) {
+				left: 0%;
+				bottom: $marge;
+				width: 80%;
+				// margin: 10%;
+				max-height: 30%;
+				left: 50%; /* à 50%/50% du parent référent */
+				transform: translate(-50%, -15px); /* décalage de 50% de sa propre taille */
+			}
 		}
 		.backImg {
 			width: 100%;
+			@media screen and (max-width: 768px) {
+				object-fit: cover;
+				height: 100%;
+				padding-bottom: $marge;
+				margin-bottom: -$marge;
+			}
 		}
 	}
 
@@ -187,7 +214,7 @@ $brand-success:         #dd9b0d;
 		margin: 0;
 		padding-top: 10px;
 		width: 98%;
-		padding-left: 2%;
+		padding-left: 1rem;
 		height: 33px;
 		text-align: start;
 		font-weight: bold;
