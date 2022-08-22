@@ -25,7 +25,7 @@
 				</li>
 				{% if session.user %}
 					<li class="dropdown desktop">
-						<a id="initiales" href="#" class="dropdown-toggle btn-social" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+						<a id="initiales" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 							{{ session.user.initials }} <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
@@ -44,11 +44,17 @@
 					<li class="page-scroll mobile"><a href="/profil"><i class="fa fa-user" aria-hidden="true"></i> Profil</a></li>
 					<li class="page-scroll mobile"><a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Déconnexion</a></li>
 					{# /Mobile #}
+					<li class="page-scroll">
+						<a href="/posts">
+							<div id="divOverview" class="user" style="width: 3rem;">
+								<img id="thumbnailOverview" src={% if user.picture is empty %}"/assets/img/profile.png"{% else %}{{ user.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
+							</div>
+						</a>
+					</li>
 				{% else %}
 					<li class="page-scroll"><a href="/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Connexion</a></li>
 					<li class="page-scroll"><a href="/profil/register"><i class="fa fa-user-plus" aria-hidden="true"></i> Inscription</a></li>
 				{% endif %}
-
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->
