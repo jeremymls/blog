@@ -2,7 +2,6 @@
 
 namespace Core;
 
-use Application\Lib\DatabaseConnection;
 use Application\Repositories\CommentRepository;
 use Application\Repositories\PostRepository;
 use Application\Repositories\TokenRepository;
@@ -17,13 +16,9 @@ class Service
         $this->flash = new Flash();
         $this->pagination = new Pagination();
         $this->postRepository = new PostRepository();
-        $this->postRepository->connection = new DatabaseConnection();
         $this->commentRepository = new CommentRepository();
-        $this->commentRepository->connection = new DatabaseConnection();
         $this->userRepository = new UserRepository();
-        $this->userRepository->connection = new DatabaseConnection();
         $this->tokenRepository = new TokenRepository();
-        $this->tokenRepository->connection = new DatabaseConnection();
     }
 
     public function validateForm(array $input, array $requiredFields = [])

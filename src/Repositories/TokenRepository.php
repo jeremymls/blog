@@ -10,6 +10,7 @@ class TokenRepository extends Repository
 {
     public function __construct()
     {
+        parent::__construct();
         $this->model = new Token();
     }
 

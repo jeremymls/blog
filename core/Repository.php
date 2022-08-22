@@ -2,12 +2,14 @@
 
 namespace Core;
 
-use Application\Lib\DatabaseConnection;
+use Core\Lib\DatabaseConnection;
 
 class Repository
 {
-
-    public DatabaseConnection $connection;
+    public function __construct()
+    {
+        $this->connection = new DatabaseConnection();
+    }
 
     public function findAll(string $option = "", array $optionsData = [], string $limit = "")
     {

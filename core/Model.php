@@ -46,14 +46,12 @@ class Model
     {
         $id = $this->$field;
         $repository = new $repository();
-        $repository->connection = new DatabaseConnection;
         $this->$field = $repository->findOne($id);
     }
 
     public function withExpirationToken()
     {
         $tokenRepository = new TokenRepository();
-        $tokenRepository->connection = new DatabaseConnection;
         $token = $tokenRepository->findAll("WHERE user_id = ?", [self::$id]);
         if (count($token) > 0) {
             if (new DateTime($token[0]->expiration_date)>new DateTime()){
