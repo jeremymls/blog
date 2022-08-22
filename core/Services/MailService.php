@@ -1,26 +1,33 @@
 <?php
 
-namespace Core\Services\Mail;
+namespace Core\Services;
 
 use Core\Services\Flash;
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 
-class Mailer
+include_once('src/config/mail.php');
+
+class MailService
 {
     public function __construct()
     {
         $this->flash = new Flash();
-        $this->owner = htmlentities("Jérémy Monlouis");
-        $this->mail = new PHPMailer();
-        $this->mail->isSMTP();                                               //Send using SMTP
-        $this->mail->Host       = 'mail49.lwspanel.com';                     //Set the SMTP server to send through
-        $this->mail->SMTPAuth   = true;                                      //Enable SMTP authentication
-        $this->mail->Username   = 'contact@jeremy-monlouis.fr';              //SMTP username
-        $this->mail->Password   = 'Aaliyah_19';                              //SMTP password
-        $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;               //Enable implicit TLS encryption
-        $this->mail->Port       = 465;                                       //TCP port
-        $this->mail->setFrom('contact@jeremy-monlouis.fr', 'Mailer');        //Set who the message is to be sent from
+        $this->owner = htmlentities(MB_NAME);
+        $this->mail = $this->getConfig();
+    }
+
+    public function getConfig()
+    {
+        $mail = new PHPMailer();
+        $mail->isSMTP();                                 //Send using SMTP
+        $mail->Host       = MB_HOST;                     //Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                        //Enable SMTP authentication
+        $mail->Username   = MB_USER;                     //SMTP username
+        $mail->Password   = MB_PASS;                     //SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; //Enable implicit TLS encryption
+        $mail->Port       = 465;                         //TCP port
+        $mail->setFrom(MB_USER, utf8_decode(MB_NAME));   //Set who the message is to be sent from
+        return $mail;
     }
 
     public function sendConfirmationEmail(string $email, string $name, string $token)
@@ -29,7 +36,7 @@ class Mailer
         $this->mail->addReplyTo('contact@jeremy-monlouis.fr', $this->owner); //Set an alternative reply-to address
         $this->mail->addAddress($email, 'Nouvel utilisateur');               //Set who the message is to be sent to
         $this->mail->Subject = 'Validation de votre compte';                 //Set the subject line
-        $msg = file_get_contents('core/Services/Mail/models/activate.html'); //Read an HTML message body from an external file
+        $msg = file_get_contents('src/config/templates_mail/activate.html'); //Read an HTML message body from an external file
         //------------- Personalize the message -----------------------------//
         $name = htmlentities($name);
         $msg = str_replace('{{name}}', $name, $msg);
@@ -53,7 +60,7 @@ class Mailer
         $this->mail->addReplyTo($post['email'], $post['name']); 
         $this->mail->addAddress('contact@jeremy-monlouis.fr', 'JM Projets');
         $this->mail->Subject = 'Message de ' . $post['name'];
-        $msg = file_get_contents('core/Services/Mail/models/contact.html');
+        $msg = file_get_contents('src/config/templates_mail/contact.html');
         $msg = str_replace('{{name}}', htmlentities($post['name']), $msg);
         $msg = str_replace('{{mail}}', $post['email'], $msg);
         $msg = str_replace('{{phone}}', $post['phone'], $msg);
@@ -72,7 +79,7 @@ class Mailer
         $this->mail->addReplyTo('contact@jeremy-monlouis.fr', $this->owner); 
         $this->mail->addAddress($email, utf8_decode($name));
         $this->mail->Subject = utf8_decode('Mot de passe oublié');
-        $msg = file_get_contents('core/Services/Mail/models/forget.html');
+        $msg = file_get_contents('src/config/templates_mail/forget.html');
         $msg = str_replace('{{name}}', htmlentities($name), $msg);
         $url = "http://" . $_SERVER['SERVER_NAME'] . "/reset_password/$token";
         $msg = str_replace('{{url}}', $url, $msg);

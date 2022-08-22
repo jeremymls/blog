@@ -4,7 +4,7 @@ namespace Application\Controllers;
 
 use Core\Controller;
 use Application\Services\PostService;
-use Core\Services\Mail\Mailer;
+use Core\Services\MailService;
 
 class HomeController extends Controller
 {
@@ -22,8 +22,8 @@ class HomeController extends Controller
 
     public function send()
     {
-        $mailer = new Mailer();
-        $mailer->sendContactEmail($_POST);
+        $mailService = new MailService();
+        $mailService->sendContactEmail($_POST);
         header('Location: /');
     }
 }
