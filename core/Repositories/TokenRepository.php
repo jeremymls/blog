@@ -2,7 +2,7 @@
 
 namespace Core\Repositories;
 
-use Application\Models\Token;
+use Core\Models\Token;
 use Application\Models\User;
 
 class TokenRepository extends Repository

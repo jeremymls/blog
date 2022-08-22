@@ -2,8 +2,7 @@
 
 namespace Application\Models;
 
-use Application\Repositories\UserRepository;
-use Core\Model;
+use Core\Models\Model;
 
 class User extends Model
 {

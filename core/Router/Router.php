@@ -2,7 +2,7 @@
 
 namespace Core\Router;
 
-use Application\Controllers\ErrorExceptionController;
+use Core\Controllers\ErrorExceptionController;
 use Exception;
 
 class Router

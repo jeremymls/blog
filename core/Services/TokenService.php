@@ -2,7 +2,8 @@
 
 namespace Core\Services;
 
-use Application\Models\Token;
+use Core\Services\Service;
+use Core\Models\Token;
 
 class TokenService extends Service
 {

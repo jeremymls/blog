@@ -1,8 +1,6 @@
 <?php
 
-namespace Application\Models;
-
-use Core\Model;
+namespace Core\Models;
 
 class Token extends Model
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Application\Controllers;
+namespace Core\Controllers;
 
 use Core\Controllers\Controller;
-use Application\Models\Error;
+use Core\Models\Error;
 
 class ErrorExceptionController extends Controller
 {
