@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Core\Services;
 
 use Application\Repositories\CommentRepository;
 use Application\Repositories\PostRepository;

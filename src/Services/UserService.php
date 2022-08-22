@@ -2,7 +2,7 @@
 
 namespace Application\Services;
 
-use Core\Service;
+use Core\Services\Service;
 use Application\Models\User;
 use Core\Services\MailService;
 use Core\Services\TokenService;

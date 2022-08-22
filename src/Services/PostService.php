@@ -2,7 +2,7 @@
 
 namespace Application\Services;
 
-use Core\Service;
+use Core\Services\Service;
 use Application\Models\Post;
 
 class PostService extends Service

@@ -2,7 +2,7 @@
 
 namespace Application\Services;
 
-use Core\Service;
+use Core\Services\Service;
 use Application\Models\Comment;
 
 class CommentService extends Service
