@@ -2,8 +2,7 @@
 
 namespace Core;
 
-use Application\Lib\DatabaseConnection;
-use Application\Repositories\TokenRepository;
+use Core\Repositories\TokenRepository;
 use DateTime;
 
 class Model

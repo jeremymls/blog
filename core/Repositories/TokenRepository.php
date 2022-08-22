@@ -1,8 +1,7 @@
 <?php
 
-namespace Application\Repositories;
+namespace Core\Repositories;
 
-use Core\Repository;
 use Application\Models\Token;
 use Application\Models\User;
 
