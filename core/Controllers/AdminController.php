@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Core\Controllers;
 
 use Core\Middleware\Security;
 

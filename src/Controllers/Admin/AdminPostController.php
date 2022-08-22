@@ -2,7 +2,7 @@
 
 namespace Application\Controllers\Admin;
 
-use Core\AdminController;
+use Core\Controllers\AdminController;
 use Application\Services\PostService;
 
 class AdminPostController extends AdminController

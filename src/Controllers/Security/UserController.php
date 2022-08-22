@@ -2,7 +2,7 @@
 
 namespace Application\Controllers\Security;
 
-use Core\Controller;
+use Core\Controllers\Controller;
 use Application\Services\UserService;
 
 class UserController extends Controller

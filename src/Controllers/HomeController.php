@@ -2,7 +2,7 @@
 
 namespace Application\Controllers;
 
-use Core\Controller;
+use Core\Controllers\Controller;
 use Application\Services\PostService;
 use Core\Services\MailService;
 

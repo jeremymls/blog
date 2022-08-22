@@ -2,7 +2,7 @@
 
 namespace Core\Middleware;
 
-use Core\Controller;
+use Core\Controllers\Controller;
 
 class Flash extends Controller
 {
