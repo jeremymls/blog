@@ -201,6 +201,7 @@ class UserService extends Service
             'Photo de profil supprimée',
             'La photo de profil a bien été supprimée'
         );
+        $_SESSION['user']->picture = null;
     }
 
     public function setUserSession(User $user)

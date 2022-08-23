@@ -12,8 +12,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1">
-
                     <div class="row">
+
+                        {# Infos #}
                         <div class="col-lg-8">
                             <dl id="profilInfos" class="dl-horizontal">
                                 <dt><strong>Nom:</strong></dt>
@@ -44,14 +45,15 @@
                                 </dd>
                             </dl>
                         </div>
-
+                        {# Image profil #}
                         <div id="colOverview" class="col-lg-4">
 							<div id="divOverview" class="user">
                                 <img id="thumbnailOverview" src={% if user.picture is empty %}"/assets/img/profile.png"{% else %}{{ user.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
                             </div>
-                            <button id="btnOverview" type="button" class="btn btn-danger btn-lg"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            {% if user.identifier == session.user.id %}<button id="btnOverview" type="button" class="btn btn-danger btn-lg"><i class="fa fa-trash" aria-hidden="true"></i></button>{% endif %}
                         </div>
                     </div>
+                    {# Commentaires #}
                     {% if comments | length > 0 %}
                     <h3 id="commentPage">Commentaires</h3>
                     {% endif %}
