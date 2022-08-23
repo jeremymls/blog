@@ -55,7 +55,7 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception("Impossible de créer l'utilisateur ! <br>L'adresse e-mail est peut-être déjà utilisée");
         }
-        $this->flash->success(
+        $this->flashServices->success(
             'Utilisateur créé',
             'L\'utilisateur '. $input['email'] .' a bien été créé'
         );
@@ -77,7 +77,7 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception("Impossible de modifier l'utilisateur !");
         }
-        $this->flash->success(
+        $this->flashServices->success(
             'Utilisateur modifié',
             'L\'utilisateur '. $input['email'] .' a bien été modifié'
         );
@@ -97,15 +97,19 @@ class UserService extends Service
         if (!$user->comparePassword($user->password, $input['password'])) {
             throw new \Exception("Mot de passe incorrect !");
         }
+        $this->flashServices->success(
+            'Connexion réussie',
+            'Vous êtes connecté(e) !'
+        );
         $this->setUserSession($user);
     }
 
     public function logout()
     {
         session_destroy();
-        $this->flash->danger(
+        $this->flashServices->danger(
             'Déconnexion',
-            'Vous êtes déconnecté'
+            'Vous êtes déconnecté(e) !'
         ); 
     }
 
@@ -115,7 +119,7 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception("Impossible de supprimer l'utilisateur !");
         } 
-        $this->flash->success(
+        $this->flashServices->success(
             'Utilisateur supprimé',
             'L\'utilisateur '. $identifier .' a bien été supprimé'
         ); 
@@ -127,12 +131,12 @@ class UserService extends Service
         if ($user->validated_email == "" || $user->validated_email == null) {
             $this->userRepository->update($user->identifier, ['validated_email' => 1]);
             $user->validated_email = "1";
-            $this->flash->success(
+            $this->flashServices->success(
                 'Confirmation de compte',
                 'Votre email est validé !'
             );
         } else {
-            $this->flash->warning(
+            $this->flashServices->warning(
                 'Confirmation de compte',
                 'Votre email est déjà validé !'
             );
@@ -154,7 +158,7 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception("Impossible de modifier l'e-mail <br>Cette adresse est peut-être déjà utilisée");
         }
-        $this->flash->success(
+        $this->flashServices->success(
             'E-mail modifiée',
             'L\'e-mail a bien été modifiée'
         );
@@ -181,7 +185,7 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception("Impossible de modifier le mot de passe");
         }
-        $this->flash->success(
+        $this->flashServices->success(
             'Mot de passe modifié',
             'Le mot de passe a bien été modifié'
         );
@@ -193,7 +197,7 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception("Impossible de supprimer la photo de profil");
         }
-        $this->flash->success(
+        $this->flashServices->success(
             'Photo de profil supprimée',
             'La photo de profil a bien été supprimée'
         );
@@ -246,7 +250,7 @@ class UserService extends Service
         if (!$success) {
             throw new \Exception("Impossible de modifier le mot de passe");
         }
-        $this->flash->success(
+        $this->flashServices->success(
             'Mot de passe modifié',
             'Le mot de passe a bien été modifié'
         );
@@ -259,12 +263,12 @@ class UserService extends Service
         if ($user->token == "expired") {
             $token = $this->tokenService->createToken($user->identifier);
             $this->mailService->sendConfirmationEmail($user->email, $user->first , $token);
-            $this->flash->success(
+            $this->flashServices->success(
                 'Confirmation de compte',
                 'Un nouveau lien de confirmation a été envoyé à votre adresse e-mail.'
             );
         } else {
-            $this->flash->warning(
+            $this->flashServices->warning(
                 'Confirmation de compte',
                 'Un lien a déjà été envoyé <br> Vous ne pouvez pas faire plus d\'une demande en moins de 30mn!'
             );

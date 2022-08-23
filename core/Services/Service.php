@@ -12,7 +12,7 @@ class Service
 {
     public function __construct()
     {
-        $this->flash = new Flash();
+        $this->flashServices = new FlashService();
         $this->pagination = new Pagination();
         $this->postRepository = new PostRepository();
         $this->commentRepository = new CommentRepository();

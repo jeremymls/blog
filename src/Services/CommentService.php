@@ -40,13 +40,13 @@ class CommentService extends Service
         }
         switch ($action) {
             case '0':
-                $this->flash->success('Modération annulée', 'La modération du commentaire a été annulée');
+                $this->flashServices->success('Modération annulée', 'La modération du commentaire a été annulée');
                 break;
             case '1':
-                $this->flash->success('Modération acceptée', 'Le commentaire a été accepté');
+                $this->flashServices->success('Modération acceptée', 'Le commentaire a été accepté');
                 break;
             case '2':
-                $this->flash->danger('Modération refusée', 'Le commentaire a été refusé');
+                $this->flashServices->danger('Modération refusée', 'Le commentaire a été refusé');
                 break;
         }
     }
@@ -57,7 +57,7 @@ class CommentService extends Service
         if (!$success) {
             throw new \Exception('Impossible de supprimer le commentaire !');
         }
-        $this->flash->danger(
+        $this->flashServices->danger(
             'Commentaire supprimé',
             'Le commentaire a bien été supprimé'
         );
@@ -71,7 +71,7 @@ class CommentService extends Service
         if (!$success) {
             throw new \Exception('Impossible de modifier le commentaire !');
         }
-        $this->flash->success(
+        $this->flashServices->success(
             'Commentaire modifié',
             'Votre commentaire sera à nouveau <strong>soumis à la modération</strong> et publié'
         );
@@ -84,12 +84,13 @@ class CommentService extends Service
         if (!$success) {
             throw new \Exception('Impossible d\'ajouter le commentaire !');
         }
-        $this->flash->success(
+        $this->flashServices->success(
             'COMMENTAIRE ENVOYÉ',
             'Votre commentaire sera <strong>soumis à la modération</strong> avant d\'être publié'
         );
     }
 
+    // todo: à supprimer
     public function action($input)
     {
         foreach ($input['comment'] as $identifier) {
@@ -110,19 +111,19 @@ class CommentService extends Service
         }
         switch ($input['btnSubmit']) {
             case 'Valider':
-                $this->flash->success(
+                $this->flashServices->success(
                     'Commentaires Validés',
                     'Les commentaires ont bien été validés'
                 );
             break;
             case 'Invalider':
-                $this->flash->warning(
+                $this->flashServices->warning(
                     'Commentaires Invalidés',
                     'Les commentaires ont bien été invalidés'
                 );
             break;
             case 'Refuser':
-                $this->flash->success(
+                $this->flashServices->success(
                     'Commentaires Refusés',
                     'Les commentaires ont bien été refusés'
                 );

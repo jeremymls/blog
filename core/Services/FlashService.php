@@ -2,7 +2,7 @@
 
 namespace Core\Services;
 
-class Flash
+class FlashService
 {
     public function success(string $title, string $message)
     {

@@ -2,15 +2,15 @@
 
 namespace Core\Middleware;
 
-use Core\Services\Flash;
+use Core\Services\FlashService;
 
 class Security
 {
     public function __construct()
     {
-        $this->flash = new Flash();
+        $this->flashServices = new FlashService();
         if (!isset($_SESSION['user'])) {
-            $this->flash->warning('Accès non autorisé', 'Vous n\'avez pas accès à cette page! Veuillez vous connecter');
+            $this->flashServices->warning('Accès non autorisé', 'Vous n\'avez pas accès à cette page! Veuillez vous connecter');
             header('Location: /login');
         } else {
             if ($_SESSION['user']->role != 'admin') {
