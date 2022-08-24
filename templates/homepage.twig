@@ -19,24 +19,44 @@
             </div>
             <div class="row text-center">
                 <div class="col-sm-12 portfolio-item">
-                    <div id="all">
-                        <div id="allcontent">
-                            <div id="maincontent">
-                                {% for post in posts|reverse %}
-                                <div class="portfolio">
-                                    <img class="backImg" src="/assets/img/slide-background.jpg" alt="Portfolio img">
-                                    <p><strong>{{ post.title }}</strong> <br> {{ post.chapo }} <br> <a target="_blank" href="{{ post.url }}">{{ post.url }}</a></p>
+                    <div id="myCarousel" class="carousel slide" data-pause="null" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            {% for post in posts %}
+                                <li data-target="#myCarousel" data-slide-to={{ loop.index }} class="{% if loop.index == 1 %}active{% endif %}"></li>
+                            {% endfor %}
+                        </ol>
+                        <div class="carousel-inner" role="listbox">
+                            {% for post in posts %}
+                                <div class="item {% if loop.index == 1 %}active{% endif %}">
                                     {% if post.picture is not empty %}
-                                        <img class="postPic" src="{{ post.picture }}" alt="Portfolio img">
+                                        <img class="back-slide" src="{{ post.picture }}" alt="Back slide">
+                                    {% else %}
+                                        <img class="back-slide" src="/assets/img/slide-background.jpg" alt="Back slide">
                                     {% endif %}
-                                    </img><br>
-                                    <span class="txt">{{ post.title }} ({{ post.frenchCreationDate |slice(0, -8) }})</span><br>
-                                    <div class="ombra"></div>
+                                    <div class="carousel-caption">
+                                        <div class="carousel-txt">
+                                            <h3>{{ post.title }}</h3>
+                                            {% if post.chapo is not empty %}
+                                                <p>{{ post.chapo }}</p>
+                                            {% endif %}
+                                            {% if post.url is not empty %}
+                                                <p><code>{{ post.url }}</code></p>
+                                            {% endif %}
+                                        </div>
+                                        <p><a class="btn btn-success" href="/post/{{ post.identifier}}" role="button">Voir le projet</a></p>
+                                    </div>
                                 </div>
-                                {% endfor %}
-                            </div>
+                            {% endfor %}
                         </div>
-                    {# <div id="navi"></div> #}
+                        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                            <span class="icon-prev" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                            <span class="icon-next" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
                 </div>
                 <a class="btn btn-lg btn-primary" href="/posts" role="button">VOIR TOUS LES PROJETS</a>
