@@ -11,13 +11,9 @@
         <div class="row">
             {% for post in posts %}
                 <div class="col">
-                    <div class="thumbnail">
-                        <div class="row">
-                            {% if post.url is not empty %}
-                            <div class="col-lg-10">
-                            {% else %}
-                            <div class="col-lg-12">
-                            {% endif %}
+                    <div class="thumbnail thumbnail-custom">
+                        <div class="row text-center">
+                            <div class="col-lg-8">
                                 <div class="caption">
                                     <a href="post/{{  post.identifier }}"><h3>{{ post.title }} </h3></a>
                                         <p>mis à jour le {{ post.frenchCreationDate }}</p>
@@ -26,31 +22,20 @@
                                         {% else %}
                                             <p>{{ post.content |  u.truncate(200, '...', false) | nl2br }}</p>
                                         {% endif %}
-                                    <p><a href="post/{{  post.identifier }}" class="btn btn-primary" role="button">Voir plus</a></p>
+                                    <p><a href="post/{{  post.identifier }}" class="btn btn-plus btn-primary" role="button">Voir plus</a></p>
                                 </div>
                             </div>
-                            {% if post.url is not empty %}
-                            <div class="col-xs-4 col-xs-offset-4 col-lg-2 col-lg-offset-0 preview-col">
-                                <div class="row text-center preview-index">
-                                    <div class="col-sm-12 preview-item">
-                                        <a href="{{ post.url }}" target="_blank" class="preview-link" >
-                                            <div class="caption">
-                                                <div class="caption-content caption-index">
-                                                    <i class="fa fa-external-link fa-3x"></i>
-                                                </div>
-                                            </div>
-                                            <div class="backgroundDiv"></div>
-                                            <iframe 
-                                                title="{{ post.title }}"
-                                                width="100%"
-                                                src="{{ post.url }}"
-                                                scrolling= "no">
-                                            </iframe>
-                                        </a>
+                            <div class="col-xs-6 col-xs-offset-3 col-lg-4 col-lg-offset-0">
+                                <div class="row text-center">
+                                    <div class="col-sm-12">
+                                        {% if post.picture is not empty %}
+                                            <img src="{{ post.picture }}" alt="{{ post.title }} image" class="img-thumbnail">
+                                        {% else %}
+                                            <img src="/assets/img/logo.png" alt="no image" class="img-thumbnail">
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
