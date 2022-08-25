@@ -43,21 +43,24 @@
 #myCarousel{
     .item{
         height: 80vh;
-            background-color: @theme-primary;
-            // background-color: #161616;
+        background-image: url("/assets/img/slide-background.jpg");
         .back-slide{
             width: 100%;
             height: 70%;
             object-fit: contain;
-            background-color: @theme-primary;
             padding: 2rem;
-            // opacity: 0.7;
         }
-        .carousel-txt{
-            padding: 1rem;
-            background-color: rgba(0, 0, 0, 0.6);
-            margin-bottom: 2rem;
-            border-radius: 10px;
+        .carousel-caption{
+            padding-bottom: 10px;
+            .carousel-txt{
+                padding: 1rem;
+                background-color: rgba(0, 0, 0, 0.6);
+                margin-bottom: 2rem;
+                border-radius: 10px;
+            }
+            i{
+                margin-left: 1rem;
+            }
         }
     }
 }
