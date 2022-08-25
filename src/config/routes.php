@@ -68,8 +68,8 @@ $router->get('admin/posts/delete/:id', 'Admin\AdminPost@delete');
 $router->get('admin/comments/moderate/:action/:id', 'Admin\AdminComment@moderate');
 $router->get('admin/comments/delete/:id', 'Admin\AdminComment@delete');
 $router->get('admin/comments/:filter', 'Admin\AdminComment@index');
-$router->post('admin/comments/:filter', 'Admin\AdminComment@action');
-$router->post('admin/comments', 'Admin\AdminComment@action');
+$router->post('admin/comments/:filter', 'Admin\AdminComment@multiple_moderation');
+$router->post('admin/comments', 'Admin\AdminComment@multiple_moderation');
 $router->get('admin/comments', 'Admin\AdminComment@index');
 
 #AdminUser

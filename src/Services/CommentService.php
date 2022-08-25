@@ -12,6 +12,7 @@ class CommentService extends Service
         parent::__construct();
         $this->model = new Comment();
     }
+
     public function getCommentsForBo($filter)
     {
         $params['comments'] = $this->commentRepository->getCommentsForBo($filter);
@@ -30,25 +31,6 @@ class CommentService extends Service
             throw new \Exception("Le commentaire $identifier n'existe pas.");
         }
         return $params;
-    }
-
-    public function moderate($action, $identifier)
-    {
-        $success = $this->commentRepository->moderate($action, $identifier);
-        if (!$success) {
-            throw new \Exception('Impossible de valider le commentaire !');
-        }
-        switch ($action) {
-            case '0':
-                $this->flashServices->success('Modération annulée', 'La modération du commentaire a été annulée');
-                break;
-            case '1':
-                $this->flashServices->success('Modération acceptée', 'Le commentaire a été accepté');
-                break;
-            case '2':
-                $this->flashServices->danger('Modération refusée', 'Le commentaire a été refusé');
-                break;
-        }
     }
 
     public function delete($identifier)
@@ -90,45 +72,47 @@ class CommentService extends Service
         );
     }
 
-    // todo: à supprimer
-    public function action($input)
+    public function moderate($action, $identifier)
     {
-        foreach ($input['comment'] as $identifier) {
-            switch ($input['btnSubmit']) {
-                case 'Valider':
-                    $success = $this->commentRepository->commentValidate($identifier);
-                    break;
-                case 'Invalider':
-                    $success = $this->commentRepository->commentInvalidate($identifier);
-                    break;
-                case 'Refuser':
-                    $success = $this->commentRepository->commentRefuse($identifier);
-                    break;
-            }
-            if (!$success) {
-                throw new \Exception('Une erreur est survenue lors de la modification d\'un commentaire !');
-            }
+        $success = $this->commentRepository->moderate($action, $identifier);
+        if (!$success) {
+            throw new \Exception('Impossible de modifier le commentaire !');
         }
+        switch ($action) {
+            case '0':
+                $this->flashServices->success('Commentaire modifié', 'La modération du commentaire a été annulée');
+                break;
+            case '1':
+                $this->flashServices->success('Commentaire modifié', 'Le commentaire a été accepté');
+                break;
+            case '2':
+                $this->flashServices->danger('Commentaire modifié', 'Le commentaire a été refusé');
+                break;
+        }
+    }
+
+    public function multiple_moderation($input)
+    {
         switch ($input['btnSubmit']) {
-            case 'Valider':
-                $this->flashServices->success(
-                    'Commentaires Validés',
-                    'Les commentaires ont bien été validés'
-                );
-            break;
             case 'Invalider':
-                $this->flashServices->warning(
-                    'Commentaires Invalidés',
-                    'Les commentaires ont bien été invalidés'
-                );
+                $action = "0";
+                $flash = 'La modération des commentaires a été annulée';
+            break;
+            case 'Valider':
+                $action = "1";
+                $flash = 'Les commentaires ont bien été validés';
             break;
             case 'Refuser':
-                $this->flashServices->success(
-                    'Commentaires Refusés',
-                    'Les commentaires ont bien été refusés'
-                );
+                $action = "2";
+                $flash = 'Les commentaires ont bien été refusés';
             break;
         }
-
+        foreach ($input['comment'] as $identifier) {
+            $success = $this->commentRepository->moderate($action, $identifier);
+            if (!$success) {
+                throw new \Exception('Une erreur est survenue lors de la modification du commentaire #'. $identifier .' !');
+            }
+        }
+        $this->flashServices->success("Commentaires modifiés", $flash);
     }
 }

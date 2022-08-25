@@ -31,9 +31,9 @@ class AdminCommentController extends AdminController
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
-    public function action()
+    public function multiple_moderation()
     {
-        $this->commentService->action($_POST);
+        $this->commentService->multiple_moderation($_POST);
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 }
