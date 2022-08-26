@@ -45,9 +45,9 @@ class CommentRepository extends Repository
             case "approved":
                 $option = " WHERE moderate = 1";
                 break;
-            // case "rejected":
-            //     $option = " WHERE moderate = 2";
-            //     break;
+            case "rejected":
+                $option = " WHERE moderate = 2";
+                break;
         }
         $comments = $this->findAll($option);
         foreach ($comments as $comment) {
@@ -65,7 +65,7 @@ class CommentRepository extends Repository
         return $comment;
     }
 
-    public function commentAdd(string $post, string $comment): bool
+    public function addComment(string $post, string $comment): bool
     {
         $author = $_SESSION['user']->id;
         $statement = $this->connection->getConnection()->prepare('INSERT INTO comments(post, author, comment, created_at) VALUES(?, ?, ?, NOW())');
@@ -76,34 +76,6 @@ class CommentRepository extends Repository
     public function moderate(string $action, string $identifier): bool
     {
         $statement = $this->connection->getConnection()->prepare("UPDATE comments SET moderate = $action WHERE id = ?");
-        $affectedLines = $statement->execute([$identifier]);
-        return ($affectedLines > 0);
-    }
-
-    public function commentValidate(string $identifier): bool
-    {
-        $statement = $this->connection->getConnection()->prepare('UPDATE comments SET moderate = 1 WHERE id = ?');
-        $affectedLines = $statement->execute([$identifier]);
-        return ($affectedLines > 0);
-    }
-
-    public function commentInvalidate(string $identifier): bool
-    {
-        $statement = $this->connection->getConnection()->prepare('UPDATE comments SET moderate = 0 WHERE id = ?');
-        $affectedLines = $statement->execute([$identifier]);
-        return ($affectedLines > 0);
-    }
-
-    public function commentRefuse(string $identifier): bool
-    {
-        $statement = $this->connection->getConnection()->prepare('UPDATE comments SET moderate = 2 WHERE id = ?');
-        $affectedLines = $statement->execute([$identifier]);
-        return ($affectedLines > 0);
-    }
-
-    public function setPending(string $identifier): bool
-    {
-        $statement = $this->connection->getConnection()->prepare('UPDATE comments SET moderate = 0 WHERE id = ?');
         $affectedLines = $statement->execute([$identifier]);
         return ($affectedLines > 0);
     }

@@ -49,26 +49,26 @@ class CommentService extends Service
     {
         $comment = $this->validateForm($input,["comment"]);
         $success = $this->commentRepository->update($identifier, $comment);
-        $success = $this->commentRepository->setPending($identifier);
+        $success = $this->commentRepository->moderate("0", $identifier);
         if (!$success) {
             throw new \Exception('Impossible de modifier le commentaire !');
         }
         $this->flashServices->success(
             'Commentaire modifié',
-            'Votre commentaire sera à nouveau <strong>soumis à la modération</strong> et publié'
+            'Votre commentaire sera à nouveau <strong style="color:#f00;">soumis à la modération</strong> et publié'
         );
     }
 
     public function add(string $post, array $input)
     {
         $comment = $this->validateForm($input,["comment"]);
-        $success = $this->commentRepository->commentAdd($post, $comment->comment);
+        $success = $this->commentRepository->addComment($post, $comment->comment);
         if (!$success) {
             throw new \Exception('Impossible d\'ajouter le commentaire !');
         }
         $this->flashServices->success(
             'COMMENTAIRE ENVOYÉ',
-            'Votre commentaire sera <strong>soumis à la modération</strong> avant d\'être publié'
+            'Votre commentaire sera <strong style="color:#f00;">soumis à la modération</strong> avant d\'être publié'
         );
     }
 

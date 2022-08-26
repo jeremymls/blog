@@ -18,11 +18,13 @@
                         <span>Filtres:</span>
                         <select id="filter">
                             <option {% if filter == "all" %}selected{% endif %} value="all">Tous</option>
-                            <option {% if filter == "pending" %}selected{% endif %} value="pending">Non publiés</option>
-                            <option {% if filter == "approved" %}selected{% endif %} value="approved">Publiés</option>
+                            <option {% if filter == "pending" %}selected{% endif %} value="pending">En attente</option>
+                            <option {% if filter == "approved" %}selected{% endif %} value="approved">Aprouvés</option>
+                            <option {% if filter == "rejected" %}selected{% endif %} value="rejected">Rejetés</option>
                         </select>
                     </div>
 
+                    {{ utils.pagination(nbPage) }}
                     <div role="tabpanel" class="tab-pane active" id="date">
                         <form method="post">
                         <table class="table table-hover">
