@@ -19,11 +19,16 @@ class User extends Model
 
     public function setPassword($password)
     {
-        $this->password = hash("sha512",hash("ripemd256", $password));
+        $this->password = self::hashPassword($password);
     }
 
     public function comparePassword($passwordBDD, $passwordPOST)
     {
-        return hash("sha512",hash("ripemd256", $passwordPOST)) == $passwordBDD;
+        return self::hashPassword($passwordPOST) === $passwordBDD;
     }
+
+    private static function hashPassword($password)
+    {
+        return hash("sha512",hash("ripemd256", $password));
+    } 
 }
