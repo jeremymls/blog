@@ -1,7 +1,7 @@
-const thumbnail = document.getElementById("thumbnailOverview");
+const thumbnail = document.querySelector(".thumbnailOverview");
 const imgSize = document.getElementById("imgSize");
 
-document.getElementById("picture").onchange = function () {
+document.querySelector(".picture").onchange = function () {
     imgSize.innerHTML = "Taille du fichier: " + formatBytes(this.files[0].size);
     if (this.files[0].size > 512000) {
         alert("Le fichier est trop gros");
