@@ -16,7 +16,7 @@ class MailService
         $this->mail = $this->getConfig();
     }
 
-    public function getConfig()
+    private function getConfig()
     {
         $mail = new PHPMailer();
         $mail->isSMTP();                                 //Send using SMTP
