@@ -16,16 +16,22 @@ abstract class Controller
 
     public function __construct()
     {
-        $this->loader = new FilesystemLoader(ROOT . '/templates');
-        $this->twig = new Environment($this->loader, [
-            'debug' => true,
-        ]);
-        $this->twig->addExtension(new DebugExtension());
-        $this->twig->addExtension(new StringExtension());
-        $this->twig->addGlobal('session', $_SESSION);
-        $this->twig->addGlobal('get', $_GET);
-        $this->twig->addGlobal('url_request', $_SERVER['REQUEST_URI']);
+        $this->twig = self::getTwig();
         new Flash($this->twig);
         new ConfirmMail($this->twig);
+    }
+
+    private static function getTwig()
+    {
+        $loader = new FilesystemLoader(ROOT . '/templates');
+        $twig = new Environment($loader, [
+            'debug' => true,
+        ]);
+        $twig->addExtension(new DebugExtension());
+        $twig->addExtension(new StringExtension());
+        $twig->addGlobal('session', $_SESSION);
+        $twig->addGlobal('get', $_GET);
+        $twig->addGlobal('url_request', $_SERVER['REQUEST_URI']);
+        return $twig;
     }
 }

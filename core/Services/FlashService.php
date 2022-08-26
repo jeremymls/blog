@@ -24,7 +24,7 @@ class FlashService
         return $this->send('warning', $title, $message);
     }
     
-    public function send(string $type, string $title, string $message)
+    private function send(string $type, string $title, string $message)
     {
         setcookie("flash", "on", time() + 5, "/");
         setcookie("type", $type, time() + 5, "/");

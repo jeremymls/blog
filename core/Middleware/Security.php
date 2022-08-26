@@ -8,13 +8,18 @@ class Security
 {
     public function __construct()
     {
-        $this->flashServices = new FlashService();
+        self::isGranted();
+    }
+
+    private static function isGranted()
+    {
         if (!isset($_SESSION['user'])) {
-            $this->flashServices->warning('Accès non autorisé', 'Vous n\'avez pas accès à cette page! Veuillez vous connecter');
+            $flashServices = new FlashService();
+            $flashServices->warning('Accès non autorisé', 'Vous n\'avez pas accès à cette page! Veuillez vous connecter');
             header('Location: /login');
         } else {
             if ($_SESSION['user']->role != 'admin') {
-                throw new \Exception('Vous n\'avez pas les droits pour accéder à cette page', 403);
+                throw new \Exception('Vous n\'avez pas le droit d\'accéder à cette page', 403);
             }
         }
     }
