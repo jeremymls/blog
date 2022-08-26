@@ -107,6 +107,7 @@
 					<hr class="star-primary">
 				</div>
 			</div>
+            {{ utils.pagination(nbPage,"#commentList") }}
 			{% for comment in comments %}
 				<div class="panel panel-default">
 					<div class="panel-heading commentHeader">

@@ -57,6 +57,7 @@
                     {% if comments | length > 0 %}
                     <h3 id="commentPage">Commentaires</h3>
                     {% endif %}
+                    {{ utils.pagination(nbPage,"#commentPage") }}
                     {% for comment in comments %}
                         <div class="panel panel-{% if comment.moderate or session.user.role == "admin" %}default{% else %}danger{% endif %}">
                             <div class="panel-heading commentHeader">
