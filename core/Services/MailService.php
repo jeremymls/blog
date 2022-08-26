@@ -59,7 +59,7 @@ class MailService
     {
         $this->mail->addReplyTo($post['email'], $post['name']); 
         $this->mail->addAddress('contact@jeremy-monlouis.fr', 'JM Projets');
-        $this->mail->Subject = 'Message de ' . $post['name']. " (". $_ENV['USER']. ")";
+        $this->mail->Subject = 'Message de ' . $post['name'];
         $msg = file_get_contents('src/config/templates_mail/contact.html');
         $msg = str_replace('{{name}}', htmlentities($post['name']), $msg);
         $msg = str_replace('{{mail}}', $post['email'], $msg);
