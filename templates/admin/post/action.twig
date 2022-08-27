@@ -14,11 +14,11 @@
                         <div class="form-group col-lg-6 col-lg-offset-3">
 							<label for="picture">Image
 								<div id="divOverview">
-                                    <img id="thumbnailOverview" src={% if post.picture is empty %}"/assets/img/post.png"{% else %}{{ post.picture }}{% endif %} alt="">
+                                    <img id="thumbnailOverview" class="thumbnailOverview" src={% if post.picture is empty %}"/assets/img/post.png"{% else %}{{ post.picture }}{% endif %} alt="">
                                 </div>
 							</label>
 							{# <input type="hidden" name="MAX_FILE_SIZE" value="512000"> #}
-							<input type="file" name="picture" id="picture" class="form-control" accept=".gif,.jpg,.jpeg,.png,.webp">
+							<input type="file" name="picture" id="picture" class="form-control picture" accept=".gif,.jpg,.jpeg,.png,.webp">
 							<p id="imgSize"></p>
 							<p>Taille max : 500 KB</p>
 						</div>
