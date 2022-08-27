@@ -27,6 +27,7 @@
                     {{ utils.pagination(nbPage) }}
                     <div role="tabpanel" class="tab-pane active" id="date">
                         <form method="post">
+                        {{ utils.actionBtn("Commentaires") }}
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -75,10 +76,16 @@
                                         <td class="text-center">
                                             {# <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmCommentDelete"><i class="fa fa-trash" aria-hidden="true"></i></button> #}
                                             {% if comment.moderate != null %}
-                                                <button type="button" class="btn btn-default" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmCommentInvalidate"><i class="fa fa-ban" aria-hidden="true"></i></button>
+                                                <a href="/admin/comments/moderate/0/{{ comment.identifier }}" type="button" class="btn btn-default confirm">
+                                                    <i class="fa fa-ban" aria-hidden="true"></i>
+                                                </a>
                                             {% else %}
-                                                <button type="button" class="btn btn-success" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmCommentValidate"><i class="fa fa-check" aria-hidden="true"></i></button>
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmCommentRefuse"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                                <a href="/admin/comments/moderate/1/{{ comment.identifier }}" type="button" class="btn btn-success confirm">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </a>
+                                                <a href="/admin/comments/moderate/2/{{ comment.identifier }}" type="button" class="btn btn-danger confirm">
+                                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                                </a>
                                             {% endif %}
                                         </td>
                                         <td><button type="button" class="btn btn-primary" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-content="{{ comment.comment }}" data-post="{{ comment.post.title }}" data-postid="{{ comment.post.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#commentPreview"><i class="fa fa-eye"></i></button></td>
@@ -86,12 +93,7 @@
                                 {% endfor %}
                             </tbody>
                         </table>
-                        <p id='actions'>
-                            Commentaires sélectionnés: 
-                            <input type="submit" class="btn btn-default" name="btnSubmit" value="Invalider">
-                            <input type="submit" class="btn btn-success" name="btnSubmit" value="Valider">
-                            <input type="submit" class="btn btn-danger" name="btnSubmit" value="Refuser">
-                        </p>
+                        {{ utils.actionBtn("Commentaires") }}
                         </form>
                     </div>
                     {{ utils.pagination(nbPage) }}
@@ -100,63 +102,7 @@
         </section>
     </div>
 
-
-
-
-
-    <!-- Modals -->
-    <div class="modal fade" id="confirmCommentInvalidate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Voulez-vous vraiment annuler?</h4>
-                </div>
-                <div class="modal-body"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                    <a href="" class="btn btn-primary">Confirmer</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="confirmCommentValidate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Voulez-vous vraiment valider ce commentaire?</h4>
-                </div>
-                <div class="modal-body"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                    <a href="" class="btn btn-primary">Valider</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="confirmCommentRefuse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Voulez-vous vraiment refuser ce commentaire?</h4>
-                </div>
-                <div class="modal-body"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                    <a href="" class="btn btn-primary">Refuser</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!-- Preview Modal -->
 	<div class="modal fade" id="commentPreview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
@@ -195,23 +141,6 @@
         $('#filter').change(function(){
             var filter = $(this).val();
             window.location.href = '/admin/comments/' + filter;
-        });
-        $('#checkAll').change(function(){
-            if($(this).is(':checked')){
-                $('.checkbox').prop('checked', true);
-                $('#actions').show();
-            }else{
-                $('.checkbox').prop('checked', false);
-                $('#actions').hide();
-            }
-        });
-        $('#actions').hide();
-        $('.checkbox').change(function(){
-            if($('.checkbox:checked').length > 0){
-                $('#actions').show();
-            }else{
-                $('#actions').hide();
-            }
         });
     });
 </script>
