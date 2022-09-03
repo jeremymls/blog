@@ -4,6 +4,7 @@ namespace Core\Repositories;
 
 use Core\Models\Token;
 use Application\Models\User;
+use Application\Repositories\UserRepository;
 
 class TokenRepository extends Repository
 {
