@@ -61,7 +61,26 @@ class UserService extends Service
         );
         $user = $this->userRepository->getUserByUsername($input['email']);
         $token = $this->tokenService->createToken($user->identifier);
-        $this->mailService->sendConfirmationEmail($input['email'], $input['first'] , $token);
+        $url = "http://" . $_SERVER['SERVER_NAME'] . "/confirmation/$token";
+        $this->mailService->sendEmail([
+            'reply_to' => $this->mailService->getOwnerMail(),
+            'recipient' => [
+                'name' => $input['first'],
+                'email' => $input['email']
+            ],
+            'subject' => 'Validation de votre compte',
+            'template' => 'activate',
+            'template_data' => [
+                'name' => $input['first'],
+                'url' => $url,
+                // todo: dynamise site name
+                'site_name' => 'JM projets'
+            ],
+            'success_message' => 'Un mail de confirmation vous a été envoyé. <br>Veuillez cliquer sur le lien contenu dans le mail pour valider votre compte (expire après 30mn).'],
+            [],
+            true,
+            "Si vous ne parvenez pas à lire ce message, veuillez copier/coller le lien suivant dans votre navigateur: $url"
+        );
         if (isset($_SESSION['user']) && $_SESSION['user']->role === "admin"){
             header("Location: /admin/users");
         } else {
@@ -230,7 +249,24 @@ class UserService extends Service
     {
         $user = $this->userRepository->getUserByUsername($input['email']);
         $token = $this->tokenService->createToken($user->identifier);
-        $this->mailService->sendForgetPasswordEmail($user->email, $user->username, $token);
+        $url = "http://" . $_SERVER['SERVER_NAME'] . "/reset_password/$token";
+        $this->mailService->sendEmail([
+            'reply_to' => $this->mailService->getOwnerMail(),
+            'recipient' => [
+                'name' => $user->username,
+                'email' => $user->email
+            ],
+            'subject' => 'Mot de passe oublié',
+            'template' => 'forget',
+            'template_data' => [
+                'url' => $url,
+                'name' => $user->username,
+            ],
+            'success_message' => 'Un e-mail vous a été envoyé pour réinitialiser votre mot de passe <br> Veuillez cliquer sur le lien contenu dans le mail pour réinitialiser votre mot de passe (expire après 30mn).',], 
+            [],
+            true,
+            "Si vous ne parvenez pas à lire ce message, veuillez copier/coller le lien suivant dans votre navigateur: $url"
+        );
     }
 
     public function getUserByToken($token)

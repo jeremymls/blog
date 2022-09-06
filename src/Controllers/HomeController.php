@@ -23,7 +23,24 @@ class HomeController extends Controller
     public function send()
     {
         $mailService = new MailService();
-        $mailService->sendContactEmail($_POST);
+        $mailService->sendEmail([
+            'reply_to' => [
+                'name' => $_POST['name'],
+                'email' => $_POST['email']
+            ],
+            'recipient' => $mailService->getOwnerMail(),
+            'subject' => 'Message de ' . $_POST['name'],
+            'template' => 'contact',
+            'template_data' => [
+                'name' => $_POST['name'],
+                'mail' => $_POST['email'],
+                'phone' => $_POST['phone'],
+                'message' => $_POST['message'],
+                // todo: dynamise site name
+                'site_name' => 'JM projets'
+            ],
+            'success_message' => 'Votre message a bien été envoyé.']
+        );
         header('Location: /');
     }
 }

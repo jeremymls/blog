@@ -30,66 +30,45 @@ class MailService
         return $mail;
     }
 
-    public function sendConfirmationEmail(string $email, string $name, string $token)
+    public function sendEmail(array $config, array $mail_images=[], bool $signature = true, string $alt_body = null)
     {
-        
-        $this->mail->addReplyTo('contact@jeremy-monlouis.fr', $this->owner); //Set an alternative reply-to address
-        $this->mail->addAddress($email, 'Nouvel utilisateur');               //Set who the message is to be sent to
-        $this->mail->Subject = 'Validation de votre compte';                 //Set the subject line
-        $msg = file_get_contents('src/config/templates_mail/activate.html'); //Read an HTML message body from an external file
-        //------------- Personalize the message -----------------------------//
-        $name = htmlentities($name);
-        $msg = str_replace('{{name}}', $name, $msg);
-        $url = "http://" . $_SERVER['SERVER_NAME'] . "/confirmation/$token";
-        $msg = str_replace('{{url}}', $url, $msg);
-        $msg = str_replace('{{owner}}', $this->owner, $msg);
-        //-------------------------------------------------------------------//
-        $this->mail->msgHTML($msg, __DIR__);                                 //convert HTML into a basic plain-text alternative body
-        //Replace the plain text body with one created manually
-        $this->mail->AltBody = "Si vous ne parvenez pas à lire ce message, veuillez copier/coller le lien suivant dans votre navigateur: $url";
-        //send the message, check for errors
-        if (!$this->mail->send()) {
-            $this->flashServices->danger('Erreur', 'Une erreur est survenue lors de l\'envoi du mail: ' . $this->mail->ErrorInfo);
-        } else {
-            $this->flashServices->success('Succès', 'Un mail de confirmation vous a été envoyé. <br>Veuillez cliquer sur le lien contenu dans le mail pour valider votre compte (expire après 30mn).');
+        $this->mail->addReplyTo($config['reply_to']['email'], $config['reply_to']['name']);                 //Set an alternative reply-to address
+        $this->mail->addAddress($config['recipient']['email'], utf8_decode($config['recipient']['name']));  //Set who the message is to be sent to
+        $this->mail->Subject = utf8_decode($config['subject']);                                             //Set the subject line
+        // template preparation //
+        $msg = file_get_contents('src/config/templates_mail/partials/header.html');                         // Read and store the header
+        $msg .= file_get_contents('src/config/templates_mail/'. $config['template'] .'.html');              // Read and store the body
+        if ($signature) {
+            $msg .= file_get_contents('src/config/templates_mail/partials/signature.html');                 // Read and store the signature
+            // todo: dynamic signature
+            $msg = str_replace('{{owner}}', htmlentities("Jérémy Monlouis"), $msg);
+            $msg = str_replace('{{owner_mail}}', "contact@jeremy-monlouis.fr", $msg);
         }
-    }
-
-    public function sendContactEmail($post)
-    {
-        $this->mail->addReplyTo($post['email'], $post['name']); 
-        $this->mail->addAddress('contact@jeremy-monlouis.fr', 'JM Projets');
-        $this->mail->Subject = 'Message de ' . $post['name'];
-        $msg = file_get_contents('src/config/templates_mail/contact.html');
-        $msg = str_replace('{{name}}', htmlentities($post['name']), $msg);
-        $msg = str_replace('{{mail}}', $post['email'], $msg);
-        $msg = str_replace('{{phone}}', $post['phone'], $msg);
-        $msg = str_replace('{{message}}', htmlentities($post['message']), $msg);
-        $msg = str_replace('{{owner}}', $this->owner, $msg);
-        $this->mail->msgHTML($msg, __DIR__);
+        $msg .= file_get_contents('src/config/templates_mail/partials/footer.html');                        // Read and store the footer
+        // Dynamise the message //
+        $msg = str_replace('{{title}}', $config['subject'], $msg);
+        foreach ($config["template_data"] as $key => $value) {
+            $msg = str_replace('{{' . $key . '}}', htmlentities($value), $msg);
+        }
+        $this->mail->msgHTML($msg, __DIR__);                                                                // Convert HTML into a basic plain-text alternative body
+        $this->mail->AltBody = $alt_body ?: 
+        "Si vous ne parvenez pas à lire ce message, veuillez utiliser un navigateur compatible HTML.";      // Replace the plain text body with one created manually
+        // Attach images
+        foreach ($mail_images as $image) {
+            $this->mail->addAttachment('src/config/templates_mail/images/' . $image);
+        }
+        $this->mail->addAttachment('src/config/templates_mail/images/logo.png');
+        // Send the message, check for errors
         if (!$this->mail->send()) {
             throw new \Exception('Une erreur est survenue lors de l\'envoi du mail: ' . $this->mail->ErrorInfo, 500);
         } else {
-            $this->flashServices->success('Succès', 'Votre message a bien été envoyé.');
+            $this->flashServices->success('E-mail envoyé', $config['success_message']);
         }
     }
 
-    public function sendForgetPasswordEmail(string $email, string $name, string $token)
+    public function getOwnerMail()
     {
-        $this->mail->addReplyTo('contact@jeremy-monlouis.fr', $this->owner); 
-        $this->mail->addAddress($email, utf8_decode($name));
-        $this->mail->Subject = utf8_decode('Mot de passe oublié');
-        $msg = file_get_contents('src/config/templates_mail/forget.html');
-        $msg = str_replace('{{name}}', htmlentities($name), $msg);
-        $url = "http://" . $_SERVER['SERVER_NAME'] . "/reset_password/$token";
-        $msg = str_replace('{{url}}', $url, $msg);
-        $msg = str_replace('{{owner}}', $this->owner, $msg);
-        $this->mail->msgHTML($msg, __DIR__);
-        $this->mail->AltBody = "Si vous ne parvenez pas à lire ce message, veuillez copier/coller le lien suivant dans votre navigateur: $url";
-        if (!$this->mail->send()) {
-            throw new \Exception('Une erreur est survenue lors de l\'envoi du mail: ' . $this->mail->ErrorInfo, 500);
-        } else {
-            $this->flashServices->success('Succès', 'Un mail de réinitialisation de mot de passe vous a été envoyé. <br>Veuillez cliquer sur le lien contenu dans le mail pour réinitialiser votre mot de passe (expire après 30mn).');
-        }
+                // todo: dynamise getOwnerMail
+        return ['name' => 'JM Projets','email' => "contact@jeremy-monlouis.fr"];
     }
 }
