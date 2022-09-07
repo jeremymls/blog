@@ -76,4 +76,10 @@ $router->get('admin/comments', 'Admin\AdminComment@index');
 $router->get('admin/users', 'Admin\AdminUser@index');
 $router->get('admin/users/delete/:id', 'Admin\AdminUser@delete');
 
+#AdminSettings
+$router->get('admin/settings/init', 'Admin\Settings@init');
+$router->get('admin/settings/update/:name', 'Admin\Settings@update');
+$router->post('admin/settings/update/:name', 'Admin\Settings@update');
+$router->get('admin/settings', 'Admin\Settings@index');
+
 $router->run();

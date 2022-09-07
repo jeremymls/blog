@@ -30,6 +30,14 @@ class Repository
         return $entity;
     }
 
+    public function findOneBy(string $option, string $optionData)
+    {
+        $statement = $this->getSelectStatementByModel("WHERE " . $option . " = ?", [$optionData]);
+        $row = $statement->fetch();
+        $entity = $this->createEntity($row);
+        return $entity;
+    }
+
     public function add($entity): bool
     {
         $sql = "";

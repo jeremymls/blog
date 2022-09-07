@@ -2,9 +2,9 @@
 
 namespace Application\Controllers;
 
+use Application\Services\HomeService;
 use Core\Controllers\Controller;
 use Application\Services\PostService;
-use Core\Services\MailService;
 
 class HomeController extends Controller
 {
@@ -12,6 +12,7 @@ class HomeController extends Controller
     {
         parent::__construct();
         $this->postService = new PostService();
+        $this->homeService = new HomeService();
     }
 
     public function execute()
@@ -22,25 +23,7 @@ class HomeController extends Controller
 
     public function send()
     {
-        $mailService = new MailService();
-        $mailService->sendEmail([
-            'reply_to' => [
-                'name' => $_POST['name'],
-                'email' => $_POST['email']
-            ],
-            'recipient' => $mailService->getOwnerMail(),
-            'subject' => 'Message de ' . $_POST['name'],
-            'template' => 'contact',
-            'template_data' => [
-                'name' => $_POST['name'],
-                'mail' => $_POST['email'],
-                'phone' => $_POST['phone'],
-                'message' => $_POST['message'],
-                // todo: dynamise site name
-                'site_name' => 'JM projets'
-            ],
-            'success_message' => 'Votre message a bien été envoyé.']
-        );
+        $this->homeService->sendContactMail();
         header('Location: /');
     }
 }

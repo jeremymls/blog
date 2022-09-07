@@ -1,0 +1,36 @@
+{% extends "/base.twig" %}
+
+{% block title %}Modification de {{param.name}}{% endblock %}
+{% block subtitle %}
+	<a id="retour" href="javascript:history.back()" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+{% endblock %}
+
+{% block main %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+					<form action="" method="post">
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Valeur</label>
+                                <textarea rows="3" class="form-control" placeholder="Valeur" id="value" name="value" >{{ param.value }}</textarea>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <br>
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" class="btn btn-success btn-lg">Enregistrer</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block script %}
+    <script src="/assets/js/action.js"></script>
+{% endblock %}

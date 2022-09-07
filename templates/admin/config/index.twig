@@ -1,0 +1,63 @@
+{% extends "/base.twig" %}
+{% import "macros/utils.twig" as utils %}
+
+{% block title %}Administration des Paramètres{% endblock %}
+{% block subtitle %}
+	<a id="retour" href="/dashboard" ><i class="fa fa-cogs" aria-hidden="true"></i></a>
+    {% if missing_params|length > 0 %}
+        <a id="oneTool" href="/admin/settings/init"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    {{ utils.pagination(nbPage) }}
+                    <table id="BO_table" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Paramètre</th>
+                                <th>Valeur</th>
+                                <th class="text-center">Actions</th>
+                            <tr>
+                        </thead>
+                        <tbody>
+                            {% for param in missing_params %}
+                                <tr class="danger">
+                                    <td></td>
+                                    <td>{{ param }} (absent de la base de données)</td>
+                                    <td></td>
+                                    {% if loop.index == 1 %}
+                                    <td class="action">
+                                        <div class="row">
+                                            <a href="/admin/settings/init" class="btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i> Initialiser les paramètres manquants</a>
+                                        </div>
+                                    </td>
+                                    {% else %}
+                                    <td></td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            {% for param in params %}
+                            <tr>
+                                <td>#{{ param.identifier }}</td>
+                                <td>{{ param.name }}</td>
+                                <td>{{ param.value }}</td>
+                                <td class="action">
+                                    <div class="row">
+                                        <a href="/admin/settings/update/{{ param.identifier }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Modifier</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {{ utils.pagination(nbPage) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

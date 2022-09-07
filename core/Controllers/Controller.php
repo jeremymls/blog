@@ -4,6 +4,7 @@ namespace Core\Controllers;
 
 use Core\Middleware\ConfirmMail;
 use Core\Middleware\Flash;
+use Core\Services\ParamService;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Extra\String\StringExtension;
@@ -19,6 +20,8 @@ abstract class Controller
         $this->twig = self::getTwig();
         new Flash($this->twig);
         new ConfirmMail($this->twig);
+        $this->params = new ParamService();
+        $this->twig->addGlobal('site_name', $this->params->get("site_name"));
     }
 
     private static function getTwig()
