@@ -64,7 +64,7 @@ class Repository
             }
         }
         $sql .= "NOW())";
-        $statement = $this->connection->getConnection()->prepare($sql);
+        $statement = $this->connection::$database->prepare($sql);
         $affectedLines = $statement->execute($values);
         return ($affectedLines > 0);
     }
@@ -87,14 +87,14 @@ class Repository
         $sql = substr($sql, 0, -2);
         $sql .= " WHERE id = ?";
         $values[] = $identifier;
-        $statement = $this->connection->getConnection()->prepare($sql);
+        $statement = $this->connection::$database->prepare($sql);
         $affectedLines = $statement->execute($values);
         return ($affectedLines > 0);
     }
 
     public function delete($identifier): bool
     {
-        $statement = $this->connection->getConnection()->prepare(
+        $statement = $this->connection::$database->prepare(
             'DELETE FROM ' . $this->model::TABLE . ' WHERE id=?'
         );
         $affectedLines = $statement->execute([$identifier]);
@@ -114,7 +114,7 @@ class Repository
         }
         $sql = substr($sql, 0, -2);
         $sql .= " FROM " . $this->model::TABLE . " " . $options;
-        $statement = $this->connection->getConnection()->prepare($sql);
+        $statement = $this->connection::$database->prepare($sql);
         $statement->execute($optionsData);
         return $statement;
     }
