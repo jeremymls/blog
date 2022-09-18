@@ -4,6 +4,7 @@ namespace Application\Repositories;
 
 use Core\Repositories\Repository;
 use Application\Models\User;
+use Core\Lib\Singleton;
 
 class UserRepository extends Repository
 {
@@ -27,7 +28,7 @@ class UserRepository extends Repository
     public function checkUsername($username)
     {
         $sql = "SELECT * FROM " . $this->model::TABLE . " WHERE username = ? OR email = ?";
-        $statement = $this->connection::$database->prepare($sql);
+        $statement = Singleton::getConnection()->prepare($sql);
         $statement->execute([$username, $username]);
         $row = $statement->fetch();
         if ($row === false) {

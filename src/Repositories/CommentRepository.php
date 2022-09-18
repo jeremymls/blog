@@ -4,6 +4,7 @@ namespace Application\Repositories;
 
 use Core\Repositories\Repository;
 use Application\Models\Comment;
+use Core\Lib\Singleton;
 
 class CommentRepository extends Repository
 {
@@ -68,14 +69,14 @@ class CommentRepository extends Repository
     public function addComment(string $post, string $comment): bool
     {
         $author = $_SESSION['user']->id;
-        $statement = $this->connection::$database->prepare('INSERT INTO comments(post, author, comment, created_at) VALUES(?, ?, ?, NOW())');
+        $statement = Singleton::getConnection()->prepare('INSERT INTO comments(post, author, comment, created_at) VALUES(?, ?, ?, NOW())');
         $affectedLines = $statement->execute([$post, $author, $comment]);
         return ($affectedLines > 0);
     }
 
     public function moderate(string $action, string $identifier): bool
     {
-        $statement = $this->connection::$database->prepare("UPDATE comments SET moderate = $action WHERE id = ?");
+        $statement = Singleton::getConnection()->prepare("UPDATE comments SET moderate = $action WHERE id = ?");
         $affectedLines = $statement->execute([$identifier]);
         return ($affectedLines > 0);
     }
