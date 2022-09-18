@@ -5,7 +5,7 @@ namespace Application\Services;
 use Core\Services\Service;
 use Application\Models\User;
 use Core\Services\MailService;
-use Core\Services\ParamService;
+use Core\Services\ConfigService;
 use Core\Services\TokenService;
 use stdClass;
 
@@ -63,7 +63,7 @@ class UserService extends Service
         $user = $this->userRepository->getUserByUsername($input['email']);
         $token = $this->tokenService->createToken($user->identifier);
         $url = "http://" . $_SERVER['SERVER_NAME'] . "/confirmation/$token";
-        $paramServices = new ParamService();
+        $configServices = new ConfigService();
         $this->mailService->sendEmail([
             'reply_to' => $this->mailService->getOwnerMail(),
             'recipient' => [
@@ -75,7 +75,7 @@ class UserService extends Service
             'template_data' => [
                 'name' => $input['first'],
                 'url' => $url,
-                'site_name' => $paramServices->get("site_name")
+                'cs_site_name' => $configServices->get("cs_site_name")
             ],
             'success_message' => 'Un mail de confirmation vous a été envoyé. <br>Veuillez cliquer sur le lien contenu dans le mail pour valider votre compte (expire après 30mn).'],
             [],

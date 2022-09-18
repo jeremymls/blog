@@ -4,7 +4,7 @@ namespace Application\Services;
 
 use Core\Services\Service;
 use Core\Services\MailService;
-use Core\Services\ParamService;
+use Core\Services\ConfigService;
 
 class HomeService extends Service
 {
@@ -16,7 +16,7 @@ class HomeService extends Service
 
     public function sendContactMail()
     {
-        $paramServices = new ParamService();
+        $configServices = new ConfigService();
         $mailService = new MailService();
         $mailService->sendEmail([
             'reply_to' => [
@@ -31,7 +31,7 @@ class HomeService extends Service
                 'mail' => $_POST['email'],
                 'phone' => $_POST['phone'],
                 'message' => $_POST['message'],
-                'site_name' => $paramServices->get("site_name")
+                'cs_site_name' => $configServices->get("cs_site_name")
             ],
             'success_message' => 'Votre message a bien été envoyé.'],
             [],

@@ -10,7 +10,7 @@ class MailService
     public function __construct()
     {
         $this->flashServices = new FlashService();
-        $this->paramServices = new ParamService();
+        $this->configServices = new ConfigService();
         $this->mail = $this->getConfig();
     }
 
@@ -18,15 +18,15 @@ class MailService
     {
         $mail = new PHPMailer();
         $mail->isSMTP();                                           //Send using SMTP
-        $mail->Host       = $this->paramServices->get("mb_host");  //Set the SMTP server to send through
+        $mail->Host       = $this->configServices->get("mb_host");  //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                  //Enable SMTP authentication
-        $mail->Username   = $this->paramServices->get("mb_user");  //SMTP username
-        $mail->Password   = $this->paramServices->get("mb_pass");  //SMTP password
+        $mail->Username   = $this->configServices->get("mb_user");  //SMTP username
+        $mail->Password   = $this->configServices->get("mb_pass");  //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;           //Enable implicit TLS encryption
         $mail->Port       = 465;                                   //TCP port
         $mail->setFrom(
-            $this->paramServices->get("mb_user"), 
-            utf8_decode($this->paramServices->get("site_name"))
+            $this->configServices->get("mb_user"), 
+            utf8_decode($this->configServices->get("cs_site_name"))
         );                                                         //Set who the message is to be sent from
         return $mail;
     }
@@ -41,8 +41,8 @@ class MailService
         $msg .= file_get_contents('src/config/templates_mail/'. $config['template'] .'.html');              // Read and store the body
         if ($signature) {
             $msg .= file_get_contents('src/config/templates_mail/partials/signature.html');                 // Read and store the signature
-            $msg = str_replace('{{owner}}', htmlentities($this->paramServices->get("owner_name")), $msg);   // Replace the owner name
-            $msg = str_replace('{{owner_mail}}', $this->paramServices->get("owner_email"), $msg);           // Replace the owner mail
+            $msg = str_replace('{{owner}}', htmlentities($this->configServices->get("cs_owner_name")), $msg);   // Replace the owner name
+            $msg = str_replace('{{owner_mail}}', $this->configServices->get("cs_owner_email"), $msg);           // Replace the owner mail
         }
         $msg .= file_get_contents('src/config/templates_mail/partials/footer.html');                        // Read and store the footer
         // Dynamise the message //
@@ -68,6 +68,6 @@ class MailService
 
     public function getOwnerMail()
     {
-        return ['name' => $this->paramServices->get("site_name"),'email' => $this->paramServices->get("owner_email")];
+        return ['name' => $this->configServices->get("cs_site_name"),'email' => $this->configServices->get("cs_owner_email")];
     }
 }

@@ -58,8 +58,6 @@ class Model
             } else {
                 $this->token = 'expired';
             }
-        } else {
-            var_dump('pas de token');
         }
     }
 }

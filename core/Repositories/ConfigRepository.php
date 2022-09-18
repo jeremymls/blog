@@ -2,13 +2,13 @@
 
 namespace Core\Repositories;
 
-use Core\Models\Param;
+use Core\Models\Config;
 
-class ParamRepository extends Repository
+class ConfigRepository extends Repository
 {
     public function __construct()
     {
         parent::__construct();
-        $this->model = new Param();
+        $this->model = new Config();
     }
 }

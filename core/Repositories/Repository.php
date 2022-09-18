@@ -108,6 +108,10 @@ class Repository
 
     public function getSelectStatementByModel(string $options, array $optionsData = [])
     {
+        if ($this->checkTableExistence() == false) {
+            $_SESSION['safe_mode'] = true;
+            header('Location: /init');
+        }
         $sql = "SELECT ";
         foreach ($this->getModel() as $key => $value) {
             $sql .= $key . ", ";
@@ -179,5 +183,55 @@ class Repository
             throw new \Exception($errors);
         }
         return $base64;
+    }
+
+    private function checkTableExistence()
+    {
+        $sql = "SELECT * 
+        FROM INFORMATION_SCHEMA.TABLES 
+        WHERE TABLE_SCHEMA = ?
+        AND TABLE_NAME = ?";
+        $statement = $this->connection::$database->prepare($sql);
+        $statement->execute([DB_NAME, $this->model::TABLE]);
+        $row = $statement->fetch();
+        if($row){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getTables()
+    {
+        $tables = [];
+        $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = ?";
+        $statement = $this->connection::$database->prepare($sql);
+        $statement->execute([DB_NAME]);
+        while (($row = $statement->fetch())) {
+            $tables[] = $row['table_name'];
+        }
+        return $tables;
+    }
+
+    public function create_config_table($table)
+    {
+        $sql = "CREATE TABLE IF NOT EXISTS " . $table . " (
+            id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            value VARCHAR(255) DEFAULT NULL,
+            description VARCHAR(255) DEFAULT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )";
+        $statement = $this->connection::$database->prepare($sql);
+        $statement->execute();
+    }
+
+    public function create_tables()
+    {
+        if (file_exists("sql/blog.sql")) { 
+            $sql = file_get_contents ('sql/blog.sql');
+            $statement = $this->connection::$database->prepare($sql);
+            $statement->execute();
+        }
     }
 }

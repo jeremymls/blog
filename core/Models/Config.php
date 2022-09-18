@@ -2,9 +2,9 @@
 
 namespace Core\Models;
 
-class Param extends Model
+class Config extends Model
 {
-    const TABLE = 'params';
+    const TABLE = 'configs';
 
     public string $name;
     public ?string $value;

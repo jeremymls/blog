@@ -31,7 +31,11 @@ class Route
     {
         if (is_string($this->callable)) {
             $params = explode('@', $this->callable);
-            $controller = "Application\\Controllers\\" . $params[0]."Controller";
+            if (count($params) == 3) {
+                $controller = "Core\\Controllers\\" . $params[0] . "Controller";
+            } else {
+                $controller = "Application\\Controllers\\" . $params[0] . "Controller";
+            }
             $controller = new $controller();
             return call_user_func_array([$controller, $params[1]], $this->matches);
         } else {

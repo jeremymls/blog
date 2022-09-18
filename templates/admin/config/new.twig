@@ -1,0 +1,29 @@
+{% extends "/base.twig" %}
+{% import "macros/utils.twig" as utils %}
+
+{% block title %}Démarrage du site{% endblock %}
+{% block subtitle %}
+	La base de données n'existe pas, veuillez la créer.
+{% endblock %}
+
+{% block main %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2>Création de la base de données</h2>
+                    <p>
+                        Pour créer la base de données, cliquez sur le bouton ci-dessous ou exécuter le script suivant dans votre base de données :
+                    </p>
+                    <a class="btn btn-success btn-lg" href="/create_bdd">Créer la base de données "{{ bdd_name }}"</a><br>
+                    <em>(doit correspondre avec le fichier <strong>src/config/database.php</strong>)</em>
+                    <br><br>
+                    <p>
+                        <strong>Script SQL :</strong>
+                    </p>
+                    <pre>{{ sql }}</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,6 +1,6 @@
 {% extends "/base.twig" %}
 
-{% block title %}Modification de {{param.name}}{% endblock %}
+{% block title %}Modification de {{config.name}}{% endblock %}
 {% block subtitle %}
 	<a id="retour" href="javascript:history.back()" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 {% endblock %}
@@ -10,13 +10,32 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
+                    {% if config.value != 'ON' and config.value != 'OFF' %}
+                        <button id="empty" class="btn btn-default btn-lg">Vider</button><br><br>
+                    {% endif %}
+                    <p>{{ config.description }}</p>
 					<form action="" method="post">
                         <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Valeur</label>
-                                <textarea rows="3" class="form-control" placeholder="Valeur" id="value" name="value" >{{ param.value }}</textarea>
-                                <p class="help-block text-danger"></p>
-                            </div>
+                            {% if config.value == 'ON' or config.value == 'OFF' %}
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="value" id="optionsRadios1" value="ON" {% if config.value == 'ON'%}checked{% endif %} >
+                                        ON
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="value" id="optionsRadios2" value="OFF" {% if config.value == 'OFF'%}checked{% endif %}>
+                                        OFF
+                                    </label>
+                                </div>
+                            {% else %}
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    <label>Valeur</label>
+                                    <textarea rows="3" class="form-control" placeholder="Valeur" id="value" name="value" >{{ config.value }}</textarea>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            {% endif %}
                         </div>
                         <br>
                         <div id="success"></div>
@@ -33,4 +52,9 @@
 {% endblock %}
 {% block script %}
     <script src="/assets/js/action.js"></script>
+    <script>
+    document.getElementById("empty").addEventListener("click", function(){
+        document.getElementById("value").value = "";
+    });
+    </script>
 {% endblock %}

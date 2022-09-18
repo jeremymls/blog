@@ -16,13 +16,15 @@
                         <div class="row text-center">
                             <div class="col-lg-8">
                                 <div class="caption">
-                                    <a href="post/{{  post.identifier }}"><h3>{{ post.title }} </h3></a>
-                                        <p>mis à jour le {{ post.frenchCreationDate }}</p>
-                                        {% if post.chapo %}
-                                            <p>{{ post.chapo | nl2br}}</p>
-                                        {% else %}
-                                            <p>{{ post.content |  u.truncate(200, '...', false) | nl2br }}</p>
-                                        {% endif %}
+                                    <div class="post_head">
+                                        <a href="post/{{  post.identifier }}"><h3>{{ post.title }} </h3></a>
+                                        <em>mis à jour le {{ post.frenchCreationDate }}</em>
+                                    </div>
+                                    {% if post.chapo %}
+                                        <p>{{ post.chapo | nl2br}}</p>
+                                    {% else %}
+                                        <p>{{ post.content |  u.truncate(200, '...', false) | nl2br }}</p>
+                                    {% endif %}
                                     <p><a href="post/{{  post.identifier }}" class="btn btn-plus btn-primary" role="button">Voir plus</a></p>
                                 </div>
                             </div>

@@ -57,3 +57,53 @@
         <input type="submit" class="btn btn-danger confirm" name="btnSubmit" value="Refuser">
     </p>
 {% endmacro %}
+
+{# Réseaux sociaux #}
+{% macro social_networks() %}
+    <ul class="list-inline">
+        {% if rs_github %}
+            <li><a href="{{ rs_github }}" target="_blank" class="btn-social btn-outline"><i class="fa fa-fw fa-github"></i></a></li>
+        {% endif %}
+        {% if rs_linkedin %}
+            <li><a href="{{ rs_linkedin }}" target="_blank" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a></li>
+        {% endif %}
+        {% if rs_instagram %}
+            <li><a href="{{ rs_instagram }}" target="_blank" class="btn-social btn-outline"><i class="fa fa-fw fa-instagram"></i></a></li>
+        {% endif %}
+        {% if rs_facebook %}
+            <li><a href="{{ rs_facebook }}" target="_blank" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a></li>
+        {% endif %}
+        {% if rs_twitter %}
+            <li><a href="{{ rs_twitter }}" target="_blank" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a></li>
+        {% endif %}
+        {% if rs_youtube %}
+            <li><a href="{{ rs_youtube }}" target="_blank" class="btn-social btn-outline"><i class="fa fa-fw fa-youtube"></i></a></li>
+        {% endif %}
+        {% if rs_dribbble %}
+            <li><a href="{{ rs_dribbble }}" target="_blank" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble"></i></a></li>
+        {% endif %}
+        {% if rs_google_plus %}
+            <li><a href="{{ rs_google_plus }}" target="_blank" class="btn-social btn-outline"><i class="fa fa-fw fa-google-plus"></i></a></li>
+        {% endif %}
+    </ul>
+
+{% endmacro %}
+
+{# Coordonnées #}
+{% macro contact() %}
+    <ul class="list-unstyled">
+        {% if cs_address %}
+            <li><i class="fa fa-map-marker fa-fw"></i> {{ cs_address }}</li>
+        {% endif %}
+        {% if cs_owner_phone %}
+            <li><i class="fa fa-phone fa-fw"></i> <a href="tel:{{ cs_owner_phone }}">{{ cs_owner_phone }}</a></li>
+        {% endif %}
+        {% if cs_owner_email %}
+            <li><i class="fa fa-envelope-o fa-fw"></i> <a href="mailto:{{ cs_owner_email }}">{{ cs_owner_email }}</a></li>
+        {% endif %}
+        {% if cs_contact_form_display == "ON" %}
+            <li><i class="fa fa-envelope-o fa-fw"></i> <a href="/#contact">formulaire de contact</a></li>
+        {% endif %}
+    </ul>
+{% endmacro %}
+

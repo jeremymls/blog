@@ -1,7 +1,9 @@
+{% import "macros/utils.twig" as utils %}
 {% extends "/base.twig" %}
 
 {% block title %}Bienvenue sur mon blog{% endblock %}
-{% block subtitle %}" Je conçois vos besoins "{% endblock %}
+{% block subtitle %}{% if cs_slogan %}" {{ cs_slogan }} "{% endif %}{% endblock %}
+
 {% block imageHeader %}
     <img id="imageHeader" class="img-responsive" src="/assets/img/logo.png" alt="">
 {% endblock %}
@@ -89,31 +91,11 @@
                 </div>
 
                 <div class="col-lg-5 text-center">
-                    <h3>Vous pouvez me contacter :</h3>
-                    <div id="contactDiv">
-					<dl class="dl-horizontal text-left">
-                        <div>
-                            <dt>Par le</dt>
-                            <dd><a href="#contact">formulaire de contact</a></dd>
-                        </div>
-                        <div>
-                            <dt>Par mail</dt>
-                            <dd><a href="mailto:contact@jeremy-monlouis.fr">contact@jeremy-monlouis.fr</a></dd>
-                        </div>
-                        <div>
-                            <dt>Par téléphone</dt>
-                            <dd><a href="tel:+33767980747">07 67 98 07 47</a></dd>
-                        </div>
-                        <div>
-                            <dt>Sur les</dt>
-                            <dd>réseaux sociaux</dd>
-                        </div>
-					</dl>
-                    </div>
+                    <h3>Contactez-moi :</h3>
+                    {{ utils.contact() }}
 					<div class="row text-center">
 						<div class="col-auto">
-							<a href="https://www.linkedin.com/in/jeremy-mls/" target="_blank" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
-							<a href="https://github.com/jeremy-mls" target="_blank" class="btn-social btn-outline"><i class="fa fa-fw fa-github"></i></a>
+                            {{ utils.social_networks() }}
 						</div>
 					</div>
                 </div>
@@ -122,6 +104,7 @@
         </div>
     </section>
 
+    {% if cs_contact_form_display == 'ON' %}
     <!-- Contact Section -->
     <section id="contact">
         <div class="container">
@@ -175,6 +158,7 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
 {% endblock %}
 

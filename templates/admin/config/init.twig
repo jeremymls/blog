@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link
+		href="/assets/css/custom-bootstrap.css" rel="stylesheet">
+
+		<!-- Theme CSS -->
+		<link
+		href="/assets/css/freelancer.min.css" rel="stylesheet">
+
+		<!-- Custom Fonts -->
+		<link href="/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+		<title>Initialisation du site</title>
+	</head>
+	<body id="page-top" class="index">
+		<header>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="intro-text">
+							<h1 class="name">Initialisation du site</h1>
+							<hr class="star-light">
+							<span class="skills">
+								Votre site n'est pas correctement configuré. Vérifier votre base de données
+								<a id="retour" href="/" ><i class="fa fa-home" aria-hidden="true"></i></a>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<main>
+            {% if missing_tables|length > 0 %}
+			<section>
+				<div class="row">
+					<div class="col-lg-12 text-center">
+						<h2>Tables manquantes</h2>
+						<hr class="star-primary">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="container">
+							<table id="BO_table" class="table table-hover">
+								<thead>
+									<tr>
+										<th>Table</th>
+										<th class="text-center">Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+
+									{% for config in missing_tables %}
+										<tr class="danger">
+											<td>{{ config }}</td>
+											<td class="action">
+												{% if loop.first %}
+													{% set first = config %}
+												{% endif %}
+                                                {% if config == "configs" and loop.length == 1 %}
+													<div class="row">
+														<a href="/init/configs" class="btn btn-primary">
+															<i class="fa fa-refresh" aria-hidden="true"></i>
+															Initialiser la table configs
+														</a>
+													</div>
+                                                {% elseif loop.index == 1 or (loop.index == 2 and first == "configs")
+												%}
+													<div class="row">
+														<a href="/init/tables" class="btn btn-primary">
+															<i class="fa fa-refresh" aria-hidden="true"></i>
+															Initialiser toutes les tables
+														</a>
+													</div>
+                                                {% else %}
+                                                        <div class="row">
+                                                            <p>
+                                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                            Veuillez initialiser les tables
+                                                            </p>
+                                                        </div>
+                                                {% endif %}
+                                            </td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</section>
+            {% endif %}
+
+            {% if missing_configs|length > 0 %}
+			<section>
+				<div class="row">
+					<div class="col-lg-12 text-center">
+						<h2>Paramètres manquants</h2>
+						<hr class="star-primary">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="container">
+							<table id="BO_table" class="table table-hover">
+								<thead>
+									<tr>
+										<th>Paramètre</th>
+										<th class="text-center">Actions</th>
+									</tr>
+									<tr></tr>
+								</thead>
+								<tbody>
+									{% for config in missing_configs %}
+										<tr class="danger">
+											<td>{{ config }}</td>
+											{% if loop.index == 1 %}
+												<td class="action">
+													<div class="row">
+                                                        {% if "configs" not in missing_tables %}
+														<a href="/init/missing_configs" class="btn btn-primary">
+															<i class="fa fa-refresh" aria-hidden="true"></i>
+															Initialiser les paramètres manquants
+                                                        </a>
+                                                        {% else %}
+                                                        <p>
+                                                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                        La table configs n'existe pas
+                                                        </p>
+                                                        {% endif %}
+													</div>
+												</td>
+											{% else %}
+												<td></td>
+											{% endif %}
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</section>
+            {% endif %}
+		</main>
+	</body>
+</html>

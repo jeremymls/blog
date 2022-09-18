@@ -1,12 +1,9 @@
 {% extends "/base.twig" %}
 {% import "macros/utils.twig" as utils %}
 
-{% block title %}Administration des Paramètres{% endblock %}
+{% block title %}Configuration du site{% endblock %}
 {% block subtitle %}
 	<a id="retour" href="/dashboard" ><i class="fa fa-cogs" aria-hidden="true"></i></a>
-    {% if missing_params|length > 0 %}
-        <a id="oneTool" href="/admin/settings/init"><i class="fa fa-refresh" aria-hidden="true"></i></a>
-    {% endif %}
 {% endblock %}
 
 {% block main %}
@@ -21,39 +18,34 @@
                                 <th>Id</th>
                                 <th>Paramètre</th>
                                 <th>Valeur</th>
+                                <th>Description</th>
                                 <th class="text-center">Actions</th>
                             <tr>
                         </thead>
-                        <tbody>
-                            {% for param in missing_params %}
-                                <tr class="danger">
-                                    <td></td>
-                                    <td>{{ param }} (absent de la base de données)</td>
-                                    <td></td>
-                                    {% if loop.index == 1 %}
-                                    <td class="action">
-                                        <div class="row">
-                                            <a href="/admin/settings/init" class="btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i> Initialiser les paramètres manquants</a>
-                                        </div>
-                                    </td>
-                                    {% else %}
-                                    <td></td>
-                                    {% endif %}
-                                </tr>
-                            {% endfor %}
-                            {% for param in params %}
-                            <tr>
-                                <td>#{{ param.identifier }}</td>
-                                <td>{{ param.name }}</td>
-                                <td>{{ param.value }}</td>
-                                <td class="action">
-                                    <div class="row">
-                                        <a href="/admin/settings/update/{{ param.identifier }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Modifier</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
+                        {% for prefix, sorted_configs in configs %}
+                            <thead>
+                                <tr class="active">
+                                    <th></th>
+                                    <th>{{ prefix }}</th>
+                                    <th></th><th></th><th></th>
+                                <tr>
+                            </thead>
+                            <tbody>
+                                {% for config in sorted_configs %}
+                                    <tr>
+                                        <td>#{{ config.identifier }}</td>
+                                        <td>{{ config.name }}</td>
+                                        <td>{{ config.value }}</td>
+                                        <td>{{ config.description }}</td>
+                                        <td class="action">
+                                            <div class="row">
+                                                <a href="/admin/config/update/{{ config.identifier }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Modifier</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        {% endfor %}
                     </table>
                     {{ utils.pagination(nbPage) }}
                 </div>
