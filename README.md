@@ -1,53 +1,57 @@
-# Adoptez une architecture MVC en PHP
+# OpenClassrooms - Projet 5 - Créez votre premier blog en PHP
 
-Voici le dépôt Git qui sert de support au cours **Adoptez une architecture MVC en PHP**. À partir de ce dépôt, vous pourrez récupérer le code source, situé dans le dossier `blog/`, à chaque étape de l'avancement du projet.
+## Présentation
 
-Nous vous fournissons une liste de liens Github, dans la section [Étapes](#etapes) de ce document, vers chacune des étapes _précédentes_. Aussi, pour trouver une étape future, vous devrez obligatoirement repasser par la [dernière étape](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php). Si vous souhaitez naviguer dans les étapes directement depuis votre dépôt local, sachez que ce dépôt utilise l'[étiquettage Git](https://git-scm.com/book/fr/v2/Les-bases-de-Git-%C3%89tiquetage) pour définir chaque étape.
+Voici le dépôt Git de [JM Projets](http://jm-projets.fr), mon portfolio de projets.  
+Ce projet est le cinquième projet de la formation Développeur d'application - PHP/Symfony d'OpenClassrooms.  
+Il s'agit de créer un blog en PHP, sans framework, en utilisant une base de données MySQL.  
+Il est personnalisable, et il est possible de créer des articles, des commentaires, des utilisateurs, etc.
 
-Ce document vous fournira aussi quelques astuces et informations sur la manière d'installer le projet.
+## Prérequis
 
-## Étapes
+- PHP 7.4 ou supérieur
+- [MySQL](https://openclassrooms.com/fr/courses/918836-concevez-votre-site-web-avec-php-et-mysql/913893-mettez-en-place-une-base-de-donnees-avec-phpmyadmin) 5.7 ou supérieur
+- [Composer](https://getcomposer.org/) 2.0 ou supérieur
 
-* [Appréhendez les limites d'un code de débutant](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/apprehendez-limites-code-debutant)
-* [Isolez l'affichage du traitement PHP](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/isolez-affichage-traitement-php)
-* [Isolez l'accès aux données](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/isolez-acces-donnees)
-* [Soignez la cosmétique](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/soignez-cosmetique)
-* [Affichez des commentaires](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/affichez-commentaires)
-* [Créez un template de page](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/creez-template-page)
-* [Créez un routeur](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/creez-routeur)
-* [Ajoutez des commentaires](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/ajoutez-commentaires)
-* [Gérez les erreurs](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/gerez-erreurs)
-* [Structurez vos données](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/structurez-donnees)
-* [Donnez vie à vos structures](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/donnez-vie-structures)
-* [Tirez parti de la composition](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/tirez-parti-composition)
-* [Utilisez les namespaces](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/utilisez-namespaces)
-* [Modifiez un commentaire](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/modifiez-commentaire)
-* [Final](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/final)
+## Base de données
+
+- Par défaut, l'application utilise une base de données MySQL dénommée `blog`, accessible à un utilisateur `root` dont le mot de passe est `password`. Vous pouvez modifier ces paramètres dans le fichier `database.php` situé dans le dossier `blog/src/config/`.
+``` php
+    DB_HOST // adresse du serveur MySQL
+    DB_NAME // nom de la base de données
+    DB_USER // nom d'utilisateur
+    DB_PASS // mot de passe
+```
+
+- Il est possible de créer la base de données à partir du fichier `blog.sql` présent dans le dossier `sql`.
+```bash
+    mysql -uroot -p password < sql/blog.sql
+```
+*:warning: Si vous avez modifié database.php, pensez à remplacer `root` et `password` par vos identifiants :warning:*
 
 ## Installation
 
-### Prérequis
-
-Tout d'abord, ce projet est fait pour fonctionner avec les dernières versions de PHP (actuellement `^8.0`). Il vous faudra donc l'installer sur votre machine.
-
-De plus, ce projet nécessite l'utilisation d'une base de données MySQL. Vous devrez donc installer ET configurer votre base de données, et créer un utilisateur. Si vous voulez vous rafraîchir la mémoire, vous pouvez relire le chapitre [Mettez en place une base de données avec phpMyAdmin](https://openclassrooms.com/fr/courses/918836-concevez-votre-site-web-avec-php-et-mysql/913893-mettez-en-place-une-base-de-donnees-avec-phpmyadmin) ! Par défaut, l'application utilise une base de données dénommée `blog`, accessible à un utilisateur `blog` dont le mot de passe est `password`.
-
-### Configuration
-
-Une fois que vous avez installé votre serveur MySQL, vous pouvez remplacer les identifiants utilisés dans le code par les votre. Dans le fichier `blog/src/model.php`, à la ligne 5 :
-
-```php
-$database = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'blog', 'password');
+- Cloner le dépôt Git
+``` bash
+    git clone https://github.com/jeremymls/blog.git
 ```
 
-Vous devriez aussi remplir votre base de données. Vous pouvez charger le schéma par défaut (et quelques données), contenu dans le fichier `db.sql`. Pour ce faire, vous pouvez utiliser votre interface d'administration MySQL, ou bien lancer la commande suivante, si vous êtes sous Linux :
-
-```bash
-mysql -ublog -p blog < db.sql
+- Installer les dépendances avec Composer
+``` bash
+    composer install
 ```
 
-### Lancement
+## Lancement
 
 Vous pouvez utiliser le serveur web intégré à PHP pour lancer ce projet. Placez vous dans le dossier `blog/`, puis lancez la commande `php -S localhost:8080` (vous pouvez choisir le port que vous souhaitez si `8080` est déjà utilisé).
 
 Alternativement, et si vous avez une _stack_ WAMP ou LAMP installée, vous pouvez configurer votre serveur Apache pour qu'il gère le dossier `blog/`.
+
+## Configuration
+
+Une fois installé et lancé, vous pouvez accéder à l'application via votre navigateur web.  
+Vous pouvez vous connecter à l'application avec les identifiants suivants :
+``` bash
+    Identifiant :  admin
+    Mot de passe : password
+```
