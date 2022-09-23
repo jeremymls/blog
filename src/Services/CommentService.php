@@ -47,7 +47,7 @@ class CommentService extends Service
 
     public function update($identifier, $input)
     {
-        $comment = $this->validateForm($input,["comment"]);
+        $comment = $this->validateForm($input, ["comment"]);
         $success = $this->commentRepository->update($identifier, $comment);
         $success = $this->commentRepository->moderate("0", $identifier);
         if (!$success) {
@@ -61,7 +61,7 @@ class CommentService extends Service
 
     public function add(string $post, array $input)
     {
-        $comment = $this->validateForm($input,["comment"]);
+        $comment = $this->validateForm($input, ["comment"]);
         $success = $this->commentRepository->addComment($post, $comment->comment);
         if (!$success) {
             throw new \Exception('Impossible d\'ajouter le commentaire !');
@@ -79,32 +79,32 @@ class CommentService extends Service
             throw new \Exception('Impossible de modifier le commentaire !');
         }
         switch ($action) {
-            case '0':
-                $this->flashServices->success('Commentaire modifié', 'La modération du commentaire a été annulée');
-                break;
-            case '1':
-                $this->flashServices->success('Commentaire modifié', 'Le commentaire a été accepté');
-                break;
-            case '2':
-                $this->flashServices->danger('Commentaire modifié', 'Le commentaire a été refusé');
-                break;
+        case '0':
+            $this->flashServices->success('Commentaire modifié', 'La modération du commentaire a été annulée');
+            break;
+        case '1':
+            $this->flashServices->success('Commentaire modifié', 'Le commentaire a été accepté');
+            break;
+        case '2':
+            $this->flashServices->danger('Commentaire modifié', 'Le commentaire a été refusé');
+            break;
         }
     }
 
     public function multiple_moderation($input)
     {
         switch ($input['btnSubmit']) {
-            case 'Invalider':
-                $action = "0";
-                $flash = 'La modération des commentaires a été annulée';
+        case 'Invalider':
+            $action = "0";
+            $flash = 'La modération des commentaires a été annulée';
             break;
-            case 'Valider':
-                $action = "1";
-                $flash = 'Les commentaires ont bien été validés';
+        case 'Valider':
+            $action = "1";
+            $flash = 'Les commentaires ont bien été validés';
             break;
-            case 'Refuser':
-                $action = "2";
-                $flash = 'Les commentaires ont bien été refusés';
+        case 'Refuser':
+            $action = "2";
+            $flash = 'Les commentaires ont bien été refusés';
             break;
         }
         foreach ($input['comment'] as $identifier) {

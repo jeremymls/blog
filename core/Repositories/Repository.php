@@ -49,7 +49,7 @@ class Repository
         }
         foreach ($entity as $key => $value) {
             if ($key !== "passwordConfirm") {
-                $values[] = $value=="" ? NULL : $value;
+                $values[] = $value=="" ? null : $value;
                 $sql .= $key . ", ";
             }
         }
@@ -151,7 +151,7 @@ class Repository
             if ($entity->username == "" || $entity->username == 'NULL') {
                 $entity->isUsername = false;
                 $entity->username = $entity->first . ' ' . $entity->last;
-                $entity->initials = substr($entity->first,0,1).substr($entity->last,0,1);
+                $entity->initials = substr($entity->first, 0, 1).substr($entity->last, 0, 1);
             } else {
                 $entity->isUsername = true;
                 $entity->initials = $entity->username;
@@ -193,7 +193,7 @@ class Repository
         $statement = Singleton::getConnection()->prepare($sql);
         $statement->execute([DB_NAME, $this->model::TABLE]);
         $row = $statement->fetch();
-        if($row){
+        if($row) {
             return true;
         } else {
             return false;
@@ -228,7 +228,7 @@ class Repository
     public function create_tables()
     {
         if (file_exists("sql/blog.sql")) { 
-            $sql = file_get_contents ('sql/blog.sql');
+            $sql = file_get_contents('sql/blog.sql');
             $statement = Singleton::getConnection()->prepare($sql);
             $statement->execute();
         }

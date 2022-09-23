@@ -26,11 +26,11 @@ class Service
         foreach ($requiredFields as $key => $field) {
             $conditions[] = !empty($input[$field])?'ok':'ko';
         }
-        if (!in_array("ko", $conditions) ){
+        if (!in_array("ko", $conditions) ) {
             foreach ($input as $key => $value) {
                 $this->model->$key = $value;
             } 
-        return $this->model;
+            return $this->model;
         }else {
             throw new \Exception('Les données du formulaire sont invalides.');
         }

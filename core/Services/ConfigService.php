@@ -17,7 +17,7 @@ class ConfigService extends Service
     public function init()
     {
         $params['missing_tables'] = $this->checkMissingTables();
-        if ( in_array('configs', $params['missing_tables']) ) {
+        if (in_array('configs', $params['missing_tables']) ) {
             $params['missing_configs'] = $this->getDefaultsConfigs();
         } else {
             $params['missing_configs'] = $this->checkMissingConfigs();
@@ -88,11 +88,13 @@ class ConfigService extends Service
         }
         foreach (CONFIGS as $key => $config) {
             if (!in_array($key, $list)) {
-                $input = $this->validateForm([
+                $input = $this->validateForm(
+                    [
                     "name" => $key,
                     "value" => $config[0],
                     "description" => $config[1]
-                ]);
+                    ]
+                );
                 $this->configRepository->add($input);
             }
         }
@@ -115,7 +117,7 @@ class ConfigService extends Service
         foreach ($configs as $config) {
             $list[] = $config->name;
         }
-        return array_diff($this->getDefaultsConfigs(),$list);
+        return array_diff($this->getDefaultsConfigs(), $list);
     }
 
     public function checkMissingTables()
@@ -147,18 +149,18 @@ class ConfigService extends Service
         foreach ($configs as $config) {
             $prefix = explode('_', $config->name)[0];
             switch ($prefix) {
-                case 'cs':
-                    $prefix = 'Site';
-                    break;
-                case 'mb':
-                    $prefix = 'Configuration mail';
-                    break;
-                case 'rs':
-                    $prefix = 'Réseaux sociaux';
-                    break;
-                default:
-                    $other_configs[] = $config;
-                    break;
+            case 'cs':
+                $prefix = 'Site';
+                break;
+            case 'mb':
+                $prefix = 'Configuration mail';
+                break;
+            case 'rs':
+                $prefix = 'Réseaux sociaux';
+                break;
+            default:
+                $other_configs[] = $config;
+                break;
             }
             $sort_configs[$prefix][] = $config;
         }

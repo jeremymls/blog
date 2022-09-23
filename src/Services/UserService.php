@@ -33,7 +33,13 @@ class UserService extends Service
         $params['user']->withExpirationToken();
         $params['comments'] = $this->commentRepository->getCommentsByUser($id);
         $params['commentsCount'] = count($params['comments']);
-        $params['commentsPendingCount'] = count(array_filter($params['comments'], function($obj){return $obj->moderate == 0;}));
+        $params['commentsPendingCount'] = count(
+            array_filter(
+                $params['comments'], function ($obj) {
+                    return $obj->moderate == 0;
+                }
+            )
+        );
         $params = $this->pagination->paginate($params, 'comments', 5);
         return $params;
     }
@@ -50,7 +56,7 @@ class UserService extends Service
         if ($input['password'] !== $input['passwordConfirm']) {
             throw new \Exception('Les mots de passe ne correspondent pas.');
         }
-        $user = $this->validateForm($input,["email","password","first","last"]);
+        $user = $this->validateForm($input, ["email","password","first","last"]);
         $user->setPassword($input['password']);
         $success = $this->userRepository->add($user);
         if (!$success) {
@@ -64,7 +70,8 @@ class UserService extends Service
         $token = $this->tokenService->createToken($user->identifier);
         $url = "http://" . $_SERVER['SERVER_NAME'] . "/confirmation/$token";
         $configServices = new ConfigService();
-        $this->mailService->sendEmail([
+        $this->mailService->sendEmail(
+            [
             'reply_to' => $this->mailService->getOwnerMail(),
             'recipient' => [
                 'name' => $input['first'],
@@ -82,7 +89,7 @@ class UserService extends Service
             true,
             "Si vous ne parvenez pas à lire ce message, veuillez copier/coller le lien suivant dans votre navigateur: $url"
         );
-        if (isset($_SESSION['user']) && $_SESSION['user']->role === "admin"){
+        if (isset($_SESSION['user']) && $_SESSION['user']->role === "admin") {
             header("Location: /admin/users");
         } else {
             $this->setUserSession($user);
@@ -92,7 +99,7 @@ class UserService extends Service
 
     public function updateUser(array $input, $userId = null)
     {
-        $user = $this->validateForm($input,["email","first","last"]);
+        $user = $this->validateForm($input, ["email","first","last"]);
         $success = $this->userRepository->update($userId?$userId : $_SESSION['user']->id, $user);
         if (!$success) {
             throw new \Exception("Impossible de modifier l'utilisateur !");
@@ -101,7 +108,7 @@ class UserService extends Service
             'Utilisateur modifié',
             'L\'utilisateur '. $input['email'] .' a bien été modifié'
         );
-        if (isset($_SESSION['user']) && $_SESSION['user']->role === "admin" && isset($userId)){
+        if (isset($_SESSION['user']) && $_SESSION['user']->role === "admin" && isset($userId)) {
             header("Location: /admin/users");
         } else {
             $user = $this->userRepository->getUserByUsername($input['email']);
@@ -112,7 +119,7 @@ class UserService extends Service
 
     public function login(array $input)
     {
-        $user = $this->validateForm($input,["identifiant", "password"]);
+        $user = $this->validateForm($input, ["identifiant", "password"]);
         $user = $this->userRepository->getUserByUsername($input['identifiant']);
         if (!$user->comparePassword($user->password, $input['password'])) {
             throw new \Exception("Mot de passe incorrect !");
@@ -174,7 +181,8 @@ class UserService extends Service
             [
                 'email' => $input['email'],
                 'validated_email' => 0
-            ]);
+            ]
+        );
         if (!$success) {
             throw new \Exception("Impossible de modifier l'e-mail <br>Cette adresse est peut-être déjà utilisée");
         }
@@ -185,7 +193,7 @@ class UserService extends Service
         $_SESSION['user']->validated_email = 0;
         $user = $this->userRepository->getUserByUsername($input['email']);
         $token = $this->tokenService->createToken($user->identifier);
-        $this->mailService->sendConfirmationEmail($input['email'], $user->first , $token);
+        $this->mailService->sendConfirmationEmail($input['email'], $user->first, $token);
     }
 
     public function edit_password(array $input)
@@ -213,7 +221,7 @@ class UserService extends Service
 
     public function delete_picture()
     {
-        $success = $this->userRepository->update($_SESSION['user']->id,['picture' => null]);
+        $success = $this->userRepository->update($_SESSION['user']->id, ['picture' => null]);
         if (!$success) {
             throw new \Exception("Impossible de supprimer la photo de profil");
         }
@@ -226,12 +234,12 @@ class UserService extends Service
 
     public function setUserSession(User $user)
     {
-        if (!isset($_SESSION)){
+        if (!isset($_SESSION)) {
             session_start();
         } else {
             session_unset();
         }
-        if (!isset($_SESSION)){
+        if (!isset($_SESSION)) {
             session_start();
         }
         $_SESSION['user'] = new stdClass();
@@ -251,7 +259,8 @@ class UserService extends Service
         $user = $this->userRepository->getUserByUsername($input['email']);
         $token = $this->tokenService->createToken($user->identifier);
         $url = "http://" . $_SERVER['SERVER_NAME'] . "/reset_password/$token";
-        $this->mailService->sendEmail([
+        $this->mailService->sendEmail(
+            [
             'reply_to' => $this->mailService->getOwnerMail(),
             'recipient' => [
                 'name' => $user->username,
@@ -300,7 +309,7 @@ class UserService extends Service
         $user->withExpirationToken();
         if ($user->token == "expired") {
             $token = $this->tokenService->createToken($user->identifier);
-            $this->mailService->sendConfirmationEmail($user->email, $user->first , $token);
+            $this->mailService->sendConfirmationEmail($user->email, $user->first, $token);
             $this->flashServices->success(
                 'Confirmation de compte',
                 'Un nouveau lien de confirmation a été envoyé à votre adresse e-mail.'
@@ -315,7 +324,7 @@ class UserService extends Service
 
     public function checkUsername($username)
     {
-        if (isset($_SESSION["user"])){
+        if (isset($_SESSION["user"])) {
             if ($username == $_SESSION['user']->username || $username == $_SESSION['user']->email) {
                 echo true;
             } else {

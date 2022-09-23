@@ -72,8 +72,8 @@ class UserController extends Controller
     public function edit_mail($identifier = null)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $this->userService->edit_mail($_POST);
-        $this->twig->display('security/redirect.twig', ['target' => '/profil']);
+            $this->userService->edit_mail($_POST);
+            $this->twig->display('security/redirect.twig', ['target' => '/profil']);
         }
         $params = $this->userService->show($identifier);
         $this->twig->display('security/edit_mail.twig', $params);

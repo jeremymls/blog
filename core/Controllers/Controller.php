@@ -9,7 +9,7 @@ use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Extra\String\StringExtension;
 use Twig\Loader\FilesystemLoader;
-include_once('src/config/default.php');
+require_once 'src/config/default.php';
 
 abstract class Controller
 {
@@ -28,9 +28,11 @@ abstract class Controller
     private static function getTwig()
     {
         $loader = new FilesystemLoader(ROOT . '/templates');
-        $twig = new Environment($loader, [
+        $twig = new Environment(
+            $loader, [
             'debug' => true,
-        ]);
+            ]
+        );
         $twig->addExtension(new DebugExtension());
         $twig->addExtension(new StringExtension());
         $twig->addGlobal('session', $_SESSION);
@@ -41,7 +43,7 @@ abstract class Controller
 
     private function getConfigs()
     {
-        if ((isset($_GET['url']) && !in_array($_GET['url'],["init","init/configs","init/tables","login","new","create_bdd"])) || !isset($_GET['url'])) {
+        if ((isset($_GET['url']) && !in_array($_GET['url'], ["init","init/configs","init/tables","login","new","create_bdd"])) || !isset($_GET['url'])) {
             $configService = new ConfigService();
             if (count($configService->checkMissingConfigs()) > 0) {
                 $_SESSION['safe_mode'] = true;

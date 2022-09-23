@@ -1,7 +1,7 @@
 <?php
 
 namespace Core\Repositories;
-include_once('src/config/database.php');
+require_once 'src/config/database.php';
 
 class InitRepository extends Repository
 {

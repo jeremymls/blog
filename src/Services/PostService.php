@@ -17,7 +17,7 @@ class PostService extends Service
     public function getPosts(string $option = "", array $optionsData = [], string $limit = "")
     {
         $params['posts'] = $this->postRepository->findAll($option, $optionsData, $limit);
-        $params = $this->pagination->paginate($params, 'posts',5);
+        $params = $this->pagination->paginate($params, 'posts', 5);
         return $params;
     }
 
@@ -37,7 +37,7 @@ class PostService extends Service
 
     public function add($input)
     {
-        $post = $this->validateForm($input,["title", "content"]);
+        $post = $this->validateForm($input, ["title", "content"]);
         $success = $this->postRepository->add($post);
         if (!$success) {
             throw new \Exception('Impossible de d\'ajouter le projet !');
@@ -50,7 +50,7 @@ class PostService extends Service
 
     public function update($identifier, $input)
     {
-        $post = $this->validateForm($input,["title", "content"]);
+        $post = $this->validateForm($input, ["title", "content"]);
         $success = $this->postRepository->update($identifier, $post);
         if (!$success) {
             throw new \Exception('Impossible de modifier le projet !');

@@ -6,7 +6,7 @@ use Core\Middleware\Security;
 use Core\Services\ConfigService;
 use Core\Services\InitService;
 
-include_once('src/config/database.php');
+require_once 'src/config/database.php';
 
 class InitController extends Controller
 {
@@ -28,10 +28,12 @@ class InitController extends Controller
     public function new()
     {
         $sql = "CREATE DATABASE IF NOT EXISTS " . DB_NAME;
-        $this->twig->display('admin/config/new.twig', [
+        $this->twig->display(
+            'admin/config/new.twig', [
             'sql' => $sql,
             'bdd_name' => DB_NAME,
-        ]);
+            ]
+        );
     }
 
     public function init()

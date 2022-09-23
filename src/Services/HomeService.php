@@ -18,7 +18,8 @@ class HomeService extends Service
     {
         $configServices = new ConfigService();
         $mailService = new MailService();
-        $mailService->sendEmail([
+        $mailService->sendEmail(
+            [
             'reply_to' => [
                 'name' => $_POST['name'],
                 'email' => $_POST['email']

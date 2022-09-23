@@ -2,7 +2,7 @@
 
 namespace Core\Lib;
 
-include_once('src/config/database.php');
+require_once 'src/config/database.php';
 
 class Singleton
 {
@@ -55,7 +55,9 @@ class Singleton
     /**
      * Singletons should not be cloneable.
      */
-    protected function __clone() { }
+    protected function __clone()
+    { 
+    }
 
     /**
      * Singletons should not be restorable from strings.

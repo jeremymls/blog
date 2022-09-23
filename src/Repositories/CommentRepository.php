@@ -37,18 +37,18 @@ class CommentRepository extends Repository
     {
         $option = "";
         switch ($filter) {
-            case "all":
-                $option = "";
-                break;
-            case "pending":
-                $option = " WHERE moderate = 0";
-                break;
-            case "approved":
-                $option = " WHERE moderate = 1";
-                break;
-            case "rejected":
-                $option = " WHERE moderate = 2";
-                break;
+        case "all":
+            $option = "";
+            break;
+        case "pending":
+            $option = " WHERE moderate = 0";
+            break;
+        case "approved":
+            $option = " WHERE moderate = 1";
+            break;
+        case "rejected":
+            $option = " WHERE moderate = 2";
+            break;
         }
         $comments = $this->findAll($option);
         foreach ($comments as $comment) {

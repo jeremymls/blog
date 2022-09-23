@@ -9,24 +9,24 @@ if (isset($_GET['url'])) {
 }
 $router = new Router($url);
 
-## FRONTEND ##
+// FRONTEND //
 
-#Home
+// Home
 $router->get('/', 'Home@execute');
 $router->post('/', 'Home@send');
 
-#Post
+// Post
 $router->get('posts', 'Post@index');
 $router->get('post/:id', 'Post@show');
 
-#Comment
+// Comment
 $router->post('post/:id', 'Comment@add');
 $router->get('comment/:id', 'Comment@update');
 $router->post('comment/:id', 'Comment@update');
 
-## SECURITY ##
+// SECURITY //
 
-#User
+// User
 $router->post('profil/ajax/checkUsername', 'Security\User@checkUsername');
 $router->get('profil', 'Security\User@show');
 $router->get('profil/edit', 'Security\User@update');
@@ -48,15 +48,15 @@ $router->get('reset_password/:token', 'Security\User@reset_password');
 $router->post('reset_password/:token', 'Security\User@reset_password');
 $router->get('confirm_again', 'Security\User@confirm_again');
 
-#Email Confirmation
+// Email Confirmation
 $router->get('confirmation/:token', 'Security\User@confirmation');
 
-## BACKEND ##
+// BACKEND //
 
-#Dashboard
+// Dashboard
 $router->get('dashboard', 'Admin\Dashboard@execute');
 
-#AdminPost
+// AdminPost
 $router->get('admin/posts', 'Admin\AdminPost@index');
 $router->get('admin/posts/add', 'Admin\AdminPost@add');
 $router->post('admin/posts/add', 'Admin\AdminPost@add');
@@ -64,7 +64,7 @@ $router->get('admin/posts/update/:id', 'Admin\AdminPost@update');
 $router->post('admin/posts/update/:id', 'Admin\AdminPost@update');
 $router->get('admin/posts/delete/:id', 'Admin\AdminPost@delete');
 
-#AdminComment
+// AdminComment
 $router->get('admin/comments/moderate/:action/:id', 'Admin\AdminComment@moderate');
 $router->get('admin/comments/delete/:id', 'Admin\AdminComment@delete');
 $router->get('admin/comments/:filter', 'Admin\AdminComment@index');
@@ -72,13 +72,13 @@ $router->post('admin/comments/:filter', 'Admin\AdminComment@multiple_moderation'
 $router->post('admin/comments', 'Admin\AdminComment@multiple_moderation');
 $router->get('admin/comments', 'Admin\AdminComment@index');
 
-#AdminUser
+// AdminUser
 $router->get('admin/users', 'Admin\AdminUser@index');
 $router->get('admin/users/delete/:id', 'Admin\AdminUser@delete');
 
-## Core ##
+// Core //
 
-#Init
+// Init
 $router->get('init/missing_configs', 'Config@init_missing_configs@core');
 $router->get('init/configs', 'Config@init_configs@core');
 $router->get('init/tables', 'Config@init_tables@core');
@@ -86,7 +86,7 @@ $router->get('init', 'Init@init@core');
 $router->get('new', 'Init@new@core');
 $router->get('create_bdd', 'Init@create@core');
 
-#AdminConfig
+// AdminConfig
 $router->get('admin/config/update/:name', 'Config@update@core');
 $router->post('admin/config/update/:name', 'Config@update@core');
 $router->get('admin/configs', 'Config@index@core');

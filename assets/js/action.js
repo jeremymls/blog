@@ -19,8 +19,10 @@ document.querySelector(".picture").onchange = function () {
     }
 }
 
-function formatBytes(size, decimals = 2) {
-    if (size === 0) return '0 bytes';
+function formatBytes(size, decimals = 2)
+{
+    if (size === 0) { return '0 bytes';
+    }
     const k = 1024;
     const dm = decimals < 0 ? 0 : decimals;
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];

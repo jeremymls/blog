@@ -53,7 +53,7 @@ class Model
         $tokenRepository = new TokenRepository();
         $token = $tokenRepository->findAll("WHERE user_id = ?", [self::$id]);
         if (count($token) > 0) {
-            if (new DateTime($token[0]->expiration_date)>new DateTime()){
+            if (new DateTime($token[0]->expiration_date)>new DateTime()) {
                 $this->token = $token[0]->expiration_date;
             } else {
                 $this->token = 'expired';

@@ -23,7 +23,7 @@ class TokenRepository extends Repository
         }
         $token = $this->createEntity($row);
         if ($token->expiration_date < date("Y-m-d H:i:s")) {
-            throw new \Exception("Le token est expiré ! <br> Veuillez renouveler la demande",999);
+            throw new \Exception("Le token est expiré ! <br> Veuillez renouveler la demande", 999);
         }
         $token->with('user_id', UserRepository::class);
         $user = $token->user_id;

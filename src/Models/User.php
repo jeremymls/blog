@@ -29,6 +29,6 @@ class User extends Model
 
     private static function hashPassword($password)
     {
-        return hash("sha512",hash("ripemd256", $password));
+        return hash("sha512", hash("ripemd256", $password));
     } 
 }
