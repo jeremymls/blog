@@ -13,4 +13,12 @@ class Post extends Model
     public string $url;
     public string $chapo;
     public string $picture;
+
+    public function getFillable(): array
+    {
+        return [
+            'title',
+            'content',
+        ];
+    }
 }

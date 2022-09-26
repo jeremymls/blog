@@ -15,7 +15,9 @@ class AdminCommentController extends AdminController
 
     public function index($filter = "pending")
     {
-        $params = $this->commentService->getCommentsForBo($filter);
+        $params = $this->commentService->getCommentsFiltered($filter);
+        $params = $this->pagination->paginate($params, 'comments', 10);
+        $params['filter'] = $filter;
         $this->twig->display('admin/comment/index.twig', $params);
     }
 

@@ -10,6 +10,17 @@ class Repository
     {
     }
 
+    public function findOne($identifier)
+    {
+        $statement = $this->getSelectStatementByModel("WHERE id = ?", [$identifier]);
+        $row = $statement->fetch();
+        if (!$row) {
+            return null;
+        }
+        $entity = $this->createEntity($row);
+        return $entity;
+    }
+
     public function findAll(string $option = "", array $optionsData = [], string $limit = "")
     {
         $statement = $this->getSelectStatementByModel($option ." ORDER BY created_at DESC ". $limit, $optionsData);
@@ -21,20 +32,22 @@ class Repository
         return $entities;
     }
 
-    public function findOne($identifier)
-    {
-        $statement = $this->getSelectStatementByModel("WHERE id = ?", [$identifier]);
-        $row = $statement->fetch();
-        $entity = $this->createEntity($row);
-        return $entity;
-    }
-
     public function findOneBy(string $option, string $optionData)
     {
         $statement = $this->getSelectStatementByModel("WHERE " . $option . " = ?", [$optionData]);
         $row = $statement->fetch();
         $entity = $this->createEntity($row);
         return $entity;
+    }
+
+    public function delete($identifier): bool
+    {
+        $statement = Singleton::getConnection()->prepare(
+            'DELETE FROM ' . $this->model::TABLE . ' WHERE id=?'
+        );
+        $affectedLines = $statement->execute([$identifier]);
+        $affectedLines = $statement->rowCount();
+        return ($affectedLines > 0);
     }
 
     public function add($entity): bool
@@ -88,15 +101,6 @@ class Repository
         $values[] = $identifier;
         $statement = Singleton::getConnection()->prepare($sql);
         $affectedLines = $statement->execute($values);
-        return ($affectedLines > 0);
-    }
-
-    public function delete($identifier): bool
-    {
-        $statement = Singleton::getConnection()->prepare(
-            'DELETE FROM ' . $this->model::TABLE . ' WHERE id=?'
-        );
-        $affectedLines = $statement->execute([$identifier]);
         return ($affectedLines > 0);
     }
 
@@ -155,6 +159,12 @@ class Repository
             } else {
                 $entity->isUsername = true;
                 $entity->initials = $entity->username;
+            }
+        }
+        // Check if the entity has links
+        if (in_array("getLinks",get_class_methods($entity))) {
+            foreach ($entity->getLinks() as $field => $repository) {
+                $entity->with($field, "Application\\Repositories\\" . $repository);
             }
         }
         return $entity;

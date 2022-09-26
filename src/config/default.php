@@ -17,7 +17,8 @@ const CONFIGS = [
     'rs_dribbble' =>                [null,'Lien vers la page Dribbble'],
     'rs_google_plus' =>             [null,'Lien vers la page Google plus'],
     'mb_host' =>                    [null,'Hôte du serveur mail'],
-    'mb_name' =>                    [null,'Nom de la boite mail'],
+    'mb_mail' =>                    [null,'Adresse de l\'expéditeur'],
+    'mb_name' =>                    [null,'Nom de l\'expéditeur'],
     'mb_user' =>                    [null,'Nom d\'utilisateur de la boite mail'],
     'mb_pass' =>                    [null,'Mot de passe de la boite mail'],
 ];

@@ -4,6 +4,7 @@ namespace Core\Controllers;
 
 use Core\Middleware\ConfirmMail;
 use Core\Middleware\Flash;
+use Core\Middleware\Pagination;
 use Core\Services\ConfigService;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
@@ -18,10 +19,11 @@ abstract class Controller
 
     public function __construct()
     {
+        $this->pagination = new Pagination();
         $this->twig = self::getTwig();
         new Flash($this->twig);
         new ConfirmMail($this->twig);
-        self::getConfigs();
+        self::getSiteConfigs();
 
     }
 
@@ -41,7 +43,7 @@ abstract class Controller
         return $twig;
     }
 
-    private function getConfigs()
+    private function getSiteConfigs()
     {
         if ((isset($_GET['url']) && !in_array($_GET['url'], ["init","init/configs","init/tables","login","new","create_bdd"])) || !isset($_GET['url'])) {
             $configService = new ConfigService();
@@ -49,13 +51,19 @@ abstract class Controller
                 $_SESSION['safe_mode'] = true;
                 header('Location: /init');
             }
-            $configs = $configService->getConfigs();
-            foreach ($configs as $config) {
+            $params = $configService->getAll();
+            foreach ($params["configs"] as $config) {
                 $prefix = explode("_", $config->name)[0];
                 if ($prefix != "mb") {
                     $this->twig->addGlobal($config->name, $config->value);
                 }
             }
         }
+    }
+
+    public function multiParams(array $params)
+    {
+        $params = array_merge(...$params);
+        return $params;
     }
 }

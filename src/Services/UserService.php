@@ -2,14 +2,14 @@
 
 namespace Application\Services;
 
-use Core\Services\Service;
 use Application\Models\User;
 use Core\Services\MailService;
 use Core\Services\ConfigService;
+use Core\Services\EntityService;
 use Core\Services\TokenService;
 use stdClass;
 
-class UserService extends Service
+class UserService extends EntityService
 {
 
     public function __construct()
@@ -18,6 +18,7 @@ class UserService extends Service
         $this->model = new User();
         $this->tokenService = new TokenService();
         $this->mailService = new MailService();
+        $this->configService = new ConfigService();
     }
 
     public function show($id)
@@ -31,7 +32,7 @@ class UserService extends Service
         }
         $params['user'] = $this->userRepository->findOne($id);
         $params['user']->withExpirationToken();
-        $params['comments'] = $this->commentRepository->getCommentsByUser($id);
+        $params['comments'] = $this->commentRepository->findAll("WHERE author = ?", [$id]);
         $params['commentsCount'] = count($params['comments']);
         $params['commentsPendingCount'] = count(
             array_filter(
@@ -44,35 +45,25 @@ class UserService extends Service
         return $params;
     }
 
-    public function getUsers()
-    {
-        $params['users'] = $this->userRepository->findAll();
-        $params = $this->pagination->paginate($params, 'users', 5);
-        return $params;
-    }
+    // public function getUsers()
+    // {
+    //     $params['users'] = $this->userRepository->findAll();
+    //     $params = $this->pagination->paginate($params, 'users', 5);
+    //     return $params;
+    // }
 
     public function register(array $input, $userId)
     {
         if ($input['password'] !== $input['passwordConfirm']) {
             throw new \Exception('Les mots de passe ne correspondent pas.');
         }
-        $user = $this->validateForm($input, ["email","password","first","last"]);
-        $user->setPassword($input['password']);
-        $success = $this->userRepository->add($user);
-        if (!$success) {
-            throw new \Exception("Impossible de créer l'utilisateur ! <br>L'adresse e-mail est peut-être déjà utilisée");
-        }
-        $this->flashServices->success(
-            'Utilisateur créé',
-            'L\'utilisateur '. $input['email'] .' a bien été créé'
-        );
+        $this->add($input, ["role" => "user"]);
         $user = $this->userRepository->getUserByUsername($input['email']);
         $token = $this->tokenService->createToken($user->identifier);
         $url = "http://" . $_SERVER['SERVER_NAME'] . "/confirmation/$token";
-        $configServices = new ConfigService();
         $this->mailService->sendEmail(
             [
-            'reply_to' => $this->mailService->getOwnerMail(),
+            'reply_to' => $this->configService->getOwnerMailContact(),
             'recipient' => [
                 'name' => $input['first'],
                 'email' => $input['email']
@@ -82,7 +73,7 @@ class UserService extends Service
             'template_data' => [
                 'name' => $input['first'],
                 'url' => $url,
-                'cs_site_name' => $configServices->get("cs_site_name")
+                'cs_site_name' => $this->configService->getByName("cs_site_name")
             ],
             'success_message' => 'Un mail de confirmation vous a été envoyé. <br>Veuillez cliquer sur le lien contenu dans le mail pour valider votre compte (expire après 30mn).'],
             [],
@@ -261,7 +252,7 @@ class UserService extends Service
         $url = "http://" . $_SERVER['SERVER_NAME'] . "/reset_password/$token";
         $this->mailService->sendEmail(
             [
-            'reply_to' => $this->mailService->getOwnerMail(),
+            'reply_to' => $this->configService->getOwnerMailContact(),
             'recipient' => [
                 'name' => $user->username,
                 'email' => $user->email
@@ -279,6 +270,7 @@ class UserService extends Service
         );
     }
 
+    // todo: move to token service
     public function getUserByToken($token)
     {
         return $this->tokenRepository->getUserByToken($token);

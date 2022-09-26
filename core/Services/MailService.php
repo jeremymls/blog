@@ -4,30 +4,42 @@ namespace Core\Services;
 
 use Core\Services\FlashService;
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 
 class MailService
 {
     public function __construct()
     {
         $this->flashServices = new FlashService();
-        $this->configServices = new ConfigService();
-        $this->mail = $this->getConfig();
+        $this->configService = new ConfigService();
+        $this->mail = $this->getMailConfig();
     }
 
-    private function getConfig()
+    private function getMailConfig()
     {
         $mail = new PHPMailer();
         $mail->isSMTP();                                           //Send using SMTP
-        $mail->Host       = $this->configServices->get("mb_host");  //Set the SMTP server to send through
+        // $this->mail = $this->configService->getMailConfig()
+        // dump($this->configService->getMailConfig());
+        // die();
+        $mail->Host       = $this->configService->getByName("mb_host");  //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                  //Enable SMTP authentication
-        $mail->Username   = $this->configServices->get("mb_user");  //SMTP username
-        $mail->Password   = $this->configServices->get("mb_pass");  //SMTP password
+        $mail->Username   = $this->configService->getByName("mb_user");  //SMTP username
+        $mail->Password   = $this->configService->getByName("mb_pass");  //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;           //Enable implicit TLS encryption
-        $mail->Port       = 465;                                   //TCP port
+        $mail->Port       = 465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        // $mail->SMTPDebug = SMTP::DEBUG_CONNECTION;
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true
+            )
+        );
         $mail->setFrom(
-            $this->configServices->get("mb_user"), 
-            utf8_decode($this->configServices->get("cs_site_name"))
-        );                                                         //Set who the message is to be sent from
+            $this->configService->getByName("mb_user"), 
+            utf8_decode($this->configService->getByName("cs_site_name"))
+        );      
         return $mail;
     }
 
@@ -41,8 +53,8 @@ class MailService
         $msg .= file_get_contents('src/config/templates_mail/'. $config['template'] .'.html');              // Read and store the body
         if ($signature) {
             $msg .= file_get_contents('src/config/templates_mail/partials/signature.html');                 // Read and store the signature
-            $msg = str_replace('{{owner}}', htmlentities($this->configServices->get("cs_owner_name")), $msg);   // Replace the owner name
-            $msg = str_replace('{{owner_mail}}', $this->configServices->get("cs_owner_email"), $msg);           // Replace the owner mail
+            $msg = str_replace('{{owner}}', htmlentities($this->configService->getByName("cs_owner_name")), $msg);   // Replace the owner name
+            $msg = str_replace('{{owner_mail}}', $this->configService->getByName("cs_owner_email"), $msg);           // Replace the owner mail
         }
         $msg .= file_get_contents('src/config/templates_mail/partials/footer.html');                        // Read and store the footer
         // Dynamise the message //
@@ -64,10 +76,5 @@ class MailService
         } else {
             $this->flashServices->success('E-mail envoyé', $config['success_message']);
         }
-    }
-
-    public function getOwnerMail()
-    {
-        return ['name' => $this->configServices->get("cs_site_name"),'email' => $this->configServices->get("cs_owner_email")];
     }
 }

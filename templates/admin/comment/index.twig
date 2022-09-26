@@ -28,6 +28,7 @@
                     <div role="tabpanel" class="tab-pane active" id="date">
                         <form method="post">
                         {{ utils.actionBtn("Commentaires") }}
+                        {% if comments|length > 0 %}
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -93,6 +94,9 @@
                                 {% endfor %}
                             </tbody>
                         </table>
+                        {% else %}
+                            <div class="alert alert-info" role="alert">Aucun commentaire trouvé.</div>
+                        {% endif %}
                         {{ utils.actionBtn("Commentaires") }}
                         </form>
                     </div>

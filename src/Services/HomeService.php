@@ -16,7 +16,7 @@ class HomeService extends Service
 
     public function sendContactMail()
     {
-        $configServices = new ConfigService();
+        $configService = new ConfigService();
         $mailService = new MailService();
         $mailService->sendEmail(
             [
@@ -24,7 +24,7 @@ class HomeService extends Service
                 'name' => $_POST['name'],
                 'email' => $_POST['email']
             ],
-            'recipient' => $mailService->getOwnerMail(),
+            'recipient' => $configService->getOwnerMailContact(),
             'subject' => 'Message de ' . $_POST['name'],
             'template' => 'contact',
             'template_data' => [
@@ -32,7 +32,7 @@ class HomeService extends Service
                 'mail' => $_POST['email'],
                 'phone' => $_POST['phone'],
                 'message' => $_POST['message'],
-                'cs_site_name' => $configServices->get("cs_site_name")
+                'cs_site_name' => $configService->getByName("cs_site_name")
             ],
             'success_message' => 'Votre message a bien été envoyé.'],
             [],

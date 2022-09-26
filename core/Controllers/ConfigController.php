@@ -47,7 +47,7 @@ class ConfigController extends AdminController
             $this->configService->update($id, $_POST);
             header('Location: /admin/configs');
         }
-        $params["config"] = $this->configService->getConfig($id);
+        $params = $this->configService->get($id);
         $this->twig->display('admin/config/edit.twig', $params);
     }
 }

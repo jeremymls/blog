@@ -15,8 +15,11 @@ class CommentController extends Controller
 
     public function add(string $post)
     {
-        $this->commentService->add($post, $_POST);
-        header('Location: /post/' . $post);
+        $this->commentService->add($_POST, [
+            'post' =>$post,
+            'author' => $_SESSION['user']->id,
+        ]);
+        header('Location: /post/' . $post . '#commentList');
     }
 
     public function update(string $identifier)
@@ -25,7 +28,7 @@ class CommentController extends Controller
             $this->commentService->update($identifier, $_POST);
             header('Location: /post/' . $_POST['post']);
         }
-        $params = $this->commentService->getComment($identifier);
+        $params = $this->commentService->get($identifier);
         $this->twig->display('post/update_comment.twig', $params);
     }
 }

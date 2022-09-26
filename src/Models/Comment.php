@@ -12,4 +12,21 @@ class Comment extends Model
     public $author;
     public string $comment;
     public string $moderate;
+
+    public function getLinks()
+    {
+        return [
+            'post' => 'PostRepository',
+            'author' => 'UserRepository',
+        ];
+    }
+
+    public function getFillable(): array
+    {
+        return [
+            'post',
+            'author',
+            'comment',
+        ];
+    }
 }

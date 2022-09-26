@@ -15,7 +15,7 @@ class AdminPostController extends AdminController
 
     public function index()
     {
-        $params = $this->postService->getPosts();
+        $params = $this->postService->getAll();
         $this->twig->display('admin/post/index.twig', $params);
     }
 
@@ -34,7 +34,7 @@ class AdminPostController extends AdminController
             $this->postService->update($identifier, $_POST);
             header('Location: /admin/posts');
         }
-        $params = $this->postService->getPost($identifier);
+        $params = $this->postService->get($identifier);
         $this->twig->display('admin/post/action.twig', $params);
     }
 

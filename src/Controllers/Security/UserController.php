@@ -19,9 +19,8 @@ class UserController extends Controller
         $this->twig->display('security/profil.twig', $params);
     }
 
-    public function register()
+    public function register($userId = null)
     {
-        $userId = isset($_GET["userId"]) ? $_GET["userId"] : null;
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $params = $this->userService->register($_POST, $userId);
             $this->twig->display('security/redirect.twig', $params);

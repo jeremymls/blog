@@ -17,7 +17,7 @@ class HomeController extends Controller
 
     public function execute()
     {
-        $params = $this->postService->getPosts("", [], "LIMIT 5");
+        $params = $this->postService->getAll("", [], "LIMIT 5");
         $this->twig->display('homepage.twig', $params);
     }
 

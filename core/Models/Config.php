@@ -9,5 +9,12 @@ class Config extends Model
     public string $name;
     public ?string $value;
     public ?string $description;
-    
+
+    public function getFillable(): array
+    {
+        return [
+            'name',
+            'value',
+        ];
+    }
 }

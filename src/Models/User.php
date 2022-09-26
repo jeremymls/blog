@@ -17,6 +17,17 @@ class User extends Model
     public string $validated_email;
     public string $picture;
 
+    public function getFillable(): array
+    {
+        return [
+            'password',
+            'email',
+            'first',
+            'last',
+            'role',
+        ];
+    }
+
     public function setPassword($password)
     {
         $this->password = self::hashPassword($password);

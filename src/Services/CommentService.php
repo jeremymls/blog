@@ -2,10 +2,10 @@
 
 namespace Application\Services;
 
-use Core\Services\Service;
 use Application\Models\Comment;
+use Core\Services\EntityService;
 
-class CommentService extends Service
+class CommentService extends EntityService
 {
     public function __construct()
     {
@@ -13,37 +13,50 @@ class CommentService extends Service
         $this->model = new Comment();
     }
 
-    public function getCommentsForBo($filter)
+    public function getCommentsFiltered($filter)
     {
-        $params['comments'] = $this->commentRepository->getCommentsForBo($filter);
+        $option = "";
+        switch ($filter) {
+        case "all":
+            $option = "";
+            break;
+        case "pending":
+            $option = " WHERE moderate = 0";
+            break;
+        case "approved":
+            $option = " WHERE moderate = 1";
+            break;
+        case "rejected":
+            $option = " WHERE moderate = 2";
+            break;
+        }
+        $params = $this->getAll($option);
         if (!$params) {
             throw new \Exception('Impossible de récupérer les commentaires !');
         }
-        $params['filter'] = $filter;
-        $params = $this->pagination->paginate($params, 'comments', 10);
         return $params;
     }
 
-    public function getComment($identifier)
-    {
-        $params['comment'] = $this->commentRepository->getComment($identifier);
-        if ($params === null) {
-            throw new \Exception("Le commentaire $identifier n'existe pas.");
-        }
-        return $params;
-    }
+    // public function getComment($identifier)
+    // {
+    //     $params['comment'] = $this->commentRepository->getComment($identifier);
+    //     if ($params === null) {
+    //         throw new \Exception("Le commentaire $identifier n'existe pas.");
+    //     }
+    //     return $params;
+    // }
 
-    public function delete($identifier)
-    {
-        $success = $this->commentRepository->delete($identifier);
-        if (!$success) {
-            throw new \Exception('Impossible de supprimer le commentaire !');
-        }
-        $this->flashServices->danger(
-            'Commentaire supprimé',
-            'Le commentaire a bien été supprimé'
-        );
-    }
+    // public function delete($identifier)
+    // {
+    //     $success = $this->commentRepository->delete($identifier);
+    //     if (!$success) {
+    //         throw new \Exception('Impossible de supprimer le commentaire !');
+    //     }
+    //     $this->flashServices->danger(
+    //         'Commentaire supprimé',
+    //         'Le commentaire a bien été supprimé'
+    //     );
+    // }
 
     public function update($identifier, $input)
     {
@@ -59,18 +72,18 @@ class CommentService extends Service
         );
     }
 
-    public function add(string $post, array $input)
-    {
-        $comment = $this->validateForm($input, ["comment"]);
-        $success = $this->commentRepository->addComment($post, $comment->comment);
-        if (!$success) {
-            throw new \Exception('Impossible d\'ajouter le commentaire !');
-        }
-        $this->flashServices->success(
-            'COMMENTAIRE ENVOYÉ',
-            'Votre commentaire sera <strong style="color:#f00;">soumis à la modération</strong> avant d\'être publié'
-        );
-    }
+    // public function add(string $post, array $input)
+    // {
+    //     $comment = $this->validateForm($input, ["comment"]);
+    //     $success = $this->commentRepository->addComment($post, $comment->comment);
+    //     if (!$success) {
+    //         throw new \Exception('Impossible d\'ajouter le commentaire !');
+    //     }
+    //     $this->flashServices->success(
+    //         'COMMENTAIRE ENVOYÉ',
+    //         'Votre commentaire sera <strong style="color:#f00;">soumis à la modération</strong> avant d\'être publié'
+    //     );
+    // }
 
     public function moderate($action, $identifier)
     {

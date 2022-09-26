@@ -5,13 +5,14 @@ namespace Core\Services;
 use Core\Models\Config;
 use Core\Repositories\ConfigRepository;
 
-class ConfigService extends Service
+class ConfigService extends EntityService
 {
     public function __construct()
     {
         parent::__construct();
         $this->configRepository = new ConfigRepository();
         $this->model = new Config();
+        $this->configs = $this->getConfigsObject();
     }
 
     public function init()
@@ -25,48 +26,47 @@ class ConfigService extends Service
         return $params;
     }
 
-    public function getConfigs()
-    {
-        $configs = $this->configRepository->findAll();
-        return $configs;
-    }
+    // public function getConfigs()
+    // {
+    //     $configs = $this->configRepository->findAll();
+    //     return $configs;
+    // }
 
-    public function getConfig($id)
-    {
-        $config = $this->configRepository->findOne($id);
-        return $config;
-    }
+    // public function getConfig($id)
+    // {
+    //     $config = $this->configRepository->findOne($id);
+    //     return $config;
+    // }
 
-    public function getMailContact()
+    public function getOwnerMailContact()
     {
-        $configs = $this->getConfigs();
-        return ['name' => $configs['cs_site_name'], 'email' => $configs['cs_owner_email']];
+        return [
+            'name' => $this->configs['cs_site_name']->value, 
+            'email' => $this->configs['cs_owner_email']->value];
     }
 
     public function getMailConfig()
     {
-        $configs = $this->getConfigs();
         return [
-            'host' => $configs['mb_host'],
-            'user' => $configs['mb_user'],
-            'pass' => $configs['mb_pass'],
-            'name' => $configs['mb_name']
+            'Host' => $this->configs['mb_host']->value,
+            'Username' => $this->configs['mb_user']->value,
+            'Password' => $this->configs['mb_pass']->value,
         ];
     }
 
-    public function get($name)
+    public function getByName($name)
     {
         $config = $this->configRepository->findOneBy('name', $name);
-        // if ($config->name == "") {
-        //     header('Location: /init');
-        // }
+        if ($config === null) {
+            throw new \Exception("Configuration $name n'existe pas.");
+        }
         return $config->value;
     }
 
     public function getSortedParameters()
     {
         $params['missing_configs'] = $this->checkMissingConfigs();
-        $params['configs'] = $this->sortConfigs((array) $this->getConfigs());
+        $params['configs'] = $this->sortConfigs((array) $this->getAll()['configs']);
         return $params;
     }
 
@@ -81,9 +81,9 @@ class ConfigService extends Service
     public function initConfigs()
     {
         include_once ROOT . '/src/config/default.php';
-        $configs = $this->getConfigs();
+        // $configs = $this->getAll()['configs'];
         $list = [];
-        foreach ($configs as $config) {
+        foreach ($this->configs as $config) {
             $list[] = $config->name;
         }
         foreach (CONFIGS as $key => $config) {
@@ -95,7 +95,7 @@ class ConfigService extends Service
                     "description" => $config[1]
                     ]
                 );
-                $this->configRepository->add($input);
+                $this->repository->add($input);
             }
         }
     }
@@ -112,9 +112,8 @@ class ConfigService extends Service
     public function checkMissingConfigs()
     {
         include_once ROOT . '/src/config/default.php';
-        $configs = $this->getConfigs();
         $list = [];
-        foreach ($configs as $config) {
+        foreach ($this->configs as $config) {
             $list[] = $config->name;
         }
         return array_diff($this->getDefaultsConfigs(), $list);
@@ -165,5 +164,14 @@ class ConfigService extends Service
             $sort_configs[$prefix][] = $config;
         }
         return $sort_configs;
+    }
+
+    private function getConfigsObject()
+    {
+        $configs = $this->getAll()['configs'];
+        foreach ($configs as $config) {
+            $configs_object[$config->name] = $config;
+        }
+        return $configs_object;
     }
 }
