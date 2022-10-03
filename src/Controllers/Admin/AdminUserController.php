@@ -16,6 +16,7 @@ class AdminUserController extends AdminController
     public function index()
     {
         $params = $this->userService->getAll();
+        $params = $this->pagination->paginate($params, 'users', 10);
         $this->twig->display('admin/user/index.twig', $params);
     }
 

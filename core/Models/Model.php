@@ -58,6 +58,8 @@ class Model
             } else {
                 $this->token = 'expired';
             }
+        } else {
+            $this->token = 'not exist';
         }
     }
 }

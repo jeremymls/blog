@@ -3,6 +3,7 @@
 namespace Application\Services;
 
 use Application\Models\User;
+use Application\Repositories\CommentRepository;
 use Core\Services\MailService;
 use Core\Services\ConfigService;
 use Core\Services\EntityService;
@@ -21,65 +22,16 @@ class UserService extends EntityService
         $this->configService = new ConfigService();
     }
 
-    public function show($id)
-    {
-        if (!$id) {
-            if (isset($_SESSION['user'])) {
-                $id = $_SESSION['user']->id;
-            } else {
-                header('Location: /login?redirect='.$_REQUEST['url']);
-            }
-        }
-        $params['user'] = $this->userRepository->findOne($id);
-        $params['user']->withExpirationToken();
-        $params['comments'] = $this->commentRepository->findAll("WHERE author = ?", [$id]);
-        $params['commentsCount'] = count($params['comments']);
-        $params['commentsPendingCount'] = count(
-            array_filter(
-                $params['comments'], function ($obj) {
-                    return $obj->moderate == 0;
-                }
-            )
-        );
-        $params = $this->pagination->paginate($params, 'comments', 5);
-        return $params;
-    }
-
-    // public function getUsers()
-    // {
-    //     $params['users'] = $this->userRepository->findAll();
-    //     $params = $this->pagination->paginate($params, 'users', 5);
-    //     return $params;
-    // }
-
-    public function register(array $input, $userId)
+    public function register(array $input)
     {
         if ($input['password'] !== $input['passwordConfirm']) {
             throw new \Exception('Les mots de passe ne correspondent pas.');
         }
         $this->add($input, ["role" => "user"]);
-        $user = $this->userRepository->getUserByUsername($input['email']);
+        $params = $this->getBy('email = ?', [$input['email']]);
+        $user = $params['user'];
         $token = $this->tokenService->createToken($user->identifier);
-        $url = "http://" . $_SERVER['SERVER_NAME'] . "/confirmation/$token";
-        $this->mailService->sendEmail(
-            [
-            'reply_to' => $this->configService->getOwnerMailContact(),
-            'recipient' => [
-                'name' => $input['first'],
-                'email' => $input['email']
-            ],
-            'subject' => 'Validation de votre compte',
-            'template' => 'activate',
-            'template_data' => [
-                'name' => $input['first'],
-                'url' => $url,
-                'cs_site_name' => $this->configService->getByName("cs_site_name")
-            ],
-            'success_message' => 'Un mail de confirmation vous a été envoyé. <br>Veuillez cliquer sur le lien contenu dans le mail pour valider votre compte (expire après 30mn).'],
-            [],
-            true,
-            "Si vous ne parvenez pas à lire ce message, veuillez copier/coller le lien suivant dans votre navigateur: $url"
-        );
+        $this->sendConfirmationEmail($input['email'], $input['first'], $token);
         if (isset($_SESSION['user']) && $_SESSION['user']->role === "admin") {
             header("Location: /admin/users");
         } else {
@@ -88,21 +40,44 @@ class UserService extends EntityService
         }
     }
 
+    public function show($id)
+    {
+        if (isset($id) && isset($_SESSION['user']) && $_SESSION['user']->role == 'admin') {
+            $id = (int) $id;
+        } else {
+            if (isset($_SESSION['user'])) {
+                $id = $_SESSION['user']->id;
+            } else {
+                header('Location: /login?redirect='.$_REQUEST['url']);
+            }
+        }
+        $params = $this->get($id);
+        $params['user']->withExpirationToken();
+        $commentRepository = new CommentRepository();
+        $params['comments'] = $commentRepository->findAll("WHERE author = ?", [$id]);
+        $params['commentsCount'] = count($params['comments']);
+        $params['commentsPendingCount'] = count(
+            array_filter(
+                $params['comments'], function ($obj) {
+                    return $obj->moderate == 0;
+                }
+            )
+        );
+        return $params;
+    }
+
     public function updateUser(array $input, $userId = null)
     {
-        $user = $this->validateForm($input, ["email","first","last"]);
-        $success = $this->userRepository->update($userId?$userId : $_SESSION['user']->id, $user);
-        if (!$success) {
-            throw new \Exception("Impossible de modifier l'utilisateur !");
-        }
-        $this->flashServices->success(
-            'Utilisateur modifié',
+        $id = $userId ?? $_SESSION['user']->id;
+        $this->update(
+            $id, 
+            $input,
             'L\'utilisateur '. $input['email'] .' a bien été modifié'
         );
         if (isset($_SESSION['user']) && $_SESSION['user']->role === "admin" && isset($userId)) {
             header("Location: /admin/users");
         } else {
-            $user = $this->userRepository->getUserByUsername($input['email']);
+            $user = $this->repository->getUserByUsername($input['email']);
             $this->setUserSession($user);
             return ['target' => "/profil"];
         }
@@ -110,16 +85,17 @@ class UserService extends EntityService
 
     public function login(array $input)
     {
-        $user = $this->validateForm($input, ["identifiant", "password"]);
-        $user = $this->userRepository->getUserByUsername($input['identifiant']);
-        if (!$user->comparePassword($user->password, $input['password'])) {
+        ['identifiant' => $identifiant, 'password' => $password] = $input;
+        $params = $this->getBy('username = ? OR email = ?', [$identifiant, $identifiant] );
+        $user = $params['user'];
+        if (!$user->comparePassword($user->password, $password)) {
             throw new \Exception("Mot de passe incorrect !");
         }
+        $this->setUserSession($user);
         $this->flashServices->success(
             'Connexion réussie',
             'Vous êtes connecté(e) !'
         );
-        $this->setUserSession($user);
     }
 
     public function logout()
@@ -131,24 +107,14 @@ class UserService extends EntityService
         ); 
     }
 
-    public function delete($identifier)
-    {
-        $success = $this->userRepository->delete($identifier);
-        if (!$success) {
-            throw new \Exception("Impossible de supprimer l'utilisateur !");
-        } 
-        $this->flashServices->success(
-            'Utilisateur supprimé',
-            'L\'utilisateur '. $identifier .' a bien été supprimé'
-        ); 
-    }
-
     public function confirmation($token)
     {
-        $user = $this->tokenRepository->getUserByToken($token);
+        $params = $this->tokenService->getUserByToken($token);
+        $user = $params['user'];
         if ($user->validated_email == "" || $user->validated_email == null) {
-            $this->userRepository->update($user->identifier, ['validated_email' => 1]);
+            $this->update($user->identifier, ['validated_email' => 1]);
             $user->validated_email = "1";
+            $this->setUserSession($user);
             $this->flashServices->success(
                 'Confirmation de compte',
                 'Votre email est validé !'
@@ -159,7 +125,6 @@ class UserService extends EntityService
                 'Votre email est déjà validé !'
             );
         }
-        $this->setUserSession($user);
     }
 
     public function edit_mail($input)
@@ -167,7 +132,7 @@ class UserService extends EntityService
         if ($input['email'] !== $input['retape']) {
             throw new \Exception('Les adresses ne correspondent pas.');
         }
-        $success = $this->userRepository->update(
+        $success = $this->repository->update(
             $_SESSION['user']->id,
             [
                 'email' => $input['email'],
@@ -182,14 +147,14 @@ class UserService extends EntityService
             'L\'e-mail a bien été modifiée'
         );
         $_SESSION['user']->validated_email = 0;
-        $user = $this->userRepository->getUserByUsername($input['email']);
+        $user = $this->repository->getUserByUsername($input['email']);
         $token = $this->tokenService->createToken($user->identifier);
-        $this->mailService->sendConfirmationEmail($input['email'], $user->first, $token);
+        $this->sendConfirmationEmail($input['email'], $user->first, $token);
     }
 
     public function edit_password(array $input)
     {
-        $user = $this->userRepository->findOne($_SESSION['user']->id);        
+        $user = $this->repository->findOne($_SESSION['user']->id);        
         if ($input['password'] !== $input['passwordConfirm']) {
             throw new \Exception('Les mots de passe ne correspondent pas.');
         }
@@ -197,7 +162,7 @@ class UserService extends EntityService
             throw new \Exception('Ce n\'est le bon mot de passe actuel.');
         }
         $user->setPassword($input['password']);
-        $success = $this->userRepository->update(
+        $success = $this->repository->update(
             $_SESSION['user']->id,
             ['password' => $user->password,]
         );
@@ -212,7 +177,7 @@ class UserService extends EntityService
 
     public function delete_picture()
     {
-        $success = $this->userRepository->update($_SESSION['user']->id, ['picture' => null]);
+        $success = $this->repository->update($_SESSION['user']->id, ['picture' => null]);
         if (!$success) {
             throw new \Exception("Impossible de supprimer la photo de profil");
         }
@@ -247,7 +212,7 @@ class UserService extends EntityService
 
     public function forget_password(array $input)
     {
-        $user = $this->userRepository->getUserByUsername($input['email']);
+        $user = $this->repository->getUserByUsername($input['email']);
         $token = $this->tokenService->createToken($user->identifier);
         $url = "http://" . $_SERVER['SERVER_NAME'] . "/reset_password/$token";
         $this->mailService->sendEmail(
@@ -270,19 +235,13 @@ class UserService extends EntityService
         );
     }
 
-    // todo: move to token service
-    public function getUserByToken($token)
-    {
-        return $this->tokenRepository->getUserByToken($token);
-    }
-
     public function reset_password($user, $post)
     {
         if ($post['password'] !== $post['passwordConfirm']) {
             throw new \Exception('Les mots de passe ne correspondent pas.');
         }
         $user->setPassword($post['password']);
-        $success = $this->userRepository->update(
+        $success = $this->repository->update(
             $user->identifier,
             ['password' => $user->password,]
         );
@@ -297,11 +256,11 @@ class UserService extends EntityService
 
     public function confirm_again()
     {
-        $user = $this->userRepository->findOne($_SESSION['user']->id);
+        $user = $this->repository->findOne($_SESSION['user']->id);
         $user->withExpirationToken();
         if ($user->token == "expired") {
             $token = $this->tokenService->createToken($user->identifier);
-            $this->mailService->sendConfirmationEmail($user->email, $user->first, $token);
+            $this->sendConfirmationEmail($user->email, $user->first, $token);
             $this->flashServices->success(
                 'Confirmation de compte',
                 'Un nouveau lien de confirmation a été envoyé à votre adresse e-mail.'
@@ -320,10 +279,34 @@ class UserService extends EntityService
             if ($username == $_SESSION['user']->username || $username == $_SESSION['user']->email) {
                 echo true;
             } else {
-                $this->userRepository->checkUsername($username);
+                $this->repository->checkUsername($username);
             }
         } else {
-            $this->userRepository->checkUsername($username);
+            $this->repository->checkUsername($username);
         }
+    }
+
+    public function sendConfirmationEmail($email , $first, $token)
+    {
+        $url = "http://" . $_SERVER['SERVER_NAME'] . "/confirmation/$token";
+        $this->mailService->sendEmail(
+            [
+            'reply_to' => $this->configService->getOwnerMailContact(),
+            'recipient' => [
+                'name' => $first,
+                'email' => $email
+            ],
+            'subject' => 'Validation de votre compte',
+            'template' => 'activate',
+            'template_data' => [
+                'name' => $first,
+                'url' => $url,
+                'cs_site_name' => $this->configService->getByName("cs_site_name")
+            ],
+            'success_message' => 'Un mail de confirmation vous a été envoyé. <br>Veuillez cliquer sur le lien contenu dans le mail pour valider votre compte (expire après 30mn).'],
+            [],
+            true,
+            "Si vous ne parvenez pas à lire ce message, veuillez copier/coller le lien suivant dans votre navigateur: $url"
+        );
     }
 }

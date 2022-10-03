@@ -1,9 +1,6 @@
 <?php
 namespace Core\Services;
 
-use Application\Models\Post;
-use Application\Repositories\PostRepository;
-
 class EntityService extends Service
 {
     public function __construct()
@@ -21,7 +18,7 @@ class EntityService extends Service
         $entity = $this->validateForm($input, $this->model->getFillable());
         $success = $this->repository->add($entity);
         if (!$success) {
-            throw new \Exception('Impossible de d\'ajouter '. $this->getFrenchName(true) .' !');
+            throw new \Exception('Impossible de d\'ajouter '. $this->getFrenchName() .' !');
         } 
         $this->flashServices->success(
             $this->getFrenchName(true, "N") .' ajouté'. $this->getFrenchGenderTermination(),
@@ -38,10 +35,35 @@ class EntityService extends Service
         return $params;
     }
 
+    public function getBy(string $option, array $optionData=[])
+    {
+        $params[$this->modelName] = $this->getRepository()->findBy($option, $optionData);
+        if ($params[$this->modelName] === null) {
+            throw new \Exception($this->getFrenchName(true) . " n'existe pas.");
+        }
+        return $params;
+    }
+    
+
     public function getAll(string $option = "", array $optionsData = [], string $limit = "")
     {
         $params[$this->modelName."s"] = $this->getRepository()->findAll($option, $optionsData, $limit);
         return $params;
+    }
+
+    public function update($identifier, $input, $flashMsg = "", $modelValidation= true, $showFlash = true)
+    {
+        $entity = $modelValidation ? $this->validateForm($input): $input;
+        $success = $this->repository->update($identifier, $entity);
+        if (!$success) {
+            throw new \Exception('Impossible de modifier '. $this->getFrenchName() .' !');
+        }
+        if ($showFlash) {
+            $this->flashServices->success(
+                $this->getFrenchName(true, "N") .' modifié'. $this->getFrenchGenderTermination(),
+                $flashMsg ?: $this->getFrenchName(true) ." #$identifier a bien été modifié". $this->getFrenchGenderTermination()
+            );
+        }
     }
 
     public function delete($identifier)
@@ -52,7 +74,7 @@ class EntityService extends Service
         } 
         $this->flashServices->danger(
             $this->getFrenchName(true,"N") . ' supprimé'. $this->getFrenchGenderTermination(),
-            $this->getFrenchName(true) . ' a bien été supprimé'. $this->getFrenchGenderTermination()
+            $this->getFrenchName(true) . " #$identifier a bien été supprimé". $this->getFrenchGenderTermination()
         );
     }
 }

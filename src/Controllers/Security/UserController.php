@@ -4,6 +4,7 @@ namespace Application\Controllers\Security;
 
 use Core\Controllers\Controller;
 use Application\Services\UserService;
+use Core\Services\TokenService;
 
 class UserController extends Controller
 {
@@ -16,6 +17,7 @@ class UserController extends Controller
     public function show($identifier = null)
     {
         $params = $this->userService->show($identifier);
+        $params = $this->pagination->paginate($params, 'comments', 5);
         $this->twig->display('security/profil.twig', $params);
     }
 
@@ -107,8 +109,9 @@ class UserController extends Controller
 
     public function reset_password($token)
     {
-        $params['user'] = $this->userService->getUserByToken($token);
-        if ($params) {
+        $tokenService = new TokenService();
+        $params = $tokenService->getUserByToken($token);
+        if (isset($params['user'])) {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $this->userService->reset_password($params['user'], $_POST);
                 $this->twig->display('security/redirect.twig', ['target' => '/login']);

@@ -2,16 +2,17 @@
 
 namespace Core\Services;
 
-use Core\Services\Service;
 use Core\Models\Token;
+use Core\Repositories\TokenRepository;
 
-class TokenService extends Service
+class TokenService extends EntityService
 {
 
     public function __construct()
     {
         parent::__construct();
         $this->model = new Token();
+        // $this->repository = new TokenRepository();
     }
 
     public function createToken(string $user_id)
@@ -25,11 +26,21 @@ class TokenService extends Service
             'expiration_date' => $expiration_date
             ]
         );
-        $success = $this->tokenRepository->add($token);
+        $success = $this->repository->add($token);
         if (!$success) {
             throw new \Exception('Impossible de créer le token !');
         }
         return $token->token;
     }
 
+    public function getUserByToken($token)
+    {
+        $params = $this->getBy('token = ?', [$token]);
+        $token = $params['token'];
+        if ($token->expiration_date < date("Y-m-d H:i:s")) {
+            throw new \Exception("Le token est expiré ! <br> Veuillez renouveler la demande", 999);
+        }
+        $params["user"] = $token->user_id;
+        return $params;
+    }
 }

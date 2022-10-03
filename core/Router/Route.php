@@ -31,6 +31,17 @@ class Route
     {
         if (is_string($this->callable)) {
             $params = explode('@', $this->callable);
+            if ($params[1] == 'update') {
+                $shm = shm_attach(SHM_HTTP_REFERER);
+                if (!shm_has_var($shm, 1)) {
+                    shm_put_var($shm, 1, $_SERVER['HTTP_REFERER']);
+                }
+            } else {
+                $shm = shm_attach(SHM_HTTP_REFERER);
+                if (shm_has_var($shm, 1)) {
+                    shm_remove_var($shm, 1);
+                }
+            }
             if (count($params) == 3) {
                 $controller = "Core\\Controllers\\" . $params[0] . "Controller";
             } else {

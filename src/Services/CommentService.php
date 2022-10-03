@@ -37,71 +37,20 @@ class CommentService extends EntityService
         return $params;
     }
 
-    // public function getComment($identifier)
-    // {
-    //     $params['comment'] = $this->commentRepository->getComment($identifier);
-    //     if ($params === null) {
-    //         throw new \Exception("Le commentaire $identifier n'existe pas.");
-    //     }
-    //     return $params;
-    // }
-
-    // public function delete($identifier)
-    // {
-    //     $success = $this->commentRepository->delete($identifier);
-    //     if (!$success) {
-    //         throw new \Exception('Impossible de supprimer le commentaire !');
-    //     }
-    //     $this->flashServices->danger(
-    //         'Commentaire supprimé',
-    //         'Le commentaire a bien été supprimé'
-    //     );
-    // }
-
-    public function update($identifier, $input)
+    public function moderate($action, $identifier, $showFlash = true)
     {
-        $comment = $this->validateForm($input, ["comment"]);
-        $success = $this->commentRepository->update($identifier, $comment);
-        $success = $this->commentRepository->moderate("0", $identifier);
-        if (!$success) {
-            throw new \Exception('Impossible de modifier le commentaire !');
-        }
-        $this->flashServices->success(
-            'Commentaire modifié',
-            'Votre commentaire sera à nouveau <strong style="color:#f00;">soumis à la modération</strong> et publié'
-        );
-    }
-
-    // public function add(string $post, array $input)
-    // {
-    //     $comment = $this->validateForm($input, ["comment"]);
-    //     $success = $this->commentRepository->addComment($post, $comment->comment);
-    //     if (!$success) {
-    //         throw new \Exception('Impossible d\'ajouter le commentaire !');
-    //     }
-    //     $this->flashServices->success(
-    //         'COMMENTAIRE ENVOYÉ',
-    //         'Votre commentaire sera <strong style="color:#f00;">soumis à la modération</strong> avant d\'être publié'
-    //     );
-    // }
-
-    public function moderate($action, $identifier)
-    {
-        $success = $this->commentRepository->moderate($action, $identifier);
-        if (!$success) {
-            throw new \Exception('Impossible de modifier le commentaire !');
-        }
         switch ($action) {
         case '0':
-            $this->flashServices->success('Commentaire modifié', 'La modération du commentaire a été annulée');
+            $flashMsg = 'La modération du commentaire a été annulée';
             break;
         case '1':
-            $this->flashServices->success('Commentaire modifié', 'Le commentaire a été accepté');
+            $flashMsg = 'Le commentaire a été accepté';
             break;
         case '2':
-            $this->flashServices->danger('Commentaire modifié', 'Le commentaire a été refusé');
+            $flashMsg = 'Le commentaire a été refusé';
             break;
         }
+        $this->update($identifier, ["moderate" => $action], $flashMsg, false, $showFlash);
     }
 
     public function multiple_moderation($input)
@@ -121,10 +70,7 @@ class CommentService extends EntityService
             break;
         }
         foreach ($input['comment'] as $identifier) {
-            $success = $this->commentRepository->moderate($action, $identifier);
-            if (!$success) {
-                throw new \Exception('Une erreur est survenue lors de la modification du commentaire #'. $identifier .' !');
-            }
+            $this->moderate($action, $identifier, false);
         }
         $this->flashServices->success("Commentaires modifiés", $flash);
     }

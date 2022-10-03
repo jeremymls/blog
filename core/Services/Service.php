@@ -2,10 +2,6 @@
 
 namespace Core\Services;
 
-use Application\Repositories\CommentRepository;
-use Application\Repositories\PostRepository;
-use Application\Repositories\UserRepository;
-use Core\Repositories\TokenRepository;
 use Core\Middleware\Pagination;
 
 class Service
@@ -14,10 +10,6 @@ class Service
     {
         $this->flashServices = new FlashService();
         $this->pagination = new Pagination();
-        $this->postRepository = new PostRepository();
-        $this->commentRepository = new CommentRepository();
-        $this->userRepository = new UserRepository();
-        $this->tokenRepository = new TokenRepository();
     }
 
     public function getRepository()
@@ -48,14 +40,23 @@ class Service
     /**
      * Return the french name of the model, with the correct article and plural form
      * 
-     * @param uppercase if true, the first letter of the string will be uppercased
-     * @param articleType D, I or N (Definite, Indefinite or Null)
-     * @param number S for singular, P for plural
-     * @param gender M for male, F for female
+     * ***
+     * __OPTIONS__
+     * * $uppercase : if __true__ return the name with the first letter in uppercase
+     * * $articleType : Type of article to use
+     * >* "D" for definite article _(default)_
+     * >* "I" for indefinite article
+     * >* "N" for no article
+     * * $plural : if __true__ return the plural form of the name
+     * ***
+     * 
+     * @param bool $uppercase Return the name with the first letter in uppercase
+     * @param string $articleType Type of article to use
+     * @param bool $plural Return the plural form of the name
      * 
      * @return string The french name of the model
      */
-    public function getFrenchName($uppercase = false, $articleType = "D", $number = "S") : string
+    public function getFrenchName($uppercase = false, $articleType = "D", $plural = false) : string
     {
         require_once 'src/Config/translations.php';
         if (isset(FR_HELPER[$this->getModelName()][0])){
@@ -66,7 +67,9 @@ class Service
         $gender = FR_HELPER[$this->getModelName()][1];
         $str = "";
         if ($articleType === "D") {
-            if ($number == "S") {
+            if ($plural) {
+                $str .= "les ";
+            } else {
                 if (in_array(substr($modelFrenchName, 0, 1), VOYELLES) && substr($modelFrenchName, 0, 2) !== "ha") {
                     $str .= "l'";
                 } elseif ($gender == "M") {
@@ -74,10 +77,6 @@ class Service
                 } elseif ($gender == "F") {
                     $str .= "la ";
                 }
-            } elseif ($number == "P") {
-                $str .= "les ";
-            } else {
-                throw new \Exception("Le nombre doit être S ou P (Singulier ou Pluriel)");
             }
         } elseif ($articleType === "I") {
             # code...
@@ -86,9 +85,7 @@ class Service
             throw new \Exception("Le type d'article doit être D, I ou N (Défini, Indéfini ou Nul)");
         }
         $str .= $modelFrenchName;
-        if ($number == "P") {
-            $str .= "s";
-        }
+        if ($plural) { $str .= "s"; }
         if ($uppercase) {
             $str = ucfirst($str);
         }

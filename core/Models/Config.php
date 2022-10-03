@@ -12,9 +12,6 @@ class Config extends Model
 
     public function getFillable(): array
     {
-        return [
-            'name',
-            'value',
-        ];
+        return ['name'];
     }
 }

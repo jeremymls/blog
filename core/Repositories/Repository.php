@@ -10,46 +10,6 @@ class Repository
     {
     }
 
-    public function findOne($identifier)
-    {
-        $statement = $this->getSelectStatementByModel("WHERE id = ?", [$identifier]);
-        $row = $statement->fetch();
-        if (!$row) {
-            return null;
-        }
-        $entity = $this->createEntity($row);
-        return $entity;
-    }
-
-    public function findAll(string $option = "", array $optionsData = [], string $limit = "")
-    {
-        $statement = $this->getSelectStatementByModel($option ." ORDER BY created_at DESC ". $limit, $optionsData);
-        $entities = [];
-        while (($row = $statement->fetch())) {
-            $entity = $this->createEntity($row);
-            $entities[] = $entity;
-        }
-        return $entities;
-    }
-
-    public function findOneBy(string $option, string $optionData)
-    {
-        $statement = $this->getSelectStatementByModel("WHERE " . $option . " = ?", [$optionData]);
-        $row = $statement->fetch();
-        $entity = $this->createEntity($row);
-        return $entity;
-    }
-
-    public function delete($identifier): bool
-    {
-        $statement = Singleton::getConnection()->prepare(
-            'DELETE FROM ' . $this->model::TABLE . ' WHERE id=?'
-        );
-        $affectedLines = $statement->execute([$identifier]);
-        $affectedLines = $statement->rowCount();
-        return ($affectedLines > 0);
-    }
-
     public function add($entity): bool
     {
         $sql = "";
@@ -81,6 +41,36 @@ class Repository
         return ($affectedLines > 0);
     }
 
+    public function findOne($identifier)
+    {
+        $statement = $this->getSelectStatementByModel("WHERE id = ?", [$identifier]);
+        $row = $statement->fetch();
+        if (!$row) {
+            return null;
+        }
+        $entity = $this->createEntity($row);
+        return $entity;
+    }
+
+    public function findBy(string $option, array $optionData=[])
+    {
+        $statement = $this->getSelectStatementByModel("WHERE " . $option, $optionData);
+        $row = $statement->fetch();
+        $entity = $this->createEntity($row);
+        return $entity;
+    }
+
+    public function findAll(string $option = "", array $optionsData = [], string $limit = "")
+    {
+        $statement = $this->getSelectStatementByModel($option ." ORDER BY created_at DESC ". $limit, $optionsData);
+        $entities = [];
+        while (($row = $statement->fetch())) {
+            $entity = $this->createEntity($row);
+            $entities[] = $entity;
+        }
+        return $entities;
+    }
+
     public function update($identifier, $entity): bool
     {
         $values = [];
@@ -101,6 +91,16 @@ class Repository
         $values[] = $identifier;
         $statement = Singleton::getConnection()->prepare($sql);
         $affectedLines = $statement->execute($values);
+        return ($affectedLines > 0);
+    }
+
+    public function delete($identifier): bool
+    {
+        $statement = Singleton::getConnection()->prepare(
+            'DELETE FROM ' . $this->model::TABLE . ' WHERE id=?'
+        );
+        $affectedLines = $statement->execute([$identifier]);
+        $affectedLines = $statement->rowCount();
         return ($affectedLines > 0);
     }
 

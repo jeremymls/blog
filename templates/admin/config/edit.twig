@@ -11,10 +11,10 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
                     {% if config.value != 'ON' and config.value != 'OFF' %}
-                        <button id="empty" class="btn btn-default btn-lg">Vider</button><br><br>
+                        <button id="empty" class="btn btn-default btn">Vider tous les champs</button><br><br>
                     {% endif %}
-                    <p>{{ config.description }}</p>
 					<form action="" method="post">
+                        <input type="hidden" name="name" value="{{config.name}}" >
                         <div class="row control-group">
                             {% if config.value == 'ON' or config.value == 'OFF' %}
                                 <div class="radio">
@@ -31,11 +31,18 @@
                                 </div>
                             {% else %}
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    <button class="btn btn-danger btn-sm emptyOne"><i class="fa fa-minus-square"></i></button>
                                     <label>Valeur</label>
                                     <textarea rows="3" class="form-control" placeholder="Valeur" id="value" name="value" >{{ config.value }}</textarea>
                                     <p class="help-block text-danger"></p>
                                 </div>
                             {% endif %}
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <button class="btn btn-danger btn-sm emptyOne"><i class="fa fa-minus-square"></i></button>
+                                <label>Description</label>
+                                <textarea rows="3" class="form-control" placeholder="Description" id="description" name="description" >{{ config.description }}</textarea>
+                                <p class="help-block text-danger"></p>
+                            </div>
                         </div>
                         <br>
                         <div id="success"></div>
@@ -54,7 +61,15 @@
     <script src="/assets/js/action.js"></script>
     <script>
     document.getElementById("empty").addEventListener("click", function(){
-        document.getElementById("value").value = "";
+        document.querySelectorAll('textarea').forEach(function(element) {
+            element.value = '';
+        });
+    });
+    document.querySelectorAll('.emptyOne').forEach(function(element) {
+        element.addEventListener("click", function(e){
+            e.preventDefault();
+            this.parentNode.querySelector('textarea').value = '';
+        });
     });
     </script>
 {% endblock %}

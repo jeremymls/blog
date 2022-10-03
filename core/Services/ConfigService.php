@@ -26,18 +26,6 @@ class ConfigService extends EntityService
         return $params;
     }
 
-    // public function getConfigs()
-    // {
-    //     $configs = $this->configRepository->findAll();
-    //     return $configs;
-    // }
-
-    // public function getConfig($id)
-    // {
-    //     $config = $this->configRepository->findOne($id);
-    //     return $config;
-    // }
-
     public function getOwnerMailContact()
     {
         return [
@@ -56,7 +44,7 @@ class ConfigService extends EntityService
 
     public function getByName($name)
     {
-        $config = $this->configRepository->findOneBy('name', $name);
+        $config = $this->configRepository->findBy('name = ?', [$name]);
         if ($config === null) {
             throw new \Exception("Configuration $name n'existe pas.");
         }
@@ -68,14 +56,6 @@ class ConfigService extends EntityService
         $params['missing_configs'] = $this->checkMissingConfigs();
         $params['configs'] = $this->sortConfigs((array) $this->getAll()['configs']);
         return $params;
-    }
-
-    public function update($id, $value)
-    {
-        $success = $this->configRepository->update($id, $value);
-        if (!$success) {
-            $this->flashService->error("Erreur", "Une erreur est survenue lors de la mise à jour de la configuration");
-        }
     }
 
     public function initConfigs()
