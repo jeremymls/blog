@@ -13,6 +13,9 @@ class Pagination
         }
         $nbPage = ceil(count($params[$entities]) / $nbp);
         $params[$entities] = array_slice($params[$entities], ($page - 1) * $nbp, $nbp);
+        if ($params[$entities] == [] && $page > 1) {
+            header('Location: '. explode("&", $_SERVER['REQUEST_URI'])[0]);
+        }
         $params['nbPage'] = $nbPage;
         return $params;
     }
