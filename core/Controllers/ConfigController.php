@@ -4,6 +4,7 @@ namespace Core\Controllers;
 
 use Core\Services\FlashService;
 use Core\Services\ConfigService;
+use Core\Services\Encryption;
 
 class ConfigController extends AdminController
 {
@@ -44,6 +45,9 @@ class ConfigController extends AdminController
     public function update($id)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (substr($_POST['name'], 0, 3) == "mb_"){
+                $_POST["value"] = Encryption::encrypt(trim($_POST['value']));
+            }
             $this->configService->update($id, $_POST);
             header('Location: /admin/configs');
         }
