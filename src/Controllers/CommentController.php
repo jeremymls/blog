@@ -42,4 +42,37 @@ class CommentController extends Controller
         $params = $this->commentService->get($identifier);
         $this->twig->display('post/update_comment.twig', $params);
     }
+
+    public function delete()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['commentId'])) {
+                $deletion_confirmation = $this->commentService->delete_ajax($_POST['commentId']);
+                if ($deletion_confirmation === true) {
+                    echo true;
+                } else {
+                    echo false;
+                }
+            }
+        } else {
+            throw new \Exception('Méthode non autorisée', 405);
+        }
+    }
+
+    public function cancelDelete()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['commentId'])) {
+                $this->commentService->moderate(0, $_POST['commentId'],false);
+                $cancel_deletion_confirmation = $this->commentService->delete_ajax($_POST['commentId'], false);
+                if ($cancel_deletion_confirmation === true) {
+                    echo true;
+                } else {
+                    echo false;
+                }
+            }
+        } else {
+            throw new \Exception('Méthode non autorisée', 405);
+        }
+    }
 }

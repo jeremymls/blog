@@ -66,6 +66,14 @@ class EntityService extends Service
         }
     }
 
+    public function delete_ajax($identifier, $delete = true)
+    {
+        $delete = $delete ? 1 : 0;
+        $this->repository->update($identifier, ['deleted' => $delete]);
+        return true;
+    }
+
+
     public function delete($identifier)
     {
         $success = $this->getRepository()->delete($identifier);

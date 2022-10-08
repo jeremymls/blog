@@ -12,6 +12,7 @@ class Comment extends Model
     public $author;
     public string $comment;
     public string $moderate;
+    public string $deleted;
 
     public function getLinks()
     {

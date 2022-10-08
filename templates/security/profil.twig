@@ -59,15 +59,31 @@
                     {% endif %}
                     {{ utils.pagination(nbPage,"#commentPage") }}
                     {% for comment in comments %}
+                        {% if not comment.deleted %}
                         <div class="panel panel-{% if comment.moderate or session.user.role == "admin" %}default{% else %}danger{% endif %}">
                             <div class="panel-heading commentHeader">
                                 <p>Le {{comment.frenchCreationDate }} dans <a href="/post/{{ comment.post.identifier }}#comment">{{ comment.post.title }}</a>  {% if not comment.moderate  and session.user.role != "admin" %}<strong>(Non Approuvé)</strong>{% endif %}</p>
-                                <a href="/comment/{{comment.identifier }}" ><i class="fa fa-2x fa-edit" aria-hidden="true"></i></a>
+                                <div>
+                                    <a href="/comment/{{comment.identifier }}" class="btn btn-warning delete-comment"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                    <a data-id="{{ comment.identifier }}" class="btn btn-danger delete-comment" role="button"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <p>{{ comment.comment | nl2br }}</p>
                             </div>
                         </div>
+                        {% else %}
+                        <div class="panel panel-warning">
+                            <div class="panel-heading commentHeader">
+                                <p>Message supprimer dans <a href="/post/{{ comment.post.identifier }}#comment">{{ comment.post.title }}</a></p>
+                                <a data-id="{{ comment.identifier }}" class="btn btn-link cancel-delete-comment" role="button">Annuler la supression</a>
+                            </div>
+                            <div class="panel-body">
+                                <del>{{ comment.comment | nl2br }}</del>
+                            </div>
+                        </div>
+
+                        {% endif %}
                     {% endfor %}
                     {{ utils.pagination(nbPage,"#commentPage") }}
                 </div>
@@ -76,6 +92,7 @@
     </section>
 {% endblock %}
 {% block script %}
+<script src="/assets/js/deleteComment"></script>
 <script>
     $(document).ready(function(){
         $('#btnOverview').click(function(){

@@ -21,6 +21,9 @@ $router->get('post/:id', 'Post@show');
 
 // Comment
 $router->post('post/:id', 'Comment@add');
+$router->post('comment/delete', 'Comment@delete');
+// $router->get('comment/delete', 'Comment@delete');
+$router->post('comment/cancelDelete', 'Comment@cancelDelete');
 $router->get('comment/:id', 'Comment@update');
 $router->post('comment/:id', 'Comment@update');
 
