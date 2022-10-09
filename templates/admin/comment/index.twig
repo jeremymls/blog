@@ -45,7 +45,6 @@
                             </thead>
                             <tbody>
                                 {% for comment in comments %}
-                                {% if comment.author.role != 'admin' %}
                                     <tr 
                                         {% if comment.moderate == null %}
                                         class="warning"
@@ -92,7 +91,6 @@
                                         </td>
                                         <td><button type="button" class="btn btn-primary" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-content="{{ comment.comment }}" data-post="{{ comment.post.title }}" data-postid="{{ comment.post.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#commentPreview"><i class="fa fa-eye"></i></button></td>
                                     </tr>
-                                {% endif %}
                                 {% endfor %}
                             </tbody>
                         </table>

@@ -31,6 +31,10 @@ class CommentService extends EntityService
             break;
         }
         $params = $this->getAll($option);
+
+        $params['comments'] = array_filter($params['comments'], function ($comment) {
+            return $comment->author->role != 'admin';
+        });
         if (!$params) {
             throw new \Exception('Impossible de récupérer les commentaires !');
         }
