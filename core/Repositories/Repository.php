@@ -61,9 +61,15 @@ class Repository
         return $entity;
     }
 
-    public function findAll(string $option = "", array $optionsData = [], string $limit = "")
+    public function findAll(string $option = "", array $optionsData = [], string $limit = "", string $order = null, $direction = "DESC")
     {
-        $statement = $this->getSelectStatementByModel($option ." ORDER BY created_at DESC ". $limit, $optionsData);
+        $statement = $this->getSelectStatementByModel(
+            $option .
+            " ORDER BY " . ($order ? $order : 'created_at') . " " .
+            $direction . " " .
+            $limit,
+            $optionsData
+        );
         $entities = [];
         while (($row = $statement->fetch())) {
             $entity = $this->createEntity($row);

@@ -38,8 +38,13 @@ class ConfigController extends AdminController
 
     public function index()
     {
-        $params = $this->configService->getSortedParameters();
-        $this->twig->display('admin/config/index.twig', $params);
+        $this->twig->display('admin/config/index.twig');
+    }
+
+    public function list($prefix)
+    {
+        $params = $this->configService->getSortedParameters($prefix);
+        $this->twig->display('admin/config/list.twig', $params);
     }
 
     public function update($id)

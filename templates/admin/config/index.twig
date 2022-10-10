@@ -1,53 +1,56 @@
 {% extends "/base.twig" %}
 {% import "macros/utils.twig" as utils %}
 
-{% block title %}Configuration du site{% endblock %}
+{% block title %}Configuration{% endblock %}
 {% block subtitle %}
 	<a id="retour" href="/dashboard" ><i class="fa fa-cogs" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
-    <section>
+    <section id="dashbord">
         <div class="container">
             <div class="row">
                 <div class="col">
-                    {{ utils.pagination(nbPage) }}
-                    <table id="BO_table" class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Paramètre</th>
-                                <th>Valeur</th>
-                                <th>Description</th>
-                                <th class="text-center">Actions</th>
-                            <tr>
-                        </thead>
-                        {% for prefix, sorted_configs in configs %}
-                            <thead>
-                                <tr class="active">
-                                    <th></th>
-                                    <th>{{ prefix }}</th>
-                                    <th></th><th></th><th></th>
-                                <tr>
-                            </thead>
-                            <tbody>
-                                {% for config in sorted_configs %}
-                                    <tr>
-                                        <td>#{{ config.identifier }}</td>
-                                        <td>{{ config.name }}</td>
-                                        <td>{{ config.value }}</td>
-                                        <td>{{ config.description }}</td>
-                                        <td class="action">
-                                            <div class="row">
-                                                <a href="/admin/config/update/{{ config.identifier }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Modifier</a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        {% endfor %}
-                    </table>
-                    {{ utils.pagination(nbPage) }}
+                    <div class="col-sm-3 dashbord-item">
+                        <a href="/admin/configs/list/cs" class="dashbord-link" >
+                            <div class="caption">
+                                <div class="caption-content">
+                                    <i class="fa fa-wrench fa-3x"></i>
+                                </div>
+                            </div>
+                            <img src="/assets/img/dashboard/configuration.png" class="img-responsive" alt="">
+                        </a>
+                    </div>
+                    <div class="col-sm-3 dashbord-item">
+                        <a href="/admin/configs/list/mb" class="dashbord-link" >
+                            <div class="caption">
+                                <div class="caption-content">
+                                    <i class="fa fa-wrench fa-3x"></i>
+                                </div>
+                            </div>
+                            <img src="/assets/img/dashboard/configuration.png" class="img-responsive" alt="">
+                        </a>
+                    </div>
+                    <div class="col-sm-3 dashbord-item">
+                        <a href="/admin/configs/list/rs" class="dashbord-link" >
+                            <div class="caption">
+                                <div class="caption-content">
+                                    <i class="fa fa-wrench fa-3x"></i>
+                                </div>
+                            </div>
+                            <img src="/assets/img/dashboard/configuration.png" class="img-responsive" alt="">
+                        </a>
+                    </div>
+                    <div class="col-sm-3 dashbord-item">
+                        <a href="/admin/configs/list/af" class="dashbord-link" >
+                            <div class="caption">
+                                <div class="caption-content">
+                                    <i class="fa fa-wrench fa-3x"></i>
+                                </div>
+                            </div>
+                            <img src="/assets/img/dashboard/configuration.png" class="img-responsive" alt="">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

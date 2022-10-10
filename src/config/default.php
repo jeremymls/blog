@@ -7,7 +7,6 @@ const CONFIGS = [
     'cs_owner_name' =>              [null,'Nom du propriétaire du site'],
     'cs_owner_email' =>             [null,'Email du propriétaire du site'],
     'cs_owner_phone' =>             [null,'Téléphone du propriétaire du site'],
-    'cs_contact_form_display' =>    ['OFF','Afficher le formulaire de contact (ON/OFF)'],
     'rs_github' =>                  [null,'Lien vers la page Github'],
     'rs_linkedin' =>                [null,'Lien vers la page Linkedin'],
     'rs_instagram' =>               [null,'Lien vers la page Instagram'],
@@ -21,6 +20,7 @@ const CONFIGS = [
     'mb_name' =>                    [null,'Nom de l\'expéditeur'],
     'mb_user' =>                    [null,'Nom d\'utilisateur de la boite mail'],
     'mb_pass' =>                    [null,'Mot de passe de la boite mail'],
+    'af_contact_form_display' =>    ['OFF','Afficher le formulaire de contact (ON/OFF)'],
 ];
 
 const MODELS = [

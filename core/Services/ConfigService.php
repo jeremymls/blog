@@ -51,10 +51,26 @@ class ConfigService extends EntityService
         return $config->value;
     }
 
-    public function getSortedParameters()
+    public function getSortedParameters($prefix)
     {
-        $params['missing_configs'] = $this->checkMissingConfigs();
-        $params['configs'] = $this->sortConfigs((array) $this->getAll()['configs']);
+        $params = $this->getAll("where name like ?", [$prefix . '_%'], "", 'name', 'ASC');
+        switch ($prefix) {
+            case 'cs':
+                $params['title'] = 'du site';
+                break;
+            case 'mb':
+                $params['title'] = 'du mail';
+                break;
+            case 'rs':
+                $params['title'] = 'des réseaux sociaux';
+                break;
+            case 'af':
+                $params['title'] = 'de l\'affichage front';
+                break;
+            default:
+                $params['title'] = '';
+                break;
+        }
         return $params;
     }
 
@@ -121,29 +137,6 @@ class ConfigService extends EntityService
     public function create_config_table($table)
     {
         $this->configRepository->create_config_table($table);
-    }
-
-    private function sortConfigs(array $configs)
-    {
-        foreach ($configs as $config) {
-            $prefix = explode('_', $config->name)[0];
-            switch ($prefix) {
-            case 'cs':
-                $prefix = 'Site';
-                break;
-            case 'mb':
-                $prefix = 'Configuration mail';
-                break;
-            case 'rs':
-                $prefix = 'Réseaux sociaux';
-                break;
-            default:
-                $other_configs[] = $config;
-                break;
-            }
-            $sort_configs[$prefix][] = $config;
-        }
-        return $sort_configs;
     }
 
     private function getConfigsObject()

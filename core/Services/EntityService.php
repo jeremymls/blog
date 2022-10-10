@@ -45,9 +45,9 @@ class EntityService extends Service
     }
     
 
-    public function getAll(string $option = "", array $optionsData = [], string $limit = "")
+    public function getAll(string $option = "", array $optionsData = [], string $limit = "", string $order = null, string $direction = "DESC")
     {
-        $params[$this->modelName."s"] = $this->getRepository()->findAll($option, $optionsData, $limit);
+        $params[$this->modelName."s"] = $this->getRepository()->findAll($option, $optionsData, $limit, $order, $direction);
         return $params;
     }
 
