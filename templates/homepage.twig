@@ -116,7 +116,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <form action="" method="post">
+                    <form id="form-contact" action="" method="post">
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Nom</label>
@@ -164,4 +164,16 @@
 
 {% block script %}
 <script src="/assets/js/slider.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LfOJ2wiAAAAAO6YOrFALnODbeucz1jaUWPGc0uI"></script>
+<script>
+    $("#form-contact").submit(function(e) {
+        form = this;
+        e.preventDefault();
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LfOJ2wiAAAAAO6YOrFALnODbeucz1jaUWPGc0uI', {action: 'submit'}).then(function(token) {
+                form.submit();
+            });
+        });
+    });
+</script>
 {% endblock %}
