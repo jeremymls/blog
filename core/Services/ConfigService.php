@@ -29,7 +29,7 @@ class ConfigService extends EntityService
     public function getOwnerMailContact()
     {
         return [
-            'name' => $this->configs['cs_site_name']->value, 
+            'name' => $this->configs['cs_owner_name']->value, 
             'email' => $this->configs['cs_owner_email']->value];
     }
 
