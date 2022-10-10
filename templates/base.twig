@@ -21,8 +21,12 @@
 			</div>
 		</header>
 		<main>
-		{% if flash %}
-			{{ utils.flash(type, title, message) }}
+		{% if flashs|length > 0 %}
+			<div id="flash-container">
+			{% for flash in flashs %}
+				{{ utils.flash(flash) }}
+			{% endfor %}
+			</div>
 		{% endif %}
 		{% if mail_not_validated %}
 			{{ utils.flash("mail_not_validated") }}

@@ -26,9 +26,15 @@ class FlashService
     
     private function send(string $type, string $title, string $message)
     {
-        setcookie("flash", "on", time() + 5, "/");
-        setcookie("type", $type, time() + 5, "/");
-        setcookie("title", $title, time() + 5, "/");
-        setcookie("message", $message, time() + 5, "/");
+        $shm = shm_attach(SHM_FLASH);
+        $i = 1;
+        while (shm_has_var($shm, $i)) {
+            $i++;
+        }
+        shm_put_var($shm, $i, [
+            'type' => $type,
+            'title' => $title,
+            'message' => $message
+        ]);
     }
 }

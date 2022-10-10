@@ -58,7 +58,7 @@ class Service
      */
     public function getFrenchName($uppercase = false, $articleType = "D", $plural = false) : string
     {
-        require_once 'src/Config/translations.php';
+        require_once 'src/config/translations.php';
         if (isset(FR_HELPER[$this->getModelName()][0])){
             $modelFrenchName = FR_HELPER[$this->getModelName()][0];
         } else {
@@ -95,7 +95,7 @@ class Service
 
     public function getFrenchGenderTermination() : string
     {
-        require_once 'src/Config/translations.php';
+        require_once 'src/config/translations.php';
         if (isset(FR_HELPER[$this->getModelName()][0])){
             $gender = FR_HELPER[$this->getModelName()][1];
         } else {
