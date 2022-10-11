@@ -1,6 +1,10 @@
 <?php
 
 const FR_HELPER = [
+    'category' => [
+        'catégorie',
+        'F'
+    ],
     'post' => [
         'projet', 
         'M'

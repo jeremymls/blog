@@ -13,6 +13,18 @@
         <div class="container">
             <div class="row">
                 <div class="col">
+
+                    <div>
+                        <span>Filtre par catégorie:</span>
+                        <div class="btn-group" role="group">
+                            <a href="/admin/posts" type="button" class="btn btn-default">All</a>
+                            {% for category in categories %}
+                            <a href="/admin/posts/{{ category.identifier }}" type="button" class="btn btn-default">{{ category.name }}</a>
+                            {% endfor %}
+                            <a href="/admin/posts/0" type="button" class="btn btn-default">Non classé</a>
+                        </div>
+                    </div>
+
                     {{ utils.pagination(nbPage) }}
                     <table id="BO_table" class="table table-hover">
                         <thead>
@@ -38,6 +50,14 @@
                                             <dd>{{ post.chapo }}</dd>
                                             <dt>Url</dt>
                                             <dd><a href="{{ post.url }}" target="_blank">{{ post.url }}</a></dd>
+                                            <dt>Catégorie</dt>
+                                            <dd>
+                                                {% if post.category != null %}
+                                                <span class="label label-primary">{{ post.category.name }}</span>
+                                                {% else %}
+                                                <span class="label label-default">Non classé</span>
+                                                {% endif %} 
+                                            </dd>
                                             <dt>Date de création</dt>
                                             <dd>{{ post.frenchCreationDate }}</dd>
                                         </dl>

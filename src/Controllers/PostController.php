@@ -2,6 +2,7 @@
 
 namespace Application\Controllers;
 
+use Application\Services\CategoryService;
 use Application\Services\CommentService;
 use Core\Controllers\Controller;
 use Application\Services\PostService;
@@ -15,9 +16,15 @@ class PostController extends Controller
         $this->commentService = new CommentService();
     }
 
-    public function index()
+    public function index($category = null)
     {
-        $params = $this->postService->getAll();
+        $option = $category !== null ? "WHERE category = ?" : "";
+        $optionsData = $category !== null ? [$category] : [];
+        $categoryService = new CategoryService();
+        $params = $this->multiParams([
+            $this->postService->getAll($option, $optionsData),
+            $categoryService->getBy('id = ?', [$category])
+        ]);
         $params = $this->pagination->paginate($params, 'posts', 3);
         $this->twig->display('post/index.twig', $params);
     }
@@ -32,4 +39,8 @@ class PostController extends Controller
         $this->twig->display('post/show.twig', $params);
     }
 
+    public function categories()
+    {
+        $this->twig->display('post/categories.twig');
+    }
 }

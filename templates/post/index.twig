@@ -1,7 +1,7 @@
 {% extends "/base.twig" %}
 {% import "macros/utils.twig" as utils %}
 
-{% block title %}Projets{% endblock %}
+{% block title %}{% if category.name %}{{ category.name }} {% else %} Tous les articles {% endif %}{% endblock %}
 {% block subtitle %}
 	<a id="retour" href="/" ><i class="fa fa-home" aria-hidden="true"></i></a>
 {% endblock %}

@@ -8,6 +8,7 @@ class Post extends Model
 {
     const TABLE = 'posts';
     
+    public $category;
     public string $title;
     public string $content;
     public string $url;
@@ -19,6 +20,13 @@ class Post extends Model
         return [
             'title',
             'content',
+        ];
+    }
+
+    public function getLinks()
+    {
+        return [
+            'category' => 'CategoryRepository',
         ];
     }
 }
