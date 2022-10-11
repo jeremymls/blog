@@ -29,7 +29,13 @@
                                     <select class="form-control" name="category" id="category">
                                         <option value="0">Sélectionner une catégorie</option>
                                         {% for category in categories %}
-                                        <option value={{ category.identifier }} >{{ category.name }}</option>
+                                        <option 
+                                        value={{ category.identifier }} 
+                                        {% if category.identifier == post.category.identifier %}
+                                        selected
+                                        {% endif %}>
+                                            {{ category.name }}
+                                        </option>
                                         {% endfor %}
                                     </select>
                                 </div>
