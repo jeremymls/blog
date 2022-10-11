@@ -71,12 +71,12 @@ $router->get('admin/category/delete/:id', 'Admin\AdminCategory@delete');
 
 // AdminPost
 $router->get('admin/posts', 'Admin\AdminPost@index');
-$router->get('admin/posts/:category', 'Admin\AdminPost@index');
 $router->get('admin/posts/add', 'Admin\AdminPost@add');
 $router->post('admin/posts/add', 'Admin\AdminPost@add');
 $router->get('admin/posts/update/:id', 'Admin\AdminPost@update');
 $router->post('admin/posts/update/:id', 'Admin\AdminPost@update');
 $router->get('admin/posts/delete/:id', 'Admin\AdminPost@delete');
+$router->get('admin/posts/:category', 'Admin\AdminPost@index');
 
 // AdminComment
 $router->get('admin/comments/moderate/:action/:id', 'Admin\AdminComment@moderate');
