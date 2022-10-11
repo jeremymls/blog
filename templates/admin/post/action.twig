@@ -22,6 +22,19 @@
 							<p id="imgSize"></p>
 							<p>Taille max : 500 KB</p>
 						</div>
+                        <div class="col-lg-12 control-group">
+                            <div class="row form-group">
+                                <div class="col-sm-2 col-sm-offset-3 text-center" style="padding: 7px 0;">Catégorie</div>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="category" id="category">
+                                        <option value="0">Sélectionner une catégorie</option>
+                                        {% for category in categories %}
+                                        <option value={{ category.identifier }} >{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Titre*</label>

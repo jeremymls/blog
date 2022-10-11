@@ -2,6 +2,7 @@
 
 namespace Core\Controllers;
 
+use Application\Services\CategoryService;
 use Core\Middleware\ConfirmMail;
 use Core\Middleware\Flash;
 use Core\Middleware\Pagination;
@@ -45,13 +46,18 @@ abstract class Controller
 
     private function getSiteConfigs()
     {
-        if ((isset($_GET['url']) && !in_array($_GET['url'], ["init","init/configs","init/tables","login","new","create_bdd"])) || !isset($_GET['url'])) {
+        if ((isset($_GET['url']) && !in_array($_GET['url'], ["/init","/init/configs","/init/tables","/login","/new","/create_bdd"])) || !isset($_GET['url'])) {
             $configService = new ConfigService();
+            $categoryService = new CategoryService();
             if (count($configService->checkMissingConfigs()) > 0) {
                 $_SESSION['safe_mode'] = true;
                 header('Location: /init');
             }
-            $params = $configService->getAll();
+            $params = $this->multiParams([
+                $categoryService->getAll("", [], "", "", 'ASC'),
+                $configService->getAll()
+            ]);
+            $this->twig->addGlobal('categories', $params['categories']);
             foreach ($params["configs"] as $config) {
                 $prefix = explode("_", $config->name)[0];
                 if ($prefix != "mb") {

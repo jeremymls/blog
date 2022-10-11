@@ -17,6 +17,8 @@ $router->post('/', 'Home@send');
 
 // Post
 $router->get('posts', 'Post@index');
+$router->get('posts/categories', 'Post@categories');
+$router->get('posts/:id', 'Post@index');
 $router->get('post/:id', 'Post@show');
 
 // Comment
@@ -59,8 +61,17 @@ $router->get('confirmation/:token', 'Security\User@confirmation');
 // Dashboard
 $router->get('dashboard', 'Admin\Dashboard@execute');
 
+// AdminCategory
+$router->get('admin/categories', 'Admin\AdminCategory@index');
+$router->get('admin/category/add', 'Admin\AdminCategory@add');
+$router->post('admin/category/add', 'Admin\AdminCategory@add');
+$router->get('admin/category/update/:id', 'Admin\AdminCategory@update');
+$router->post('admin/category/update/:id', 'Admin\AdminCategory@update');
+$router->get('admin/category/delete/:id', 'Admin\AdminCategory@delete');
+
 // AdminPost
 $router->get('admin/posts', 'Admin\AdminPost@index');
+$router->get('admin/posts/:category', 'Admin\AdminPost@index');
 $router->get('admin/posts/add', 'Admin\AdminPost@add');
 $router->post('admin/posts/add', 'Admin\AdminPost@add');
 $router->get('admin/posts/update/:id', 'Admin\AdminPost@update');

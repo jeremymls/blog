@@ -20,8 +20,18 @@
 				<li class="page-scroll">
 					<a href="/"><i class="fa fa-home" aria-hidden="true"></i> Accueil</a>
 				</li>
-				<li class="page-scroll">
-					<a href="/posts"><i class="fa fa-folder" aria-hidden="true"></i> Projets</a>
+				<li class="dropdown desktop">
+					<a id="categories_drop" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+						<i class="fa fa-folder" aria-hidden="true"></i> Catégories <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						{% for category in categories %}
+						<li class="page-scroll"><a href="/posts/{{ category.identifier }}"><i class="fa fa-folder-open" aria-hidden="true"></i> {{ category.name }}</a></li>
+						{% endfor %}
+						<li role="separator" class="divider"></li>
+						<li class="page-scroll"><a href="/posts/categories"><i class="fa fa-sitemap" aria-hidden="true"></i> Voir les Catégories</a></li>
+						<li class="page-scroll"><a href="/posts"><i class="fa fa-files-o" aria-hidden="true"></i> Tous les articles</a></li>
+					</ul>
 				</li>
 				{% if session.user %}
 					<li class="dropdown desktop">

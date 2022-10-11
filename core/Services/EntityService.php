@@ -47,7 +47,8 @@ class EntityService extends Service
 
     public function getAll(string $option = "", array $optionsData = [], string $limit = "", string $order = null, string $direction = "DESC")
     {
-        $params[$this->modelName."s"] = $this->getRepository()->findAll($option, $optionsData, $limit, $order, $direction);
+        $modelName = (substr($this->modelName, -1) === "y") ? (substr($this->modelName, 0, -1). "ies") : $this->modelName . "s";
+        $params[$modelName] = $this->getRepository()->findAll($option, $optionsData, $limit, $order, $direction);
         return $params;
     }
 
