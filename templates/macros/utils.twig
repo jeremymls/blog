@@ -90,7 +90,10 @@
 {% endmacro %}
 
 {# Coordonnées #}
-{% macro contact() %}
+{% macro contact(title = false) %}
+    {% if title %}
+        <h3>{{ title }}</h3>
+    {% endif %}
     <ul class="list-unstyled">
         {% if cs_address %}
             <li><i class="fa fa-map-marker fa-fw"></i> {{ cs_address }}</li>
@@ -107,3 +110,25 @@
     </ul>
 {% endmacro %}
 
+{# Convert content #}
+{% macro content_converter(content) %}
+    {% if content | first == "<" %}
+    {{ content | raw }}
+    {% elseif content | slice(0, 2) == "[%" %}
+    {% set macroName = content | slice(2) | slice(0, -2) %}
+        {% if macroName == "contact" %}
+            {{ _self.contact("CONTACTEZ-MOI :") }}
+        {% endif %}
+        {% if macroName == "reseaux" %}
+            {{ _self.social_networks() }}
+        {% endif %}
+        {% if macroName == "contact+reseaux" %}
+            {{ _self.contact("CONTACTEZ-MOI :") }}
+            {{ _self.social_networks() }}
+        {% endif %}
+    {% elseif content | slice(0, 11) == "data:image/" %}
+    <img src="{{ content }}" width="100%" alt="image">
+    {% else %}
+    {{ content }}
+    {% endif %}
+{% endmacro %}

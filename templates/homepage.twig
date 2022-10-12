@@ -13,12 +13,6 @@
     <!-- Dashbord Grid Section -->
     <section id="dashbord">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>Derniers projets</h2>
-                    <hr class="star-primary">
-                </div>
-            </div>
             <div class="row text-center">
                 <div class="col-sm-12 dashbord-item">
                     <div id="myCarousel" class="carousel slide" data-pause="null" data-ride="carousel">
@@ -69,37 +63,24 @@
     <!-- About Section -->
     <section class="success" id="about">
         <div class="container">
+            {% if af_home_content_title != "" %}
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Je m'appelle Jérémy Monlouis</h2>
+                    <h2>{{ af_home_content_title }}</h2>
                     <hr class="star-light">
                 </div>
             </div>
+            {% endif %}
             <div class="row">
-
                 <div class="col-md-5 col-lg-push-5 col-lg-2  text-center">
-                    <img width="100%"  src="/assets/img/photo.png" alt="">
+                    {{ utils.content_converter(af_home_content_1) }}
                 </div>
-
                 <div id="intro" class="col-md-6 col-lg-pull-2 col-lg-5 text-center">
-                    <p>Développeur PHP / Symfony passionné<p/>
-					<p>Je partage sur ce blog quelques projets</p>
-                    <p>N'hesitez pas à télécharger mon CV</p>
-					<div class="row">
-                        <a href="/assets/CV.pdf" target="_blank" class="btn btn-sm btn-outline">CV <i class="fa fa-download"></i></a>
-					</div>
+                    {{ utils.content_converter(af_home_content_2) }}
                 </div>
-
                 <div class="col-lg-5 text-center">
-                    <h3>Contactez-moi :</h3>
-                    {{ utils.contact() }}
-					<div class="row text-center">
-						<div class="col-auto">
-                            {{ utils.social_networks() }}
-						</div>
-					</div>
+                    {{ utils.content_converter(af_home_content_3) }}
                 </div>
-
             </div>
         </div>
     </section>

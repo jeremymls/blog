@@ -88,11 +88,15 @@ class Repository
                 $sql .= $key . " = ?, ";
             }
         }
-        if (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE && $entity::TABLE != "tokens") {
-            $base64 = $this->getPicture($sql, $values);
-            $values[] = $base64;
-            $sql .= "picture = ?, ";
+        if (count($_FILES) > 0){
+            $fileName = array_keys($_FILES)[0];
+            if (isset($_FILES[$fileName]) && $_FILES[$fileName]['error'] !== UPLOAD_ERR_NO_FILE && $entity::TABLE != "tokens") {
+                $base64 = $this->getPicture($fileName);
+                $values[] = $base64;
+                $sql .=  $fileName . " = ?, ";
+            }
         }
+
         $sql = substr($sql, 0, -2);
         $sql .= " WHERE id = ?";
         $values[] = $identifier;
@@ -180,13 +184,13 @@ class Repository
         return $entity;
     }
 
-    public function getPicture()
+    public function getPicture($fileName = "picture")
     {
         $base64="";
         $file_exts = array('gif', 'jpeg', 'png', 'webp');
-        $file_ext = strtolower(substr($_FILES['picture']['type'],  strpos($_FILES['picture']['type'], '/') + 1));
-        $file_size = $_FILES['picture']['size'];
-        $file_temp = $_FILES['picture']['tmp_name'];
+        $file_ext = strtolower(substr($_FILES[$fileName]['type'],  strpos($_FILES[$fileName]['type'], '/') + 1));
+        $file_size = $_FILES[$fileName]['size'];
+        $file_temp = $_FILES[$fileName]['tmp_name'];
         $file_max_size = 512000;
         $errors = "";
         if (!in_array($file_ext, $file_exts)) {

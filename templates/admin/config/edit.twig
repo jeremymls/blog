@@ -1,4 +1,5 @@
 {% extends "/base.twig" %}
+{% import "macros/utils.twig" as utils %}
 
 {% block title %}Modification de {{config.name}}{% endblock %}
 {% block subtitle %}
@@ -6,6 +7,12 @@
 {% endblock %}
 
 {% block main %}
+    <script src="/vendor/tinymce/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+        selector: '#mytextarea'
+        });
+    </script>
     <section>
         <div class="container">
             <div class="row">
@@ -13,8 +20,7 @@
                     {% if config.value != 'ON' and config.value != 'OFF' %}
                         <button id="empty" class="btn btn-default btn">Vider tous les champs</button><br><br>
                     {% endif %}
-					<form action="" method="post">
-                        <input type="hidden" name="name" value="{{config.name}}" >
+					<form action="" method="post" enctype="multipart/form-data">
                         <div class="row control-group">
                             {% if config.value == 'ON' or config.value == 'OFF' %}
                                 <div class="radio">
@@ -29,6 +35,47 @@
                                         OFF
                                     </label>
                                 </div>
+                            {% elseif config.type == "editor" %}
+                                <div class="col-lg-12 control-group">
+                                    <div class="row form-group">
+                                        <div class="col-sm-2 col-sm-offset-3 text-center" style="padding: 7px 0;">Type</div>
+                                        <div class="col-sm-4">
+                                            <select class="form-control" id="type">
+                                                <option>Sélectionner un type</option>
+                                                <option {% if config.value | first == "<" %}selected{% endif %} value="content">Contenu</option>
+                                                <option {% if config.value | slice(0, 11) == "data:image/" %}selected{% endif %} value="image">Image</option>
+                                                <option {% if config.value | slice(0, 2) == "[%" %}selected{% endif %} value="template">Template</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                {# CONTENT #}
+                                <textarea name="value" id="mytextarea" >{{ config.value }}</textarea>
+                                {# IMAGE #}
+                                <div id="image" class="form-group col-lg-6 col-lg-offset-3">
+                                    <label for="value">Image
+                                        <div id="divOverview">
+                                            <img id="thumbnailOverview" class="thumbnailOverview" src={% if config.value is empty %} "/assets/img/post.png" {% else %} {{ config.value }} {% endif %} alt="">
+                                        </div>
+                                    </label>
+                                    <input type="file" name="value" id="picture" class="form-control picture" accept=".gif,.jpg,.jpeg,.png,.webp">
+                                    <p id="imgSize"></p>
+                                    <p>Taille max : 500 KB</p>
+                                </div>
+                                {# TEMPLATE #}
+                                <div id="template">
+                                    <select name="value" class="form-control" id="select_template">
+                                        <option value="">Sélectionner un template</option>
+                                        <option {% if config.value == "[%contact%]" %}selected{% endif %} value="[%contact%]">Contact</option>
+                                        <option {% if config.value == "[%reseaux%]" %}selected{% endif %} value="[%reseaux%]">Réseaux sociaux</option>
+                                        <option {% if config.value == "[%contact+reseaux%]" %}selected{% endif %} value="[%contact+reseaux%]">Contact + Réseaux sociaux</option>
+                                    </select>
+                                    <div id="template_div" class='text-center'>
+                                        <p id="template_overview">Aperçu</p>
+                                        {{ utils.content_converter(config.value) }}
+                                    </div>
+                                </div>
+                                <br>
                             {% else %}
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <button class="btn btn-danger btn-sm emptyOne"><i class="fa fa-minus-square"></i></button>
@@ -56,6 +103,25 @@
             </div>
         </div>
     </section>
+
+    <style>
+        #template_div {
+            position: relative;
+            border: thick double #ccc;
+            padding: 10px;
+            margin: 2rem 0;
+        }
+        #template_overview {
+            position: absolute;
+            top: -1.5rem;
+            background: whitesmoke;
+            padding: 0 1rem;
+            font-weight: bold;
+        }
+        main {
+            background-color: whitesmoke !important;
+        }
+    </style>
 {% endblock %}
 {% block script %}
     <script src="/assets/js/action.js"></script>
@@ -71,5 +137,37 @@
             this.parentNode.querySelector('textarea').value = '';
         });
     });
+        // Choice type
+        {% if config.value | first != "<" %}
+            $('#mytextarea').hide();
+        {% endif %}
+        {% if config.value | slice(0, 2) != "[%" %}
+            $('#template').hide();
+        {% endif %}
+        {% if config.value | slice(0, 11) != "data:image/" %}
+            $('#image').hide();
+        {% endif %}
+        $('#type').change(function(){
+            $('.tox-tinymce').hide();
+            $('#image').hide();
+            $('#template').hide();
+            switch ($(this).val()) {
+                
+                case 'content':
+                    $('.tox-tinymce').show();
+                    break;
+                case 'image':
+                    $('#image').show();
+                    break;
+                case 'template':
+                    $('#template').show();
+                    break;
+                default:
+                    break;
+            }
+        });
+        $('#select_template').change(function(){
+            console.log($(this).val());
+        });
     </script>
 {% endblock %}

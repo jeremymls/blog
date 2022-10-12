@@ -21,6 +21,10 @@ const CONFIGS = [
     'mb_user' =>                    [null,'Nom d\'utilisateur de la boite mail'],
     'mb_pass' =>                    [null,'Mot de passe de la boite mail'],
     'af_contact_form_display' =>    ['OFF','Afficher le formulaire de contact (ON/OFF)'],
+    'af_home_content_title' =>      [null,'Titre de la section "A propos"'],
+    'af_home_content_1' =>          [null,'Contenu n°1 de la page d\'accueil','editor'],
+    'af_home_content_2' =>          [null,'Contenu n°2 de la page d\'accueil','editor'],
+    'af_home_content_3' =>          [null,'Contenu n°3 de la page d\'accueil','editor'],
 ];
 
 const MODELS = [
