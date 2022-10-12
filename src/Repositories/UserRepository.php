@@ -19,17 +19,4 @@ class UserRepository extends Repository
         $user = $this->findBy('username = ? OR email = ?', [$user, $user]);
         return $user;
     }
-
-    public function checkUsername($username)
-    {
-        $sql = "SELECT * FROM " . $this->model::TABLE . " WHERE username = ? OR email = ?";
-        $statement = Singleton::getConnection()->prepare($sql);
-        $statement->execute([$username, $username]);
-        $row = $statement->fetch();
-        if ($row === false) {
-            echo true;
-        } else {
-            echo false;
-        }
-    }
 }

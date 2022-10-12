@@ -86,8 +86,7 @@ class UserService extends EntityService
     public function login(array $input)
     {
         ['identifiant' => $identifiant, 'password' => $password] = $input;
-        $params = $this->getBy('username = ? OR email = ?', [$identifiant, $identifiant] );
-        $user = $params['user'];
+        $user = $this->repository->getUserByUsername($identifiant);
         if (!$user->comparePassword($user->password, $password)) {
             throw new \Exception("Mot de passe incorrect !");
         }
@@ -127,6 +126,7 @@ class UserService extends EntityService
         }
     }
 
+    // todo: revoir
     public function edit_mail($input)
     {
         if ($input['email'] !== $input['retape']) {
@@ -275,14 +275,15 @@ class UserService extends EntityService
 
     public function checkUsername($username)
     {
-        if (isset($_SESSION["user"])) {
-            if ($username == $_SESSION['user']->username || $username == $_SESSION['user']->email) {
-                echo true;
-            } else {
-                $this->repository->checkUsername($username);
-            }
+        if (isset($_SESSION["user"]) && ($username == $_SESSION['user']->username || $username == $_SESSION['user']->email)) {
+            echo "already";
         } else {
-            $this->repository->checkUsername($username);
+            $user = $this->repository->getUserByUsername($username);
+            if ($user->email == "") {
+                echo "available";
+            } else {
+                echo "unavailable";
+            }
         }
     }
 

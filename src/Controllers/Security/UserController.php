@@ -127,6 +127,7 @@ class UserController extends Controller
         $this->twig->display('security/redirect.twig', ['target' => '/profil']);
     }
 
+    // AJAX
     public function checkUsername()
     {
         $this->userService->checkUsername($_POST['username']);
