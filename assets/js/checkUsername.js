@@ -1,46 +1,54 @@
-$("#username").keyup(function(){
+$("#username").keyup(function () {
     var username = $(this).val().trim();
-    if(username != ''){
+    if (username != '') {
         $.ajax({
             url: '/profil/ajax/checkUsername',
             type: 'post',
-            data: {username:username},
-            success: function(response){
-            // Show response
-            if(response == "1"){
-                    $("#uname_response").html('Pseudo disponible');
-                    $("#uname_response").css('color', 'green');
-                }else{
-                    $("#uname_response").html('Pseudo indisponible');
-                    $("#uname_response").css('color', 'red');
+            data: { username: username },
+            success: function (response) {
+                switch (response) {
+                    case 'available':
+                        $("#uname_response").html('Pseudo disponible');
+                        $("#uname_response").css('color', 'green');
+                        break;
+                    case 'unavailable':
+                    default:
+                        $("#uname_response").html('Pseudo indisponible');
+                        $("#uname_response").css('color', 'red');
+                        break;
                 }
             }
         });
-    }else{
+    } else {
         $("#uname_response").html("");
     }
 });
 
-$("#email").keyup(function(){
+$("#email").keyup(function () {
     var username = $(this).val().trim();
-    if(username != ''){
+    if (username != '') {
         $.ajax({
             url: '/profil/ajax/checkUsername',
             type: 'post',
-            data: {username:username},
-            success: function(response){
-                console.log(response);
-            // Show response
-            if(response == '1'){
-                    $("#email_response").html('Email disponible');
-                    $("#email_response").css('color', 'green');
-                }else{
-                    $("#email_response").html("Email indisponible");
-                    $("#email_response").css('color', 'red');
+            data: { username: username },
+            success: function (response) {
+                switch (response) {
+                    case 'already':
+                        $("#email_response").html("C'est déjà le votre !");
+                        $("#email_response").css('color', 'orange');
+                        break;
+                    case 'available':
+                        $("#email_response").html('Pseudo disponible');
+                        $("#email_response").css('color', 'green');
+                        break;
+                    case 'unavailable':
+                    default:
+                        $("#email_response").html("Email indisponible");
+                        $("#email_response").css('color', 'red');
                 }
             }
         });
-    }else{
+    } else {
         $("#email_response").html("");
     }
 });
