@@ -88,7 +88,8 @@ class ConfigService extends EntityService
                     [
                     "name" => $key,
                     "value" => $config[0],
-                    "description" => $config[1]
+                    "description" => $config[1],
+                    "type" => isset($config[2]) ? $config[2] : "text"
                     ]
                 );
                 $this->repository->add($input);
@@ -122,7 +123,8 @@ class ConfigService extends EntityService
         $models_files = array_diff($models_files, array('.', '..', 'Model.php', 'Error.php'));
         $models = [];
         foreach($models_files as $model_file){
-            $models[] = strtolower(str_replace(".php", "", $model_file))."s";
+            $str=strtolower(str_replace(".php", "", $model_file));
+            $models[] = (substr($str, -1) == "y") ? (substr($str,0, -1) . "ies"): $str . "s";
         }
         $tables = $this->configRepository->getTables();
         $missing_tables = array_diff($models, $tables);
