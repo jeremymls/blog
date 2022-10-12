@@ -46,7 +46,7 @@ abstract class Controller
 
     private function getSiteConfigs()
     {
-        if ((isset($_GET['url']) && !in_array($_GET['url'], ["/init","/init/configs","/init/tables","/login","/new","/create_bdd"])) || !isset($_GET['url'])) {
+        if ((isset($_GET['url']) && !in_array($_GET['url'], ["/init", "/init/configs", "/init/tables", "/login", "/new", "/create_bdd", "init", "init/configs", "init/tables", "login", "new", "create_bdd"])) || !isset($_GET['url'])) {
             $configService = new ConfigService();
             $categoryService = new CategoryService();
             if (count($configService->checkMissingConfigs()) > 0) {
