@@ -30,7 +30,7 @@
 						{% endfor %}
 						<li role="separator" class="divider"></li>
 						<li class="page-scroll"><a href="/posts/categories"><i class="fa fa-sitemap" aria-hidden="true"></i> Voir les Catégories</a></li>
-						<li class="page-scroll"><a href="/posts"><i class="fa fa-files-o" aria-hidden="true"></i> Tous les articles</a></li>
+						<li class="page-scroll"><a href={{ getPath('posts') }}><i class="fa fa-files-o" aria-hidden="true"></i> Tous les articles</a></li>
 					</ul>
 				</li>
 				{% if session.user %}

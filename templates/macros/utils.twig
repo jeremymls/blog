@@ -105,7 +105,7 @@
             <li><i class="fa fa-envelope-o fa-fw"></i> <a href="mailto:{{ cs_owner_email }}">{{ cs_owner_email }}</a></li>
         {% endif %}
         {% if af_contact_form_display == "ON" %}
-            <li><a href="/#contact">Formulaire de contact</a></li>
+            <li class="page-scroll"><a href={% if get['url'] %}{{ getPath('home') }}{% else %}"#contact"{% endif %}>Formulaire de contact</a></li>
         {% endif %}
     </ul>
 {% endmacro %}

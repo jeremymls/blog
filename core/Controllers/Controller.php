@@ -2,6 +2,7 @@
 
 namespace Core\Controllers;
 
+use Application\config\Routes;
 use Application\Services\CategoryService;
 use Core\Middleware\ConfirmMail;
 use Core\Middleware\Flash;
@@ -41,6 +42,11 @@ abstract class Controller
         $twig->addGlobal('session', $_SESSION);
         $twig->addGlobal('get', $_GET);
         $twig->addGlobal('url_request', $_SERVER['REQUEST_URI']);
+        $getUrlFunc = new \Twig\TwigFunction('getPath', function ($name) {
+            $routes = new Routes();
+            return $_SERVER["REQUEST_SCHEME"]. "://" . $_SERVER["HTTP_HOST"] . "/" .$routes->getUrl($name);
+        });
+        $twig->addFunction($getUrlFunc);
         return $twig;
     }
 
