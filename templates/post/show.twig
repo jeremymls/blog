@@ -6,7 +6,9 @@
 	<h2>{{ post.title }}</h2>
 	<em>{{ post.frenchCreationDate }}</em><br>
 	<a id="retour" href="/posts" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
-	<a id="oneTool" href="#comment" ><i class="fa fa-comment-o" aria-hidden="true"></i></a>
+	<div id="oneTool" class="page-scroll">
+		<a href="#comment" ><i class="fa fa-comment-o" aria-hidden="true"></i></a>
+	</div>
 {% endblock %}
 {% block imageHeader %}
 	{% if post.picture is not empty %}
@@ -27,30 +29,30 @@
 				<p>{{ post.chapo | nl2br }}</p>
 			</div>
 		{% endif %}
-		{% if post.url is not empty %}
-			<div id="section-preview" class="row text-center">
-                <div class="col-sm-12 preview-item">
-                    <a href="{{ post.url }}" target="_blank" class="preview-link" >
-                        <div class="caption">
-                            <div class="caption-content">
-								<h3>Afficher le site</h3><br>
-                                <i class="fa fa-external-link fa-3x"></i>
-                            </div>
-                        </div>
-						<iframe id="SiteFrame"
-							title="{{ post.title }}"
-							width="100%"
-							src="{{ post.url }}">
-						</iframe>
-                    </a>
-                </div>
-            </div>
-			
-		{% endif %}
 		<h2>Description</h2>
 		<div>
 			<p>{{ post.content | nl2br }}</p>
 		</div>
+		{% if post.url is not empty %}
+		<h2>Aperçu</h2>
+		<div id="section-preview" class="row text-center">
+			<div class="col-sm-12 preview-item">
+				<a href="{{ post.url }}" target="_blank" class="preview-link" >
+					<div class="caption">
+						<div class="caption-content">
+							<h3>Afficher le site</h3><br>
+							<i class="fa fa-external-link fa-3x"></i>
+						</div>
+					</div>
+					<iframe id="SiteFrame"
+						title="{{ post.title }}"
+						width="100%"
+						src="{{ post.url }}">
+					</iframe>
+				</a>
+			</div>
+		</div>
+		{% endif %}
 	</section>
 
 	<section id="comment" class="container">
