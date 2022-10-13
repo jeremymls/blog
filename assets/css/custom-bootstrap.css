@@ -3846,6 +3846,21 @@ tbody.collapse.in {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   background-clip: padding-box;
 }
+@media (max-width: 768px) {
+  .dropdown-menu {
+    float: unset;
+    margin: auto;
+    border: 0;
+    border-radius: 0 !important;
+    display: block !important;
+    position: relative;
+  }
+  .dropdown-menu .divider {
+    margin: 9px 2rem !important;
+    width: 40%;
+    opacity: 0.3;
+  }
+}
 .dropdown-menu.pull-right {
   right: 0;
   left: auto;
@@ -3858,7 +3873,7 @@ tbody.collapse.in {
 }
 .dropdown-menu > li > a {
   display: block;
-  padding: 3px 20px;
+  padding: 3px 15px;
   clear: both;
   font-weight: normal;
   line-height: 1.428571429;

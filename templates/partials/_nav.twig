@@ -20,8 +20,8 @@
 				<li class="page-scroll">
 					<a href="/"><i class="fa fa-home" aria-hidden="true"></i> Accueil</a>
 				</li>
-				<li class="dropdown desktop">
-					<a id="categories_drop" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+				<li class="dropdown">
+					<a id="categories_drop" href="#" class="dropdown-toggle desktop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<i class="fa fa-folder" aria-hidden="true"></i> Catégories <span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
@@ -54,7 +54,7 @@
 					<li class="page-scroll mobile"><a href="/profil"><i class="fa fa-user" aria-hidden="true"></i> Profil</a></li>
 					<li class="page-scroll mobile"><a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Déconnexion</a></li>
 					{# /Mobile #}
-					<li class="page-scroll">
+					<li class="desktop">
 						<a href="/profil">
 							<div id="divOverview" class="user" style="width: 3rem;">
 								<img id="thumbnailOverview" src={% if session.user.picture is empty %}"/assets/img/profile.png"{% else %}{{ session.user.picture }}{% endif %} class="img-responsive" alt="{{ session.user.first }} {{ session.user.last }}">
@@ -67,6 +67,11 @@
 				{% endif %}
 			</ul>
 		</div>
+		<a id="avatar_mobile" class="mobile" href="/profil">
+			<div id="divOverview" class="user" style="width: 3rem;">
+				<img id="thumbnailOverview" src={% if session.user.picture is empty %}"/assets/img/profile.png"{% else %}{{ session.user.picture }}{% endif %} class="img-responsive" alt="{{ session.user.first }} {{ session.user.last }}">
+			</div>
+		</a>
 		<!-- /.navbar-collapse -->
 	</div>
 	<!-- /.container-fluid -->
