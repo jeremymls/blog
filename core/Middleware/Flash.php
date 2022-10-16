@@ -3,6 +3,7 @@
 namespace Core\Middleware;
 
 use Core\Controllers\Controller;
+use Core\Services\FlashService;
 
 class Flash extends Controller
 {
@@ -13,14 +14,8 @@ class Flash extends Controller
 
     private static function setFlashs($twig)
     {
-        $shm = shm_attach(SHM_FLASH);
-        $i = 1;
-        $flashs = [];
-        while (shm_has_var($shm, $i)) {
-            $flashs[] = (shm_get_var($shm, $i));
-            shm_remove_var($shm, $i);
-            $i++;
-        }
+        $flashServices = new FlashService();
+        $flashs = $flashServices->get();
         $twig->addGlobal('flashs', $flashs);
     }
 }
