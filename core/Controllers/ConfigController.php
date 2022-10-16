@@ -50,7 +50,7 @@ class ConfigController extends AdminController
     public function update($id)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (isset($_POST['name']) && substr($_POST['name'], 0, 3) == "mb_"){
+            if (isset($_POST['name']) && (substr($_POST['name'], 0, 3) == "mb_" || substr($_POST['name'], 0, 3) == "sd_")){
                 $_POST["value"] = Encryption::encrypt(trim($_POST['value']));
             }
             $this->configService->update($id, $_POST);

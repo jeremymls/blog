@@ -67,6 +67,9 @@ class ConfigService extends EntityService
             case 'af':
                 $params['title'] = 'de l\'affichage front';
                 break;
+            case 'sd':
+                $params['title'] = 'des applications tierces';
+                break;
             default:
                 $params['title'] = '';
                 break;

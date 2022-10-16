@@ -21,6 +21,7 @@
                         <button id="empty" class="btn btn-default btn">Vider tous les champs</button><br><br>
                     {% endif %}
 					<form action="" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="name" value="{{config.name}}" >
                         <div class="row control-group">
                             {% if config.value == 'ON' or config.value == 'OFF' %}
                                 <div class="radio">

@@ -159,7 +159,7 @@ class Repository
                 } elseif ($key == "created_at") {
                     $entity->setCreatedAt($row[$key]);
                     $entity->frenchCreationDate = $entity->getFrenchCreationDate();
-                } elseif ($key == "value" && isset($row["name"]) && substr($row["name"], 0, 3) == "mb_") {
+                } elseif ($key == "value" && isset($row["name"]) && (substr($row["name"], 0, 3) == "mb_"|| substr($row["name"], 0, 3) == "sd_")) {
                     $entity->$key = $row[$key]? Encryption::decrypt($row[$key]) : ""; // decrypt mail config
                 } else {
                     $entity->$key = $row[$key]? $row[$key] : "";
