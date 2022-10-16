@@ -2,6 +2,8 @@
 
 namespace Core\Lib;
 
+use Core\Middleware\Session\PHPSession;
+
 require_once 'src/config/database.php';
 
 class Singleton
@@ -41,7 +43,8 @@ class Singleton
                     self::$database->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                 } catch (\PDOException $e) {
                     if ($e->getCode() == 1049) {
-                        $_SESSION['safe_mode'] = true;
+                        $session = new PHPSession();
+                        $session->set('safe_mode', true);
                         header('Location: /new');
                     }
                     echo 'Erreur de connexion à la base de données : ' . $e->getMessage();

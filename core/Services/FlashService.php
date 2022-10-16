@@ -32,8 +32,13 @@ class FlashService
     {
         return $this->send('warning', $title, $message);
     }
+
+    public function template(string $template)
+    {
+        return $this->send($template);
+    }
     
-    private function send(string $type, string $title, string $message)
+    private function send(string $type, string $title = "", string $message = "")
     {
         $flash = $this->session->get($this->sessionKey, []);
         $flash[] = [

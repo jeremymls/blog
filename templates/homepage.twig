@@ -101,14 +101,14 @@
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Nom</label>
-                                <input type="text" class="form-control" placeholder="Nom" name="name" value="{{session.user.username}}" required data-validation-required-message="Please enter your name.">
+                                <input type="text" class="form-control" placeholder="Nom" name="name" value="{{ getUserParam("username") }}" required data-validation-required-message="Please enter your name.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Adresse E-mail</label>
-                                <input type="email" class="form-control" placeholder="Adresse E-mail" name="email" value="{{session.user.email}}" required data-validation-required-message="Please enter your email address.">
+                                <input type="email" class="form-control" placeholder="Adresse E-mail" name="email" value="{{ getUserParam("email") }}" required data-validation-required-message="Please enter your email address.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>

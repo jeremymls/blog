@@ -24,12 +24,12 @@ class PHPSession implements SessionInterface
         return $default;
     }
 
-    public function set(string $key, $value): void
+    public function set(string $key, $value)
     {
         $_SESSION[$key] = $value;
     }
 
-    public function delete(string $key): void
+    public function delete(string $key)
     {
         unset($_SESSION[$key]);
     }

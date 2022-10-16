@@ -3,6 +3,7 @@
 namespace Core\Repositories;
 
 use Core\Lib\Singleton;
+use Core\Middleware\Session\PHPSession;
 use Core\Services\Encryption;
 
 class Repository
@@ -123,7 +124,8 @@ class Repository
     public function getSelectStatementByModel(string $options, array $optionsData = [])
     {
         if ($this->checkTableExistence() == false) {
-            $_SESSION['safe_mode'] = true;
+            $session = new PHPSession();
+            $session->set("safe_mode", true);
             header('Location: /init');
         }
         $sql = "SELECT ";

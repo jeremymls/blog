@@ -3,6 +3,7 @@
 namespace Core\Controllers;
 
 use Core\Middleware\Security;
+use Core\Middleware\Session\PHPSession;
 use Core\Services\ConfigService;
 use Core\Services\InitService;
 
@@ -18,7 +19,8 @@ class InitController extends Controller
 
     private static function grantAccess()
     {
-        if (isset($_SESSION['safe_mode']) && $_SESSION['safe_mode'] == true) {
+        $session = new PHPSession();
+        if ($session->get('safe_mode') == true) {
             return true;
         } else {
             new Security();

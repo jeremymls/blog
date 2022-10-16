@@ -28,7 +28,7 @@
 
 {# Flash #}
 {% macro flash(flash ) %}
-    {% if flash == "mail_not_validated" %}
+    {% if flash.type == "mail_not_validated" %}
         {% set type = "danger" %}
         {% set title = "Vous n'avez pas validé votre e-mail!" %}
         {% set message = "Veuillez valider votre adresse e-mail sinon vous ne pourrez pas accéder à certaines fonctionnalités" %}

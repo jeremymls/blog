@@ -4,6 +4,7 @@ namespace Application\Controllers;
 
 use Core\Controllers\Controller;
 use Application\Services\CommentService;
+use Core\Middleware\Session\UserSession;
 
 class CommentController extends Controller
 {
@@ -15,9 +16,10 @@ class CommentController extends Controller
 
     public function add(string $post)
     {
+        $userSession = new UserSession();
         $this->commentService->add($_POST, [
             'post' =>$post,
-            'author' => $_SESSION['user']->id,
+            'author' => $userSession->getUserParam("identifier"),
         ]);
         header('Location: /post/' . $post . '#commentList');
     }

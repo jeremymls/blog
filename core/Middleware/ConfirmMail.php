@@ -2,17 +2,22 @@
 
 namespace Core\Middleware;
 
+use Core\Middleware\Session\UserSession;
+use Core\Services\FlashService;
+
 class ConfirmMail
 {
-    public function __construct($twig)
+    public function __construct()
     {
-        self::validatedEmail($twig);
+        self::validatedEmail();
     }
 
-    private function validatedEmail($twig)
+    private function validatedEmail()
     {
-        if (isset($_SESSION['user']) &&  $_SESSION['user']->validated_email != "1") {
-            $twig->addGlobal('mail_not_validated', true);
+        $user = new UserSession();
+        $flashServices = new FlashService();
+        if ($user->isUser() && !$user->isValidate() && !$user->isAdmin()) {
+            $flashServices->template("mail_not_validated");
         }
     }
 }

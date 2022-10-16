@@ -15,7 +15,7 @@
                     <div class="row">
 
                         {# Infos #}
-                        <div class="col-lg-8">
+                        <div class="col-md-8">
                             <dl id="profilInfos" class="dl-horizontal">
                                 <dt><strong>Nom:</strong></dt>
                                 <dd>{{ user.first }}</dd>
@@ -46,11 +46,11 @@
                             </dl>
                         </div>
                         {# Image profil #}
-                        <div id="colOverview" class="col-lg-4">
+                        <div id="colOverview" class="col-xs-8 col-xs-offset-2 col-md-offset-0 col-md-4">
 							<div id="divOverview" class="user">
                                 <img id="thumbnailOverview" src={% if user.picture is empty %}"/assets/img/profile.png"{% else %}{{ user.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
                             </div>
-                            {% if user.identifier == session.user.id %}<button id="btnOverview" type="button" class="btn btn-danger btn-lg"><i class="fa fa-trash" aria-hidden="true"></i></button>{% endif %}
+                            {% if user.identifier == getUserParam("identifier") %}<button id="btnOverview" type="button" class="btn btn-danger btn-lg"><i class="fa fa-trash" aria-hidden="true"></i></button>{% endif %}
                         </div>
                     </div>
                     {# Commentaires #}
@@ -60,9 +60,9 @@
                     {{ utils.pagination(nbPage,"#commentPage") }}
                     {% for comment in comments %}
                         {% if not comment.deleted %}
-                        <div class="panel panel-{% if comment.moderate or session.user.role == "admin" %}default{% else %}danger{% endif %}">
+                        <div class="panel panel-{% if comment.moderate or isAdmin() %}default{% else %}danger{% endif %}">
                             <div class="panel-heading commentHeader">
-                                <p>Le {{comment.frenchCreationDate }} dans <a href="/post/{{ comment.post.identifier }}#comment">{{ comment.post.title }}</a>  {% if not comment.moderate  and session.user.role != "admin" %}<strong>(Non Approuvé)</strong>{% endif %}</p>
+                                <p>Le {{comment.frenchCreationDate }} dans <a href="/post/{{ comment.post.identifier }}#comment">{{ comment.post.title }}</a>  {% if not comment.moderate  and not isAdmin() %}<strong>(Non Approuvé)</strong>{% endif %}</p>
                                 <div>
                                     <a href="/comment/{{comment.identifier }}" class="btn btn-warning delete-comment"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                     <a data-id="{{ comment.identifier }}" class="btn btn-danger delete-comment" role="button"><i class="fa fa-trash" aria-hidden="true"></i></a>

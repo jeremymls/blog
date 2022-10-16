@@ -7,6 +7,8 @@ use Application\Services\CategoryService;
 use Core\Middleware\ConfirmMail;
 use Core\Middleware\Flash;
 use Core\Middleware\Pagination;
+use Core\Middleware\Session\PHPSession;
+use Core\Middleware\Session\UserSession;
 use Core\Services\ConfigService;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
@@ -23,8 +25,8 @@ abstract class Controller
     {
         $this->pagination = new Pagination();
         $this->twig = self::getTwig();
+        new ConfirmMail();
         new Flash($this->twig);
-        new ConfirmMail($this->twig);
         self::getSiteConfigs();
 
     }
@@ -39,7 +41,6 @@ abstract class Controller
         );
         $twig->addExtension(new DebugExtension());
         $twig->addExtension(new StringExtension());
-        $twig->addGlobal('session', $_SESSION);
         $twig->addGlobal('get', $_GET);
         $twig->addGlobal('url_request', $_SERVER['REQUEST_URI']);
         $getUrlFunc = new \Twig\TwigFunction('getPath', function ($name) {
@@ -47,18 +48,44 @@ abstract class Controller
             return $_SERVER["REQUEST_SCHEME"]. "://" . $_SERVER["HTTP_HOST"] . "/" .$routes->getUrl($name);
         });
         $twig->addFunction($getUrlFunc);
+        // User Session functions
+        $getUserParamFunc = new \Twig\TwigFunction('getUserParam', function ($param) {
+            $userSession = new UserSession();
+            return $userSession->getUserParam($param);
+        });
+        $twig->addFunction($getUserParamFunc);
+
+        $isLoggedFunc = new \Twig\TwigFunction('isLogged', function () {
+            $userSession = new UserSession();
+            return $userSession->isUser();
+        });
+        $twig->addFunction($isLoggedFunc);
+
+        $isAdminFunc = new \Twig\TwigFunction('isAdmin', function () {
+            $userSession = new UserSession();
+            return $userSession->isAdmin();
+        });
+        $twig->addFunction($isAdminFunc);
+
+        $isValideFunc = new \Twig\TwigFunction('isValidate', function () {
+            $userSession = new UserSession();
+            return $userSession->isValidate();
+        });
+        $twig->addFunction($isValideFunc);
+
         return $twig;
     }
 
     private function getSiteConfigs()
     {
-        if ((isset($_GET['url']) && !in_array($_GET['url'], ["/init", "/init/configs", "/init/tables", "/login", "/new", "/create_bdd", "init", "init/configs", "init/tables", "login", "new", "create_bdd"])) || !isset($_GET['url'])) {
+        if ((isset($_GET['url']) && !in_array($_GET['url'], ["/init", "/init/configs", "/init/tables", "/login", "/new", "/create_bdd","init/missing_configs", "/init/missing_configs", "init", "init/configs", "init/tables", "login", "new", "create_bdd"])) || !isset($_GET['url'])) {
             $configService = new ConfigService();
-            $categoryService = new CategoryService();
             if (count($configService->checkMissingConfigs()) > 0) {
-                $_SESSION['safe_mode'] = true;
+            $session = new PHPSession();
+                $session->set("safe_mode", true);
                 header('Location: /init');
             }
+            $categoryService = new CategoryService();
             $params = $this->multiParams([
                 $categoryService->getAll("", [], "", "", 'ASC'),
                 $configService->getAll()

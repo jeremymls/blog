@@ -57,8 +57,8 @@
 
 	<section id="comment" class="container">
 		<div id="commentAdd">
-			{% if session.user %}
-				{% if session.user.validated_email != "" %}
+			{% if isLogged() %}
+				{% if isValidate() %}
 					<div class="row">
 						<div class="col-lg-12 text-center">
 							<h3>Laisser un commentaire</h3>
@@ -114,13 +114,18 @@
 				<div class="panel panel-default">
 					{% if not comment.deleted %}
 					<div class="panel-heading commentHeader">
+					<div style="display:flex; align-items:center;">
+						<div id="divOverview" class="user" style="width: 2rem; margin-right:1rem;">
+							<img id="thumbnailOverview" src={% if comment.author.picture is empty %}"/assets/img/profile.png"{% else %}{{ comment.author.picture }}{% endif %} class="img-responsive" alt="{{ comment.author.username }}">
+						</div>
 						<small><strong>{{ comment.author.username }}</strong> le {{comment.frenchCreationDate }}</small>  
-						{% if comment.author.identifier == (session.user.id) %}
-							<div>
-								<a href="/comment/{{comment.identifier }}" class="btn btn-warning btn-xs" role="button"><i class="fa fa-edit" aria-hidden="true"></i></a>
-								<a data-id="{{ comment.identifier }}" class="btn btn-danger btn-xs delete-comment" role="button"><i class="fa fa-trash" aria-hidden="true"></i></a>
-							</div>
-						{% endif %}
+					</div>
+					{% if comment.author.identifier == getUserParam("identifier") %}
+					<div>
+						<a href="/comment/{{comment.identifier }}" class="btn btn-warning btn-xs" role="button"><i class="fa fa-edit" aria-hidden="true"></i></a>
+						<a data-id="{{ comment.identifier }}" class="btn btn-danger btn-xs delete-comment" role="button"><i class="fa fa-trash" aria-hidden="true"></i></a>
+					</div>
+					{% endif %}
 					</div>
 					<div class="panel-body">
 						<p>{{ comment.comment | nl2br }}</p>
@@ -128,7 +133,7 @@
 					{% else %}
 					<div class="panel-heading commentHeader">
 						<sm><i>Commentaire supprimé.</i></sm>
-						{% if comment.author.identifier == (session.user.id) %}
+						{% if comment.author.identifier == getUserParam("identifier") %}
 							<a data-id="{{ comment.identifier }}" class="btn btn-link cancel-delete-comment" role="button">Annuler la supression</a>
 						{% endif %}
 					</div>

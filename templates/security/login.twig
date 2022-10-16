@@ -10,7 +10,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    {% if session.user %}
+                    {% if isLogged() %}
                         <div class="row">
                             <div class="form-group col-xs-12 text-center">
                                 <a href="/logout">Déconnexion</a>
