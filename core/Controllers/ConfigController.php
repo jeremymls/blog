@@ -49,11 +49,12 @@ class ConfigController extends AdminController
 
     public function update($id)
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (isset($_POST['name']) && (substr($_POST['name'], 0, 3) == "mb_" || substr($_POST['name'], 0, 3) == "sd_")){
-                $_POST["value"] = Encryption::encrypt(trim($_POST['value']));
+        if ($this->superglobals->getMethod() == 'POST') {
+            $prefix = $this->superglobals->getPrefix('name');
+            if ($prefix == "mb_" || $prefix == "sd_"){
+                $this->superglobals->setPost("value", Encryption::encrypt(trim($this->superglobals->getPost('value'))));
             }
-            $this->configService->update($id, $_POST);
+            $this->configService->update($id, $this->superglobals->getPost());
             header('Location: /admin/configs');
         }
         $params = $this->configService->get($id);

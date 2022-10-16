@@ -9,6 +9,7 @@ use Core\Middleware\Flash;
 use Core\Middleware\Pagination;
 use Core\Middleware\Session\PHPSession;
 use Core\Middleware\Session\UserSession;
+use Core\Middleware\Superglobals;
 use Core\Services\ConfigService;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
@@ -24,14 +25,14 @@ abstract class Controller
     public function __construct()
     {
         $this->pagination = new Pagination();
-        $this->twig = self::getTwig();
+        $this->superglobals = new Superglobals();
+        $this->twig = self::getTwig($this->superglobals);
         new ConfirmMail();
         new Flash($this->twig);
-        self::getSiteConfigs();
-
+        self::getSiteConfigs($this->superglobals);
     }
 
-    private static function getTwig()
+    private static function getTwig(Superglobals $superglobals)
     {
         $loader = new FilesystemLoader(ROOT . '/templates');
         $twig = new Environment(
@@ -41,11 +42,12 @@ abstract class Controller
         );
         $twig->addExtension(new DebugExtension());
         $twig->addExtension(new StringExtension());
-        $twig->addGlobal('get', $_GET);
-        $twig->addGlobal('url_request', $_SERVER['REQUEST_URI']);
+        $twig->addGlobal('get', $superglobals->getGet());
+        $twig->addGlobal('url_request', $superglobals->getPath());
         $getUrlFunc = new \Twig\TwigFunction('getPath', function ($name) {
-            $routes = new Routes();
-            return $_SERVER["REQUEST_SCHEME"]. "://" . $_SERVER["HTTP_HOST"] . "/" .$routes->getUrl($name);
+            // todo : à revoir
+            $superglobals = new Superglobals();
+            return $superglobals->getPath($name);
         });
         $twig->addFunction($getUrlFunc);
         // User Session functions
@@ -76,9 +78,10 @@ abstract class Controller
         return $twig;
     }
 
-    private function getSiteConfigs()
+    private function getSiteConfigs(Superglobals $superglobals)
     {
-        if ((isset($_GET['url']) && !in_array($_GET['url'], ["/init", "/init/configs", "/init/tables", "/login", "/new", "/create_bdd","init/missing_configs", "/init/missing_configs", "init", "init/configs", "init/tables", "login", "new", "create_bdd"])) || !isset($_GET['url'])) {
+        $url = $superglobals->getGet('url');
+        if (($url && !in_array($superglobals->getGet('url'), ["/init", "/init/configs", "/init/tables", "/login", "/new", "/create_bdd","init/missing_configs", "/init/missing_configs", "init", "init/configs", "init/tables", "login", "new", "create_bdd"])) || !$url) {
             $configService = new ConfigService();
             if (count($configService->checkMissingConfigs()) > 0) {
             $session = new PHPSession();

@@ -58,7 +58,7 @@
 	<section id="comment" class="container">
 		<div id="commentAdd">
 			{% if isLogged() %}
-				{% if isValidate() %}
+				{% if isValidate() or isAdmin() %}
 					<div class="row">
 						<div class="col-lg-12 text-center">
 							<h3>Laisser un commentaire</h3>
