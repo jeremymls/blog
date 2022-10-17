@@ -20,20 +20,20 @@ class ConfigController extends AdminController
         $this->configService->create_config_table('configs');
         $this->configService->initConfigs();
         $this->flashService->success("Configuration initialisée", "La configuration a été initialisée avec succès");
-        header('Location: /');
+        $this->superglobals->redirect('home');
     }
 
     public function init_missing_configs()
     {
         $this->configService->initConfigs();
         $this->flashService->success("Configuration initialisée", "La configuration a été initialisée avec succès");
-        header('Location: /');
+        $this->superglobals->redirect('home');
     }
 
     public function init_tables()
     {
         $this->configService->create_tables();
-        header('Location: /');
+        $this->superglobals->redirect('home');
     }
 
     public function index()

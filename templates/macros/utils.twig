@@ -5,18 +5,18 @@
         <nav aria-label="Page navigation">
             <ul class="pagination">
                 <li>
-                    <a href="{{ get.url }}{% if get.id %}&id={{ get.id }}{% endif %}{% if get.filter %}&filter={{ get.filter }}{% endif %}{% if index %}{{ index }}{% endif %}" aria-label="Previous">
+                    <a href="{{ removeGetPath() }}{% if get.id %}&id={{ get.id }}{% endif %}{% if get.filter %}&filter={{ get.filter }}{% endif %}{% if index %}{{ index }}{% endif %}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 {% for page in 1.. nbPage %}
                     {% if get.page is defined %}{% set currentPage = get.page %}{% else %}{% set currentPage = 1 %}{% endif %}
                     <li {% if currentPage == page %} class="active"{% endif %}>
-                        <a href="{{ get.url }}{% if get.id %}&id={{ get.id }}{% endif %}{% if get.filter %}&filter={{ get.filter }}{% endif %}&page={{ page }}{% if index %}{{ index }}{% endif %}">{{ page }}</a>
+                        <a href="{{ removeGetPath() }}{% if get.id %}&id={{ get.id }}{% endif %}{% if get.filter %}&filter={{ get.filter }}{% endif %}&page={{ page }}{% if index %}{{ index }}{% endif %}">{{ page }}</a>
                     </li>
                 {% endfor %}
                 <li>
-                    <a href="{{ get.url }}{% if get.id %}&id={{ get.id }}{% endif %}{% if get.filter %}&filter={{ get.filter }}{% endif %}&page={{ nbPage }}{% if index %}{{ index }}{% endif %}" aria-label="Next">
+                    <a href="{{ removeGetPath() }}{% if get.id %}&id={{ get.id }}{% endif %}{% if get.filter %}&filter={{ get.filter }}{% endif %}&page={{ nbPage }}{% if index %}{{ index }}{% endif %}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

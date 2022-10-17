@@ -45,33 +45,38 @@ abstract class Controller
         $twig->addExtension(new StringExtension());
         $twig->addGlobal('get', $superglobals->getGet());
         $twig->addGlobal('url_request', $superglobals->getPath());
-        $getUrlFunc = new \Twig\TwigFunction('getPath', function ($name) {
-            // todo : à revoir
-            $superglobals = new Superglobals();
-            return $superglobals->getPath($name);
+
+        $getUrlFunc = new \Twig\TwigFunction('getPath', function ($name = null, $params = []) use ($superglobals) {
+            return $superglobals->getPath($name, $params);
         });
         $twig->addFunction($getUrlFunc);
+
+        $removeGetUrlFunc = new \Twig\TwigFunction('removeGetPath', function () use ($superglobals) {
+            return $superglobals->removeGetPath();
+        });
+        $twig->addFunction($removeGetUrlFunc);
+
         // User Session functions
         $getUserParamFunc = new \Twig\TwigFunction('getUserParam', function ($param) {
-            $userSession = new UserSession();
+            $userSession = new UserSession(); // !
             return $userSession->getUserParam($param);
         });
         $twig->addFunction($getUserParamFunc);
 
         $isLoggedFunc = new \Twig\TwigFunction('isLogged', function () {
-            $userSession = new UserSession();
+            $userSession = new UserSession(); // !
             return $userSession->isUser();
         });
         $twig->addFunction($isLoggedFunc);
 
         $isAdminFunc = new \Twig\TwigFunction('isAdmin', function () {
-            $userSession = new UserSession();
+            $userSession = new UserSession(); // !
             return $userSession->isAdmin();
         });
         $twig->addFunction($isAdminFunc);
 
         $isValideFunc = new \Twig\TwigFunction('isValidate', function () {
-            $userSession = new UserSession();
+            $userSession = new UserSession(); // !
             return $userSession->isValidate();
         });
         $twig->addFunction($isValideFunc);
@@ -85,9 +90,9 @@ abstract class Controller
         if (($url && !in_array($url, ["/init", "/init/configs", "/init/tables", "/login", "/new", "/create_bdd","init/missing_configs", "/init/missing_configs", "init", "init/configs", "init/tables", "login", "new", "create_bdd"])) || !$url) {
             $configService = new ConfigService();
             if (count($configService->checkMissingConfigs()) > 0) {
-            $session = new PHPSession();
+                $session = new PHPSession();
                 $session->set("safe_mode", true);
-                header('Location: /init');
+                $this->superglobals->redirect('init');
             }
             $categoryService = new CategoryService();
             $params = $this->multiParams([

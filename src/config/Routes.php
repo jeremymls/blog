@@ -104,8 +104,8 @@ class Routes
         $this->router->get('init/missing_configs', 'Config@init_missing_configs@core');
         $this->router->get('init/configs', 'Config@init_configs@core');
         $this->router->get('init/tables', 'Config@init_tables@core');
-        $this->router->get('init', 'Init@init@core');
-        $this->router->get('new', 'Init@new@core');
+        $this->router->get('init', 'Init@init@core', 'init');
+        $this->router->get('new', 'Init@new@core', 'new');
         $this->router->get('create_bdd', 'Init@create@core');
     }
 

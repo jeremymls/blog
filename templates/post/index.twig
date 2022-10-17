@@ -17,8 +17,7 @@
                             <div class="col-lg-8">
                                 <div class="caption">
                                     <div class="post_head">
-                                    {# ! in progess #}
-                                        <a href="{{ getPath('post') }}"><h3>{{ post.title }} </h3></a>
+                                        <a href="{{ getPath('post', {"id": post.identifier}) }}"><h3>{{ post.title }} </h3></a>
                                         <em>mis à jour le {{ post.frenchCreationDate }}</em>
                                     </div>
                                     {% if post.chapo %}

@@ -2,7 +2,6 @@
 namespace Core\Middleware;
 
 use Application\config\Routes;
-use Core\Router\Router;
 
 class Superglobals
 {
@@ -23,13 +22,23 @@ class Superglobals
         return $this->method;
     }
 
-    public function getPath($name = null)
+    public function getPath($name = null, $params = [])
     {
         if ($name) {
             $routes = new Routes();
-            return $this->path . "/" .$routes->getUrl($name);
+            return $this->path . "/" .$routes->getUrl($name, $params);
         }
-        return $this->path . "/" . $_SERVER['REQUEST_URI'];
+        return $this->path . "/" . trim($_SERVER['REQUEST_URI'], '/');
+    }
+
+    public function removeGetPath()
+    {
+        return strtok($this->getPath(), '&');
+    }
+
+    public function redirect($name, $params = [])
+    {
+        header('Location: ' . $this->getPath($name, $params));
     }
 
     public function getPathReferer()

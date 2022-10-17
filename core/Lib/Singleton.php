@@ -3,6 +3,7 @@
 namespace Core\Lib;
 
 use Core\Middleware\Session\PHPSession;
+use Core\Middleware\Superglobals;
 
 require_once 'src/config/database.php';
 
@@ -45,7 +46,8 @@ class Singleton
                     if ($e->getCode() == 1049) {
                         $session = new PHPSession();
                         $session->set('safe_mode', true);
-                        header('Location: /new');
+                        $superglobals = new Superglobals();
+                        $superglobals->redirect('new');
                     }
                     echo 'Erreur de connexion à la base de données : ' . $e->getMessage();
                     // 1049 = database not found
