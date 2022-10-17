@@ -3,7 +3,7 @@
 
 {% block title %}Configuration {{ title }}{% endblock %}
 {% block subtitle %}
-	<a id="retour" href="javascript:history.back()" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+	<a id="retour" href="{{ getPath('admin:configs') }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}

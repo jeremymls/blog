@@ -32,7 +32,7 @@ class Routes
         $this->router->get('posts', 'Post@index', 'posts');
         $this->router->get('posts/categories', 'Post@categories');
         $this->router->get('posts/:id', 'Post@index' , 'post:id');
-        $this->router->get('post/:id', 'Post@show');
+        $this->router->get('post/:id', 'Post@show', 'post');
         // Comment
         $this->router->post('post/:id', 'Comment@add');
         $this->router->post('comment/delete', 'Comment@delete');
@@ -66,7 +66,7 @@ class Routes
         $this->router->get('confirmation/:token', 'Security\User@confirmation');
         // BACKEND //
         // Dashboard
-        $this->router->get('dashboard', 'Admin\Dashboard@execute');
+        $this->router->get('dashboard', 'Admin\Dashboard@execute', 'dashboard');
         // AdminCategory
         $this->router->get('admin/categories', 'Admin\AdminCategory@index');
         $this->router->get('admin/category/add', 'Admin\AdminCategory@add');
@@ -97,7 +97,7 @@ class Routes
         $this->router->get('admin/config/update/:name', 'Config@update@core');
         $this->router->post('admin/config/update/:name', 'Config@update@core');
         $this->router->get('admin/configs/list/:prefix', 'Config@list@core');
-        $this->router->get('admin/configs', 'Config@index@core');
+        $this->router->get('admin/configs', 'Config@index@core', 'admin:configs');
         // AdminDoc
         $this->router->get('admin/docs', 'Doc@index@core');
         // Init

@@ -33,4 +33,13 @@ class PHPSession implements SessionInterface
     {
         unset($_SESSION[$key]);
     }
+
+    public function redirectLastUrl($anchor = null)
+    {
+        $last_url = $this->get('last_url');
+        if ($last_url) {
+            $this->delete('last_url');
+        }
+        header('Location: ' . ($last_url ?? '/') . ($anchor ? '#' . $anchor : ''));
+    }
 }

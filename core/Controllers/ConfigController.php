@@ -55,7 +55,7 @@ class ConfigController extends AdminController
                 $this->superglobals->setPost("value", Encryption::encrypt(trim($this->superglobals->getPost('value'))));
             }
             $this->configService->update($id, $this->superglobals->getPost());
-            header('Location: /admin/configs');
+            $this->session->redirectLastUrl();
         }
         $params = $this->configService->get($id);
         $this->twig->display('admin/config/edit.twig', $params);

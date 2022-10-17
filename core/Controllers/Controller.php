@@ -30,6 +30,7 @@ abstract class Controller
         new ConfirmMail();
         new Flash($this->twig);
         self::getSiteConfigs($this->superglobals);
+        $this->session = new PHPSession();
     }
 
     private static function getTwig(Superglobals $superglobals)
@@ -81,7 +82,7 @@ abstract class Controller
     private function getSiteConfigs(Superglobals $superglobals)
     {
         $url = $superglobals->getGet('url');
-        if (($url && !in_array($superglobals->getGet('url'), ["/init", "/init/configs", "/init/tables", "/login", "/new", "/create_bdd","init/missing_configs", "/init/missing_configs", "init", "init/configs", "init/tables", "login", "new", "create_bdd"])) || !$url) {
+        if (($url && !in_array($url, ["/init", "/init/configs", "/init/tables", "/login", "/new", "/create_bdd","init/missing_configs", "/init/missing_configs", "init", "init/configs", "init/tables", "login", "new", "create_bdd"])) || !$url) {
             $configService = new ConfigService();
             if (count($configService->checkMissingConfigs()) > 0) {
             $session = new PHPSession();

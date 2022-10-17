@@ -32,14 +32,7 @@ class CommentController extends Controller
                 $_POST, 
                 'Votre commentaire sera à nouveau <strong style="color:#f00;">soumis à la modération</strong> et publié'
             );
-            $shm = shm_attach(SHM_HTTP_REFERER);
-            if (shm_has_var($shm, 1)) {
-                $referer = shm_get_var($shm, 1);
-                shm_remove_var($shm, 1);
-                header('Location: ' . $referer);
-            } else {
-                header('Location: /');
-            }
+            $this->session->redirectLastUrl('commentList');
         }
         $params = $this->commentService->get($identifier);
         $this->twig->display('post/update_comment.twig', $params);

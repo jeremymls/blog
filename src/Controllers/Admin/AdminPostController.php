@@ -35,14 +35,7 @@ class AdminPostController extends AdminController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $this->postService->update($identifier, $_POST);
-            $shm = shm_attach(SHM_HTTP_REFERER);
-            if (shm_has_var($shm, 1)) {
-                $referer = shm_get_var($shm, 1);
-                shm_remove_var($shm, 1);
-                header('Location: ' . $referer);
-            } else {
-                header('Location: /admin/posts');
-            }
+            $this->session->redirectLastUrl();
         }
         $params = $this->postService->get($identifier);
         $this->twig->display('admin/post/action.twig', $params);

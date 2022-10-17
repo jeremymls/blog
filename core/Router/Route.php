@@ -2,6 +2,9 @@
 
 namespace Core\Router;
 
+use Core\Middleware\Session\PHPSession;
+use Core\Middleware\Superglobals;
+
 class Route
 {
     private $path;
@@ -32,14 +35,10 @@ class Route
         if (is_string($this->callable)) {
             $params = explode('@', $this->callable);
             if ($params[1] == 'update') {
-                $shm = shm_attach(SHM_HTTP_REFERER);
-                if (!shm_has_var($shm, 1)) {
-                    shm_put_var($shm, 1, $_SERVER['HTTP_REFERER']);
-                }
-            } else {
-                $shm = shm_attach(SHM_HTTP_REFERER);
-                if (shm_has_var($shm, 1)) {
-                    shm_remove_var($shm, 1);
+                $session = new PHPSession();
+                $superglobals = new Superglobals();
+                if (!$session->get('last_url')) {
+                    $session->set('last_url', $superglobals->getPathReferer());
                 }
             }
             if (count($params) == 3) {

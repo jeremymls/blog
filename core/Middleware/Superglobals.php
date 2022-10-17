@@ -2,6 +2,7 @@
 namespace Core\Middleware;
 
 use Application\config\Routes;
+use Core\Router\Router;
 
 class Superglobals
 {
@@ -26,9 +27,14 @@ class Superglobals
     {
         if ($name) {
             $routes = new Routes();
-            return $this->path .$routes->getUrl($name);
+            return $this->path . "/" .$routes->getUrl($name);
         }
-        return $this->path . $_SERVER['REQUEST_URI'];
+        return $this->path . "/" . $_SERVER['REQUEST_URI'];
+    }
+
+    public function getPathReferer()
+    {
+        return $this->referer;
     }
 
     public function getGet($key = null)
@@ -101,7 +107,8 @@ class Superglobals
         $this->_GET = (isset($_GET)) ? $_GET : null;
         $this->_POST = (isset($_POST)) ? $_POST : null;
         $this->method = (isset($_SERVER['REQUEST_METHOD'])) ? $_SERVER['REQUEST_METHOD'] : null;
-        $this->path = (isset($_SERVER['REQUEST_URI'], $_SERVER["REQUEST_SCHEME"], $_SERVER["HTTP_HOST"] )) ? 
+        $this->referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
+        $this->path = (isset($_SERVER["REQUEST_SCHEME"], $_SERVER["HTTP_HOST"] )) ? 
             ($_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"]) : null;
         
     }
