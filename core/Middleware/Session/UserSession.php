@@ -3,7 +3,7 @@ namespace Core\Middleware\Session;
 
 use Application\Models\User;
 
-class UserSession extends PhpSession
+class UserSession extends PHPSession
 {
     public function __construct()
     {

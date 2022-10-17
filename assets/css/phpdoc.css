@@ -1,0 +1,20 @@
+:root {
+    --primary-color: #dd9b0d;
+    --primary-color-darken: #dd9b0d !important;
+    --primary-color-lighten: #dd9b0d !important;
+}
+.phpdocumentor-table-of-contents .phpdocumentor-table-of-contents__entry::before {
+    background: #dd9b0d !important;
+}
+body{
+    animation: transition 1s ease-in-out;
+}
+
+@keyframes transition {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

@@ -92,12 +92,14 @@ class Routes
         // AdminUser
         $this->router->get('admin/users', 'Admin\AdminUser@index');
         $this->router->get('admin/users/delete/:id', 'Admin\AdminUser@delete');
+        // Core //
         // AdminConfig
         $this->router->get('admin/config/update/:name', 'Config@update@core');
         $this->router->post('admin/config/update/:name', 'Config@update@core');
         $this->router->get('admin/configs/list/:prefix', 'Config@list@core');
         $this->router->get('admin/configs', 'Config@index@core');
-        // Core //
+        // AdminDoc
+        $this->router->get('admin/docs', 'Doc@index@core');
         // Init
         $this->router->get('init/missing_configs', 'Config@init_missing_configs@core');
         $this->router->get('init/configs', 'Config@init_configs@core');
