@@ -6,9 +6,10 @@
         }
     },
     "require": {
-        "twig/twig": "^2.0",
+        "twig/twig": "*",
         "twig/string-extra": "*",
-        "phpmailer/phpmailer": "^6.6"
+        "phpmailer/phpmailer": "^6.6",
+        "tinymce/tinymce": "^6.2"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "*"
