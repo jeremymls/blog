@@ -4,9 +4,16 @@
 				'title' : block('title'),
 			} 
 		%}
-		{% include ('partials/_nav.twig') %}
+		{% block nav %}{% include ('partials/_nav.twig') %}{% endblock %}
 
 		<header>
+			{% if flashs|length > 0 %}
+				<div id="flash-container">
+				{% for flash in flashs %}
+					{{ utils.flash(flash) }}
+				{% endfor %}
+				</div>
+			{% endif %}
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12">
@@ -21,20 +28,10 @@
 			</div>
 		</header>
 		<main>
-		{% if flashs|length > 0 %}
-			<div id="flash-container">
-			{% for flash in flashs %}
-				{{ utils.flash(flash) }}
-			{% endfor %}
-			</div>
-		{% endif %}
-		{% if mail_not_validated %}
-			{{ utils.flash("mail_not_validated") }}
-		{% endif %}
 		{% block main %}{% endblock %}
 		</main>
 
-		{% include ('partials/_footer.twig') %}
+		{% block footer %}{% include ('partials/_footer.twig') %}{% endblock %}
 		{% include ('partials/_scripts.twig') %}
 		{% block script %}{% endblock %}
 		{% include ('partials/_foot.twig') %}
