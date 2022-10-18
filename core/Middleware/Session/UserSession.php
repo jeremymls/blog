@@ -32,7 +32,11 @@ class UserSession extends PHPSession
 
     public function getUserParam($param)
     {
-        return $this->get("user")->$param;
+        $user = $this->get("user");
+        if ($user) {
+            return $user->$param;
+        }
+        return null;
     }
 
     public function setUser(User $user)
