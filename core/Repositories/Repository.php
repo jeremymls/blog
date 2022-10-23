@@ -4,12 +4,15 @@ namespace Core\Repositories;
 
 use Core\Lib\Singleton;
 use Core\Middleware\Session\PHPSession;
+use Core\Middleware\Superglobals;
 use Core\Services\Encryption;
 
 class Repository
 {
     public function __construct()
     {
+        $this->superglobals = new Superglobals();
+
     }
 
     public function add($entity): bool
@@ -17,7 +20,7 @@ class Repository
         $sql = "";
         $values = [];
         $sql .= "INSERT INTO " . $entity::TABLE . " (";
-        if (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE && $entity::TABLE != "tokens") {
+        if ($this->superglobals->isExistPicture($entity::TABLE)) {
             $base64 = $this->getPicture($sql, $values);
             $values[] = $base64;
             $sql .= "picture, ";
@@ -29,7 +32,7 @@ class Repository
             }
         }
         $sql .= "created_at) VALUES (";
-        if (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE && $entity::TABLE != "tokens") {
+        if ($this->superglobals->isExistPicture($entity::TABLE)) {
             $sql .= "?, ";
         }
         foreach ($entity as  $key => $val) {
@@ -91,7 +94,7 @@ class Repository
         }
         if (count($_FILES) > 0){
             $fileName = array_keys($_FILES)[0];
-            if (isset($_FILES[$fileName]) && $_FILES[$fileName]['error'] !== UPLOAD_ERR_NO_FILE && $entity::TABLE != "tokens") {
+            if ($this->superglobals->isExistPicture($entity::TABLE)) {
                 $base64 = $this->getPicture($fileName);
                 $values[] = $base64;
                 $sql .=  $fileName . " = ?, ";
@@ -126,7 +129,7 @@ class Repository
         if ($this->checkTableExistence() == false) {
             $session = new PHPSession();
             $session->set("safe_mode", true);
-            header('Location: /init');
+            $this->superglobals->redirect('init');
         }
         $sql = "SELECT ";
         foreach ($this->getModel() as $key => $value) {
@@ -186,13 +189,14 @@ class Repository
         return $entity;
     }
 
-    public function getPicture($fileName = "picture")
+    public function getPicture()
     {
         $base64="";
         $file_exts = array('gif', 'jpeg', 'png', 'webp');
-        $file_ext = strtolower(substr($_FILES[$fileName]['type'],  strpos($_FILES[$fileName]['type'], '/') + 1));
-        $file_size = $_FILES[$fileName]['size'];
-        $file_temp = $_FILES[$fileName]['tmp_name'];
+        $picture = $this->superglobals->getPicture();
+        $file_ext = strtolower(substr($picture['type'],  strpos($picture['type'], '/') + 1));
+        $file_size = $picture['size'];
+        $file_temp = $picture['tmp_name'];
         $file_max_size = 512000;
         $errors = "";
         if (!in_array($file_ext, $file_exts)) {

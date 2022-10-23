@@ -2,7 +2,6 @@
 
 namespace Core\Controllers;
 
-use Application\config\Routes;
 use Application\Services\CategoryService;
 use Core\Middleware\ConfirmMail;
 use Core\Middleware\Flash;
@@ -19,21 +18,21 @@ require_once 'src/config/default.php';
 
 abstract class Controller
 {
-    private $loader;
     protected $twig;
 
     public function __construct()
     {
         $this->pagination = new Pagination();
         $this->superglobals = new Superglobals();
-        $this->twig = self::getTwig($this->superglobals);
+        $this->userSession = new UserSession();
+        $this->twig = self::getTwig($this->superglobals, $this->userSession); // todo: verify if it's ok
         new ConfirmMail();
         new Flash($this->twig);
         self::getSiteConfigs($this->superglobals);
         $this->session = new PHPSession();
     }
 
-    private static function getTwig(Superglobals $superglobals)
+    private static function getTwig(Superglobals $superglobals, UserSession $userSession)
     {
         $loader = new FilesystemLoader(ROOT . '/templates');
         $twig = new Environment(
@@ -51,48 +50,59 @@ abstract class Controller
         });
         $twig->addFunction($getUrlFunc);
 
-        $removeGetUrlFunc = new \Twig\TwigFunction('removeGetPath', function () use ($superglobals) {
-            return $superglobals->removeGetPath();
+        $removeGetUrlFunc = new \Twig\TwigFunction('getPathWithoutGet', function () use ($superglobals) {
+            return $superglobals->getPathWithoutGet();
         });
         $twig->addFunction($removeGetUrlFunc);
 
         // User Session functions
-        $getUserParamFunc = new \Twig\TwigFunction('getUserParam', function ($param) {
-            $userSession = new UserSession(); // !
+        $getUserParamFunc = new \Twig\TwigFunction('getUserParam', function ($param) use ($userSession) {
             return $userSession->getUserParam($param);
         });
         $twig->addFunction($getUserParamFunc);
 
-        $isLoggedFunc = new \Twig\TwigFunction('isLogged', function () {
-            $userSession = new UserSession(); // !
+        $isLoggedFunc = new \Twig\TwigFunction('isLogged', function () use ($userSession) {
             return $userSession->isUser();
         });
         $twig->addFunction($isLoggedFunc);
 
-        $isAdminFunc = new \Twig\TwigFunction('isAdmin', function () {
-            $userSession = new UserSession(); // !
+        $isAdminFunc = new \Twig\TwigFunction('isAdmin', function () use ($userSession) {
             return $userSession->isAdmin();
         });
         $twig->addFunction($isAdminFunc);
 
-        $isValideFunc = new \Twig\TwigFunction('isValidate', function () {
-            $userSession = new UserSession(); // !
+        $isValideFunc = new \Twig\TwigFunction('isValidate', function () use ($userSession) {
             return $userSession->isValidate();
         });
         $twig->addFunction($isValideFunc);
+
+        $redirectFunc = new \Twig\TwigFunction('redirect', function ($name, $params = null) use ($superglobals) {
+            return $superglobals->redirect($name, $params);
+        });
+        $twig->addFunction($redirectFunc);
 
         return $twig;
     }
 
     private function getSiteConfigs(Superglobals $superglobals)
     {
-        $url = $superglobals->getGet('url');
-        if (($url && !in_array($url, ["/init", "/init/configs", "/init/tables", "/login", "/new", "/create_bdd","init/missing_configs", "/init/missing_configs", "init", "init/configs", "init/tables", "login", "new", "create_bdd"])) || !$url) {
+        $url = $superglobals->getPath();
+        if (!in_array($url, [
+            $superglobals->getPath("login"), 
+            $superglobals->getPath("new"), 
+            $superglobals->getPath("init"), 
+            $superglobals->getPath("create_bdd"), 
+            $superglobals->getPath("init:configs"), 
+            $superglobals->getPath("init:tables"),
+            $superglobals->getPath("init:missing_configs")
+        ])) {
             $configService = new ConfigService();
+            $session = new PHPSession();
             if (count($configService->checkMissingConfigs()) > 0) {
-                $session = new PHPSession();
                 $session->set("safe_mode", true);
                 $this->superglobals->redirect('init');
+            }else{
+                $session->set("safe_mode", false);
             }
             $categoryService = new CategoryService();
             $params = $this->multiParams([
@@ -113,5 +123,10 @@ abstract class Controller
     {
         $params = array_merge(...$params);
         return $params;
+    }
+
+    public function isPost()
+    {
+        return $this->superglobals->getMethod() == 'POST';
     }
 }

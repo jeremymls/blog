@@ -40,7 +40,7 @@
                                                 <p><a target="_blank" href="{{ post.url }}"><code>{{ post.url }}</code></a></p>
                                             {% endif %}
                                         </div>
-                                        <p><a class="btn btn-lg btn-success" href="/post/{{ post.identifier}}" role="button">En savoir plus <i class="fa fa-search-plus" aria-hidden="true"></i></a></p>
+                                        <p><a class="btn btn-lg btn-success" href="{{ getPath('post', {'id':post.identifier}) }}" role="button">En savoir plus <i class="fa fa-search-plus" aria-hidden="true"></i></a></p>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -55,7 +55,7 @@
                         </a>
                     </div>
                 </div>
-                <a class="btn btn-lg btn-primary" href="/posts" role="button">VOIR TOUS LES PROJETS</a>
+                <a class="btn btn-lg btn-primary" href="{{ getPath('posts') }}" role="button">VOIR TOUS LES POSTS</a>
             </div>
         </div>
     </section>

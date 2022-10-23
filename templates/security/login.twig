@@ -13,7 +13,7 @@
                     {% if isLogged() %}
                         <div class="row">
                             <div class="form-group col-xs-12 text-center">
-                                <a href="/logout">Déconnexion</a>
+                                <a href="{{ getPath('logout') }}">Déconnexion</a>
                             </div>
                         </div>
                     {% else %}

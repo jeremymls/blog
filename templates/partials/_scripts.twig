@@ -35,5 +35,9 @@
 <script>
     $(document).ready(function(){
         $("#flash-container").delay(15000).slideUp("slow");
+        $(".alert").click(function(){
+        console.log($("#flash-container"));
+            $("#flash-container").hide();
+        });
     });
 </script>

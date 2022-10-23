@@ -10,7 +10,7 @@ class EntityService extends Service
         $this->repository = $this->getRepository();
     }
 
-    public function add($input, $options=[])
+    public function add($input, $options=[],$flashMsg = null)
     {
         if (count($options) > 0) {
             $input = array_merge($input, $options);
@@ -22,7 +22,7 @@ class EntityService extends Service
         } 
         $this->flashServices->success(
             $this->getFrenchName(true, "N") .' ajouté'. $this->getFrenchGenderTermination(),
-            $this->getFrenchName(true) .' a bien été ajouté'. $this->getFrenchGenderTermination()
+            ($flashMsg ?? $this->getFrenchName(true) .' a bien été ajouté'. $this->getFrenchGenderTermination())
         );
     }
 

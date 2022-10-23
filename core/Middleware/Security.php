@@ -9,10 +9,10 @@ class Security
 {
     public function __construct()
     {
-        self::isGranted();
+        $this->isGranted();
     }
 
-    private static function isGranted()
+    private function isGranted()
     {
         $userSession = new UserSession();
         $flashServices = new FlashService();
@@ -20,8 +20,9 @@ class Security
             return true;
         }
         if (!$userSession->isUser()) {
-            $flashServices->warning('Accès non autorisé', 'Vous n\'avez pas accès à cette page! Veuillez vous connecter');
-            header('Location: /login');
+            $flashServices->warning('Accès non autorisé', 'Vous n\'avez pas accès à cette page! <strong style="color:red;">Veuillez vous connecter!</strong>');
+            $superglobals = new Superglobals();
+            $superglobals->redirect('login');
         } else {
             if (!$userSession->isAdmin()) {
                 throw new \Exception('Vous n\'avez pas le droit d\'accéder à cette page', 403);

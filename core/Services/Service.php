@@ -3,6 +3,7 @@
 namespace Core\Services;
 
 use Core\Middleware\Pagination;
+use Core\Middleware\Superglobals;
 
 class Service
 {
@@ -10,6 +11,7 @@ class Service
     {
         $this->flashServices = new FlashService();
         $this->pagination = new Pagination();
+        $this->superglobals = new Superglobals();
     }
 
     public function getRepository()

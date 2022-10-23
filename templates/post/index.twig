@@ -3,7 +3,7 @@
 
 {% block title %}{% if category.name %}{{ category.name }} {% else %} Tous les articles {% endif %}{% endblock %}
 {% block subtitle %}
-	<a id="retour" href="/" ><i class="fa fa-home" aria-hidden="true"></i></a>
+	<a id="retour" href="{{ getPath('home') }}" ><i class="fa fa-home" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
@@ -25,7 +25,7 @@
                                     {% else %}
                                         <p>{{ post.content |  u.truncate(200, '...', false) | nl2br }}</p>
                                     {% endif %}
-                                    <p><a href="post/{{  post.identifier }}" class="btn btn-plus btn-primary" role="button">Voir plus</a></p>
+                                    <p><a href="{{ getPath('post', {"id": post.identifier}) }}" class="btn btn-plus btn-primary" role="button">Voir plus</a></p>
                                 </div>
                             </div>
                             <div class="col-xs-6 col-xs-offset-3 col-lg-4 col-lg-offset-0">

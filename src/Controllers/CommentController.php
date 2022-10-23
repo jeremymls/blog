@@ -17,16 +17,20 @@ class CommentController extends Controller
     public function add(string $post)
     {
         $userSession = new UserSession();
-        $this->commentService->add($_POST, [
-            'post' =>$post,
-            'author' => $userSession->getUserParam("identifier"),
-        ]);
-        header('Location: /post/' . $post . '#commentList');
+        $this->commentService->add(
+            $_POST, 
+            [
+                'post' =>$post,
+                'author' => $userSession->getUserParam("identifier")
+            ],
+            'Votre commentaire sera publié après <strong style="color:#f00;">validation</strong> par un administrateur.'
+        );
+        $this->superglobals->redirect('post', ['id' => $post], "commentList");
     }
 
     public function update(string $identifier)
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($this->isPost()) {
             $this->commentService->update(
                 $identifier, 
                 $_POST, 
@@ -38,9 +42,10 @@ class CommentController extends Controller
         $this->twig->display('post/update_comment.twig', $params);
     }
 
+    // AJAX
     public function delete()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($this->isPost()) {
             if (isset($_POST['commentId'])) {
                 $deletion_confirmation = $this->commentService->delete_ajax($_POST['commentId']);
                 if ($deletion_confirmation === true) {
@@ -56,7 +61,7 @@ class CommentController extends Controller
 
     public function cancelDelete()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($this->isPost()) {
             if (isset($_POST['commentId'])) {
                 $this->commentService->moderate(0, $_POST['commentId'],false);
                 $cancel_deletion_confirmation = $this->commentService->delete_ajax($_POST['commentId'], false);

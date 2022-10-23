@@ -3,8 +3,8 @@
 
 {% block title %}Administration des projets{% endblock %}
 {% block subtitle %}
-	<a id="retour" href="/dashboard" ><i class="fa fa-cogs" aria-hidden="true"></i></a>
-	<a id="oneTool" href="/admin/posts/add" ><i class="fa fa-plus" aria-hidden="true"></i></a>
+	<a id="retour" href="{{ getPath('dashboard') }}" ><i class="fa fa-cogs" aria-hidden="true"></i></a>
+	<a id="oneTool" href="{{ getPath('admin:post:add') }}" ><i class="fa fa-plus" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
@@ -17,11 +17,11 @@
                     <div>
                         <span>Filtre par catégorie:</span>
                         <div class="btn-group" role="group">
-                            <a href="/admin/posts" type="button" class="btn btn-default">All</a>
+                            <a href="{{ getPath('admin:posts') }}" type="button" class="btn btn-{% if categoryId == null %}primary{% else %}default{% endif %}">All</a>
                             {% for category in categories %}
-                            <a href="/admin/posts/{{ category.identifier }}" type="button" class="btn btn-default">{{ category.name }}</a>
+                            <a href="{{ getPath('admin:posts:category', {"category": category.identifier}) }}" type="button" class="btn btn-{% if categoryId == category.identifier %}primary{% else %}default{% endif %}">{{ category.name }}</a>
                             {% endfor %}
-                            <a href="/admin/posts/0" type="button" class="btn btn-default">Non classé</a>
+                            <a href="{{ getPath('admin:posts:category', {"category": "0"}) }}" type="button" class="btn btn-{% if categoryId == "0" %}primary{% else %}default{% endif %}">Non classé</a>
                         </div>
                     </div>
 
@@ -64,13 +64,13 @@
                                     </td>
                                     <td class="action">
                                         <div class="row">
-                                            <a href="/admin/posts/update/{{ post.identifier }}" class="btn btn-info"><i class="fa fa-pencil-square-o"></i> Editer</a>
+                                            <a href="{{ getPath('admin:post:update', {'id': post.identifier}) }}" class="btn btn-info"><i class="fa fa-pencil-square-o"></i> Editer</a>
                                         </div>
                                         <div class="row">
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ post.identifier }}" data-title="{{ post.title }} (id:{{ post.identifier }})" data-target="#confirmDeletePost"><i class="fa fa-trash"></i> Supprimer</button>
+                                            <a href="{{ getPath('admin:post:delete', {'id': post.identifier}) }}" class="btn btn-danger confirm"><i class="fa fa-trash"></i> Supprimer</a>
                                         </div>
                                         <div class="row">
-                                            <a href="/post/{{ post.identifier }}" target="_blank" class="btn btn-primary"><i class="fa fa-external-link"></i> Voir</a>
+                                            <a href="{{ getPath('post', {'id': post.identifier}) }}" target="_blank" class="btn btn-primary"><i class="fa fa-external-link"></i> Voir</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -82,29 +82,6 @@
             </div>
         </div>
     </section>
-
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="confirmDeletePost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title" id="myModalLabel">Voulez-vous vraiment supprimer ce post?</h4>
-			</div>
-			<div class="modal-body"></div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-				<a href="" class="btn btn-danger">Supprimer</a>
-			</div>
-		</div>
-	</div>
-</div>
-
 {% endblock %}
 
 {% block script %}

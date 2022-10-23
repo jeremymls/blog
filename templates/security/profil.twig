@@ -3,7 +3,7 @@
 
 {% block title %}Profil{% endblock %}
 {% block subtitle %}
-	<a id="retour" href="/" ><i class="fa fa-home" aria-hidden="true"></i></a>
+	<a id="retour" href="{{ getPath('home') }}" ><i class="fa fa-home" aria-hidden="true"></i></a>
 	{% include ('security/partials/_tools.twig') %}
 {% endblock %}
 
@@ -27,7 +27,7 @@
                                     {% if user.validated_email is empty %}
                                         <p class="label label-default"><i class="fa fa-hourglass-half" aria-hidden="true"></i> Non-validée</p>
                                         {% if user.token == "expired"  %}
-                                            <div><a class="btn btn-danger btn-sm" href="/confirm_again">Renvoyer l'e-mail de confirmation</a></div>
+                                            <div><a class="btn btn-danger btn-sm" href="{{ getPath('confirm_again') }}">Renvoyer l'e-mail de confirmation</a></div>
                                         {% else %}
                                             <p><em><small>Un mail de confirmation a déjà été envoyé! <br> Vérifier vos mails (notament les indésirables),<br> sinon contacter l'administrateur <a href="mailto:contact@jeremy-monlouis.fr">Jérémy MONLOUIS</a></small></em></p>
                                         {% endif %}
@@ -62,9 +62,9 @@
                         {% if not comment.deleted %}
                         <div class="panel panel-{% if comment.moderate or isAdmin() %}default{% else %}danger{% endif %}">
                             <div class="panel-heading commentHeader">
-                                <p>Le {{comment.frenchCreationDate }} dans <a href="/post/{{ comment.post.identifier }}#comment">{{ comment.post.title }}</a>  {% if not comment.moderate  and not isAdmin() %}<strong>(Non Approuvé)</strong>{% endif %}</p>
+                                <p>Le {{comment.frenchCreationDate }} dans <a href="{{ getPath('post', {'id':comment.post.identifier}) }}#comment">{{ comment.post.title }}</a>  {% if not comment.moderate  and not isAdmin() %}<strong>(Non Approuvé)</strong>{% endif %}</p>
                                 <div>
-                                    <a href="/comment/{{comment.identifier }}" class="btn btn-warning delete-comment"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                    <a href="{{ getPath('comment:update', {'id':comment.identifier}) }}" class="btn btn-warning"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                     <a data-id="{{ comment.identifier }}" class="btn btn-danger delete-comment" role="button"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
                         {% else %}
                         <div class="panel panel-warning">
                             <div class="panel-heading commentHeader">
-                                <p>Message supprimer dans <a href="/post/{{ comment.post.identifier }}#comment">{{ comment.post.title }}</a></p>
+                                <p>Message supprimer dans <a href="{{ getPath('post', {'id':comment.post.identifier}) }}#comment">{{ comment.post.title }}</a></p>
                                 <a data-id="{{ comment.identifier }}" class="btn btn-link cancel-delete-comment" role="button">Annuler la supression</a>
                             </div>
                             <div class="panel-body">

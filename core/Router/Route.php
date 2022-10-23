@@ -34,11 +34,26 @@ class Route
     {
         if (is_string($this->callable)) {
             $params = explode('@', $this->callable);
-            if ($params[1] == 'update') {
-                $session = new PHPSession();
-                $superglobals = new Superglobals();
-                if (!$session->get('last_url')) {
-                    $session->set('last_url', $superglobals->getPathReferer());
+            $session = new PHPSession();
+            
+            $temp = $session->get('temp_last_url');
+            if ($temp !== null && $temp > 0) {
+                $session->set('temp_last_url', $temp - 1);
+            } else {
+                $session->delete('last_url');
+                $session->delete('temp_last_url');
+            }
+
+            if ($params[1] == 'update' || 
+                $params[1] == 'login'
+            ) {
+                if ($temp === null) {
+                    $session->set('temp_last_url', 1);
+
+                    $superglobals = new Superglobals();
+                    if (!$session->get('last_url')) {
+                        $session->set('last_url', $superglobals->getPathReferer());
+                    }
                 }
             }
             if (count($params) == 3) {

@@ -3,7 +3,7 @@
 
 {% block title %}Catégories{% endblock %}
 {% block subtitle %}
-	<a id="retour" href="/" ><i class="fa fa-home" aria-hidden="true"></i></a>
+	<a id="retour" href="{{ getPath('home') }}" ><i class="fa fa-home" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
@@ -261,7 +261,7 @@
                 {% for category in categories %} 
                 {# 6 MAX #}
 				<li class="">
-					<a href="/posts/{{ category.identifier }}" class="hover-target" data-hover="{{ category.name }}">{{ category.name }}</a>
+					<a href="{{ getPath('post:id', {'id':category.identifier}) }}" class="hover-target" data-hover="{{ category.name }}">{{ category.name }}</a>
 				</li>
                 {% endfor %}
 			</ul>

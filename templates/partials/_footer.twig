@@ -7,30 +7,30 @@
                 <div class="footer-col col-md-4">
                     <h3>Menu</h3>
                     <ul class="nav nav-pills nav-stacked">
-                        <li role="presentation"><a href="#">Accueil</a></li>
+                        <li role="presentation"><a href="{{ getPath('home') }}">Accueil</a></li>
                         <li class="dropdown">
                             <a id="categories_drop" href="#" class="dropdown-toggle desktop" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 Catégories <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 {% for category in categories %}
-                                <li><a href="/posts/{{ category.identifier }}"><i class="fa fa-folder-open" aria-hidden="true"></i> {{ category.name }}</a></li>
+                                <li><a href="{{ getPath('post:id', {'id':category.identifier}) }}"><i class="fa fa-folder-open" aria-hidden="true"></i> {{ category.name }}</a></li>
                                 {% endfor %}
                                 <li role="separator" class="divider"></li>
-                                <li><a href="/posts/categories"><i class="fa fa-sitemap" aria-hidden="true"></i> Voir les Catégories</a></li>
-                                <li><a href="/posts"><i class="fa fa-files-o" aria-hidden="true"></i> Tous les articles</a></li>
+                                <li><a href="{{ getPath('posts:categories') }}"><i class="fa fa-sitemap" aria-hidden="true"></i> Voir les Catégories</a></li>
+                                <li><a href="{{ getPath('posts') }}"><i class="fa fa-files-o" aria-hidden="true"></i> Tous les articles</a></li>
                             </ul>
                         </li>                        
                         {% if isLogged() %}
                             {% if isAdmin() %}
-								<li class="page-scroll"><a href="/dashboard">Back office</a></li>
+								<li class="page-scroll"><a href="{{ getPath('dashboard') }}">Back office</a></li>
 							{% endif %}
-                            <li class="page-scroll"><a href="/profil">Profil</a></li>
+                            <li class="page-scroll"><a href="{{ getPath('profil') }}">Profil</a></li>
 							<li role="separator" class="divider"></li>
-							<li class="page-scroll"><a href="/logout">Déconnexion</a></li>
+							<li class="page-scroll"><a href="{{ getPath('logout') }}">Déconnexion</a></li>
                         {% else %}
-                            <li class="page-scroll"><a href="/login">Connexion</a></li>
-                            <li class="page-scroll"><a href="/profil/register">Inscription</a></li>
+                            <li class="page-scroll"><a href="{{ getPath('login') }}">Connexion</a></li>
+                            <li class="page-scroll"><a href="{{ getPath('register') }}">Inscription</a></li>
                         {% endif %}
                     </ul>
                 </div>

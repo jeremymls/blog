@@ -49,7 +49,7 @@ class ConfigController extends AdminController
 
     public function update($id)
     {
-        if ($this->superglobals->getMethod() == 'POST') {
+        if ($this->isPost()) {
             $prefix = $this->superglobals->getPrefix('name');
             if ($prefix == "mb_" || $prefix == "sd_"){
                 $this->superglobals->setPost("value", Encryption::encrypt(trim($this->superglobals->getPost('value'))));

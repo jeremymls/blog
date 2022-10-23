@@ -16,16 +16,16 @@ class UserController extends Controller
 
     public function show($identifier = null)
     {
-        $params = $this->userService->show($identifier);
+        $params = $this->userService->getData($identifier);
         $params = $this->pagination->paginate($params, 'comments', 5);
         $this->twig->display('security/profil.twig', $params);
     }
 
     public function register($userId = null)
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $params = $this->userService->register($_POST, $userId);
-            $this->twig->display('security/redirect.twig', $params);
+        if ($this->isPost()) {
+            $this->userService->register($_POST, $userId);
+            $this->redirectWithTimeout('profil');
         } else {
             $this->twig->display('security/action.twig', ['action' => 'register',]);
         }
@@ -34,25 +34,20 @@ class UserController extends Controller
     public function update()
     {
         $userId = isset($_GET["userId"]) ? $_GET["userId"] : null;
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $params = $this->userService->updateUser($_POST, $userId);
-            $this->twig->display('security/redirect.twig', $params);
+        if ($this->isPost()) {
+            $this->userService->updateUser($_POST, $userId);
+            $this->redirectWithTimeout('profil');
         } else {
-            $params = $this->userService->show($userId);
+            $params = $this->userService->getData($userId);
             $this->twig->display('security/action.twig', $params);
         }
     }
 
-    public function login()
+    public function login($anchor = null)
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (isset($_GET['redirect']) && $_GET['redirect'] !== '') {
-                $target = $_GET['redirect'];
-            } else {
-                $target = '/';
-            }
+        if ($this->isPost()) {
             $this->userService->login($_POST);
-            $this->twig->display('security/redirect.twig', ['target' => $target]);
+            $this->redirectWithTimeout(null, $anchor);
         } else {
             $this->twig->display('security/login.twig', []);
         }
@@ -61,47 +56,47 @@ class UserController extends Controller
     public function logout()
     {
         $this->userService->logout();
-        header('Location: /login');
+        $this->superglobals->redirect('login');
     }
 
     public function confirmation(string $token)
     {
         $this->userService->confirmation($token);
-        $this->twig->display('security/redirect.twig', ['target' => '/profil']);
+        $this->redirectWithTimeout('profil');
     }
 
     public function edit_mail($identifier = null)
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($this->isPost()) {
             $this->userService->edit_mail($_POST);
-            $this->twig->display('security/redirect.twig', ['target' => '/profil']);
+            $this->redirectWithTimeout('profil');
         }
-        $params = $this->userService->show($identifier);
+        $params = $this->userService->getData($identifier);
         $this->twig->display('security/edit_mail.twig', $params);
     }
 
     public function edit_password($identifier = null)
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($this->isPost()) {
             $this->userService->edit_password($_POST);
-            $this->twig->display('security/redirect.twig', ['target' => '/profil']);
+            $this->redirectWithTimeout('profil');
         }
-        $params = $this->userService->show($identifier);
+        $params = $this->userService->getData($identifier);
         $this->twig->display('security/edit_password.twig', $params);
     }
 
     public function delete_picture($identifier = null)
     {
         $this->userService->delete_picture($identifier);
-        $params = $this->userService->show($identifier);
+        $params = $this->userService->getData($identifier);
         $this->twig->display('security/profil.twig', $params);
     }
 
     public function forget_password()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($this->isPost()) {
             $this->userService->forget_password($_POST);
-            $this->twig->display('security/redirect.twig', ['target' => '/login']);
+        $this->redirectWithTimeout('login');
         } else {
             $this->twig->display('security/forget_password.twig', []);
         }
@@ -112,9 +107,9 @@ class UserController extends Controller
         $tokenService = new TokenService();
         $params = $tokenService->getUserByToken($token);
         if (isset($params['user'])) {
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if ($this->isPost()) {
                 $this->userService->reset_password($params['user'], $_POST);
-                $this->twig->display('security/redirect.twig', ['target' => '/login']);
+                $this->redirectWithTimeout('login');
             } else {
                 $this->twig->display('security/reset_password.twig', $params);
             }
@@ -124,12 +119,18 @@ class UserController extends Controller
     public function confirm_again()
     {
         $this->userService->confirm_again();
-        $this->twig->display('security/redirect.twig', ['target' => '/profil']);
+        $this->redirectWithTimeout('profil');
     }
 
     // AJAX
     public function checkUsername()
     {
         $this->userService->checkUsername($_POST['username']);
+    }
+
+    public function redirectWithTimeout(string $pathName = null, $anchor = null)
+    {
+        $url = isset($pathName) ? $this->superglobals->getPath($pathName) : $this->session->getLastUrl($anchor);
+        $this->twig->display('security/redirect.twig', ['target' => $url]);
     }
 }

@@ -3,8 +3,8 @@
 
 {% block title %}Administration des Utilisateurs{% endblock %}
 {% block subtitle %}
-	<a id="retour" href="/dashboard" ><i class="fa fa-cogs" aria-hidden="true"></i></a>
-	<a id="oneTool" href="/profil/register"><i class="fa fa-plus" aria-hidden="true"></i></a>
+	<a id="retour" href="{{ getPath('dashboard') }}" ><i class="fa fa-cogs" aria-hidden="true"></i></a>
+	<a id="oneTool" href="{{ getPath('register') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
@@ -55,13 +55,13 @@
                                     </td>
                                     <td class="action">
                                     <div class="row">
-                                        <a href="/profil/edit&userId={{ user.identifier }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Modifier</a>
+                                        <a href="{{ getPath('profil:edit', {'id': user.identifier}) }}&userId={{ user.identifier }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Modifier</a>
                                     </div>
                                     <div class="row">
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ user.identifier }}" data-title="{{ user.username }} (id:{{ user.identifier }})" data-target="#confirmDeleteUser"><i class="fa fa-trash"></i> Supprimer</button>
+                                        <a href="{{ getPath('admin:user:delete', {'id': user.identifier}) }}" class="btn btn-danger confirm"><i class="fa fa-trash-o"></i> Supprimer</a>
                                     </div>
                                     <div class="row">
-                                        <a href="/profil/{{ user.identifier }}" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> Voir</a>
+                                        <a href="{{ getPath('profil:id', {'id': user.identifier}) }}" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> Voir</a>
                                     </div>
                                     </td>
                                 </tr>
@@ -73,29 +73,6 @@
             </div>
         </div>
     </section>
-
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="confirmDeleteUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title" id="myModalLabel">Voulez-vous vraiment supprimer cet utilisateur?</h4>
-			</div>
-			<div class="modal-body"></div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-				<a href="" class="btn btn-danger">Supprimer</a>
-			</div>
-		</div>
-	</div>
-</div>
-
 {% endblock %}
 
 {% block script %}

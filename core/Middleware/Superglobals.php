@@ -31,14 +31,23 @@ class Superglobals
         return $this->path . "/" . trim($_SERVER['REQUEST_URI'], '/');
     }
 
-    public function removeGetPath()
+    public function getPathWithoutGet()
     {
         return strtok($this->getPath(), '&');
     }
 
-    public function redirect($name, $params = [])
+    public function redirect($name, $params = [], $anchor = null)
     {
-        header('Location: ' . $this->getPath($name, $params));
+        $url = $this->getPath($name, $params);
+        if ($anchor) {
+            $url .= '#' . $anchor;
+        }
+        header('Location: ' . $url);
+    }
+
+    public function redirectLastUrl()
+    {
+        header('Location: ' . $this->getPathReferer());
     }
 
     public function getPathReferer()
@@ -109,6 +118,17 @@ class Superglobals
         $this->_POST[$key] = $value;
     }
 
+    public function isExistPicture($entityTable = null)
+    {
+        return (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE && $entityTable != "tokens");
+    }
+
+    public function getPicture()
+    {
+        if ($this->isExistPicture()) {
+            return $_FILES['picture'];
+        }
+    }
 
     private function define_superglobals()
     {

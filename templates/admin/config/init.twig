@@ -29,7 +29,7 @@
 							<hr class="star-light">
 							<span class="skills">
 								Votre site n'est pas correctement configuré. Vérifier votre base de données
-								<a id="retour" href="/" ><i class="fa fa-home" aria-hidden="true"></i></a>
+								<a id="retour" href="{{ getPath('home') }}" ><i class="fa fa-home" aria-hidden="true"></i></a>
 							</span>
 						</div>
 					</div>
@@ -67,7 +67,7 @@
 												{% endif %}
                                                 {% if config == "configs" and loop.length == 1 %}
 													<div class="row">
-														<a href="/init/configs" class="btn btn-primary">
+														<a href="{{ getPath('init:configs') }}" class="btn btn-primary">
 															<i class="fa fa-refresh" aria-hidden="true"></i>
 															Initialiser la table configs
 														</a>
@@ -75,7 +75,7 @@
                                                 {% elseif loop.index == 1 or (loop.index == 2 and first == "configs")
 												%}
 													<div class="row">
-														<a href="/init/tables" class="btn btn-primary">
+														<a href="{{ getPath('init:tables') }}" class="btn btn-primary">
 															<i class="fa fa-refresh" aria-hidden="true"></i>
 															Initialiser toutes les tables
 														</a>
@@ -126,7 +126,7 @@
 												<td class="action">
 													<div class="row">
                                                         {% if "configs" not in missing_tables %}
-														<a href="/init/missing_configs" class="btn btn-primary">
+														<a href="{{ getPath('init:missing_configs') }}" class="btn btn-primary">
 															<i class="fa fa-refresh" aria-hidden="true"></i>
 															Initialiser les paramètres manquants
                                                         </a>

@@ -23,7 +23,7 @@ class AdminUserController extends AdminController
     public function delete(string $identifier)
     {
         $this->userService->delete($identifier);
-        header('Location: /admin/users');
+        $this->superglobals->redirect('admin:users');
     }
 
 }

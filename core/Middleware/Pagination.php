@@ -15,7 +15,7 @@ class Pagination
         $params[$entities] = array_slice($params[$entities], ($page - 1) * $nbp, $nbp);
         if ($params[$entities] == [] && $page > 1) {
             $superglobals = new Superglobals();
-            header('Location: ' . $superglobals->removeGetPath());
+            header('Location: ' . $superglobals->getPathWithoutGet());
         }
         $params['nbPage'] = $nbPage;
         return $params;

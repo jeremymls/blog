@@ -24,6 +24,6 @@ class HomeController extends Controller
     public function send()
     {
         $this->homeService->sendContactMail();
-        header('Location: /');
+        $this->superglobals->redirect('home');
     }
 }

@@ -24,19 +24,19 @@ class AdminCommentController extends AdminController
     public function moderate(string $action, string $identifier)
     {
         $this->commentService->moderate($action, $identifier);
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        $this->superglobals->redirectLastUrl();
     }
 
     public function delete(string $identifier)
     {
         $this->commentService->delete($identifier);
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        $this->superglobals->redirectLastUrl();
     }
 
     public function multiple_moderation()
     {
         $this->commentService->multiple_moderation($_POST);
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        $this->superglobals->redirectLastUrl();
     }
 }
 

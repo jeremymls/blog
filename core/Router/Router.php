@@ -3,6 +3,7 @@
 namespace Core\Router;
 
 use Core\Controllers\ErrorExceptionController;
+use Core\Middleware\Superglobals;
 use Exception;
 
 class Router
@@ -42,11 +43,13 @@ class Router
 
     public function run()
     {
+        $superglobals = new Superglobals();
+        $method = $superglobals->getMethod();
         try {
-            if (!isset($this->routes[$_SERVER['REQUEST_METHOD']])) {
+            if (!isset($this->routes[$method])) {
                 throw new Exception('REQUEST_METHOD does not exist');
             }
-            foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
+            foreach ($this->routes[$method] as $route) {
                 if ($route->match($this->url)) {
                     return $route->call();
                 }

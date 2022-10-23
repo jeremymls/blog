@@ -19,21 +19,22 @@ class AdminPostController extends AdminController
         $optionsData = $category !== null ? [$category] : [];
         $params = $this->postService->getAll($option, $optionsData);
         $params = $this->pagination->paginate($params, 'posts', 5);
+        $params['categoryId'] = $category;
         $this->twig->display('admin/post/index.twig', $params);
     }
 
     public function add()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($this->isPost()) {
             $this->postService->add($_POST);
-            header('Location: /admin/posts');
+            $this->superglobals->redirect('admin:posts');
         }
         $this->twig->display('admin/post/action.twig', ['action' => 'add',]);
     }
 
     public function update(string $identifier)
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($this->isPost()) {
             $this->postService->update($identifier, $_POST);
             $this->session->redirectLastUrl();
         }
@@ -44,6 +45,6 @@ class AdminPostController extends AdminController
     public function delete(string $identifier)
     {
         $this->postService->delete($identifier);
-        header('Location: /admin/posts');
+        $this->superglobals->redirect('admin:posts');
     }
 }

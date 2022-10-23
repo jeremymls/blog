@@ -34,14 +34,13 @@ class UserService extends EntityService
         $token = $this->tokenService->createToken($user->identifier);
         $this->sendConfirmationEmail($input['email'], $input['first'], $token);
         if ($this->userSession->isAdmin()) {
-            header("Location: /admin/users");
+            $this->superglobal->redirect('admin:users');
         } else {
             $this->userSession->setUser($user);
-            return ['target' => "/profil"];
         }
     }
 
-    public function show($id)
+    public function getData($id)
     {
         if (isset($id) && $this->userSession->isAdmin()) {
             $id = (int) $id;
@@ -49,7 +48,7 @@ class UserService extends EntityService
             if ($this->userSession->isUser()) {
                 $id = $this->userSession->getUserParam("identifier");
             } else {
-                header('Location: /login?redirect='.$_REQUEST['url']);
+                $this->superglobal->redirect('login');
             }
         }
         $params = $this->get($id);
@@ -76,11 +75,10 @@ class UserService extends EntityService
             'L\'utilisateur '. $input['email'] .' a bien été modifié'
         );
         if ($this->userSession->isAdmin() && isset($userId)) {
-            header("Location: /admin/users");
+            $this->superglobal->redirect('admin:users');
         } else {
             $user = $this->repository->getUserByUsername($input['email']);
             $this->userSession->setUser($user);
-            return ['target' => "/profil"];
         }
     }
 
@@ -190,7 +188,7 @@ class UserService extends EntityService
     {
         $user = $this->repository->getUserByUsername($input['email']);
         $token = $this->tokenService->createToken($user->identifier);
-        $url = "http://" . $_SERVER['SERVER_NAME'] . "/reset_password/$token";
+        $url = $this->superglobals->getPath('reset_password', ['token' => $token]);
         $this->mailService->sendEmail(
             [
             'reply_to' => $this->configService->getOwnerMailContact(),
@@ -237,10 +235,6 @@ class UserService extends EntityService
         if ($user->token == "expired") {
             $token = $this->tokenService->createToken($user->identifier);
             $this->sendConfirmationEmail($user->email, $user->first, $token);
-            $this->flashServices->success(
-                'Confirmation de compte',
-                'Un nouveau lien de confirmation a été envoyé à votre adresse e-mail.'
-            );
         } else {
             $this->flashServices->warning(
                 'Confirmation de compte',
@@ -265,7 +259,7 @@ class UserService extends EntityService
 
     public function sendConfirmationEmail($email , $first, $token)
     {
-        $url = "http://" . $_SERVER['SERVER_NAME'] . "/confirmation/$token";
+        $url = $this->superglobals->getPath('confirmation', ['token' => $token]);
         $this->mailService->sendEmail(
             [
             'reply_to' => $this->configService->getOwnerMailContact(),

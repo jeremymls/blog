@@ -77,7 +77,7 @@
         </div>
         <div class="tools tools--hidden">
             <a 
-            href="/profil/edit{% if user.identifier != getUserParam("identifier") %}&userId={{ user.identifier }}{% endif %}" 
+            href="{{ getPath('profil:edit') }}{% if user.identifier != getUserParam("identifier") %}&userId={{ user.identifier }}{% endif %}" 
             data-toggle="tooltip" 
             data-placement="left" 
             title="Modifier le profil"
@@ -279,7 +279,7 @@
                 /> Modifier le profil
             </a>
             <a
-            href="/profil/edit/mail"
+            href="{{ getPath('profil:edit:mail') }}"
             data-toggle="tooltip" 
             data-placement="left" 
             title="Modifier l'adresse mail"
@@ -288,7 +288,7 @@
                 Modifier l'adresse mail
             </a>
             <a
-            href="profil/edit/password"
+            href="{{ getPath('profil:edit:password') }}"
             data-toggle="tooltip" 
             data-placement="left" 
             title="Modifier le mot de passe"
