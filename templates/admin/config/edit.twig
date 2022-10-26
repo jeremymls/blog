@@ -72,8 +72,8 @@
                                         <option {% if config.value == "[%contact+reseaux%]" %}selected{% endif %} value="[%contact+reseaux%]">Contact + Réseaux sociaux</option>
                                     </select>
                                     <div id="template_div" class='text-center'>
-                                        <p id="template_overview">Aperçu</p>
-                                        {{ utils.content_converter(config.value) }}
+                                        <p id="template_overview_title">Exemple</p>
+                                        <div id="template_overview"></div>
                                     </div>
                                 </div>
                                 <br>
@@ -110,15 +110,24 @@
             position: relative;
             border: thick double #ccc;
             padding: 10px;
-            margin: 2rem 0;
+            background: #dd9b0d;
+            margin: 4rem 0 2rem 0;
         }
-        #template_overview {
+        #template_overview_title {
             position: absolute;
-            top: -1.5rem;
+            border: thick double #ccc;
+            top: -3rem;
             background: whitesmoke;
-            padding: 0 1rem;
+            border-radius: 15px;
+            padding: 1rem 2rem;
             font-weight: bold;
         }
+        #template_overview {
+            color: #fff;
+        }
+        #template_overview a{
+                color: #81260a;
+            }
         main {
             background-color: whitesmoke !important;
         }
@@ -153,7 +162,6 @@
             $('#image').hide();
             $('#template').hide();
             switch ($(this).val()) {
-                
                 case 'content':
                     $('.tox-tinymce').show();
                     break;
@@ -167,8 +175,32 @@
                     break;
             }
         });
-        $('#select_template').change(function(){
-            console.log($(this).val());
+        // change template overview
+        $('document').ready(function(){
+        changeTemplateOverview($('#select_template').val());
         });
+        $('#select_template').change(function(){
+            changeTemplateOverview($(this).val());
+        });
+
+        const template_contact = '<h3>Titre</h3><ul class="list-unstyled"><li><i class="fa fa-map-marker fa-fw"></i> 1 rue de la libération 75000 PARIS</li><li><i class="fa fa-phone fa-fw"></i> <a>0123456789</a></li><li><i class="fa fa-envelope-o fa-fw"></i> <a>votre@adresse.fr</a></li><li class="page-scroll"><a>Formulaire de contact</a></li></ul>';
+        const template_reseaux = '<ul class="list-inline"><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-github"></i></a></li><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a></li><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-instagram"></i></a></li><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a></li><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a></li><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-youtube"></i></a></li><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble"></i></a></li><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-google-plus"></i></a></li></ul>';
+        const template_contact_reseaux = template_contact + template_reseaux;
+        function changeTemplateOverview(template) {
+            switch (template) {
+                case '[%contact%]':
+                    $('#template_overview').html(template_contact);
+                    break;
+                case '[%reseaux%]':
+                    $('#template_overview').html(template_reseaux);
+                    break;
+                case '[%contact+reseaux%]':
+                    $('#template_overview').html(template_contact_reseaux);
+                    break;
+                default:
+                    $('#template_overview').html('Aucun contenu disponible');
+                    break;
+            }
+        }
     </script>
 {% endblock %}

@@ -123,11 +123,9 @@ class Superglobals
         return (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE && $entityTable != "tokens");
     }
 
-    public function getPicture()
+    public function getPicture($key = 'picture')
     {
-        if ($this->isExistPicture()) {
-            return $_FILES['picture'];
-        }
+            return $_FILES[$key];
     }
 
     private function define_superglobals()

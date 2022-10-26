@@ -94,11 +94,9 @@ class Repository
         }
         if (count($_FILES) > 0){
             $fileName = array_keys($_FILES)[0];
-            if ($this->superglobals->isExistPicture($entity::TABLE)) {
-                $base64 = $this->getPicture($fileName);
-                $values[] = $base64;
-                $sql .=  $fileName . " = ?, ";
-            }
+            $base64 = $this->getPicture($fileName);
+            $values[] = $base64;
+            $sql .=  $fileName . " = ?, ";
         }
 
         $sql = substr($sql, 0, -2);
@@ -189,11 +187,11 @@ class Repository
         return $entity;
     }
 
-    public function getPicture()
+    public function getPicture($key = "picture")
     {
         $base64="";
         $file_exts = array('gif', 'jpeg', 'png', 'webp');
-        $picture = $this->superglobals->getPicture();
+        $picture = $this->superglobals->getPicture($key);
         $file_ext = strtolower(substr($picture['type'],  strpos($picture['type'], '/') + 1));
         $file_size = $picture['size'];
         $file_temp = $picture['tmp_name'];

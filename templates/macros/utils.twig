@@ -112,7 +112,8 @@
 {% endmacro %}
 
 {# Convert content #}
-{% macro content_converter(content) %}
+{% macro content_converter(content, configName) %}
+    <div {% if (configName | slice(0, 15) == "af_home_content") %}class="home_content text-center"{% endif %}>
     {% if content | first == "<" %}
     {{ content | raw }}
     {% elseif content | slice(0, 2) == "[%" %}
@@ -132,4 +133,18 @@
     {% else %}
     {{ content }}
     {% endif %}
+    </div>
+    <style>
+        .home_content {
+            background: #dd9b0d;
+            padding: 20px;
+            color: #fff;
+        }
+        .home_content a {
+            color: #81260a;
+        }
+        .home_content img {
+            width: 50%;
+        }
+    </style>
 {% endmacro %}
