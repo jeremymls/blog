@@ -4,10 +4,15 @@
 {% block title %}{% if category.name %}{{ category.name }} {% else %} Tous les articles {% endif %}{% endblock %}
 {% block subtitle %}
 	<a id="retour" href="{{ getPath('home') }}" ><i class="fa fa-home" aria-hidden="true"></i></a>
+    <a id="oneTool" href="{{ getPath('posts:categories') }}" ><i class="fa fa-list" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
     <section id="posts" class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ getPath('home') }}">Accueil</a></li>
+            <li class="active">{{ category.name }}</li>
+		</ol>
         <div class="row">
             {{ utils.pagination(nbPage) }}
             {% for post in posts %}

@@ -1,11 +1,10 @@
 {% extends "/base.twig" %}
 {% import "macros/utils.twig" as utils %}
 
-{% block title %}Projet{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
 {% block subtitle %}
-	<h2>{{ post.title }}</h2>
 	<em>{{ post.frenchCreationDate }}</em><br>
-	<a id="retour" href="{{ getPath('posts') }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+	<a id="retour" href="{{ getPath('post:id', {id:post.category.identifier}) }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 	<div id="oneTool" class="page-scroll">
 		<a href="#comment" ><i class="fa fa-comment-o" aria-hidden="true"></i></a>
 	</div>
@@ -17,12 +16,12 @@
 {% endblock %}
 
 {% block main %}
-	<div class="container">
-		{% if alert == "commentSubmitted" %}
-			{{ alerts.commentSubmitted() }}
-		{% endif %}
-	</div>
 	<section class="container">
+		<ol class="breadcrumb">
+			<li><a href="{{ getPath('home') }}">Accueil</a></li>
+			<li><a href="{{ getPath('post:id', {id:post.category.identifier}) }}">{{ post.category.name }}</a></li>
+			<li class="active">{{ post.title }}</li>
+		</ol>
 		{% if post.chapo %}
 		<h2>Résumé</h2>
 			<div id="postContent">

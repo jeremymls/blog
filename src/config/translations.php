@@ -6,8 +6,8 @@ const FR_HELPER = [
         'F'
     ],
     'post' => [
-        'projet', 
-        'M'
+        'publication', 
+        'F'
     ],
     'comment' => [
         'commentaire', 
