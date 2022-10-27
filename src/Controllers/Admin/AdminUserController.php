@@ -26,4 +26,16 @@ class AdminUserController extends AdminController
         $this->superglobals->redirect('admin:users');
     }
 
+    public function role(string $identifier)
+    {
+        if ($this->isPost()) {
+            $this->userService->update(
+                $identifier, 
+                $_POST
+            );
+        $this->superglobals->redirect('admin:users');
+        }
+        $params = $this->userService->get($identifier);
+        $this->twig->display('admin/user/role.twig', $params);
+    }
 }

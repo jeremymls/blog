@@ -1,0 +1,40 @@
+{% extends "/base.twig" %}
+
+{% block title %}Modification du statut de {{ user.username }}{% endblock %}
+{% block subtitle %}
+	<a id="retour" href="javascript:history.back()" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+{% endblock %}
+
+{% block main %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+					<form action="" method="post" enctype="multipart/form-data">
+                        <div class="col-lg-12 control-group">
+                            <div class="row form-group">
+                                <div class="col-sm-2 col-sm-offset-3 text-center" style="padding: 7px 0;">Statut</div>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="role" id="category">
+                                        <option {% if user.role == 'user' %}selected{% endif %} value="user">User</option>
+                                        <option {% if user.role == 'admin' %}selected{% endif %} value="admin">Admin</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" class="btn btn-success btn-lg confirm">Enregistrer</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block script %}
+    <script src="/assets/js/admin.js"></script>
+{% endblock %}

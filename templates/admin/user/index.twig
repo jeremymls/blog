@@ -49,6 +49,8 @@
                                                     <span class="label label-info"><i class="fa fa-sign-in" aria-hidden="true"> Validé</i></span>
                                                 {% endif %}
                                             </dd>
+                                            <dt>Rôle</dt>
+                                            <dd><span class="label label-{% if user.role == "admin" %}danger{% else %}info{% endif %}">{{ user.role }}</span></dd>
                                             <dt>Date d'inscription</dt>
                                             <dd>{{ user.frenchCreationDate }}</dd>
                                         </dl>
@@ -56,6 +58,9 @@
                                     <td class="action">
                                     <div class="row">
                                         <a href="{{ getPath('profil:edit', {'id': user.identifier}) }}&userId={{ user.identifier }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Modifier</a>
+                                    </div>
+                                    <div class="row">
+                                        <a href="{{ getPath('admin:user:role', {'id': user.identifier}) }}" class="btn btn-warning"><i class="fa fa-lock"></i> Role</a>
                                     </div>
                                     <div class="row">
                                         <a href="{{ getPath('admin:user:delete', {'id': user.identifier}) }}" class="btn btn-danger confirm"><i class="fa fa-trash-o"></i> Supprimer</a>

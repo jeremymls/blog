@@ -93,6 +93,8 @@ class Routes
         // AdminUser
         $this->router->get('admin/users', 'Admin\AdminUser@index', 'admin:users');
         $this->router->get('admin/users/delete/:id', 'Admin\AdminUser@delete', 'admin:user:delete');
+        $this->router->get('admin/users/role/:id', 'Admin\AdminUser@role', 'admin:user:role');
+        $this->router->post('admin/users/role/:id', 'Admin\AdminUser@role');
         // Core //
         // AdminConfig
         $this->router->get('admin/config/update/:id', 'Config@update@core', 'admin:config:update');
