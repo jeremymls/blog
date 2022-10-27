@@ -34,7 +34,7 @@ class UserService extends EntityService
         $token = $this->tokenService->createToken($user->identifier);
         $this->sendConfirmationEmail($input['email'], $input['first'], $token);
         if ($this->userSession->isAdmin()) {
-            $this->superglobal->redirect('admin:users');
+            $this->superglobals->redirect('admin:users');
         } else {
             $this->userSession->setUser($user);
         }
@@ -48,7 +48,7 @@ class UserService extends EntityService
             if ($this->userSession->isUser()) {
                 $id = $this->userSession->getUserParam("identifier");
             } else {
-                $this->superglobal->redirect('login');
+                $this->superglobals->redirect('login');
             }
         }
         $params = $this->get($id);
@@ -75,7 +75,7 @@ class UserService extends EntityService
             'L\'utilisateur '. $input['email'] .' a bien été modifié'
         );
         if ($this->userSession->isAdmin() && isset($userId)) {
-            $this->superglobal->redirect('admin:users');
+            $this->superglobals->redirect('admin:users');
         } else {
             $user = $this->repository->getUserByUsername($input['email']);
             $this->userSession->setUser($user);
