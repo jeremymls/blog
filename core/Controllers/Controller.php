@@ -79,11 +79,6 @@ abstract class Controller
         });
         $twig->addFunction($isValideFunc);
 
-        $redirectFunc = new \Twig\TwigFunction('redirect', function ($name, $params = null) use ($superglobals) {
-            return $superglobals->redirect($name, $params);
-        });
-        $twig->addFunction($redirectFunc);
-
         return $twig;
     }
 
