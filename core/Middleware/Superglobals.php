@@ -27,6 +27,17 @@ class Superglobals
         return self::$instances[$cls];
     }
 
+    private function define_superglobals()
+    {
+        $this->_SERVER = (isset($_SERVER)) ? $_SERVER : null;
+        $this->_GET = (isset($_GET)) ? $_GET : null;
+        $this->_POST = (isset($_POST)) ? $_POST : null;
+        $this->method = (isset($_SERVER['REQUEST_METHOD'])) ? $_SERVER['REQUEST_METHOD'] : null;
+        $this->referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
+        $this->path = (isset($_SERVER["REQUEST_SCHEME"], $_SERVER["HTTP_HOST"] )) ? 
+            ($_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"]) : null;
+    }
+
     public function getMethod()
     {
         return $this->method;
@@ -145,17 +156,5 @@ class Superglobals
             return $_FILES[$key];
         }
         return null;
-    }
-
-    private function define_superglobals()
-    {
-        $this->_SERVER = (isset($_SERVER)) ? $_SERVER : null;
-        $this->_GET = (isset($_GET)) ? $_GET : null;
-        $this->_POST = (isset($_POST)) ? $_POST : null;
-        $this->method = (isset($_SERVER['REQUEST_METHOD'])) ? $_SERVER['REQUEST_METHOD'] : null;
-        $this->referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
-        $this->path = (isset($_SERVER["REQUEST_SCHEME"], $_SERVER["HTTP_HOST"] )) ? 
-            ($_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"]) : null;
-        
     }
 }
