@@ -14,10 +14,9 @@ class ConfirmMail
 
     private function validatedEmail()
     {
-        $user = new UserSession();
-        $flashServices = new FlashService();
+        $user = UserSession::getInstance();
         if ($user->isUser() && !$user->isValidate() && !$user->isAdmin()) {
-            $flashServices->template("mail_not_validated");
+            FlashService::getInstance()->template("mail_not_validated");
         }
     }
 }

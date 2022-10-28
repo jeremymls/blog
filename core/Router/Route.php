@@ -34,8 +34,7 @@ class Route
     {
         if (is_string($this->callable)) {
             $params = explode('@', $this->callable);
-            $session = new PHPSession();
-            
+            $session = PHPSession::getInstance();
             $temp = $session->get('temp_last_url');
             if ($temp !== null && $temp > 0) {
                 $session->set('temp_last_url', $temp - 1);
@@ -43,16 +42,13 @@ class Route
                 $session->delete('last_url');
                 $session->delete('temp_last_url');
             }
-
             if ($params[1] == 'update' || 
                 $params[1] == 'login'
             ) {
                 if ($temp === null) {
                     $session->set('temp_last_url', 1);
-
-                    $superglobals = new Superglobals();
                     if (!$session->get('last_url')) {
-                        $session->set('last_url', $superglobals->getPathReferer());
+                        $session->set('last_url', Superglobals::getInstance()->getPathReferer());
                     }
                 }
             }

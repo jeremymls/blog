@@ -19,8 +19,7 @@ class InitController extends Controller
 
     private static function grantAccess()
     {
-        $session = new PHPSession();
-        if ($session->get('safe_mode') == true) {
+        if (PHPSession::getInstance()->get('safe_mode') == true) {
             return true;
         } else {
             new Security();

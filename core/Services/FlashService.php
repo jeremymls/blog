@@ -6,11 +6,21 @@ use Core\Middleware\Session\PHPSession;
 
 class FlashService
 {
+    private static $instances = [];
     private $sessionKey = 'flash';
     
     public function __construct()
     {
-        $this->session = new PHPSession();
+        $this->session = PHPSession::getInstance();
+    }
+
+    public static function getInstance(): FlashService
+    {
+        $cls = static::class;
+        if (!isset(self::$instances[$cls])) {
+            self::$instances[$cls] = new FlashService();
+        }
+        return self::$instances[$cls];
     }
 
     public function success(string $title, string $message)

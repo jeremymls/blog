@@ -4,9 +4,20 @@ namespace Core\Middleware\Session;
 
 class PHPSession implements SessionInterface
 {
+    private static $instances = [];
+
     public function __construct()
     {
         $this->ensureStarted();
+    }
+
+    public static function getInstance() 
+    {
+        $cls = static::class;
+        if (!isset(self::$instances[$cls])) {
+            self::$instances[$cls] = new PHPSession();
+        }
+        return self::$instances[$cls];
     }
 
     private function ensureStarted()

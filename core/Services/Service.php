@@ -9,9 +9,9 @@ class Service
 {
     public function __construct()
     {
-        $this->flashServices = new FlashService();
+        $this->flashServices = FlashService::getInstance();
         $this->pagination = new Pagination();
-        $this->superglobals = new Superglobals();
+        $this->superglobals = Superglobals::getInstance();
     }
 
     public function getRepository()

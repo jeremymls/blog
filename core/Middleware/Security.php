@@ -14,15 +14,16 @@ class Security
 
     private function isGranted()
     {
-        $userSession = new UserSession();
-        $flashServices = new FlashService();
+        $userSession = UserSession::getInstance();
         if ($userSession->get("safe_mode")) {
             return true;
         }
         if (!$userSession->isUser()) {
-            $flashServices->warning('Accès non autorisé', 'Vous n\'avez pas accès à cette page! <strong style="color:red;">Veuillez vous connecter!</strong>');
-            $superglobals = new Superglobals();
-            $superglobals->redirect('login');
+            FlashService::getInstance()->warning(
+                'Accès non autorisé',
+                'Vous n\'avez pas accès à cette page! <strong style="color:red;">Veuillez vous connecter!</strong>'
+            );
+            Superglobals::getInstance()->redirect('login');
         } else {
             if (!$userSession->isAdmin()) {
                 throw new \Exception('Vous n\'avez pas le droit d\'accéder à cette page', 403);

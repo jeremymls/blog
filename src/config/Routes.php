@@ -15,8 +15,7 @@ class Routes
 
     private function url()
     {
-        $superglobals = new Superglobals();
-        $url = $superglobals->getGet('url');
+        $url = Superglobals::getInstance()->getGet('url');
         return $url ?? '/';
     }
 

@@ -43,8 +43,7 @@ class Router
 
     public function run()
     {
-        $superglobals = new Superglobals();
-        $method = $superglobals->getMethod();
+        $method = Superglobals::getInstance()->getMethod();
         try {
             if (!isset($this->routes[$method])) {
                 throw new Exception('REQUEST_METHOD does not exist');

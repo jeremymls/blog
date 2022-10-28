@@ -10,7 +10,6 @@ class MailService
 {
     public function __construct()
     {
-        $this->flashServices = new FlashService();
         $this->configService = new ConfigService();
         $this->mail = $this->getMailConfig();
     }
@@ -74,7 +73,7 @@ class MailService
         if (!$this->mail->send()) {
             throw new \Exception('Une erreur est survenue lors de l\'envoi du mail: ' . $this->mail->ErrorInfo, 500); 
         } else {
-            $this->flashServices->success('E-mail envoyé', $config['success_message']);
+            FlashService::getInstance()->success('E-mail envoyé', $config['success_message']);
         }
     }
 }

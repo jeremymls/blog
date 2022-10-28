@@ -17,7 +17,7 @@ class UserService extends EntityService
     {
         parent::__construct();
         $this->model = new User();
-        $this->userSession = new UserSession();
+        $this->userSession = UserSession::getInstance();
         $this->tokenService = new TokenService();
         $this->mailService = new MailService();
         $this->configService = new ConfigService();

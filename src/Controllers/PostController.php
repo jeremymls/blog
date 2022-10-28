@@ -6,6 +6,8 @@ use Application\Services\CategoryService;
 use Application\Services\CommentService;
 use Core\Controllers\Controller;
 use Application\Services\PostService;
+use Core\Middleware\Superglobals;
+use Core\Services\FlashService;
 
 class PostController extends Controller
 {
@@ -25,6 +27,10 @@ class PostController extends Controller
             $this->postService->getAll($option, $optionsData),
             $categoryService->getBy('id = ?', [$category])
         ]);
+        if ($category && $params['category']->name == "") {
+            FlashService::getInstance()->danger("Erreur", "La catégorie demandée n'existe pas <br>Sélectionnez une catégorie dans la liste");
+            Superglobals::getInstance()->redirect('posts:categories');
+        }
         $params = $this->pagination->paginate($params, 'posts', 3);
         $this->twig->display('post/index.twig', $params);
     }

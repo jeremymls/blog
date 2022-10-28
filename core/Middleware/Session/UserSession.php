@@ -5,9 +5,20 @@ use Application\Models\User;
 
 class UserSession extends PHPSession
 {
+    private static $instances = [];
+
     public function __construct()
     {
         parent::__construct();
+    }
+
+    public static function getInstance(): UserSession
+    {
+        $cls = static::class;
+        if (!isset(self::$instances[$cls])) {
+            self::$instances[$cls] = new UserSession();
+        }
+        return self::$instances[$cls];
     }
 
     public function isAdmin()

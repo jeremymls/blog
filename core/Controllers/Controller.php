@@ -23,13 +23,13 @@ abstract class Controller
     public function __construct()
     {
         $this->pagination = new Pagination();
-        $this->superglobals = new Superglobals();
-        $this->userSession = new UserSession();
+        $this->superglobals = Superglobals::getInstance();
+        $this->userSession = UserSession::getInstance();
         $this->twig = self::getTwig($this->superglobals, $this->userSession);
         new ConfirmMail();
         new Flash($this->twig);
-        self::getSiteConfigs($this->superglobals);
-        $this->session = new PHPSession();
+        $this->session = PHPSession::getInstance();
+        self::getSiteConfigs($this->superglobals, $this->session);
     }
 
     private static function getTwig(Superglobals $superglobals, UserSession $userSession)
@@ -82,7 +82,7 @@ abstract class Controller
         return $twig;
     }
 
-    private function getSiteConfigs(Superglobals $superglobals)
+    private function getSiteConfigs(Superglobals $superglobals, PHPSession $session)
     {
         $url = $superglobals->getPath();
         if (!in_array($url, [
@@ -95,7 +95,6 @@ abstract class Controller
             $superglobals->getPath("init:missing_configs")
         ])) {
             $configService = new ConfigService();
-            $session = new PHPSession();
             if (count($configService->checkMissingConfigs()) > 0) {
                 $session->set("safe_mode", true);
                 $this->superglobals->redirect('init');

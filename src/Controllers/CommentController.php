@@ -16,12 +16,11 @@ class CommentController extends Controller
 
     public function add(string $post)
     {
-        $userSession = new UserSession();
         $this->commentService->add(
             $_POST, 
             [
                 'post' =>$post,
-                'author' => $userSession->getUserParam("identifier")
+                'author' => UserSession::getInstance()->getUserParam("identifier")
             ],
             'Votre commentaire sera publié après <strong style="color:#f00;">validation</strong> par un administrateur.'
         );

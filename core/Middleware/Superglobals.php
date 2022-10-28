@@ -5,6 +5,7 @@ use Application\config\Routes;
 
 class Superglobals
 {
+    private static $instances = [];
     private $_SERVER;
     private $_GET;
     private $_POST;
@@ -15,6 +16,15 @@ class Superglobals
     public function __construct()
     {
         $this->define_superglobals();
+    }
+
+    public static function getInstance(): Superglobals
+    {
+        $cls = static::class;
+        if (!isset(self::$instances[$cls])) {
+            self::$instances[$cls] = new Superglobals();
+        }
+        return self::$instances[$cls];
     }
 
     public function getMethod()

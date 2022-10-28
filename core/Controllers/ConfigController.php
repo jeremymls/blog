@@ -12,7 +12,7 @@ class ConfigController extends AdminController
     {
         parent::__construct();
         $this->configService = new ConfigService();
-        $this->flashService = new FlashService();
+        $this->flashService = FlashService::getInstance();
     }
 
     public function init_configs()

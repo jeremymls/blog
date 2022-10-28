@@ -11,8 +11,8 @@ class Repository
 {
     public function __construct()
     {
-        $this->superglobals = new Superglobals();
-
+        $this->superglobals = Superglobals::getInstance();
+        $this->connection = Singleton::getConnection();
     }
 
     public function add($entity): bool
@@ -41,7 +41,7 @@ class Repository
             }
         }
         $sql .= "NOW())";
-        $statement = Singleton::getConnection()->prepare($sql);
+        $statement = $this->connection->prepare($sql);
         $affectedLines = $statement->execute($values);
         return ($affectedLines > 0);
     }
@@ -102,14 +102,14 @@ class Repository
         $sql = substr($sql, 0, -2);
         $sql .= " WHERE id = ?";
         $values[] = $identifier;
-        $statement = Singleton::getConnection()->prepare($sql);
+        $statement = $this->connection->prepare($sql);
         $affectedLines = $statement->execute($values);
         return ($affectedLines > 0);
     }
 
     public function delete($identifier): bool
     {
-        $statement = Singleton::getConnection()->prepare(
+        $statement = $this->connection->prepare(
             'DELETE FROM ' . $this->model::TABLE . ' WHERE id=?'
         );
         $affectedLines = $statement->execute([$identifier]);
@@ -125,8 +125,7 @@ class Repository
     public function getSelectStatementByModel(string $options, array $optionsData = [])
     {
         if ($this->checkTableExistence() == false) {
-            $session = new PHPSession();
-            $session->set("safe_mode", true);
+            PHPSession::getInstance()->set("safe_mode", true);
             $this->superglobals->redirect('init');
         }
         $sql = "SELECT ";
@@ -135,7 +134,7 @@ class Repository
         }
         $sql = substr($sql, 0, -2);
         $sql .= " FROM " . $this->model::TABLE . " " . $options;
-        $statement = Singleton::getConnection()->prepare($sql);
+        $statement = $this->connection->prepare($sql);
         $statement->execute($optionsData);
         return $statement;
     }
@@ -218,7 +217,7 @@ class Repository
         FROM INFORMATION_SCHEMA.TABLES 
         WHERE TABLE_SCHEMA = ?
         AND TABLE_NAME = ?";
-        $statement = Singleton::getConnection()->prepare($sql);
+        $statement = $this->connection->prepare($sql);
         $statement->execute([DB_NAME, $this->model::TABLE]);
         $row = $statement->fetch();
         if($row) {
@@ -232,7 +231,7 @@ class Repository
     {
         $tables = [];
         $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = ?";
-        $statement = Singleton::getConnection()->prepare($sql);
+        $statement = $this->connection->prepare($sql);
         $statement->execute([DB_NAME]);
         while (($row = $statement->fetch())) {
             $tables[] = $row['table_name'];
@@ -249,7 +248,7 @@ class Repository
             description VARCHAR(255) DEFAULT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )";
-        $statement = Singleton::getConnection()->prepare($sql);
+        $statement = $this->connection->prepare($sql);
         $statement->execute();
     }
 
@@ -257,7 +256,7 @@ class Repository
     {
         if (file_exists("sql/blog.sql")) { 
             $sql = file_get_contents('sql/blog.sql');
-            $statement = Singleton::getConnection()->prepare($sql);
+            $statement = $this->connection->prepare($sql);
             $statement->execute();
         }
     }

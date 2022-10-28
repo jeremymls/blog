@@ -14,8 +14,7 @@ class Flash extends Controller
 
     private static function setFlashs($twig)
     {
-        $flashServices = new FlashService();
-        $flashs = $flashServices->get();
+        $flashs = FlashService::getInstance()->get();
         $twig->addGlobal('flashs', $flashs);
     }
 }

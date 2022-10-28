@@ -44,10 +44,8 @@ class Singleton
                     self::$database->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                 } catch (\PDOException $e) {
                     if ($e->getCode() == 1049) {
-                        $session = new PHPSession();
-                        $session->set('safe_mode', true);
-                        $superglobals = new Superglobals();
-                        $superglobals->redirect('new');
+                        PHPSession::getInstance()->set('safe_mode', true);
+                        Superglobals::getInstance()->redirect('new');
                     }
                     echo 'Erreur de connexion à la base de données : ' . $e->getMessage();
                     // 1049 = database not found
