@@ -88,8 +88,7 @@ class UserController extends Controller
     public function delete_picture($identifier = null)
     {
         $this->userService->delete_picture($identifier);
-        $params = $this->userService->getData($identifier);
-        $this->twig->display('security/profil.twig', $params);
+        $this->superglobals->redirect('profil');
     }
 
     public function forget_password()

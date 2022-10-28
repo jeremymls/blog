@@ -19,12 +19,7 @@
                             </div>
                         </div>
                     {% else %}
-                        {% if get.redirect is defined %}
-                            <form action="?redirect={{ get.redirect }}" method="post">
-                        {% else %}
-                            <form action="" method="post">
-                            
-                        {% endif %}
+                        <form action="" method="post">
                             <div class="row control-group">
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <label>Identifiant</label>
@@ -39,7 +34,7 @@
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
-                            <small><a href="/forget">Mot de passe oublié?</a></small>
+                            <small><a href="{{ getPath('forget') }}">Mot de passe oublié?</a></small>
                             <br>
                             <div class="row">
                                 <div class="form-group col-xs-12 text-center">

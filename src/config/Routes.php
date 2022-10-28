@@ -48,7 +48,7 @@ class Routes
         $this->router->post('profil/edit/mail', 'Security\User@edit_mail');
         $this->router->get('profil/edit/password', 'Security\User@edit_password', 'profil:edit:password');
         $this->router->post('profil/edit/password', 'Security\User@edit_password');
-        $this->router->get('profil/delete/image', 'Security\User@delete_picture');
+        $this->router->get('profil/delete/image', 'Security\User@delete_picture', 'profil:delete:image');
         $this->router->get('profil/register', 'Security\User@register', 'register');
         $this->router->post('profil/register', 'Security\User@register');
         $this->router->get('profil/:id', 'Security\User@show', 'profil:id');
@@ -57,7 +57,7 @@ class Routes
         $this->router->get('login', 'Security\User@login', 'login');
         $this->router->post('login', 'Security\User@login');
         $this->router->get('logout', 'Security\User@logout', 'logout');
-        $this->router->get('forget', 'Security\User@forget_password');
+        $this->router->get('forget', 'Security\User@forget_password', 'forget');
         $this->router->post('forget', 'Security\User@forget_password');
         $this->router->get('reset_password/:token', 'Security\User@reset_password', 'reset_password');
         $this->router->post('reset_password/:token', 'Security\User@reset_password');

@@ -25,7 +25,7 @@ abstract class Controller
         $this->pagination = new Pagination();
         $this->superglobals = new Superglobals();
         $this->userSession = new UserSession();
-        $this->twig = self::getTwig($this->superglobals, $this->userSession); // todo: verify if it's ok
+        $this->twig = self::getTwig($this->superglobals, $this->userSession);
         new ConfirmMail();
         new Flash($this->twig);
         self::getSiteConfigs($this->superglobals);
@@ -42,8 +42,6 @@ abstract class Controller
         );
         $twig->addExtension(new DebugExtension());
         $twig->addExtension(new StringExtension());
-        $twig->addGlobal('get', $superglobals->getGet());
-        $twig->addGlobal('url_request', $superglobals->getPath());
 
         $getUrlFunc = new \Twig\TwigFunction('getPath', function ($name = null, $params = []) use ($superglobals) {
             return $superglobals->getPath($name, $params);
@@ -54,6 +52,11 @@ abstract class Controller
             return $superglobals->getPathWithoutGet();
         });
         $twig->addFunction($removeGetUrlFunc);
+
+        $getGetFunc = new \Twig\TwigFunction('get', function (string $key) use ($superglobals) {
+            return $superglobals->getGet($key);
+        });
+        $twig->addFunction($getGetFunc);
 
         // User Session functions
         $getUserParamFunc = new \Twig\TwigFunction('getUserParam', function ($param) use ($userSession) {
@@ -105,11 +108,9 @@ abstract class Controller
                 $session->set("safe_mode", false);
             }
             $categoryService = new CategoryService();
-            $params = $this->multiParams([
-                $categoryService->getAll("", [], "", "", 'ASC'),
-                $configService->getAll()
-            ]);
+            $params = $categoryService->getAll("", [], "", "", 'ASC');
             $this->twig->addGlobal('categories', $params['categories']);
+            $params = $configService->getAll();
             foreach ($params["configs"] as $config) {
                 $prefix = explode("_", $config->name)[0];
                 if ($prefix != "mb") {

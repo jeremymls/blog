@@ -29,7 +29,7 @@
                                         {% if user.token == "expired"  %}
                                             <div><a class="btn btn-danger btn-sm" href="{{ getPath('confirm_again') }}">Renvoyer l'e-mail de confirmation</a></div>
                                         {% else %}
-                                            <p><em><small>Un mail de confirmation a déjà été envoyé! <br> Vérifier vos mails (notament les indésirables),<br> sinon contacter l'administrateur <a href="mailto:contact@jeremy-monlouis.fr">Jérémy MONLOUIS</a></small></em></p>
+                                            <p><em><small>Un mail de confirmation a déjà été envoyé! <br> Vérifier vos mails (notament les indésirables),<br> sinon contacter l'administrateur <a href="mailto:{{ cs_owner_email }}">{{ cs_owner_name }}</a></small></em></p>
                                         {% endif %}
                                     {% else %}
                                         <span class="label label-info"><i class="fa fa-check" aria-hidden="true"></i> Validé</span>
@@ -41,7 +41,7 @@
                                 <dd>le {{ user.frenchCreationDate }}</dd>
                                 <dt>Commentaires:</dt>
                                 <dd>{{ commentsCount }} 
-                                {% if commentsPendingCount > 0 %} <em>(dont {{ commentsPendingCount }} en attente de modération)</em>{% endif %}
+                                {% if commentsPendingCount > 0 %} {% if user.role != "admin" %}<em>(dont {{ commentsPendingCount }} en attente de modération)</em>{% endif %}{% endif %}
                                 </dd>
                             </dl>
                         </div>
@@ -97,7 +97,7 @@
     $(document).ready(function(){
         $('#btnOverview').click(function(){
             if (confirm("Voulez-vous vraiment supprimer votre image de profil?")){
-                window.location.href='/profil/delete/image';
+                window.location.href="{{ getPath('profil:delete:image') }}";
             };
         });
     });
