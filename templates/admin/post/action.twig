@@ -2,7 +2,7 @@
 
 {% block title %}{% if action == "add" %}Ajout{% else %}Modification{% endif %} d'une publication{% endblock %}
 {% block subtitle %}
-	<a id="retour" href="javascript:history.back()" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+	<a id="retour" href="{{ getPath('admin:posts') }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
@@ -13,8 +13,13 @@
 					<form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group col-lg-6 col-lg-offset-3">
 							<label for="picture">Image
-								<div id="divOverview">
-                                    <img id="thumbnailOverview" class="thumbnailOverview" src={% if post.picture is empty %}"/assets/img/post.png"{% else %}{{ post.picture }}{% endif %} alt="">
+								<div id="divOverview" class="div-pic">
+                                    {% if post.picture is empty %}
+                                    <img id="thumbnailOverview" class="thumbnailOverview " src="/assets/img/post.png" alt="">
+                                    {% else %}
+                                    <img id="thumbnailOverview" class="thumbnailOverview " src="{{ post.picture }}" alt="">
+                                    {# <button data-target="{{ getPath('admin:post:delete:picture', {'id': post.identifier}) }}" class="btn btn-danger btn-xs delete-pic"><i class="fa fa-trash"></i></button> #}
+                                    {% endif %}
                                 </div>
 							</label>
 							{# <input type="hidden" name="MAX_FILE_SIZE" value="512000"> #}
@@ -84,5 +89,6 @@
     </section>
 {% endblock %}
 {% block script %}
+    <script src="/assets/js/admin.js"></script>
     <script src="/assets/js/action.js"></script>
 {% endblock %}

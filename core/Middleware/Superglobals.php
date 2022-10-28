@@ -130,12 +130,21 @@ class Superglobals
 
     public function isExistPicture($entityTable = null)
     {
-        return (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE && $entityTable != "tokens");
+        // return (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE && $entityTable != "tokens");
+        return (
+            count($_FILES) > 0 && 
+            $entityTable != "tokens" &&
+            ((isset($_FILES['picture']['error']) && $_FILES['picture']['error'] !== 4) ||
+            (isset($_FILES['value']['error']) && $_FILES['value']['error'] !== 4))
+        );
     }
 
     public function getPicture($key = 'picture')
     {
+        if (isset($_FILES[$key])) {
             return $_FILES[$key];
+        }
+        return null;
     }
 
     private function define_superglobals()

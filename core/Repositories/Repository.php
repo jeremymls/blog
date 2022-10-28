@@ -21,7 +21,7 @@ class Repository
         $values = [];
         $sql .= "INSERT INTO " . $entity::TABLE . " (";
         if ($this->superglobals->isExistPicture($entity::TABLE)) {
-            $base64 = $this->getPicture($sql, $values);
+            $base64 = $this->getPicture();
             $values[] = $base64;
             $sql .= "picture, ";
         }
@@ -92,7 +92,8 @@ class Repository
                 $sql .= $key . " = ?, ";
             }
         }
-        if (count($_FILES) > 0){
+        // if (count($_FILES) > 0 && isset($_FILES['picture']['error']) && $_FILES['picture']['error'] !== 4) {
+        if ($this->superglobals->isExistPicture()) {
             $fileName = array_keys($_FILES)[0];
             $base64 = $this->getPicture($fileName);
             $values[] = $base64;

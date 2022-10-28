@@ -47,4 +47,10 @@ class AdminPostController extends AdminController
         $this->postService->delete($identifier);
         $this->superglobals->redirect('admin:posts');
     }
+
+    public function delete_picture($identifier)
+    {
+        $this->postService->delete_post_picture($identifier);
+        $this->superglobals->redirectLastUrl();
+    }
 }

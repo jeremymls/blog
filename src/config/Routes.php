@@ -80,6 +80,7 @@ class Routes
         $this->router->post('admin/posts/add', 'Admin\AdminPost@add');
         $this->router->get('admin/posts/update/:id', 'Admin\AdminPost@update', 'admin:post:update');
         $this->router->post('admin/posts/update/:id', 'Admin\AdminPost@update');
+        $this->router->get('admin/posts/delete/picture/:id', 'Admin\AdminPost@delete_picture', 'admin:post:delete:picture');
         $this->router->get('admin/posts/delete/:id', 'Admin\AdminPost@delete', 'admin:post:delete');
         $this->router->get('admin/posts/:category', 'Admin\AdminPost@index', 'admin:posts:category');
         // AdminComment

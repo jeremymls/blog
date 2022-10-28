@@ -37,9 +37,10 @@
                         <tbody>
                             {% for post in posts %}
                                 <tr>
-                                    <td>
+                                    <td class="div-pic">
                                         {% if post.picture is not empty %}
                                             <img class="img-thumbnail" width="200px" src="{{ post.picture }}" alt='{{ post.title }} picture'>
+                                            <button data-target="{{ getPath('admin:post:delete:picture', {'id': post.identifier}) }}" class="btn btn-danger btn-xs delete-pic"><i class="fa fa-trash"></i></button>
                                         {% endif %}
                                     </td>
                                     <td>

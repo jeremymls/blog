@@ -40,4 +40,13 @@ $(document).ready(function () {
             e.preventDefault();
         };
     });
+
+    $('.delete-pic').click(function (e) {
+            e.preventDefault();
+            var target = $(this).data('target');
+            if (confirm("Voulez-vous vraiment supprimer cette image?")) {
+                window.location.href = target
+            };
+
+    });
 });
