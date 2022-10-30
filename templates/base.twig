@@ -1,38 +1,47 @@
 {% import "macros/utils.twig" as utils %}
-		{% include 'partials/_head.twig' with {
-				'cs_site_name' : cs_site_name,
-				'title' : block('title'),
-			} 
-		%}
-		{% block nav %}{% include ('partials/_nav.twig') %}{% endblock %}
+{% set head %}{% if block("head") is defined %}{{ block("head") }}{% endif %}{% endset %}
+{% set title %}{% if block("title") is defined %}{{ block("title") }}{% endif %}{% endset %}
+{% set subtitle %}{% if block("subtitle") is defined %}{{ block("subtitle") }}{% endif %}{% endset %}
+{% set imageHeader %}{% if block("imageHeader") is defined %}{{ block("imageHeader") }}{% endif %}{% endset %}
+{% include 'partials/_head.twig' with {
+		'cs_site_name' : cs_site_name,
+		'title' : title,
+		'head' : head,
+	} 
+%}
+{% block nav %}{% include ('partials/_nav.twig') %}{% endblock %}
 
-		<header>			
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="intro-text">
-							<h1 class="name">{{ block('title') }}</h1>
-							<hr class="star-light">
-							{% block imageHeader %}{% endblock %}
-							<span class="skills">{% block subtitle %}{% endblock %}</span>
-						</div>
-					</div>
+{% if block("title") is defined or block("subtitle") is defined or block("imageHeader") is defined  %}
+<header>			
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="intro-text">
+					{% if title %}
+					<h1 class="name">{{ title }}</h1>
+					<hr class="star-light">
+					{% endif %}
+					{{ imageHeader }}
+					<span class="skills">{{ subtitle }}</span>
 				</div>
 			</div>
-		</header>
-		<main>
-			{% if flashs|length > 0 %}
-			<div id="flash-container">
-				{% for flash in flashs %}
-				{{ utils.flash(flash) }}
-				{% endfor %}
-			</div>
-			{% endif %}
-		{% block main %}{% endblock %}
-		</main>
+		</div>
+	</div>
+</header>
+{% endif %}
+<main>
+	{% if flashs|length > 0 %}
+	<div id="flash-container">
+		{% for flash in flashs %}
+		{{ utils.flash(flash) }}
+		{% endfor %}
+	</div>
+	{% endif %}
+{% block main %}{% endblock %}
+</main>
 
-		{% block footer %}{% include ('partials/_footer.twig') %}{% endblock %}
-		{% include ('partials/_scripts.twig') %}
-		{% block script %}{% endblock %}
-		{% include ('partials/_foot.twig') %}
+{% block footer %}{% include ('partials/_footer.twig') %}{% endblock %}
+{% include ('partials/_scripts.twig') %}
+{% block script %}{% endblock %}
+{% include ('partials/_foot.twig') %}
 

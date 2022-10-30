@@ -11,6 +11,7 @@
 
 		<!-- Theme CSS -->
 		<link href="/assets/css/freelancer.min.css" rel="stylesheet">
+		{{ head }}
 
 		<!-- Custom Fonts -->
 		<link href="/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -21,7 +22,6 @@
 			{% if cs_site_name %}{{ cs_site_name }}{% endif %}
             {% if title %}{% if cs_site_name %} - {% endif %}{{ title }}{% endif %}
 		</title>
-		{% block head %}{% endblock %}
 	</head>
 
 	<body
