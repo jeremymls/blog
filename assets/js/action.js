@@ -1,7 +1,7 @@
 const thumbnail = document.querySelector(".thumbnailOverview");
 const imgSize = document.getElementById("imgSize");
 
-document.querySelector(".picture").onchange = function () {
+$('.picture').change(function(){
     if (this.files[0].size > 512000) {
         alert("Le fichier est trop gros");
         this.value = "";
@@ -17,7 +17,7 @@ document.querySelector(".picture").onchange = function () {
         // read the image file as a data URL.
         reader.readAsDataURL(this.files[0]);
     }
-}
+});
 
 function formatBytes(size, decimals = 2)
 {

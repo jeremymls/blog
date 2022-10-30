@@ -5,7 +5,7 @@
 {% block subtitle %}{% if cs_slogan %}" {{ cs_slogan }} "{% endif %}{% endblock %}
 
 {% block imageHeader %}
-    <img id="imageHeader" class="img-responsive" src="/assets/img/logo.png" alt="">
+    <img id="imageHeader" class="img-responsive" src="{{ cs_logo }}" alt="">
 {% endblock %}
 
 {% block main %}
@@ -28,7 +28,9 @@
                                     {% if post.picture is not empty %}
                                         <img class="back-slide" src="{{ post.picture }}" alt="Back slide">
                                     {% else %}
-                                        <img class="back-slide" src="/assets/img/logo.png" alt="Back slide">
+                                        {% if cs_logo %}
+                                        <img class="back-slide" src="{{ cs_logo }}" alt="Back slide empty">
+                                        {% endif %}
                                     {% endif %}
                                     <div class="carousel-caption">
                                         <div class="carousel-txt">

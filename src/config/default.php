@@ -4,6 +4,7 @@ const CONFIGS = [
     'cs_site_name' =>               ['JM Projets','Nom du site'],
     'cs_address' =>                 ['','Adresse Postale'],
     'cs_slogan' =>                  ['','Slogan'],
+    'cs_logo' =>                    [null,'Logo du site','image'],
     'cs_owner_name' =>              [null,'Nom du propriétaire du site'],
     'cs_owner_email' =>             [null,'Email du propriétaire du site'],
     'cs_owner_phone' =>             [null,'Téléphone du propriétaire du site'],

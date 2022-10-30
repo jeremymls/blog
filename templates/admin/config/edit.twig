@@ -23,6 +23,19 @@
 					<form action="" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="name" value="{{config.name}}" >
                         <div class="row control-group">
+                            {# IMAGE FIELD #}
+                            {% macro imageField(value) %}
+                            <div id="image" class="form-group col-lg-6 col-lg-offset-3" style='display:block !important;'>
+                                <label for="value">Image
+                                    <div id="divOverview">
+                                        <img id="thumbnailOverview" class="thumbnailOverview" src={% if value is empty %} "/assets/img/post.png" {% else %} {{ value }} {% endif %} alt="">
+                                    </div>
+                                </label>
+                                <input type="file" name="value" id="picture" class="form-control picture" accept=".gif,.jpg,.jpeg,.png,.webp">
+                                <p id="imgSize"></p>
+                                <p>Taille max : 500 KB</p>
+                            </div>
+                            {% endmacro %}
                             {% if config.value == 'ON' or config.value == 'OFF' %}
                                 <div class="radio">
                                     <label>
@@ -53,16 +66,7 @@
                                 {# CONTENT #}
                                 <textarea name="value" id="mytextarea" >{{ config.value }}</textarea>
                                 {# IMAGE #}
-                                <div id="image" class="form-group col-lg-6 col-lg-offset-3">
-                                    <label for="value">Image
-                                        <div id="divOverview">
-                                            <img id="thumbnailOverview" class="thumbnailOverview" src={% if config.value is empty %} "/assets/img/post.png" {% else %} {{ config.value }} {% endif %} alt="">
-                                        </div>
-                                    </label>
-                                    <input type="file" name="value" id="picture" class="form-control picture" accept=".gif,.jpg,.jpeg,.png,.webp">
-                                    <p id="imgSize"></p>
-                                    <p>Taille max : 500 KB</p>
-                                </div>
+                                {{ _self.imageField(config.value) }}
                                 {# TEMPLATE #}
                                 <div id="template">
                                     <select name="value" class="form-control" id="select_template">
@@ -77,6 +81,8 @@
                                     </div>
                                 </div>
                                 <br>
+                            {% elseif config.type == 'image' %}
+                                {{ _self.imageField(config.value) }}
                             {% else %}
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <button class="btn btn-danger btn-sm emptyOne"><i class="fa fa-minus-square"></i></button>
@@ -156,6 +162,9 @@
         {% endif %}
         {% if config.value | slice(0, 11) != "data:image/" %}
             $('#image').hide();
+        {% endif %}
+        {% if (config.type == 'image') %}
+            $('#image').show();
         {% endif %}
         $('#type').change(function(){
             $('.tox-tinymce').hide();
