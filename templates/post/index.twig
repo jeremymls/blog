@@ -18,6 +18,9 @@
             {% for post in posts %}
                 <div class="col">
                     <div class="thumbnail thumbnail-custom">
+                        {% if category.name == "" %}
+                        <span class="label label-success">{{ post.category.name ?? "Non classé"}}</span>
+                        {% endif %}
                         <div class="row text-center">
                             <div class="{% if post.picture is not empty %}col-lg-8{% else %}col-lg-12{% endif %}">
                                 <div class="caption">
