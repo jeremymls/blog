@@ -4,11 +4,10 @@ namespace Core\Controllers;
 
 use Core\Middleware\Security;
 use Core\Middleware\Session\PHPSession;
+use Core\Middleware\Superglobals;
 use Core\Services\ConfigService;
 use Core\Services\FlashService;
 use Core\Services\InitService;
-
-require_once 'src/config/database.php';
 
 class InitController extends Controller
 {
@@ -30,11 +29,12 @@ class InitController extends Controller
 
     public function new()
     {
-        $sql = "CREATE DATABASE IF NOT EXISTS " . DB_NAME;
+        $dbData = Superglobals::getInstance()->getDatabase();
+        $sql = "CREATE DATABASE IF NOT EXISTS " . $dbData['name'];
         $this->twig->display(
             'admin/config/new.twig', [
             'sql' => $sql,
-            'bdd_name' => DB_NAME,
+            'bdd_name' => $dbData['name'],
             ]
         );
     }

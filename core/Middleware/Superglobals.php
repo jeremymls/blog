@@ -167,7 +167,16 @@ class Superglobals
         return $this->_ASSETS . $path;
     }
 
-    public function getEnv($key)
+    public function getDatabase()
+    {
+        $database['host'] = $this->getEnv('DB_HOST');
+        $database['name'] = $this->getEnv('DB_NAME');
+        $database['user'] = $this->getEnv('DB_USER');
+        $database['pass'] = $this->getEnv('DB_PASS');
+        return $database;
+    }
+
+    private function getEnv($key)
     {
         if (array_key_exists($key, $this->_ENV)) {
             return $this->_ENV[$key];

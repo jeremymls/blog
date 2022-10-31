@@ -15,8 +15,9 @@ class InitRepository extends Repository
 
     public function create_database()
     {
-        $bdd = new \PDO('mysql:host='. DB_HOST .';dbname=mysql;charset=utf8', DB_USER, DB_PASS);
-        $sql = "CREATE DATABASE IF NOT EXISTS " . DB_NAME;
+        $dbData = Superglobals::getInstance()->getDatabase();
+        $bdd = new \PDO('mysql:host=' . $dbData['host'] . ';dbname=mysql;charset=utf8', $dbData['user'], $dbData['pass']);
+        $sql = "CREATE DATABASE IF NOT EXISTS " . $dbData['name'];
         $statement = $bdd->prepare($sql);
         $statement->execute();
         $this->superGlobals->redirect('home');

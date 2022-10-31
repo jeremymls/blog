@@ -5,8 +5,6 @@ namespace Core\Lib;
 use Core\Middleware\Session\PHPSession;
 use Core\Middleware\Superglobals;
 
-require_once 'src/config/database.php';
-
 class Singleton
 {
     private static $instances = [];
@@ -38,9 +36,10 @@ class Singleton
     private static function newConnection(): \PDO
     {
         if (self::$database === null) {
-            if ((isset($_GET['url']) && $_GET['url'] != 'create_bdd') || !isset($_GET['url'])) {
+            if ((isset($_GET['url']) && $_GET['url'] != 'create_bdd') || !isset($_GET['url'])) { // todo : get url from getHost method
+                $dbData = Superglobals::getInstance()->getDatabase();
                 try {
-                    self::$database = new \PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
+                    self::$database = new \PDO('mysql:host=' . $dbData['host'] . ';dbname=' . $dbData['name'] . ';charset=utf8', $dbData['user'], $dbData['pass']);
                     self::$database->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                 } catch (\PDOException $e) {
                     if ($e->getCode() == 1049) {
