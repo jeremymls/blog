@@ -15,7 +15,7 @@
 							<label for="picture">Image
 								<div id="divOverview" class="div-pic">
                                     {% if post.picture is empty %}
-                                    <img id="thumbnailOverview" class="thumbnailOverview " src="/assets/img/post.png" alt="">
+                                    <img id="thumbnailOverview" class="thumbnailOverview " src="{{ asset('img/post.png') }}" alt="">
                                     {% else %}
                                     <img id="thumbnailOverview" class="thumbnailOverview " src="{{ post.picture }}" alt="">
                                     {# <button data-target="{{ getPath('admin:post:delete:picture', {'id': post.identifier}) }}" class="btn btn-danger btn-xs delete-pic"><i class="fa fa-trash"></i></button> #}
@@ -89,6 +89,6 @@
     </section>
 {% endblock %}
 {% block script %}
-    <script src="/assets/js/admin.js"></script>
-    <script src="/assets/js/action.js"></script>
+    <script src="{{ asset('js/admin.js') }}"></script>
+    <script src="{{ asset('js/action.js') }}"></script>
 {% endblock %}

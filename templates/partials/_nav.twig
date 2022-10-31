@@ -57,7 +57,7 @@
 					<li class="desktop">
 						<a href="{{ getPath('profil') }}">
 							<div id="divOverview" class="user" style="width: 3rem;">
-								<img id="thumbnailOverview" src={% if getUserParam("picture") is empty %}"/assets/img/profile.png"{% else %}{{ getUserParam("picture") }}{% endif %} class="img-responsive" alt="{{ getUserParam("username") }}">
+								<img id="thumbnailOverview" src={% if getUserParam("picture") is empty %}"{{ asset('img/profile.png') }}"{% else %}{{ getUserParam("picture") }}{% endif %} class="img-responsive" alt="{{ getUserParam("username") }}">
 							</div>
 						</a>
 					</li>
@@ -69,7 +69,7 @@
 		</div>
 		<a id="avatar_mobile" class="mobile" href="{{ getPath('profil') }}">
 			<div id="divOverview" class="user" style="width: 3rem;">
-				<img id="thumbnailOverview" src={% if getUserParam("picture") is empty %}"/assets/img/profile.png"{% else %}{{ getUserParam("picture") }}{% endif %} class="img-responsive" alt="{{  getUserParam("username") }}">
+				<img id="thumbnailOverview" src={% if getUserParam("picture") is empty %}"{{ asset('img/profile.png') }}"{% else %}{{ getUserParam("picture") }}{% endif %} class="img-responsive" alt="{{  getUserParam("username") }}">
 			</div>
 		</a>
 		<!-- /.navbar-collapse -->

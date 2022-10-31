@@ -79,6 +79,11 @@ abstract class Controller
         });
         $twig->addFunction($isValideFunc);
 
+        $assetFunc = new \Twig\TwigFunction('asset', function (string $path) use ($superglobals) {
+            return $superglobals->asset($path);
+        });
+        $twig->addFunction($assetFunc);
+
         return $twig;
     }
 

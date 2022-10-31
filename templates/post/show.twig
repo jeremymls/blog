@@ -115,7 +115,7 @@
 					<div class="panel-heading commentHeader">
 					<div style="display:flex; align-items:center;">
 						<div id="divOverview" class="user" style="width: 2rem; margin-right:1rem;">
-							<img id="thumbnailOverview" src={% if comment.author.picture is empty %}"/assets/img/profile.png"{% else %}{{ comment.author.picture }}{% endif %} class="img-responsive" alt="{{ comment.author.username }}">
+							<img id="thumbnailOverview" src={% if comment.author.picture is empty %}"{{ asset('img/profile.png') }}"{% else %}{{ comment.author.picture }}{% endif %} class="img-responsive" alt="{{ comment.author.username }}">
 						</div>
 						<small><strong>{{ comment.author.username }}</strong> le {{comment.frenchCreationDate }}</small>  
 					</div>
@@ -145,5 +145,5 @@
 
 {% endblock %}
 {% block script %}
-<script src="/assets/js/deleteComment.js"></script>
+<script src="{{ asset('js/deleteComment.js') }}"></script>
 {% endblock %}

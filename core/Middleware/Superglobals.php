@@ -11,6 +11,7 @@ class Superglobals
     private $_POST;
     private $method;
     private $path;
+    private $assetsPath;
     
 
     public function __construct()
@@ -33,9 +34,9 @@ class Superglobals
         $this->_GET = (isset($_GET)) ? $_GET : null;
         $this->_POST = (isset($_POST)) ? $_POST : null;
         $this->method = (isset($_SERVER['REQUEST_METHOD'])) ? $_SERVER['REQUEST_METHOD'] : null;
-        $this->referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
-        $this->path = (isset($_SERVER["REQUEST_SCHEME"], $_SERVER["HTTP_HOST"] )) ? 
-            ($_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"]) : null;
+        $this->referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : $_ENV['HOST'];
+        $this->path = $_ENV['HOST'];
+        $this->assetsPath = $_ENV['ASSETS_PATH'];
     }
 
     public function getMethod()
@@ -156,5 +157,10 @@ class Superglobals
             return $_FILES[$key];
         }
         return null;
+    }
+
+    public function asset($path)
+    {
+        return $this->assetsPath . $path;
     }
 }

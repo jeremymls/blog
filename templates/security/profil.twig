@@ -48,7 +48,7 @@
                         {# Image profil #}
                         <div id="colOverview" class="col-xs-8 col-xs-offset-2 col-md-offset-0 col-md-4">
 							<div id="divOverview" class="user">
-                                <img id="thumbnailOverview" src={% if user.picture is empty %}"/assets/img/profile.png"{% else %}{{ user.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
+                                <img id="thumbnailOverview" src={% if user.picture is empty %}"{{ asset('img/profile.png') }}"{% else %}{{ user.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
                             </div>
                             {% if user.identifier == getUserParam("identifier") %}<button id="btnOverview" type="button" class="btn btn-danger btn-lg"><i class="fa fa-trash" aria-hidden="true"></i></button>{% endif %}
                         </div>
@@ -92,7 +92,7 @@
     </section>
 {% endblock %}
 {% block script %}
-<script src="/assets/js/deleteComment.js"></script>
+<script src="{{ asset('js/deleteComment.js') }}"></script>
 <script>
     $(document).ready(function(){
         $('#btnOverview').click(function(){

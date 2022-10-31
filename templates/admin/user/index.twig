@@ -27,7 +27,7 @@
                                 <tr>
                                     <td>
                                         <div id="divOverview" class="user" style="width: 15rem;">
-                                            <img id="thumbnailOverview" src={% if user.picture is empty %}"/assets/img/profile.png"{% else %}{{ user.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
+                                            <img id="thumbnailOverview" src={% if user.picture is empty %}"{{ asset('img/profile.png') }}"{% else %}{{ user.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
                                         </div>
                                     </td>
                                     <td>
@@ -81,5 +81,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="/assets/js/admin.js"></script>
+<script src="{{ asset('js/admin.js') }}"></script>
 {% endblock %}
