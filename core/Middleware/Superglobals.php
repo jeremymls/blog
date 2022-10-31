@@ -9,9 +9,11 @@ class Superglobals
     private $_SERVER;
     private $_GET;
     private $_POST;
-    private $method;
-    private $path;
-    private $assetsPath;
+    private $_METHOD;
+    private $_REFERER;
+    private $_ENV;
+    private $_PATH;
+    private $_ASSETS;
     
 
     public function __construct()
@@ -33,24 +35,25 @@ class Superglobals
         $this->_SERVER = (isset($_SERVER)) ? $_SERVER : null;
         $this->_GET = (isset($_GET)) ? $_GET : null;
         $this->_POST = (isset($_POST)) ? $_POST : null;
-        $this->method = (isset($_SERVER['REQUEST_METHOD'])) ? $_SERVER['REQUEST_METHOD'] : null;
-        $this->referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : $_ENV['HOST'];
-        $this->path = $_ENV['HOST'];
-        $this->assetsPath = $_ENV['ASSETS_PATH'];
+        $this->_METHOD = (isset($_SERVER['REQUEST_METHOD'])) ? $_SERVER['REQUEST_METHOD'] : null;
+        $this->_REFERER = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : $_ENV['HOST'];
+        $this->_ENV = (isset($_ENV)) ? $_ENV : null;
+        $this->_PATH = (isset($this->_ENV['HOST'])) ? $this->_ENV['HOST'] : null;
+        $this->_ASSETS = (isset($this->_ENV['ASSETS_PATH'])) ? $this->_ENV['ASSETS_PATH'] : null;
     }
 
     public function getMethod()
     {
-        return $this->method;
+        return $this->_METHOD;
     }
 
     public function getPath($name = null, $params = [])
     {
         if ($name) {
             $routes = new Routes();
-            return $this->path . "/" .$routes->getUrl($name, $params);
+            return $this->_PATH . "/" .$routes->getUrl($name, $params);
         }
-        return $this->path . "/" . trim($_SERVER['REQUEST_URI'], '/');
+        return $this->_PATH . "/" . trim($_SERVER['REQUEST_URI'], '/');
     }
 
     public function getPathWithoutGet()
@@ -74,7 +77,7 @@ class Superglobals
 
     public function getPathReferer()
     {
-        return $this->referer;
+        return $this->_REFERER;
     }
 
     public function getGet($key = null)
@@ -161,6 +164,14 @@ class Superglobals
 
     public function asset($path)
     {
-        return $this->assetsPath . $path;
+        return $this->_ASSETS . $path;
+    }
+
+    public function getEnv($key)
+    {
+        if (array_key_exists($key, $this->_ENV)) {
+            return $this->_ENV[$key];
+        }
+        return null;
     }
 }
