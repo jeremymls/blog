@@ -28,7 +28,7 @@
                             <div id="image" class="form-group col-lg-6 col-lg-offset-3" style='display:block !important;'>
                                 <label for="value">Image
                                     <div id="divOverview">
-                                        <img id="thumbnailOverview" class="thumbnailOverview" src={% if value is empty %} "/assets/img/post.png" {% else %} {{ value }} {% endif %} alt="">
+                                        <img id="thumbnailOverview" class="thumbnailOverview" src={% if value is empty %} "{{ asset('img/post.png') }}" {% else %} {{ value }} {% endif %} alt="">
                                     </div>
                                 </label>
                                 <input type="file" name="value" id="picture" class="form-control picture" accept=".gif,.jpg,.jpeg,.png,.webp">
@@ -83,6 +83,11 @@
                                 <br>
                             {% elseif config.type == 'image' %}
                                 {{ _self.imageField(config.value) }}
+                            {% elseif config.type == 'color' %}
+                                <div class="form-group col-xs-3 floating-label-form-group controls text-center">
+                                    <label>Valeur</label>
+                                    <input type="color" name="value" id="value" style="height: 5rem;width: 10rem;border: 3px black solid;padding: 0;" value="{{ config.value }}">
+                                </div>
                             {% else %}
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <button class="btn btn-danger btn-sm emptyOne"><i class="fa fa-minus-square"></i></button>
@@ -140,7 +145,7 @@
     </style>
 {% endblock %}
 {% block script %}
-    <script src="/assets/js/action.js"></script>
+    <script src="{{ asset('js/action.js') }}"></script>
     <script>
     document.getElementById("empty").addEventListener("click", function(){
         document.querySelectorAll('textarea').forEach(function(element) {
