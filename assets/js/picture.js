@@ -1,12 +1,14 @@
 const thumbnail = document.querySelector(".thumbnailOverview");
 const imgSize = document.getElementById("imgSize");
-
 $('.picture').change(function(){
     if (this.files[0].size > 512000) {
         alert("Le fichier est trop gros");
         this.value = "";
         imgSize.innerHTML = "";
-        thumbnail.src = "/assets/img/profile.png";
+        thumbnail.src = 
+        $(this).attr('id') == "picture" ?
+        $("input[id='empty_picture']").val():
+        $("input[id='empty_profil_picture']").val();
     } else {
         imgSize.innerHTML = "Taille du fichier: " + formatBytes(this.files[0].size);
         var reader = new FileReader();

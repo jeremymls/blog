@@ -10,7 +10,8 @@
 	} 
 %}
 {% block nav %}{% include ('partials/_nav.twig') %}{% endblock %}
-
+<input type="hidden" id="empty_profil_picture" value="{{ empty_profil_picture }}" />
+<input type="hidden" id="empty_picture" value="{{ empty_picture }}" />
 {% if block("title") is defined or block("subtitle") is defined or block("imageHeader") is defined  %}
 <header>			
 	<div class="container">

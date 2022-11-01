@@ -43,6 +43,15 @@ abstract class Controller
         $twig->addExtension(new DebugExtension());
         $twig->addExtension(new StringExtension());
 
+        /**
+         * GLOBALS TWIG VARIABLES
+         */
+        $twig->addGlobal('empty_picture', $superglobals->getInstance()->asset('img/picture.png'));
+        $twig->addGlobal('empty_profil_picture', $superglobals->getInstance()->asset('img/profile.png'));
+
+        /**
+         * FONCTIONS TWIG
+         */
         $getUrlFunc = new \Twig\TwigFunction('getPath', function ($name = null, $params = []) use ($superglobals) {
             return $superglobals->getPath($name, $params);
         });

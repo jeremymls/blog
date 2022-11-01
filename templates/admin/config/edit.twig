@@ -26,7 +26,7 @@
                             {# IMAGE FIELD #}
                             {% macro imageField(value) %}
                             <div id="image" class="form-group col-lg-6 col-lg-offset-3" style='display:block !important;'>
-                                <label for="value">Image
+                                <label for="picture">Image
                                     <div id="divOverview">
                                         <img id="thumbnailOverview" class="thumbnailOverview" src={% if value is empty %} "{{ asset('img/post.png') }}" {% else %} {{ value }} {% endif %} alt="">
                                     </div>
@@ -145,7 +145,7 @@
     </style>
 {% endblock %}
 {% block script %}
-    <script src="{{ asset('js/action.js') }}"></script>
+    <script src="{{ asset('js/picture.js') }}"></script>
     <script>
     document.getElementById("empty").addEventListener("click", function(){
         document.querySelectorAll('textarea').forEach(function(element) {
