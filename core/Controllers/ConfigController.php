@@ -39,4 +39,9 @@ class ConfigController extends AdminController
         $params = $this->configService->get($id);
         $this->twig->display('admin/config/edit.twig', $params);
     }
+
+    public function delete_value($identifier)
+    {
+        $this->configService->delete_value($identifier);
+    }
 }

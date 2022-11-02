@@ -152,4 +152,17 @@ class ConfigService extends EntityService
         }
         return $configs_object;
     }
+
+    public function delete_value($id)
+    {
+        $success = $this->repository->update($id, ['value' => null]);
+        if (!$success) {
+            throw new \Exception("Impossible de supprimer cette valeur.");
+        }
+        $this->flashServices->success(
+            'Configuration modifiée',
+            'La valeur a bien été supprimée.'
+        );
+        $this->superglobals->redirect("admin:config:update",["id"=> $id]);
+    }
 }

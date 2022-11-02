@@ -7,11 +7,6 @@
 {% endblock %}
 
 {% block main %}
-<style>
-.convertedContentImage{
-    max-width: 150px;
-}
-</style>
     <section id="dashbord">
         <div class="container">
             <div class="row">
@@ -33,7 +28,7 @@
                                     {% if config.type == "color" %}
                                     <div style="margin:auto;background-color:{{ config.value }};height:3rem;width:10rem;"></div>
                                     {% else %}
-                                    {{ utils.content_converter(config.value, config.name) }}
+                                    {{ utils.content_converter(config.value, config.name, af_home_contact_title) }}
                                     {% endif %}
                                 </td>
                                 <td>{{ config.description }}</td>

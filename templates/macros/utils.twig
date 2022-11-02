@@ -112,20 +112,20 @@
 {% endmacro %}
 
 {# Convert content #}
-{% macro content_converter(content, configName) %}
+{% macro content_converter(content, configName, contactTitle) %}
     <div {% if (configName | slice(0, 15) == "af_home_content") %}class="home_content text-center"{% endif %}>
     {% if content | first == "<" %}
     {{ content | raw }}
     {% elseif content | slice(0, 2) == "[%" %}
     {% set macroName = content | slice(2) | slice(0, -2) %}
         {% if macroName == "contact" %}
-            {{ _self.contact("CONTACTEZ-MOI :") }}
+            {{ _self.contact(contactTitle) }}
         {% endif %}
         {% if macroName == "reseaux" %}
             {{ _self.social_networks() }}
         {% endif %}
         {% if macroName == "contact+reseaux" %}
-            {{ _self.contact("CONTACTEZ-MOI :") }}
+            {{ _self.contact(contactTitle) }}
             {{ _self.social_networks() }}
         {% endif %}
     {% elseif content | slice(0, 11) == "data:image/" %}

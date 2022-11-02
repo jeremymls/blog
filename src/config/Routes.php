@@ -99,6 +99,7 @@ class Routes
         // AdminConfig
         $this->router->get('admin/config/update/:id', 'Config@update@core', 'admin:config:update');
         $this->router->post('admin/config/update/:id', 'Config@update@core');
+        $this->router->get('admin/config/delete/:value', 'Config@delete_value@core', 'admin:config:delete:value');
         $this->router->get('admin/configs/list/:prefix', 'Config@list@core', 'admin:configs:list');
         $this->router->get('admin/configs', 'Config@index@core', 'admin:configs');
         // AdminDoc

@@ -24,11 +24,12 @@
                         <input type="hidden" name="name" value="{{config.name}}" >
                         <div class="row control-group">
                             {# IMAGE FIELD #}
-                            {% macro imageField(value) %}
+                            {% macro imageField(value, id) %}
                             <div id="image" class="form-group col-lg-6 col-lg-offset-3" style='display:block !important;'>
                                 <label for="picture">Image
                                     <div id="divOverview">
-                                        <img id="thumbnailOverview" class="thumbnailOverview" src={% if value is empty %} "{{ asset('img/post.png') }}" {% else %} {{ value }} {% endif %} alt="">
+                                        <img id="thumbnailOverview" class="thumbnailOverview" src="{% if value is not empty and value | slice(0, 11) == "data:image/" %}{{ value }}{% else %}{{ asset('img/post.png') }}{% endif %}" alt="">
+                                        <button id="btnOverview" data-id="{{ id }}" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                     </div>
                                 </label>
                                 <input type="file" name="value" id="picture" class="form-control picture" accept=".gif,.jpg,.jpeg,.png,.webp">
@@ -66,7 +67,7 @@
                                 {# CONTENT #}
                                 <textarea name="value" id="mytextarea" >{{ config.value }}</textarea>
                                 {# IMAGE #}
-                                {{ _self.imageField(config.value) }}
+                                {{ _self.imageField(config.value, config.identifier) }}
                                 {# TEMPLATE #}
                                 <div id="template">
                                     <select name="value" class="form-control" id="select_template">
@@ -82,7 +83,7 @@
                                 </div>
                                 <br>
                             {% elseif config.type == 'image' %}
-                                {{ _self.imageField(config.value) }}
+                                {{ _self.imageField(config.value, config.identifier) }}
                             {% elseif config.type == 'color' %}
                                 <div class="form-group col-xs-3 floating-label-form-group controls text-center">
                                     <label>Valeur</label>
@@ -142,6 +143,16 @@
         main {
             background-color: whitesmoke !important;
         }
+        #divOverview {
+            position: relative;
+        }
+        #divOverview > button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: .5rem;
+            border-radius: 50%;
+        }
     </style>
 {% endblock %}
 {% block script %}
@@ -157,6 +168,11 @@
             e.preventDefault();
             this.parentNode.querySelector('textarea').value = '';
         });
+    });
+    $('#btnOverview').click(function(){
+        if (confirm("Voulez-vous vraiment supprimer cette image?")){
+            window.location.href="{{ getPath('admin:config:delete:value', {value: config.identifier}) }}";
+        };
     });
         // Choice type
         {% if config.value | first != "<" %}
@@ -212,7 +228,7 @@
                     $('#template_overview').html(template_contact_reseaux);
                     break;
                 default:
-                    $('#template_overview').html('Aucun contenu disponible');
+                    $('#template_overview').html('Selectionnez un template pour voir un aperçu');
                     break;
             }
         }

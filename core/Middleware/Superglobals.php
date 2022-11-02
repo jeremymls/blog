@@ -35,11 +35,11 @@ class Superglobals
         $this->_SERVER = (isset($_SERVER)) ? $_SERVER : null;
         $this->_GET = (isset($_GET)) ? $_GET : null;
         $this->_POST = (isset($_POST)) ? $_POST : null;
-        $this->_METHOD = (isset($_SERVER['REQUEST_METHOD'])) ? $_SERVER['REQUEST_METHOD'] : null;
-        $this->_REFERER = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : $_ENV['HOST'];
         $this->_ENV = (isset($_ENV)) ? $_ENV : null;
         $this->_PATH = (isset($this->_ENV['HOST'])) ? $this->_ENV['HOST'] : null;
         $this->_ASSETS = (isset($this->_ENV['ASSETS_PATH'])) ? $this->_ENV['ASSETS_PATH'] : null;
+        $this->_METHOD = (isset($_SERVER['REQUEST_METHOD'])) ? $_SERVER['REQUEST_METHOD'] : null;
+        $this->_REFERER = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : $_ENV['HOST'];
     }
 
     public function getMethod()

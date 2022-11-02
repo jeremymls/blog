@@ -28,6 +28,7 @@ const CONFIGS = [
     'af_home_content_1' =>          [null,'Contenu n°1 de la page d\'accueil','editor'],
     'af_home_content_2' =>          [null,'Contenu n°2 de la page d\'accueil','editor'],
     'af_home_content_3' =>          [null,'Contenu n°3 de la page d\'accueil','editor'],
+    'af_home_contact_title' =>      ["Contactez-moi :",'Titre de la section "Contact"'],
     'sd_google_analytics_key' =>    [null,'Clé Google Analytics'],
     'sd_recaptcha_site_key' =>      [null,'Clé du site reCaptcha'],
 ];
