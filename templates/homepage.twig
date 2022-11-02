@@ -11,6 +11,7 @@
 {% block main %}
 
     <!-- Dashbord Grid Section -->
+    {% if af_slider_display == 'ON' %}
     <section id="dashbord">
         <div class="container-fluid">
             <div class="row text-center">
@@ -61,6 +62,7 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
     <!-- About Section -->
     <section class="success" id="about">
@@ -161,4 +163,15 @@
     });
 </script>
 {% endif %}
+{% endblock %}
+
+{% block head %}
+<style>
+    #myCarousel .item {
+        background-image: url('{% if af_slider_background_image %}{{ af_slider_background_image }}{% else %}{{ asset("img/slide-background.jpg") }}{% endif %}');
+        background-size: {% if af_slider_background_size %}{{ af_slider_background_size }}{% else %}cover{% endif %};
+        background-color: {% if af_slider_background_color %}{{ af_slider_background_color }}{% else %}transparent{% endif %};
+        background-repeat: {% if af_slider_background_repeat %}{{ af_slider_background_repeat }}{% else %}no-repeat{% endif %};
+    }
+</style>
 {% endblock %}
