@@ -8,25 +8,28 @@
 	!!
 {% endblock %}
 {% block subtitle %}
-	<a id="retour" href="javascript:history.back()" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+	<a id="retour" href="{{ getPath('home') }}" ><i class="fa fa-home" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
-	<div class="alert alert-danger" role="alert">
-		<dl class="dl-horizontal">
-			{% if error.code > 0 %}
-				<dt>Code</dt>
-				<dd>{{ error.code }}</dd>
-			{% endif %}
-
-			<dt>Message</dt>
-			<dd>{{ error.message | raw  }}</dd>
-			{% if error.code != 404 %}
-				<dt>Fichier</dt>
-				<dd>{{ error.file }} <strong>(line:{{ error.line }})</strong></dd>
-				{# <textarea readonly class="form-control" rows="15">{{ error.trace }}</textarea> #}
-			{% endif %}
-		</dl>
+<section>
+	<div class="container">
+		<div class="alert alert-danger" role="alert">
+			<dl class="dl-horizontal text-center">
+				{% if error.code > 0 %}
+					<dt>Code</dt>
+					<dd>{{ error.code }}</dd>
+				{% endif %}
+				<dt>Message</dt>
+				<dd>{{ error.message | raw  }}</dd>
+				{% if error.code != 404 %}
+					<dt>Fichier</dt>
+					<dd>{{ error.file }} <strong>(line:{{ error.line }})</strong></dd>
+					{# <textarea readonly class="form-control" rows="15">{{ error.trace }}</textarea> #}
+				{% endif %}
+			</dl>
+		</div>
 	</div>
+</section>
 
 {% endblock %}
