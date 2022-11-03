@@ -1,6 +1,11 @@
 {% extends "/base.twig" %}
 
 {% block title %}{% if action == "register" %}Inscription{% else %}Modification du profil{% endif %}{% endblock %}
+{% block subtitle %}{% if action == "register" %}
+	<a id="retour" href="{{ getPath('home') }}" ><i class="fa fa-home" aria-hidden="true"></i></a>
+{% else %}
+	<a id="retour" href="{{ getPath('profil') }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+{% endif %}{% endblock %}
 
 {% block main %}
     <section>

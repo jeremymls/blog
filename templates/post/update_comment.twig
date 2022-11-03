@@ -2,7 +2,7 @@
 
 {% block title %}Modification du commentaire{% endblock %}
 {% block subtitle %}
-	<a id="retour" href="javascript:history.back()" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+	<a id="retour" href="{{ getPath('post', {'id': comment.post.identifier}) }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
