@@ -4468,6 +4468,12 @@ tbody.collapse.in {
 .navbar-header:after {
   clear: both;
 }
+.navbar-header #navbar-header-right {
+  float: right;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
 @media (min-width: 768px) {
   .navbar-header {
     float: left;
@@ -4597,7 +4603,6 @@ tbody.collapse.in {
 
 .navbar-toggle {
   position: relative;
-  float: right;
   margin-right: 15px;
   padding: 9px 10px;
   margin-top: 8px;

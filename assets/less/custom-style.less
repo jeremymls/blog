@@ -291,14 +291,9 @@
 }
 
 #avatar_mobile{
-    position:absolute;
-    top:1rem;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
+    position:relative;
+    margin-right: 1rem;
     text-align: center;
-    z-index: -1;
 }
 
 .footer-col{
@@ -425,6 +420,18 @@
     font-size: 2.2rem;
     dt,dd{
         padding-top: 1rem;
+    }
+    @media (max-width: 768px) {
+        text-align: center;
+        dt,dd{
+            padding-top: 0;
+        }
+        dt {
+            font-size: 2rem !important;
+        }
+        dd {
+            margin-bottom: 1rem;
+        }
     }
 }
 

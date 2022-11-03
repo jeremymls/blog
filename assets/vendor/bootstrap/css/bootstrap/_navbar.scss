@@ -30,7 +30,12 @@
 
 .navbar-header {
   @include clearfix;
-
+  #navbar-header-right{
+    float: right;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+  }
   @media (min-width: $grid-float-breakpoint) {
     float: left;
   }
@@ -192,7 +197,7 @@
 
 .navbar-toggle {
   position: relative;
-  float: right;
+  // float: right;
   margin-right: $navbar-padding-horizontal;
   padding: 9px 10px;
   @include navbar-vertical-align(34px);
