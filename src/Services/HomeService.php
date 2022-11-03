@@ -18,20 +18,21 @@ class HomeService extends Service
     {
         $configService = new ConfigService();
         $mailService = new MailService();
+        $data = $this->superglobals->getPost();
         $mailService->sendEmail(
             [
             'reply_to' => [
-                'name' => $_POST['name'],
-                'email' => $_POST['email']
+                'name' => $data['name'],
+                'email' => $data['email']
             ],
             'recipient' => $configService->getOwnerMailContact(),
-            'subject' => 'Message de ' . $_POST['name'],
+            'subject' => 'Message de ' . $data['name'],
             'template' => 'contact',
             'template_data' => [
-                'name' => $_POST['name'],
-                'mail' => $_POST['email'],
-                'phone' => $_POST['phone'],
-                'message' => $_POST['message'],
+                'name' => $data['name'],
+                'mail' => $data['email'],
+                'phone' => $data['phone'],
+                'message' => $data['message'],
                 'cs_site_name' => $configService->getByName("cs_site_name")
             ],
             'success_message' => 'Votre message a bien été envoyé.'],

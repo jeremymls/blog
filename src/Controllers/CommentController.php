@@ -17,7 +17,7 @@ class CommentController extends Controller
     public function add(string $post)
     {
         $this->commentService->add(
-            $_POST, 
+            $this->superglobals->getPost(), 
             [
                 'post' =>$post,
                 'author' => UserSession::getInstance()->getUserParam("identifier")
@@ -30,9 +30,10 @@ class CommentController extends Controller
     public function update(string $identifier)
     {
         if ($this->isPost()) {
+            $this->superglobals->setPost('moderate', 0);
             $this->commentService->update(
                 $identifier, 
-                $_POST, 
+                $this->superglobals->getPost(), 
                 'Votre commentaire sera à nouveau <strong style="color:#f00;">soumis à la modération</strong> et publié'
             );
             $this->session->redirectLastUrl('commentList');
@@ -45,8 +46,9 @@ class CommentController extends Controller
     public function delete()
     {
         if ($this->isPost()) {
-            if (isset($_POST['commentId'])) {
-                $deletion_confirmation = $this->commentService->delete_ajax($_POST['commentId']);
+            $id = $this->superglobals->getPost('commentId');
+            if ($id) {
+                $deletion_confirmation = $this->commentService->delete_ajax($id);
                 if ($deletion_confirmation === true) {
                     echo true;
                 } else {
@@ -61,9 +63,10 @@ class CommentController extends Controller
     public function cancelDelete()
     {
         if ($this->isPost()) {
-            if (isset($_POST['commentId'])) {
-                $this->commentService->moderate(0, $_POST['commentId'],false);
-                $cancel_deletion_confirmation = $this->commentService->delete_ajax($_POST['commentId'], false);
+            $id = $this->superglobals->getPost('commentId');
+            if ($id) {
+                $this->commentService->moderate(0, $id,false);
+                $cancel_deletion_confirmation = $this->commentService->delete_ajax($id, false);
                 if ($cancel_deletion_confirmation === true) {
                     echo true;
                 } else {

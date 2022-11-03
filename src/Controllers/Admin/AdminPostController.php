@@ -26,7 +26,7 @@ class AdminPostController extends AdminController
     public function add()
     {
         if ($this->isPost()) {
-            $this->postService->add($_POST);
+            $this->postService->add($this->superglobals->getPost());
             $this->superglobals->redirect('admin:posts');
         }
         $this->twig->display('admin/post/action.twig', ['action' => 'add',]);
@@ -35,7 +35,7 @@ class AdminPostController extends AdminController
     public function update(string $identifier)
     {
         if ($this->isPost()) {
-            $this->postService->update($identifier, $_POST);
+            $this->postService->update($identifier, $this->superglobals->getPost());
             $this->session->redirectLastUrl();
         }
         $params = $this->postService->get($identifier);

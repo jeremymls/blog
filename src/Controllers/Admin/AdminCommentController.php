@@ -35,7 +35,7 @@ class AdminCommentController extends AdminController
 
     public function multiple_moderation()
     {
-        $this->commentService->multiple_moderation($_POST);
+        $this->commentService->multiple_moderation($this->superglobals->getPost());
         $this->superglobals->redirectLastUrl();
     }
 }

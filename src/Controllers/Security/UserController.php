@@ -24,7 +24,7 @@ class UserController extends Controller
     public function register($userId = null)
     {
         if ($this->isPost()) {
-            $this->userService->register($_POST, $userId);
+            $this->userService->register($this->superglobals->getPost(), $userId);
             $this->redirectWithTimeout('profil');
         } else {
             $this->twig->display('security/action.twig', ['action' => 'register',]);
@@ -33,9 +33,9 @@ class UserController extends Controller
 
     public function update()
     {
-        $userId = isset($_GET["userId"]) ? $_GET["userId"] : null;
+        $userId = $this->superglobals->getGet('userId');
         if ($this->isPost()) {
-            $this->userService->updateUser($_POST, $userId);
+            $this->userService->updateUser($this->superglobals->getPost(), $userId);
             $this->redirectWithTimeout('profil');
         } else {
             $params = $this->userService->getData($userId);
@@ -46,7 +46,7 @@ class UserController extends Controller
     public function login($anchor = null)
     {
         if ($this->isPost()) {
-            $this->userService->login($_POST);
+            $this->userService->login($this->superglobals->getPost());
             $this->redirectWithTimeout(null, $anchor);
         } else {
             $this->twig->display('security/login.twig', []);
@@ -68,7 +68,7 @@ class UserController extends Controller
     public function edit_mail($identifier = null)
     {
         if ($this->isPost()) {
-            $this->userService->edit_mail($_POST);
+            $this->userService->edit_mail($this->superglobals->getPost());
             $this->redirectWithTimeout('profil');
         }
         $params = $this->userService->getData($identifier);
@@ -78,7 +78,7 @@ class UserController extends Controller
     public function edit_password($identifier = null)
     {
         if ($this->isPost()) {
-            $this->userService->edit_password($_POST);
+            $this->userService->edit_password($this->superglobals->getPost());
             $this->redirectWithTimeout('profil');
         }
         $params = $this->userService->getData($identifier);
@@ -94,7 +94,7 @@ class UserController extends Controller
     public function forget_password()
     {
         if ($this->isPost()) {
-            $this->userService->forget_password($_POST);
+            $this->userService->forget_password($this->superglobals->getPost());
         $this->redirectWithTimeout('login');
         } else {
             $this->twig->display('security/forget_password.twig', []);
@@ -107,7 +107,7 @@ class UserController extends Controller
         $params = $tokenService->getUserByToken($token);
         if (isset($params['user'])) {
             if ($this->isPost()) {
-                $this->userService->reset_password($params['user'], $_POST);
+                $this->userService->reset_password($params['user'], $this->superglobals->getPost());
                 $this->redirectWithTimeout('login');
             } else {
                 $this->twig->display('security/reset_password.twig', $params);
@@ -124,7 +124,7 @@ class UserController extends Controller
     // AJAX
     public function checkUsername()
     {
-        $this->userService->checkUsername($_POST['username']);
+        $this->userService->checkUsername($this->superglobals->getPost('username'));
     }
 
     public function redirectWithTimeout(string $pathName = null, $anchor = null)

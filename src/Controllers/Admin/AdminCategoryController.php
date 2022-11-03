@@ -22,7 +22,7 @@ class AdminCategoryController extends AdminController
     public function add()
     {
         if ($this->isPost()) {
-            $this->categoryService->add($_POST);
+            $this->categoryService->add($this->superglobals->getPost());
             $this->superglobals->redirect('admin:categories');
         }
         $this->twig->display('admin/category/action.twig', ['action' => 'add',]);
@@ -31,7 +31,7 @@ class AdminCategoryController extends AdminController
     public function update(string $identifier)
     {
         if ($this->isPost()) {
-            $this->categoryService->update($identifier, $_POST);
+            $this->categoryService->update($identifier, $this->superglobals->getPost());
             $this->superglobals->redirect('admin:categories');
         }
         $params = $this->categoryService->get($identifier);

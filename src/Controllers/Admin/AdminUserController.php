@@ -31,7 +31,7 @@ class AdminUserController extends AdminController
         if ($this->isPost()) {
             $this->userService->update(
                 $identifier, 
-                $_POST
+                $this->superglobals->getPost()
             );
         $this->superglobals->redirect('admin:users');
         }
