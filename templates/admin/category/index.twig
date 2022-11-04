@@ -1,37 +1,34 @@
 {% extends "/base.twig" %}
-{% import "macros/utils.twig" as utils %}
 
 {% block title %}Administration des Catégories{% endblock %}
 {% block subtitle %}
 	<a id="retour" href="{{ getPath('dashboard') }}"><i class="fa fa-cogs" aria-hidden="true"></i></a>
-	<a id="oneTool" href="{{ getPath('admin:category:add') }}" ><i class="fa fa-plus" aria-hidden="true"></i></a>
+    {% if categories|length < 5 %}
+        <a id="oneTool" href="{{ getPath('admin:category:add') }}" ><i class="fa fa-plus" aria-hidden="true"></i></a>
+    {% endif %}
 {% endblock %}
 
 {% block main %}
-
     <section>
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
-                    {{ utils.pagination(nbPage) }}
+                {% if categories|length >= 5 %}
+                    <div class="alert alert-danger text-center" role="alert">
+                        <strong>Attention !</strong> Vous avez atteint le nombre maximum de catégories.
+                    </div>
+                {% endif %}
+                <div class="col-lg-6 col-lg-offset-3">
                     <table id="BO_table" class="table table-hover">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Name</th>
                                 <th class="text-center">Actions</th>
                             <tr>
                         </thead>
                         <tbody>
                             {% for category in categories %}
-                            
                                 <tr>
-                                    <td>
-                                        {{ category.identifier }}
-                                    </td>
-                                    <td>
-                                        {{ category.name }}
-                                    </td>
+                                    <td>{{ category.name }}</td>
                                     <td class="text-center">
                                             <a href="{{ getPath('admin:category:update', {'id':category.identifier}) }}" class="btn btn-info"><i class="fa fa-pencil-square-o"></i> Editer</a>
                                             <a href="{{ getPath('admin:category:delete', {'id':category.identifier}) }}" class="btn btn-danger confirm"><i class="fa fa-trash"></i> Supprimer</a>
@@ -40,7 +37,7 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                    {{ utils.pagination(nbPage) }}
+                    <strong>* 5 catégories maximum</strong>
                 </div>
             </div>
         </div>
