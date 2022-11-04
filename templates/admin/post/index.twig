@@ -13,18 +13,21 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-
-                    <div>
-                        <span>Filtre par catégorie:</span>
-                        <div class="btn-group" role="group">
-                            <a href="{{ getPath('admin:posts') }}" type="button" class="btn btn-{% if categoryId == null %}primary{% else %}default{% endif %}">All</a>
-                            {% for category in categories %}
-                            <a href="{{ getPath('admin:posts:category', {"category": category.identifier}) }}" type="button" class="btn btn-{% if categoryId == category.identifier %}primary{% else %}default{% endif %}">{{ category.name }}</a>
-                            {% endfor %}
-                            <a href="{{ getPath('admin:posts:category', {"category": "0"}) }}" type="button" class="btn btn-{% if categoryId == "0" %}primary{% else %}default{% endif %}">Non classé</a>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form class="form-inline">
+                                <span>Filtre par catégorie:</span>
+                                <div class="btn-group" role="group">
+                                    <a href="{{ getPath('admin:posts') }}" type="button" class="btn btn-{% if categoryId == "all" %}primary{% else %}default{% endif %}">All</a>
+                                    {% for category in categories %}
+                                    <a href="{{ getPath('admin:posts:category:nbr_show', {"category": category.identifier, "nbr_show": nbr_show}) }}" type="button" class="btn btn-{% if categoryId == category.identifier %}primary{% else %}default{% endif %}">{{ category.name }}</a>
+                                    {% endfor %}
+                                    <a href="{{ getPath('admin:posts:category:nbr_show', {"category": "0", "nbr_show": nbr_show}) }}" type="button" class="btn btn-{% if categoryId == "0" %}primary{% else %}default{% endif %}">Non classé</a>
+                                </div>
+                            </form>
                         </div>
+                        <div class="col-md-6 text-right">{{ utils.nbp(nbr_show) }}</div>
                     </div>
-
                     {{ utils.pagination(nbPage) }}
                     <table id="BO_table" class="table table-hover">
                         <thead>
@@ -87,4 +90,9 @@
 
 {% block script %}
 <script src="{{ asset('js/admin.js') }}"></script>
+<script>
+$('#nbr_show').change(function(){
+    window.location.href = "{{ getPath('admin:posts') }}/{{ categoryId }}/" + $("#nbr_show").val();
+});
+</script>
 {% endblock %}

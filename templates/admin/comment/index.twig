@@ -7,23 +7,27 @@
 {% endblock %}
 
 {% block main %}
-
-
     <div class="container">
         <section id="moderate">
-
             <div class="row">
                 <div class="col">
-                    <div>
-                        <span>Filtres:</span>
-                        <select id="filter">
-                            <option {% if filter == "all" %}selected{% endif %} value="all">Tous</option>
-                            <option {% if filter == "pending" %}selected{% endif %} value="pending">En attente</option>
-                            <option {% if filter == "approved" %}selected{% endif %} value="approved">Aprouvés</option>
-                            <option {% if filter == "rejected" %}selected{% endif %} value="rejected">Rejetés</option>
-                        </select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form class="form-inline">
+                                <span>Filtres:</span>
+                                <div class="form-group">
+                                    <label>Modération</label>
+                                    <select class="form-control" id="filter">
+                                        <option {% if filter == "all" %}selected{% endif %} value="all">Tous</option>
+                                        <option {% if filter == "pending" %}selected{% endif %} value="pending">En attente</option>
+                                        <option {% if filter == "approved" %}selected{% endif %} value="approved">Aprouvés</option>
+                                        <option {% if filter == "rejected" %}selected{% endif %} value="rejected">Rejetés</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6 text-right">{{ utils.nbp(nbr_show) }}</div>
                     </div>
-
                     {{ utils.pagination(nbPage) }}
                     <div role="tabpanel" class="tab-pane active" id="date">
                         <form method="post">
@@ -143,9 +147,16 @@
 <script>
     $(document).ready(function(){
         $('#filter').change(function(){
-            var filter = $(this).val();
-            window.location.href = "{{ getPath('admin:comments') }}/" + filter;
+            redirectWithParam();
+            // var filter = $(this).val();
+            // window.location.href = "{{ getPath('admin:comments') }}/" + filter;
         });
+        $('#nbr_show').change(function(){
+            redirectWithParam();
+        });
+        function redirectWithParam() {
+            window.location.href = "{{ getPath('admin:comments') }}/" + $("#filter").val()  + "/" + $("#nbr_show").val();
+        }
     });
 </script>
 {% endblock %}

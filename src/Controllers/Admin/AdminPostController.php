@@ -13,13 +13,13 @@ class AdminPostController extends AdminController
         $this->postService = new PostService();
     }
 
-    public function index($category = null)
+    public function index($category = "all", $nbr_show=5)
     {
-        $option = $category !== null ? "WHERE category = ?" : "";
-        $optionsData = $category !== null ? [$category] : [];
+        $option = $category !== "all" ? "WHERE category = ?" : "";
+        $optionsData = $category !== "all" ? [$category] : [];
         $params = $this->postService->getAll($option, $optionsData);
-        $params = $this->pagination->paginate($params, 'posts', 5);
-        $params['categoryId'] = $category;
+        $params = $this->pagination->paginate($params, 'posts', $nbr_show);
+        $params['categoryId'] = $category ?? "all";
         $this->twig->display('admin/post/index.twig', $params);
     }
 

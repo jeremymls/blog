@@ -26,6 +26,23 @@
     {% endif %}
 {% endmacro %}
 
+{# Nombre par page #}
+{% macro nbp(nbr_show) %}
+<form class="form-inline">
+    <div class="form-group">
+        <label>Nbr/Page</label>
+        <select class="form-control" id="nbr_show">
+            <option {% if nbr_show == 0 %}selected{% endif %} value="0">Tous</option>
+            <option {% if nbr_show == 5 %}selected{% endif %} value="5">5</option>
+            <option {% if nbr_show == 10 %}selected{% endif %} value="10">10</option>
+            <option {% if nbr_show == 20 %}selected{% endif %} value="20">20</option>
+            <option {% if nbr_show == 50 %}selected{% endif %} value="50">50</option>
+            <option {% if nbr_show == 100 %}selected{% endif %} value="100">100</option>
+        </select>
+    </div>
+</form>
+{% endmacro %}
+
 {# Flash #}
 {% macro flash(flash ) %}
     {% if flash.type == "mail_not_validated" %}

@@ -13,10 +13,10 @@ class AdminCommentController extends AdminController
         $this->commentService = new CommentService();
     }
 
-    public function index($filter = "pending")
+    public function index($filter = "pending", $nbr_show = 10)
     {
         $params = $this->commentService->getCommentsFiltered($filter);
-        $params = $this->pagination->paginate($params, 'comments', 10);
+        $params = $this->pagination->paginate($params, 'comments', $nbr_show );
         $params['filter'] = $filter;
         $this->twig->display('admin/comment/index.twig', $params);
     }

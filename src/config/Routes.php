@@ -83,15 +83,18 @@ class Routes
         $this->router->get('admin/posts/delete/picture/:id', 'Admin\AdminPost@delete_picture', 'admin:post:delete:picture');
         $this->router->get('admin/posts/delete/:id', 'Admin\AdminPost@delete', 'admin:post:delete');
         $this->router->get('admin/posts/:category', 'Admin\AdminPost@index', 'admin:posts:category');
+        $this->router->get('admin/posts/:category/:nbr_show', 'Admin\AdminPost@index', 'admin:posts:category:nbr_show');
         // AdminComment
         $this->router->get('admin/comments/moderate/:action/:id', 'Admin\AdminComment@moderate', 'admin:comment:moderate');
         $this->router->get('admin/comments/delete/:id', 'Admin\AdminComment@delete');
         $this->router->get('admin/comments/:filter', 'Admin\AdminComment@index', 'admin:comments:filter');
+        $this->router->get('admin/comments/:filter/:nbr_show', 'Admin\AdminComment@index');
         $this->router->post('admin/comments/:filter', 'Admin\AdminComment@multiple_moderation');
         $this->router->post('admin/comments', 'Admin\AdminComment@multiple_moderation');
         $this->router->get('admin/comments', 'Admin\AdminComment@index', 'admin:comments');
         // AdminUser
         $this->router->get('admin/users', 'Admin\AdminUser@index', 'admin:users');
+        $this->router->get('admin/users/:nbr_show', 'Admin\AdminUser@index');
         $this->router->get('admin/users/delete/:id', 'Admin\AdminUser@delete', 'admin:user:delete');
         $this->router->get('admin/users/role/:id', 'Admin\AdminUser@role', 'admin:user:role');
         $this->router->post('admin/users/role/:id', 'Admin\AdminUser@role');

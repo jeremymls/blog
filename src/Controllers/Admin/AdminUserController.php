@@ -13,10 +13,10 @@ class AdminUserController extends AdminController
         $this->userService = new UserService();
     }
 
-    public function index()
+    public function index($nbr_show = 5)
     {
         $params = $this->userService->getAll();
-        $params = $this->pagination->paginate($params, 'users', 10);
+        $params = $this->pagination->paginate($params, 'users', $nbr_show);
         $this->twig->display('admin/user/index.twig', $params);
     }
 
