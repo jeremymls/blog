@@ -10,6 +10,7 @@ class Config extends Model
     public ?string $value;
     public ?string $description;
     public ?string $type;
+    public ?string $default_value;
 
     public function getFillable(): array
     {

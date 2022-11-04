@@ -92,7 +92,8 @@ class ConfigService extends EntityService
                     "name" => $key,
                     "value" => $config[0],
                     "description" => $config[1],
-                    "type" => isset($config[2]) ? $config[2] : "text"
+                    "type" => isset($config[2]) ? $config[2] : "text",
+                    "default_value" => $config[0]
                     ]
                 );
                 $this->repository->add($input);

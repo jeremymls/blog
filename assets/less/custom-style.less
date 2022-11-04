@@ -48,7 +48,8 @@
     }
 }
 
-.floating-label-form-group{
+.floating-label-form-group,
+.form-custom{
     background-color: whitesmoke;
     margin-bottom: 1rem;
     border-radius: 1rem;
@@ -61,6 +62,20 @@
         right: 1rem;
         z-index: 100;
     }
+    .desc-label {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-top: 1rem;
+        color: @theme-primary;
+        margin-bottom: 0.5rem;
+    }
+}
+
+#change_color{
+    z-index: 1;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
 }
 
 #commentList{

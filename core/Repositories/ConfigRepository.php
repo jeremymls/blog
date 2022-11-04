@@ -21,6 +21,8 @@ class ConfigRepository extends Repository
             name VARCHAR(255) NOT NULL,
             value VARCHAR(255) DEFAULT NULL,
             description VARCHAR(255) DEFAULT NULL,
+            type VARCHAR(255) DEFAULT NULL,
+            default_value VARCHAR(255) DEFAULT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )";
         $statement = $this->connection->prepare($sql);

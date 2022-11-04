@@ -26,7 +26,7 @@
                                 <td>{{ config.name| slice(3,1) | upper ~ config.name | slice(4) | replace({'_': ' '})}}</td>
                                 <td>
                                     {% if config.type == "color" %}
-                                    <div style="margin:auto;background-color:{{ config.value }};height:3rem;width:10rem;"></div>
+                                    <div style="margin:auto;background-color:{{ config.value }};height:3rem;width:10rem;border:1px solid black;border-radius:5px;"></div>
                                     {% else %}
                                     {{ utils.content_converter(config.value, config.name, af_home_contact_title) }}
                                     {% endif %}
