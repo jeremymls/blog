@@ -2,6 +2,7 @@
 
 namespace Core\Services;
 
+use Core\Middleware\TemplateRenderer;
 use Core\Models\Config;
 use Core\Repositories\ConfigRepository;
 
@@ -74,6 +75,7 @@ class ConfigService extends EntityService
                 $params['title'] = '';
                 break;
         }
+        $params['prefix'] = $prefix;
         return $params;
     }
 
@@ -165,5 +167,16 @@ class ConfigService extends EntityService
             'La valeur a bien été supprimée.'
         );
         $this->superglobals->redirect("admin:config:update",["id"=> $id]);
+    }
+
+    public function renderColor($twig)
+    {
+        $params = $this->getAll("where name LIKE 'af_color%'");
+        $renderer = new TemplateRenderer($twig, $_SERVER['DOCUMENT_ROOT'], 'assets/styles.css.twig'); // todo: à revoir 
+        foreach ($params['configs'] as $param) {
+            $renderer->setParam($param->name, $param->value);
+        }
+        $renderer->render();
+
     }
 }

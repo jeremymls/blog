@@ -34,6 +34,11 @@ class ConfigController extends AdminController
                 $this->superglobals->setPost("value", Encryption::encrypt(trim($this->superglobals->getPost('value'))));
             }
             $this->configService->update($id, $this->superglobals->getPost());
+            if ($prefix == "af_"){
+                if (explode('_', $this->superglobals->getPost('name'))[1]== "color"){
+                    $this->configService->renderColor($this->twig);
+                }
+            }
             $this->session->redirectLastUrl();
         }
         $params = $this->configService->get($id);
