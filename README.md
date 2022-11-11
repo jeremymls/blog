@@ -39,9 +39,27 @@ mysql -uroot -p password < sql/blog.sql
 git clone https://github.com/jeremymls/blog.git
 ```
 
-- Installer les dépendances avec Composer
+- Installer Composer
 ``` bash
-composer install
+curl -sS https://getcomposer.org/installer | php
+```
+
+- Installer les dépendances
+``` bash
+php composer.phar install
+```
+- Copier le fichier `.env.example` et le renommer en `.env`
+``` bash
+cp .env.example .env
+```
+- Configurer le fichier `.env` avec vos identifiants de base de données
+``` php
+SITE_URL // URL du site
+
+DB_HOST // adresse du serveur MySQL
+DB_NAME // nom de la base de données
+DB_USER // nom d'utilisateur
+DB_PASS // mot de passe
 ```
 
 ## Lancement du serveur

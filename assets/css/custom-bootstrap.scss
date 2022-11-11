@@ -1,4 +1,8 @@
-$brand-primary:         darken(#81260a, 6.5%);
-$brand-success:         #dd9b0d;
+@import "styles.css";
+
+$brand-primary:         var(--theme-primary);
+$brand-primary-darken:  var(--theme-primary-darken);
+$brand-success:         var(--theme-success);
+$brand-success-darken:  var(--theme-success-darken);
 
 @import '../vendor/bootstrap/css/_bootstrap.scss';

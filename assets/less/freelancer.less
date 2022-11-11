@@ -239,7 +239,7 @@ section.success {
             .caption {
 				border-radius: 10px;
 
-                background: fade(@theme-success, 90%);
+                background: @theme-success-fade;
                 position: absolute;
                 width: 100%;
                 height: 100%;
@@ -407,7 +407,7 @@ footer {
 	}
 	.footer-below {
 		padding: 25px 0;
-		background-color: darken(@theme-primary, 5%);
+		background-color: @theme-primary-darken;
 	}
 }
 
@@ -431,12 +431,12 @@ footer {
 }
 
 .btn-primary {
-	.button-variant(white; @theme-primary; @theme-primary);
+	// .button-variant(white; @theme-primary; @theme-primary);
 	font-weight: 700;
 }
 
 .btn-success {
-	.button-variant(white; @theme-success; @theme-success);
+	// .button-variant(white; @theme-success; @theme-success);
 	font-weight: 700;
 }
 

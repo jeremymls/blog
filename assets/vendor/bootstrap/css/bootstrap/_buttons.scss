@@ -69,11 +69,11 @@ a.btn {
   @include button-variant($btn-default-color, $btn-default-bg, $btn-default-border);
 }
 .btn-primary {
-  @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+  @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border, $brand-primary-darken);
 }
 // Success appears as green
 .btn-success {
-  @include button-variant($btn-success-color, $btn-success-bg, $btn-success-border);
+  @include button-variant($btn-success-color, $btn-success-bg, $btn-success-border, $brand-success-darken);
 }
 // Info appears as blue-green
 .btn-info {

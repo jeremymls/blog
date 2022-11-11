@@ -20,7 +20,7 @@ class PostService extends EntityService
         if (!$success) {
             throw new \Exception("Impossible de supprimer la photo de profil");
         }
-        $this->flashServices->success(
+        $this->flashServices->danger(
             'Image de la publication supprimée',
             "L'image de la publication a bien été supprimée"
         );

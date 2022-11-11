@@ -1,9 +1,10 @@
 // Variables
+@import "../css/styles.css";
 
-// Gray and Brand Colors for use across theme
-
-@theme-primary:    #81260a;
-@theme-success:    #dd9b0d;
+@theme-primary:         var(--theme-primary, #81260a);
+@theme-primary-darken:  var(--theme-primary-darken, #5e200d);
+@theme-success:         var(--theme-success, #dd9b0d);
+@theme-success-fade:    var(--theme-success-fade, #dd9b0d90);
 
 @gray-base:        #000;
 @gray-darker:      lighten(@gray-base, 13.5%); // #222
