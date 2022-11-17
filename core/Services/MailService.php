@@ -68,7 +68,6 @@ class MailService
         foreach ($mail_images as $image) {
             $this->mail->addAttachment('src/config/templates_mail/images/' . $image);                       // Attach images
         }
-        $this->mail->addAttachment('src/config/templates_mail/images/logo.png');                            // Attach the logo
         // Send the message, check for errors
         if (!$this->mail->send()) {
             throw new \Exception('Une erreur est survenue lors de l\'envoi du mail: ' . $this->mail->ErrorInfo, 500); 
