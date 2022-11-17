@@ -23,7 +23,9 @@ class HomeController extends Controller
 
     public function send()
     {
-        $this->homeService->sendContactMail();
+        if ($this->isPost()) {
+            $this->homeService->sendContactMail($this->superglobals->getPost());
+        }
         $this->superglobals->redirect('home');
     }
 }
