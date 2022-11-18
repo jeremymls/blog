@@ -88,8 +88,9 @@ class Routes
         $this->router->get('admin/comments/moderate/:action/:id', 'Admin\AdminComment@moderate', 'admin:comment:moderate');
         $this->router->get('admin/comments/delete/:id', 'Admin\AdminComment@delete');
         $this->router->get('admin/comments/:filter', 'Admin\AdminComment@index', 'admin:comments:filter');
-        $this->router->get('admin/comments/:filter/:nbr_show', 'Admin\AdminComment@index');
         $this->router->post('admin/comments/:filter', 'Admin\AdminComment@multiple_moderation');
+        $this->router->get('admin/comments/:filter/:nbr_show', 'Admin\AdminComment@index');
+        $this->router->post('admin/comments/:filter/:nbr_show', 'Admin\AdminComment@multiple_moderation');
         $this->router->post('admin/comments', 'Admin\AdminComment@multiple_moderation');
         $this->router->get('admin/comments', 'Admin\AdminComment@index', 'admin:comments');
         // AdminUser
