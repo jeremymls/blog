@@ -1,5 +1,6 @@
 {% extends "/base.twig" %}
 {% import "macros/utils.twig" as utils %}
+{% import "macros/csrf.twig" as csrf %}
 
 {% block title %}Administration des projets{% endblock %}
 {% block subtitle %}
@@ -71,7 +72,7 @@
                                             <a href="{{ getPath('admin:post:update', {'id': post.identifier}) }}" class="btn btn-info"><i class="fa fa-pencil-square-o"></i> Editer</a>
                                         </div>
                                         <div class="row">
-                                            <a href="{{ getPath('admin:post:delete', {'id': post.identifier}) }}" class="btn btn-danger confirm"><i class="fa fa-trash"></i> Supprimer</a>
+                                            {{ csrf.button_delete(getPath('admin:post:delete', {'id':post.identifier})) }}
                                         </div>
                                         <div class="row">
                                             <a href="{{ getPath('post', {'id': post.identifier}) }}" target="_blank" class="btn btn-primary"><i class="fa fa-external-link"></i> Voir</a>

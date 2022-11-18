@@ -1,5 +1,6 @@
 {% extends "/base.twig" %}
 {% import "macros/utils.twig" as utils %}
+{% import "macros/csrf.twig" as csrf %}
 
 {% block title %}Administration des Utilisateurs{% endblock %}
 {% block subtitle %}
@@ -66,7 +67,7 @@
                                         <a href="{{ getPath('admin:user:role', {'id': user.identifier}) }}" class="btn btn-warning"><i class="fa fa-lock"></i> Role</a>
                                     </div>
                                     <div class="row">
-                                        <a href="{{ getPath('admin:user:delete', {'id': user.identifier}) }}" class="btn btn-danger confirm"><i class="fa fa-trash-o"></i> Supprimer</a>
+                                        {{ csrf.button_delete(getPath('admin:user:delete', {'id':user.identifier})) }}
                                     </div>
                                     <div class="row">
                                         <a href="{{ getPath('profil:id', {'id': user.identifier}) }}" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> Voir</a>

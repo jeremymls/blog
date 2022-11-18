@@ -1,5 +1,6 @@
-{% import "macros/utils.twig" as utils %}
 {% extends "/base.twig" %}
+{% import "macros/utils.twig" as utils %}
+{% import "macros/csrf.twig" as csrf %}
 
 {% block title %}Bienvenue sur mon blog{% endblock %}
 {% block subtitle %}{% if cs_slogan %}" {{ cs_slogan }} "{% endif %}{% endblock %}
@@ -102,6 +103,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
                     <form id="form-contact" action="" method="post">
+                        {{ csrf.input() }}
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Nom</label>

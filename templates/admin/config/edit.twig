@@ -1,5 +1,6 @@
 {% extends "/base.twig" %}
 {% import "macros/utils.twig" as utils %}
+{% import "macros/csrf.twig" as csrf %}
 
 {% block title %}Modification de {{config.name}}{% endblock %}
 {% block subtitle %}
@@ -18,6 +19,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
 					<form action="" method="post" enctype="multipart/form-data">
+                        {{ csrf.input() }}
                         <input type="hidden" name="name" value="{{config.name}}" >
                         <div class="row control-group">
                             {# IMAGE FIELD #}

@@ -14,6 +14,8 @@ use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Extra\String\StringExtension;
 use Twig\Loader\FilesystemLoader;
+use Core\Services\CsrfService;
+
 require_once 'src/config/default.php';
 
 abstract class Controller
@@ -88,10 +90,17 @@ abstract class Controller
         });
         $twig->addFunction($isValideFunc);
 
+        // Asset function
         $assetFunc = new \Twig\TwigFunction('asset', function (string $path) use ($superglobals) {
             return $superglobals->asset($path);
         });
         $twig->addFunction($assetFunc);
+
+        // Csrf functions
+        $csrfTokenFunc = new \Twig\TwigFunction('getCsrf', function () {
+            return CsrfService::getInstance()->generateToken();
+        });
+        $twig->addFunction($csrfTokenFunc);
 
         return $twig;
     }

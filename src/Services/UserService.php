@@ -7,8 +7,10 @@ use Application\Repositories\CommentRepository;
 use Core\Middleware\Session\UserSession;
 use Core\Services\MailService;
 use Core\Services\ConfigService;
+use Core\Services\CsrfService;
 use Core\Services\EntityService;
 use Core\Services\TokenService;
+use stdClass;
 
 class UserService extends EntityService
 {
@@ -109,8 +111,11 @@ class UserService extends EntityService
     {
         $params = $this->tokenService->getUserByToken($token);
         $user = $params['user'];
+        $validation = new stdClass();
+        $validation->validated_email = 1;
+        $validation->csrf_token = CsrfService::getInstance()->generateToken();
         if ($user->validated_email == "" || $user->validated_email == null) {
-            $this->update($user->identifier, ['validated_email' => 1], "", true, false);
+            $this->update($user->identifier, $validation, "", false, false);
             $user->validated_email = "1";
             $this->userSession->setUser($user);
             $this->flashServices->success(
@@ -130,13 +135,11 @@ class UserService extends EntityService
         if ($input['email'] !== $input['retape']) {
             throw new \Exception('Les adresses ne correspondent pas.');
         }
-        $success = $this->repository->update(
-            $this->userSession->getUserParam("identifier"),
-            [
-                'email' => $input['email'],
-                'validated_email' => 0
-            ]
-        );
+        $user = new stdClass();
+        $user->email = $input['email'];
+        $user->validated_email = 0;
+        $user->csrf_token = $input['csrf_token'];
+        $success = $this->repository->update($this->userSession->getUserParam("identifier"),$user);
         if (!$success) {
             throw new \Exception("Impossible de modifier l'e-mail <br>Cette adresse est peut-être déjà utilisée");
         }
@@ -152,16 +155,18 @@ class UserService extends EntityService
 
     public function edit_password(array $input)
     {
-        $id = $this->userSession->getUserParam("identifier");
-        $user = $this->repository->findOne($id);        
         if ($input['password'] !== $input['passwordConfirm']) {
             throw new \Exception('Les mots de passe ne correspondent pas.');
         }
+        $id = $this->userSession->getUserParam("identifier");
+        $user = $this->repository->findOne($id);        
         if (!$user->comparePassword($user->password, $input['currentPassword'])) {
             throw new \Exception('Ce n\'est le bon mot de passe actuel.');
         }
-        $user->setPassword($input['password']);
-        $success = $this->repository->update($id,['password' => $user->password,]);
+        $newPass = new stdClass();
+        $newPass->password = $input['password'];
+        $newPass->csrf_token = $input['csrf_token'];
+        $success = $this->repository->update($id, $newPass);
         if (!$success) {
             throw new \Exception("Impossible de modifier le mot de passe");
         }
@@ -187,7 +192,15 @@ class UserService extends EntityService
     public function forget_password(array $input)
     {
         $user = $this->repository->getUserByUsername($input['email']);
-        $token = $this->tokenService->createToken($user->identifier);
+        if ($user->email == null) {
+            throw new \Exception("Cet utilisateur n'existe pas");
+        }
+        $checkToken = $this->tokenService->getAll('where user_id = ?', [$user->identifier], "", null, "ASC")['tokens'];
+        if (count($checkToken) > 0 && $checkToken[0]->expiration_date > date("Y-m-d H:i:s")) {
+            throw new \Exception("Un mail de réinitialisation a déjà été envoyé à cette adresse.<br> Veuillez vérifier vos spams ou réessayer dans 30mn.");
+        } else {
+            $token = $this->tokenService->createToken($user->identifier);
+        }
         $url = $this->superglobals->getPath('reset_password', ['token' => $token]);
         $this->mailService->sendEmail(
             [
@@ -214,10 +227,12 @@ class UserService extends EntityService
         if ($post['password'] !== $post['passwordConfirm']) {
             throw new \Exception('Les mots de passe ne correspondent pas.');
         }
-        $user->setPassword($post['password']);
+        $newPass = new stdClass();
+        $newPass->password = $post['password'];
+        $newPass->csrf_token = $post['csrf_token'];
         $success = $this->repository->update(
             $user->identifier,
-            ['password' => $user->password,]
+            $newPass
         );
         if (!$success) {
             throw new \Exception("Impossible de modifier le mot de passe");

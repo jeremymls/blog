@@ -6,6 +6,7 @@ use Core\Models\MailContactModel;
 use Core\Services\Service;
 use Core\Services\MailService;
 use Core\Services\ConfigService;
+use Core\Services\CsrfService;
 
 class HomeService extends Service
 {
@@ -17,6 +18,10 @@ class HomeService extends Service
 
     public function sendContactMail($data)
     {
+        $csrfService = CsrfService::getInstance();
+        if (!$csrfService->checkToken($data['csrf_token'])) {
+            throw new \Exception('Le token CSRF est invalide ou n\'existe pas');
+        }
         $configService = new ConfigService();
         $mailService = new MailService();
         $this->model = new MailContactModel();

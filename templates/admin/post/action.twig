@@ -1,4 +1,5 @@
 {% extends "/base.twig" %}
+{% import "macros/csrf.twig" as csrf %}
 
 {% block title %}{% if action == "add" %}Ajout{% else %}Modification{% endif %} d'une publication{% endblock %}
 {% block subtitle %}
@@ -11,6 +12,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
 					<form action="" method="post" enctype="multipart/form-data">
+                        {{ csrf.input() }}
                         <div class="form-group col-lg-6 col-lg-offset-3">
 							<label for="picture">Image
 								<div id="divOverview" class="div-pic">

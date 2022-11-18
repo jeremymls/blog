@@ -1,0 +1,9 @@
+{# input #}
+{% macro input() %}
+<input type="hidden" name="csrf_token" value="{{ getCsrf() }}" />
+{% endmacro %}
+
+{# buttton #}
+{% macro button_delete(path) %}
+<a href="{{ path }}?csrf_token={{ getCsrf() }}" class="btn btn-danger confirm"><i class="fa fa-trash"></i> Supprimer</a>
+{% endmacro %}

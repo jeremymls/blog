@@ -5,6 +5,8 @@ namespace Core\Repositories;
 use Core\Lib\Singleton;
 use Core\Middleware\Session\PHPSession;
 use Core\Middleware\Superglobals;
+use Core\Models\Token;
+use Core\Services\CsrfService;
 use Core\Services\Encryption;
 
 class Repository
@@ -15,8 +17,20 @@ class Repository
         $this->connection = Singleton::getConnection();
     }
 
+    private function checkCrsf($csrf_token)
+    {
+        $csrfService = CsrfService::getInstance();
+        if (!$csrfService->checkToken($csrf_token)) {
+            throw new \Exception('Le token CSRF est invalide ou n\'existe pas');
+        }
+    }
+
     public function add($entity): bool
     {
+        if (get_class($entity)!= Token::class) {
+            $this->checkCrsf($entity->csrf_token);
+        }
+        $this->removeObsoleteProperties($entity);
         $sql = "";
         $values = [];
         $sql .= "INSERT INTO " . $entity::TABLE . " (";
@@ -26,19 +40,15 @@ class Repository
             $sql .= "picture, ";
         }
         foreach ($entity as $key => $value) {
-            if ($key !== "passwordConfirm") {
-                $values[] = $value=="" ? null : $value;
-                $sql .= $key . ", ";
-            }
+            $values[] = $value=="" ? null : $value;
+            $sql .= $key . ", ";
         }
         $sql .= "created_at) VALUES (";
         if ($this->superglobals->isExistPicture($entity::TABLE)) {
             $sql .= "?, ";
         }
         foreach ($entity as  $key => $val) {
-            if ($key !== "passwordConfirm") {
-                $sql .= "?, ";
-            }
+            $sql .= "?, ";
         }
         $sql .= "NOW())";
         $statement = $this->connection->prepare($sql);
@@ -84,13 +94,13 @@ class Repository
 
     public function update($identifier, $entity): bool
     {
+        $this->checkCrsf($entity->csrf_token);
+        $this->removeObsoleteProperties($entity);
         $values = [];
         $sql = "UPDATE " . $this->model::TABLE . " SET ";
         foreach ($entity as $key => $value) {
-            if ($key !== "passwordConfirm") {
-                $values[] = $value;
-                $sql .= $key . " = ?, ";
-            }
+            $values[] = $value;
+            $sql .= $key . " = ?, ";
         }
         // if (count($_FILES) > 0 && isset($_FILES['picture']['error']) && $_FILES['picture']['error'] !== 4) {
         if ($this->superglobals->isExistPicture()) {
@@ -110,6 +120,7 @@ class Repository
 
     public function delete($identifier): bool
     {
+        $this->checkCrsf($this->superglobals->getGet('csrf_token'));
         $statement = $this->connection->prepare(
             'DELETE FROM ' . $this->model::TABLE . ' WHERE id=?'
         );
@@ -179,6 +190,16 @@ class Repository
         if (in_array("getLinks",get_class_methods($entity))) {
             foreach ($entity->getLinks() as $field => $repository) {
                 $entity->with($field, "Application\\Repositories\\" . $repository);
+            }
+        }
+        return $entity;
+    }
+
+    private function removeObsoleteProperties($entity)
+    {
+        foreach ($entity as $key => $value) {
+            if (!array_key_exists($key, $this->getModel())) {
+                unset($entity->$key);
             }
         }
         return $entity;

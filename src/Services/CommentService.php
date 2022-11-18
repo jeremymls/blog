@@ -4,6 +4,7 @@ namespace Application\Services;
 
 use Application\Models\Comment;
 use Core\Services\EntityService;
+use stdClass;
 
 class CommentService extends EntityService
 {
@@ -41,7 +42,7 @@ class CommentService extends EntityService
         return $params;
     }
 
-    public function moderate($action, $identifier, $showFlash = true)
+    public function moderate($action, $identifier, $showFlash = true, $csrf_token = null)
     {
         switch ($action) {
         case '0':
@@ -54,7 +55,10 @@ class CommentService extends EntityService
             $flashMsg = 'Le commentaire a été refusé';
             break;
         }
-        $this->update($identifier, ["moderate" => $action], $flashMsg, false, $showFlash);
+        $entity = new stdClass;
+        $entity->moderate = $action;
+        $entity->csrf_token = $csrf_token ?? $this->superglobals->getGet("csrf_token");
+        $this->update($identifier, $entity, $flashMsg, false, $showFlash);
     }
 
     public function multiple_moderation($input)
@@ -74,7 +78,7 @@ class CommentService extends EntityService
             break;
         }
         foreach ($input['comment'] as $identifier) {
-            $this->moderate($action, $identifier, false);
+            $this->moderate($action, $identifier, false, $input['csrf_token']);
         }
         $this->flashServices->success("Commentaires modifiés", $flash);
     }
