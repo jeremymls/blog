@@ -70,6 +70,8 @@
 {% macro actionBtn( actionName ) %}
     <p class='multiAction'>
         {{ actionName }} sélectionnés: 
+        {% import "macros/csrf.twig" as csrf %}
+        {{ csrf.input() }}
         <input type="submit" class="btn btn-default confirm" name="btnSubmit" value="Invalider">
         <input type="submit" class="btn btn-success confirm" name="btnSubmit" value="Valider">
         <input type="submit" class="btn btn-danger confirm" name="btnSubmit" value="Refuser">

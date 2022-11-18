@@ -1,4 +1,5 @@
 {% extends "/base.twig" %}
+{% import "macros/csrf.twig" as csrf %}
 
 {% block title %}{% if action == "register" %}Inscription{% else %}Modification du profil{% endif %}{% endblock %}
 {% block subtitle %}{% if action == "register" %}
@@ -12,6 +13,7 @@
         <div class="container">
             <div class="row">
                 <form action={% if action == "register" %} "{{ getPath('register') }}" {% else %} "{{ getPath('profil:edit') }}{% if get('userId') != null %}&userId={{ get('userId') }}{% endif %}" {% endif %} method="post" enctype="multipart/form-data">
+					{{ csrf.input() }}
 					<div class="col-lg-4">
 						<div class="form-group">
 							<label for="picture">Photo de profil

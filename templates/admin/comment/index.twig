@@ -81,14 +81,14 @@
                                         <td class="text-center">
                                             {# <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmCommentDelete"><i class="fa fa-trash" aria-hidden="true"></i></button> #}
                                             {% if comment.moderate != null %}
-                                                <a href="{{ getPath('admin:comment:moderate', {'action': '0', 'id': comment.identifier}) }}" type="button" class="btn btn-default confirm">
+                                                <a href="{{ getPath('admin:comment:moderate', {'action': '0', 'id': comment.identifier}) }}?csrf_token={{ getCsrf() }}" type="button" class="btn btn-default confirm">
                                                     <i class="fa fa-ban" aria-hidden="true"></i>
                                                 </a>
                                             {% else %}
-                                                <a href="{{ getPath('admin:comment:moderate', {'action': '1', 'id': comment.identifier}) }}" type="button" class="btn btn-success confirm">
+                                                <a href="{{ getPath('admin:comment:moderate', {'action': '1', 'id': comment.identifier}) }}?csrf_token={{ getCsrf() }}" type="button" class="btn btn-success confirm">
                                                     <i class="fa fa-check" aria-hidden="true"></i>
                                                 </a>
-                                                <a href="{{ getPath('admin:comment:moderate', {'action': '2', 'id': comment.identifier}) }}" type="button" class="btn btn-danger confirm">
+                                                <a href="{{ getPath('admin:comment:moderate', {'action': '2', 'id': comment.identifier}) }}?csrf_token={{ getCsrf() }}" type="button" class="btn btn-danger confirm">
                                                     <i class="fa fa-times" aria-hidden="true"></i>
                                                 </a>
                                             {% endif %}

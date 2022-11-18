@@ -1,5 +1,6 @@
 {% extends "/base.twig" %}
 {% import "macros/utils.twig" as utils %}
+{% import "macros/csrf.twig" as csrf %}
 
 {% block title %}{{ post.title }}{% endblock %}
 {% block subtitle %}
@@ -67,6 +68,7 @@
 						<div class="col-lg-8 col-lg-offset-2">
 							{# <form name="sentMessage" id="contactForm" novalidate> #}
 							<form action="" method="post">
+								{{ csrf.input() }}
 								<div class="row control-group">
 									<div class="form-group col-xs-12 floating-label-form-group controls">
 										<label>Commentaire</label>

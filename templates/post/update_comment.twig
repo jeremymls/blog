@@ -1,8 +1,9 @@
 {% extends "/base.twig" %}
+{% import "macros/csrf.twig" as csrf %}
 
 {% block title %}Modification du commentaire{% endblock %}
 {% block subtitle %}
-	<a id="retour" href="{{ getPath('post', {'id': comment.post.identifier}) }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+	<a id="retour" href="{{ getPath('post', {'id': comment.post.identifier}) }}#commentList" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 {% endblock %}
 
 {% block main %}
@@ -11,6 +12,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
 					<form action="" method="post">
+                        {{ csrf.input() }}
 						<input type="hidden" id="post" name="post" value="{{ comment.post.identifier }}">
                         <div class="row control-group">
 							<label for="basic-url">Auteur</label>
