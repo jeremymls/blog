@@ -124,7 +124,7 @@
 					{% if comment.author.identifier == getUserParam("identifier") %}
 					<div>
 						<a href="{{ getPath('comment:update', {'id':comment.identifier}) }}" class="btn btn-warning btn-xs" role="button"><i class="fa fa-edit" aria-hidden="true"></i></a>
-						<a data-id="{{ comment.identifier }}" class="btn btn-danger btn-xs delete-comment" role="button"><i class="fa fa-trash" aria-hidden="true"></i></a>
+						<a data-id="{{ comment.identifier }}" data-csrf="{{ getCsrf() }}" class="btn btn-danger btn-xs delete-comment" role="button"><i class="fa fa-trash" aria-hidden="true"></i></a>
 					</div>
 					{% endif %}
 					</div>
@@ -135,7 +135,7 @@
 					<div class="panel-heading commentHeader">
 						<sm><i>Commentaire supprimé.</i></sm>
 						{% if comment.author.identifier == getUserParam("identifier") %}
-							<a data-id="{{ comment.identifier }}" class="btn btn-link cancel-delete-comment" role="button">Annuler la supression</a>
+							<a data-id="{{ comment.identifier }}" data-csrf="{{ getCsrf() }}" class="btn btn-link cancel-delete-comment" role="button">Annuler la supression</a>
 						{% endif %}
 					</div>
 					{% endif %}

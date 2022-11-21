@@ -43,35 +43,15 @@ class CommentController extends Controller
     }
 
     // AJAX
-    public function delete()
+    public function ajax($delete)
     {
         if ($this->isPost()) {
             $id = $this->superglobals->getPost('commentId');
             if ($id) {
-                $deletion_confirmation = $this->commentService->delete_ajax($id);
-                if ($deletion_confirmation === true) {
-                    echo true;
-                } else {
-                    echo false;
-                }
-            }
-        } else {
-            throw new \Exception('Méthode non autorisée', 405);
-        }
-    }
-
-    public function cancelDelete()
-    {
-        if ($this->isPost()) {
-            $id = $this->superglobals->getPost('commentId');
-            if ($id) {
-                $this->commentService->moderate(0, $id,false);
-                $cancel_deletion_confirmation = $this->commentService->delete_ajax($id, false);
-                if ($cancel_deletion_confirmation === true) {
-                    echo true;
-                } else {
-                    echo false;
-                }
+                $this->commentService->delete_ajax($id, $delete);
+                echo 'done';
+            } else {
+                throw new \Exception("Identifiant de commentaire manquant");
             }
         } else {
             throw new \Exception('Méthode non autorisée', 405);

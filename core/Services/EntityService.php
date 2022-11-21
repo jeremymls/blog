@@ -1,6 +1,8 @@
 <?php
 namespace Core\Services;
 
+use stdClass;
+
 class EntityService extends Service
 {
     public function __construct()
@@ -67,10 +69,16 @@ class EntityService extends Service
         }
     }
 
-    public function delete_ajax($identifier, $delete = true)
+    public function delete_ajax($identifier, $delete)
     {
-        $delete = $delete ? 1 : 0;
-        $this->repository->update($identifier, ['deleted' => $delete]);
+        $entity = new stdClass;
+        if ($delete == "delete") {
+            $entity->deleted = 1;
+        } elseif ($delete == "restore") {
+            $entity->deleted = 0;
+        }
+        $entity->csrf_token = $this->superglobals->getGet("csrf_token");
+        $this->repository->update($identifier, $entity);
         return true;
     }
 
