@@ -44,28 +44,28 @@ class UserService extends EntityService
 
     public function getData($id)
     {
-        if (isset($id) && $this->userSession->isAdmin()) {
+        if ($id != null && $this->userSession->isAdmin()) {
             $id = (int) $id;
-        } else {
-            if ($this->userSession->isUser()) {
-                $id = $this->userSession->getUserParam("identifier");
-            } else {
-                $this->superglobals->redirect('login');
-            }
+        } else if ($this->userSession->isUser()) {
+            $id = $this->userSession->getUserParam("identifier");
         }
-        $params = $this->get($id);
-        $params['user']->withExpirationToken();
-        $commentRepository = new CommentRepository();
-        $params['comments'] = $commentRepository->findAll("WHERE author = ?", [$id]);
-        $params['commentsCount'] = count($params['comments']);
-        $params['commentsPendingCount'] = count(
-            array_filter(
-                $params['comments'], function ($obj) {
-                    return $obj->moderate == 0;
-                }
-            )
-        );
-        return $params;
+        if ($id) {
+            $params = $this->get($id);
+            $params['user']->withExpirationToken();
+            $commentRepository = new CommentRepository();
+            $params['comments'] = $commentRepository->findAll("WHERE author = ?", [$id]);
+            $params['commentsCount'] = count($params['comments']);
+            $params['commentsPendingCount'] = count(
+                array_filter(
+                    $params['comments'], function ($obj) {
+                        return $obj->moderate == 0;
+                    }
+                )
+            );
+            return $params;
+        } else {
+            $this->superglobals->redirect('login');
+        }
     }
 
     public function updateUser(array $input, $userId = null)
