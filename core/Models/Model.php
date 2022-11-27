@@ -13,14 +13,6 @@ class Model
     // static string $deleted_at;
 
     /**
-     * Get the value of id
-     */ 
-    public function getId()
-    {
-        return $this;
-    }
-
-    /**
      * Set the value of id
      */ 
     public function setId($id)
