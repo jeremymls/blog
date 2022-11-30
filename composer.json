@@ -2,7 +2,8 @@
     "autoload": {
         "psr-4": {
             "Application\\": "src/",
-            "Core\\": "core/"
+            "Core\\": "core/",
+            "Test\\": "tests/"
         }
     },
     "require": {
@@ -10,10 +11,12 @@
         "twig/string-extra": "*",
         "phpmailer/phpmailer": "^6.6",
         "tinymce/tinymce": "^6.2",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "symfony/http-client": "^5.4"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "*"
+        "squizlabs/php_codesniffer": "*",
+        "phpunit/phpunit": "^9.5"
     },
     "config": {
         "allow-plugins": {

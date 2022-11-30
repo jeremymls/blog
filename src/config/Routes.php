@@ -32,9 +32,7 @@ class Routes
         $this->router->get('post/:id', 'Post@show', 'post');
         // Comment
         $this->router->post('post/:id', 'Comment@add');
-        $this->router->post('comment/delete', 'Comment@delete');
-        // $this->router->get('comment/delete', 'Comment@delete');
-        $this->router->post('comment/cancelDelete', 'Comment@cancelDelete');
+        $this->router->post('comment/ajax/:delete', 'Comment@ajax');
         $this->router->get('comment/:id', 'Comment@update', 'comment:update');
         $this->router->post('comment/:id', 'Comment@update');
         // SECURITY //
