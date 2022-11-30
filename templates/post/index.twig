@@ -50,6 +50,23 @@
                 </div>
             {% endfor %}
             {{ utils.pagination(nbPage) }}
+            {% if posts is empty %}
+            <div class="col">
+                <div class="thumbnail thumbnail-custom">
+                    <div class="row text-center">
+                        <div class="col-lg-12">
+                            <div class="caption">
+                                <div class="post_head">
+                                    <h3 style="color:gray;" >Aucun post trouvé</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+            
         </div>
     </section>
 {% endblock %}
