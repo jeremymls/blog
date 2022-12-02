@@ -3,3 +3,4 @@
 composer.lock
 composer.phar
 assets/css/styles.css
+.phpunit.result.cache
