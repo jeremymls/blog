@@ -126,7 +126,7 @@ class ConfigService extends EntityService
     {
         $models_files = scandir("./src/Models");
         $models_files = array_merge($models_files, scandir("./core/Models"));
-        $models_files = array_diff($models_files, array('.', '..', 'Model.php', 'Error.php'));
+        $models_files = array_diff($models_files, array('.', '..', 'Model.php', 'Error.php', 'MailContactModel.php'));
         $models = [];
         foreach($models_files as $model_file){
             $str=strtolower(str_replace(".php", "", $model_file));
