@@ -37,20 +37,18 @@ class Singleton
     {
         if (self::$database === null) {
             $superglobals = Superglobals::getInstance();
-            if ($superglobals->getPath('create_bdd') != $superglobals->getPath()) {
-                $dbData = $superglobals->getDatabase();
-                try {
-                    self::$database = new \PDO('mysql:host=' . $dbData['host'] . ';dbname=' . $dbData['name'] . ';charset=utf8', $dbData['user'], $dbData['pass']);
-                    self::$database->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-                } catch (\PDOException $e) {
-                    if ($e->getCode() == 1049) {
-                        PHPSession::getInstance()->set('safe_mode', true);
-                        $superglobals->redirect('new');
-                    }
-                    echo 'Erreur de connexion à la base de données : ' . $e->getMessage();
-                    // 1049 = database not found
-                    // 1045 = bad credentials
+            $dbData = $superglobals->getDatabase();
+            try {
+                self::$database = new \PDO('mysql:host=' . $dbData['host'] . ';dbname=' . $dbData['name'] . ';charset=utf8', $dbData['user'], $dbData['pass']);
+                self::$database->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            } catch (\PDOException $e) {
+                if ($e->getCode() == 1049) {
+                    PHPSession::getInstance()->set('safe_mode', true);
+                    $superglobals->redirect('new');
                 }
+                echo 'Erreur de connexion à la base de données : ' . $e->getMessage();
+                // 1049 = database not found
+                // 1045 = bad credentials
             }
         }
         return self::$database;

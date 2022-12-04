@@ -107,12 +107,13 @@ class Routes
         // AdminDoc
         $this->router->get('admin/docs', 'Doc@index@core', 'admin:docs');
         // Init
-        $this->router->get('init/missing_configs', 'Init@init_missing_configs@core', 'init:missing_configs');
+        $this->router->get('init', 'Init@init@core', 'init');
+        $this->router->post('init', 'Init@init_missing_configs@core', 'init:missing_configs');
         $this->router->get('init/configs', 'Init@init_configs@core', 'init:configs');
         $this->router->get('init/tables', 'Init@init_tables@core', 'init:tables');
-        $this->router->get('init', 'Init@init@core', 'init');
         $this->router->get('new', 'Init@new@core', 'new');
         $this->router->get('create_bdd', 'Init@create@core', 'create_bdd');
+        $this->router->get('delete_bdd', 'Init@delete@core', 'delete_bdd');
     }
 
     public function run()

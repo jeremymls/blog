@@ -10,11 +10,20 @@ class InitService extends Service
     public function __construct()
     {
         parent::__construct();
-        $this->initRepository = new InitRepository();
     }
 
-    public function create()
+    public static function create()
     {
-        $this->initRepository->create_database();
+        InitRepository::create_database();
+    }
+
+    public function create_tables()
+    {
+        $this->getRepository()->create_tables();
+    }
+
+    public function delete()
+    {
+        $this->getRepository()->delete_database();
     }
 }

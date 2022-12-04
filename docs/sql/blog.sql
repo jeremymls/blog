@@ -24,6 +24,19 @@ SET time_zone = "+02:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `categories`
+--
+
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `comments`
 --
 
@@ -34,6 +47,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `comment` text NOT NULL,
   `created_at` datetime NOT NULL,
   `moderate` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `post_id` (`post`),
   KEY `author` (`author`)
@@ -46,10 +60,12 @@ CREATE TABLE IF NOT EXISTS `comments` (
 --
 
 CREATE TABLE IF NOT EXISTS `configs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `value` varchar(255) DEFAULT NULL,
+  `value` longtext,
   `description` varchar(255) DEFAULT NULL,
+  `type` varchar(50) DEFAULT NULL,
+  `default_value` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
@@ -62,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `configs` (
 
 CREATE TABLE IF NOT EXISTS `posts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category` int(11) NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL,
   `chapo` varchar(255) DEFAULT NULL,
   `content` text NOT NULL,
@@ -85,6 +102,20 @@ CREATE TABLE IF NOT EXISTS `tokens` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `tokens_csrf`
+--
+
+CREATE TABLE IF NOT EXISTS `tokens_csrf` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `token` varchar(1000) NOT NULL,
+  `expiration_date` datetime NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 

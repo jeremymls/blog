@@ -126,10 +126,13 @@
 												<td class="action">
 													<div class="row">
                                                         {% if "configs" not in missing_tables %}
-														<a href="{{ getPath('init:missing_configs') }}" class="btn btn-primary">
-															<i class="fa fa-refresh" aria-hidden="true"></i>
-															Initialiser les paramètres manquants
-                                                        </a>
+														<form method="post" >
+															<input type="hidden" name="csrf_token" value="{{ getCsrf() }}">
+															<button type="submit" class="btn btn-primary">
+																Initialiser
+																<i class="fa fa-refresh" aria-hidden="true"></i>
+															</button>
+														</form>
                                                         {% else %}
                                                         <p>
                                                         <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>

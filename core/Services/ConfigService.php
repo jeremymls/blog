@@ -95,7 +95,8 @@ class ConfigService extends EntityService
                     "value" => $config[0],
                     "description" => $config[1],
                     "type" => isset($config[2]) ? $config[2] : "text",
-                    "default_value" => $config[0]
+                    "default_value" => $config[0],
+                    "csrf_token" => $this->superglobals->getPost('csrf_token'),
                     ]
                 );
                 $this->repository->add($input);
@@ -137,11 +138,6 @@ class ConfigService extends EntityService
         return $missing_tables;
     }
 
-    public function create_tables()
-    {
-        $this->configRepository->create_tables();
-    }
-
     public function create_config_table($table)
     {
         $this->configRepository->create_config_table($table);
@@ -150,6 +146,7 @@ class ConfigService extends EntityService
     private function getConfigsObject()
     {
         $configs = $this->getAll()['configs'];
+        $configs_object = [];
         foreach ($configs as $config) {
             $configs_object[$config->name] = $config;
         }

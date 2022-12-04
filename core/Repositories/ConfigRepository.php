@@ -40,13 +40,4 @@ class ConfigRepository extends Repository
         }
         return $tables;
     }
-    
-    public function create_tables()
-    {
-        if (file_exists("sql/blog.sql")) { 
-            $sql = file_get_contents('sql/blog.sql');
-            $statement = $this->connection->prepare($sql);
-            $statement->execute();
-        }
-    }
 }

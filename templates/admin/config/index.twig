@@ -51,7 +51,7 @@
                             <img src="{{ asset('img/dashboard/conf_affichage.png') }}" class="img-responsive" alt="">
                         </a>
                     </div>
-                    <div class="col-sm-4"></div>{# Space #}
+                    {# <div class="col-sm-4"></div> #}
                     <div class="col-sm-4 dashbord-item">
                         <a href="{{ getPath('admin:configs:list', {'prefix' : 'sd'} ) }}" class="dashbord-link" >
                             <div class="caption">
@@ -62,8 +62,28 @@
                             <img src="{{ asset('img/dashboard/outils.png') }}" class="img-responsive" alt="">
                         </a>
                     </div>
+                    <div class="col-sm-4 dashbord-item">
+                        <a href="{{ getPath('delete_bdd' ) }}" class="dashbord-link confirm" >
+                            <div class="caption">
+                                <div class="caption-content">
+                                    <i class="fa fa-trash fa-3x"></i>
+                                </div>
+                            </div>
+                            <img src="{{ asset('img/dashboard/delete_bdd.png') }}" class="img-responsive" alt="">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+{% endblock %}
+
+{% block script %}
+<script>
+$(".confirm").click(function(e){
+    if(!confirm('Voulez-vous vraiment supprimer la base de données ?')){
+        e.preventDefault();
+    }
+});
+</script>
 {% endblock %}
