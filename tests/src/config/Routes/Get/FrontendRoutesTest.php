@@ -1,8 +1,8 @@
 <?php
 
-use Test\base\RoutesBaseTest;
+use Test\base\BaseTest;
 
-class FrontendRoutesTest extends RoutesBaseTest
+class FrontendRoutesTest extends BaseTest
 {
     public function __construct()
     {
