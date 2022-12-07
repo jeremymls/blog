@@ -2,6 +2,7 @@
 <phpunit bootstrap="vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite name="Unit">
+            <file>tests/StartTest.php</file>
             <directory>tests/core</directory>
             <directory>tests/src</directory>
             <!-- <directory>tests/build</directory> -->

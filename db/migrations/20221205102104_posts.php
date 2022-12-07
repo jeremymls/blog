@@ -21,8 +21,8 @@ final class Posts extends AbstractMigration
     public function change()
     {
         $this->table('posts')
-            ->addColumn('title', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('category', 'integer', ['null' => true, 'signed' => false])
+            ->addColumn('title', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('chapo', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('content', 'text', ['null' => false])
             ->addColumn('picture', 'text', ['limit' => MysqlAdapter::TEXT_LONG, 'null' => true])
