@@ -39,7 +39,7 @@ class Singleton
             $superglobals = Superglobals::getInstance();
             $dbData = $superglobals->getDatabase();
             try {
-                self::$database = new \PDO('mysql:host=' . $dbData['host'] . ';dbname=' . $dbData['name'] . ';charset=utf8', $dbData['user'], $dbData['pass']);
+                self::$database = new \PDO('mysql:host=' . $dbData['host'] . ';dbname=' . $dbData['name'] . ';charset=utf8', $dbData['user'], $dbData['pass']); // todo: Port
                 self::$database->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             } catch (\PDOException $e) {
                 if ($e->getCode() == 1049) {

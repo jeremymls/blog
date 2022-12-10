@@ -8,6 +8,7 @@ use Core\Middleware\Superglobals;
 use Core\Services\ConfigService;
 use Core\Services\FlashService;
 use Core\Services\InitService;
+use Core\Services\PhinxService;
 
 class InitController extends Controller
 {
@@ -30,14 +31,17 @@ class InitController extends Controller
     public function new()
     {
         $dbData = Superglobals::getInstance()->getDatabase();
-        $sql = "CREATE DATABASE IF NOT EXISTS " . $dbData['name'];
+        $sql = "CREATE DATABASE IF NOT EXISTS " . $dbData['name']; // todo: add instructions
         $this->twig->display('admin/config/new.twig', ['sql' => $sql,'bdd_name' => $dbData['name']]);
     }
     
+    // AJAX
     public function create()
     {
         InitService::create();
-        $this->init_tables();
+        $phinx = PhinxService::getManager();
+        $phinx->migrate($this->superglobals->getAppEnv());
+        echo 'La base de données a été créée avec succès';
     }
 
     public function init_tables()

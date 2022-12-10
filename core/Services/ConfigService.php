@@ -174,6 +174,18 @@ class ConfigService extends EntityService
             $renderer->setParam($param->name, $param->value);
         }
         $renderer->render();
+    }
 
+    public function change_env($environment)
+    {
+        if (!in_array($environment, ['DEV', 'PROD', 'TEST'])) {
+            throw new \Exception("L'environnement $environment n'existe pas.");
+        }
+        if ($environment == $this->superglobals->getAppEnv()) {
+            throw new \Exception("L'environnement est déjà $environment");
+        }
+        $dotEnv = file_get_contents("./.env");
+        $output = preg_replace("/APP_ENV=(.*)/", "APP_ENV=$environment", $dotEnv);
+        file_put_contents("./.env", $output);
     }
 }

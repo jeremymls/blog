@@ -47,9 +47,9 @@ class FillDatabase extends AbstractSeed
         for ($i = 0; $i < 100; $i++) {
             $posts[] = [
                 'category' => $faker->numberBetween(1, 5),
-                'title' => $faker->title,
+                'title' => $faker->words(3, true),
                 'chapo' => $faker->sentence,
-                'content' => $faker->paragraph,
+                'content' => $faker->paragraphs(3, true),
                 'picture' => $faker->boolean(90)? $faker->imageUrl(640, 480, 'POST', false) : null,
                 'url' => $faker->boolean(90)? $faker->url() : null,
                 'created_at' => $faker->dateTimeBetween('-1 years', 'now')->format('Y-m-d H:i:s'),

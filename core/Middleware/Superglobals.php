@@ -167,12 +167,21 @@ class Superglobals
         return $this->_ASSETS . $path;
     }
 
-    public function getDatabase()
+    public function getAppEnv()
     {
-        $database['host'] = $this->getEnv('DB_HOST');
-        $database['name'] = $this->getEnv('DB_NAME');
-        $database['user'] = $this->getEnv('DB_USER');
-        $database['pass'] = $this->getEnv('DB_PASS');
+        return $this->getEnv('APP_ENV');
+    }
+
+    public function getDatabase($app_env = null)
+    {
+        if (!$app_env) {
+            $app_env = $this->getAppEnv();
+        }
+        $database['host'] = $this->getEnv($app_env . '_DB_HOST');
+        $database['name'] = $this->getEnv($app_env . '_DB_NAME');
+        $database['user'] = $this->getEnv($app_env . '_DB_USER');
+        $database['pass'] = $this->getEnv($app_env . '_DB_PASS');
+        $database['port'] = $this->getEnv($app_env . '_DB_PORT');
         return $database;
     }
 
