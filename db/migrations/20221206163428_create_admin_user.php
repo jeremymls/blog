@@ -16,7 +16,7 @@ final class CreateAdminUser extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change()
+    public function up()
     {
         $rows = [
             [
@@ -31,5 +31,10 @@ final class CreateAdminUser extends AbstractMigration
             ]
         ];
         $this->table('users')->insert($rows)->update();
+    }
+
+    public function down()
+    {
+        $this->table('users')->drop()->save();
     }
 }

@@ -1,5 +1,12 @@
 <?php
 
+use Core\Middleware\Superglobals;
+$phinxInit = true;
+require 'index.php';
+$superglobals = Superglobals::getInstance();
+$dbProd = $superglobals->getDatabase('PROD');
+$dbDev = $superglobals->getDatabase('DEV');
+$dbTest = $superglobals->getDatabase('TEST');
 return
 [
     'paths' => [
@@ -8,29 +15,33 @@ return
     ],
     'environments' => [
         'default_migration_table' => 'migrations',
-        'default_environment' => 'development',
-        'production' => [
+        'default_environment' => 'PROD',
+        'PROD' => [
             'adapter' => 'mysql',
-            'host' => 'localhost',
-            'name' => 'production_db',
-            'user' => 'root',
-            'pass' => '',
-            'port' => '3306',
+            'host' => $dbProd['host'],
+            'name' => $dbProd['name'],
+            'user' => $dbProd['user'],
+            'pass' => $dbProd['pass'],
+            'port' => $dbProd['port'],
             'charset' => 'utf8',
         ],
-        'development' => [
+        'DEV' => [
             'adapter' => 'mysql',
-            'host' => 'localhost',
-            'name' => 'blog_test',
-            'user' => 'root',
-            'pass' => 'root',
-            'port' => '3306',
+            'host' => $dbDev['host'],
+            'name' => $dbDev['name'],
+            'user' => $dbDev['user'],
+            'pass' => $dbDev['pass'],
+            'port' => $dbDev['port'],
             'charset' => 'utf8',
         ],
-        'test' => [
-            'adapter' => 'sqlite',
-            'memory' => true,
-            'name' => 'blog_test',
+        'TEST' => [
+            'adapter' => 'mysql',
+            'host' => $dbTest['host'],
+            'name' => $dbTest['name'],
+            'user' => $dbTest['user'],
+            'pass' => $dbTest['pass'],
+            'port' => $dbTest['port'],
+            'charset' => 'utf8',
         ]
     ],
     'version_order' => 'creation'

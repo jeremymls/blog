@@ -112,7 +112,7 @@ class Routes
         $this->router->get('init/configs', 'Init@init_configs@core', 'init:configs');
         $this->router->get('init/tables', 'Init@init_tables@core', 'init:tables');
         $this->router->get('new', 'Init@new@core', 'new');
-        $this->router->get('create_bdd', 'Init@create@core', 'create_bdd');
+        $this->router->post('create_bdd', 'Init@create@core', 'create_bdd');
         $this->router->get('delete_bdd', 'Init@delete@core', 'delete_bdd');
     }
 

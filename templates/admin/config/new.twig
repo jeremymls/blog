@@ -1,5 +1,7 @@
 {% extends "/base.twig" %}
 {% import "macros/utils.twig" as utils %}
+{% block nav %}{% endblock %}
+{% block footer %}{% endblock %}
 
 {% block title %}Démarrage du site{% endblock %}
 {% block subtitle %}
@@ -15,8 +17,8 @@
                     <p>
                         Pour créer la base de données, cliquez sur le bouton ci-dessous ou exécuter le script suivant dans votre base de données :
                     </p>
-                    <a class="btn btn-success btn-lg" href="{{ getPath('create_bdd') }}">Créer la base de données "{{ bdd_name }}"</a><br>
-                    <em>(doit correspondre avec le fichier <strong>src/config/database.php</strong>)</em>
+                    <button id="create_bdd" class="btn btn-success btn-lg">Créer la base de données "{{ bdd_name }}"</button><br>
+                    <em>(correspond au fichier <strong>.env</strong>)</em>
                     <br><br>
                     <p>
                         <strong>Script SQL :</strong>
@@ -26,4 +28,23 @@
             </div>
         </div>
     </section>
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function() {
+    $('#create_bdd').click(function() {
+        $(this).attr('disabled', 'disabled');
+        $(this).append(' <i class="fa fa-spinner fa-spin"></i>');
+        $.ajax({
+            url: '{{ getPath('create_bdd') }}',
+            type: 'POST',
+            success: function(data) {
+                alert(data);
+                window.location.href = '{{ getPath('home') }}';
+            }
+        });
+    });
+});
+</script>
 {% endblock %}
