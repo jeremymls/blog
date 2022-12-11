@@ -5,7 +5,7 @@
             <file>tests/StartTest.php</file>
             <directory>tests/core</directory>
             <directory>tests/src</directory>
-            <!-- <directory>tests/build</directory> -->
+            <file>tests/EndTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

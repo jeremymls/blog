@@ -12,13 +12,14 @@
         "phpmailer/phpmailer": "^6.6",
         "tinymce/tinymce": "^6.2",
         "vlucas/phpdotenv": "^5.5",
-        "robmorgan/phinx": "^0.13.2",
-        "symfony/http-client": "^5.4"
+        "robmorgan/phinx": "^0.13.2"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "*",
         "phpunit/phpunit": "^9.5",
-        "fakerphp/faker": "^1.20"
+        "fakerphp/faker": "^1.20",
+        "symfony/http-client": "^5.4",
+        "symfony/http-kernel": "^5.4"
     },
     "config": {
         "allow-plugins": {

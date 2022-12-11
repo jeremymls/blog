@@ -2,6 +2,7 @@
 
 namespace Core\Services;
 
+use Core\Middleware\Superglobals;
 use Core\Middleware\TemplateRenderer;
 use Core\Models\Config;
 use Core\Repositories\ConfigRepository;
@@ -176,16 +177,17 @@ class ConfigService extends EntityService
         $renderer->render();
     }
 
-    public function change_env($environment)
+    public static function change_env($environment)
     {
         if (!in_array($environment, ['DEV', 'PROD', 'TEST'])) {
             throw new \Exception("L'environnement $environment n'existe pas.");
         }
-        if ($environment == $this->superglobals->getAppEnv()) {
+        if ($environment == Superglobals::getInstance()->getAppEnv()) {
             throw new \Exception("L'environnement est déjà $environment");
         }
         $dotEnv = file_get_contents("./.env");
         $output = preg_replace("/APP_ENV=(.*)/", "APP_ENV=$environment", $dotEnv);
         file_put_contents("./.env", $output);
+        Superglobals::getInstance()->setAppEnv($environment);
     }
 }

@@ -15,6 +15,7 @@ class FillDatabase extends AbstractSeed
      */
     public function run(): void
     {
+        echo "\nDatabase filling :";
         $faker = Faker\Factory::create('fr_FR');
         $users = [];
         for ($i = 0; $i < 100; $i++) {
@@ -31,7 +32,7 @@ class FillDatabase extends AbstractSeed
             ];
         }
         $this->table('users')->insert($users)->save();
-        var_dump("100 users added");
+        echo "\n100 users added";
         
         $categories = [];
         for ($i = 0; $i < 5; $i++) {
@@ -41,7 +42,7 @@ class FillDatabase extends AbstractSeed
             ];
         }
         $this->table('categories')->insert($categories)->save();
-        var_dump("5 categories added");
+        echo "\n5 categories added";
 
         $posts = [];
         for ($i = 0; $i < 100; $i++) {
@@ -56,7 +57,7 @@ class FillDatabase extends AbstractSeed
             ];
         }
         $this->table('posts')->insert($posts)->save();
-        var_dump("100 posts added");
+        echo "\n100 posts added";
 
         $comments = [];
         for ($i = 0; $i < 5000; $i++) {
@@ -70,6 +71,7 @@ class FillDatabase extends AbstractSeed
             ];
         }
         $this->table('comments')->insert($comments)->save();
-        var_dump("5000 comments added");
+        echo "\n5000 comments added";
+        echo "\nFilled database\n";
     }
 }

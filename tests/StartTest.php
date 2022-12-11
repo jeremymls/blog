@@ -1,55 +1,73 @@
 <?php
 
-use Test\base\RoutesBaseTest;
+use Core\Services\ConfigService;
+use Core\Services\PhinxService;
+use Test\base\BaseTest;
+use Symfony\Component\HttpClient\CachingHttpClient;
+use Symfony\Component\HttpKernel\HttpCache\Store;
 
-class StartTest extends RoutesBaseTest
+class StartTest extends BaseTest
 {
     public function __construct()
     {
         parent::__construct();
     }
 
+    public function testChangeEnv()
+    {
+        if ($_ENV['APP_ENV'] !== "TEST") ConfigService::change_env('TEST');
+        $this->assertTrue(true);
+        sleep(1);
+    }
+    
+    public function testCreateDb()
+    {
+        $response = $this->client->request('POST', $this->host."create_bdd");
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
     // Test if the home page is accessible
     public function testHome()
     {
         $response = $this->client->request('GET', $this->host);
-        if ($response->getStatusCode() == 200) {
-            $response = $this->client->request('GET', $this->host."delete_bdd");
-            $this->assertEquals(302, $response->getStatusCode());
-        } else {
-            $this->assertTrue(true);
-        }
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals($this->host, $response->getInfo('url'));
     }
 
-    // First start without database
-    public function testInitialState()
+    public function testAuthAdmin()
     {
-        $response = $this->client->request('GET', $this->host);
-        $statusCode = $response->getStatusCode();
-        $this->assertEquals(302, $statusCode);
-        $response_url = $response->getInfo('url');
-        var_dump($response);
-        $this->assertEquals($this->host."login", $response_url); // ! Pourquoi login et pas new?
+        $store = new Store('/tmp');
+        $this->client = new CachingHttpClient($this->client, $store);
+        $post = [
+            'body' => [
+                'identifiant' => 'admin',
+                'password' => 'jmp2022',
+            ]
+        ];
+        $response = $this->client->request('POST', $this->host."login", $post);
+        // I'm trying to test if the user is logged in
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals($this->host."login", $response->getInfo('url'));
+        // If he is, I want to test if he can access the dashboard page
+        $response = $this->client->request('GET', $this->host."dashboard");
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals($this->host."dashboard", $response->getInfo('url'));
     }
 
-    // Create database
-    public function testCreateDatabase()
+    public function testSeedDatabase()
     {
-        $response = $this->client->request('GET', $this->host."create_bdd");
-        $statusCode = $response->getStatusCode();
-        $this->assertEquals(200, $statusCode);
-        $response_url = $response->getInfo('url');
-        $this->assertEquals($this->host."login", $response_url); // ! Pourquoi login et pas init?
-    }
+        PhinxService::getManager()->seed('TEST');
 
-    // Initial parameters
-    public function testInitialParameters()
-    {
-        $response = $this->client->request('POST', $this->host."init");
+        $response = $this->client->request('GET', $this->host . 'posts/5');
         $statusCode = $response->getStatusCode();
         $this->assertEquals(200, $statusCode);
         $response_url = $response->getInfo('url');
-        $this->assertEquals($this->host, $response_url); // OK
-    }
+        $this->assertEquals($this->host . 'posts/5', $response_url);
 
+        $response = $this->client->request('GET', $this->host . 'post/100');
+        $statusCode = $response->getStatusCode();
+        $this->assertEquals(200, $statusCode);
+        $response_url = $response->getInfo('url');
+        $this->assertEquals($this->host . 'post/100', $response_url);
+    }
 }

@@ -42,9 +42,4 @@ class PhinxService
     {
         $this->run("seed:run -e $environment");
     }
-
-    public function rollback($environment, $targetVersion = null)
-    {
-        $this->run("rollback -e $environment". $targetVersion ? " -t $targetVersion" : '');
-    }
 }
