@@ -1,24 +1,31 @@
 <?php
 
+use Application\Models\Post;
 use PHPUnit\Framework\TestCase;
 
-class CommentTest extends TestCase
+class PostTest extends TestCase
 {
     public function testClass()
     {
-        $comment = new Application\Models\Comment();
-        $this->assertInstanceOf(Application\Models\Comment::class, $comment);
+        $post = new Post();
+        $this->assertInstanceOf(Post::class, $post);
     }
 
     public function testTableName()
     {
-        $comment = new Application\Models\Comment();
-        $this->assertEquals('comments', $comment::TABLE);
+        $post = new Post();
+        $this->assertEquals('posts', $post::TABLE);
     }
-    
+
     public function testFillable()
     {
-        $comment = new Application\Models\Comment();
-        $this->assertEquals(['post','author','comment'], $comment->getFillable());
+        $post = new Post();
+        $this->assertEquals(['title','content'], $post->getFillable());
+    }
+
+    public function testLinks()
+    {
+        $post = new Post();
+        $this->assertEquals(['category' => 'CategoryRepository'], $post->getLinks());
     }
 }

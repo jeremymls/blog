@@ -21,7 +21,7 @@ final class CreateAdminUser extends AbstractMigration
         $rows = [
             [
                 'id' => 1,
-                'email'  => 'admin@jm-projet.fr',
+                'email'  => 'admin@yopmail.com',
                 'username' => 'admin',
                 'password' => "2cccdc2687174d99b72adf3e151cdc42d77fd16d4de993972261d0cadf002406efeca3991a8bcb2d265d44c4e460a60c9eb357008733d9ba10ba52bce99e45ef",
                 'first' => "Owner_first",

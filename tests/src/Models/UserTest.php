@@ -30,4 +30,12 @@ class UserTest extends TestCase
         $user->setPassword($password);
         $this->assertTrue($user->comparePassword($user->password, $password));
     }
+
+    public function testWithExpirationToken()
+    {
+        $model = new User();
+        $model->setId(1);
+        $model->withExpirationToken();
+        $this->assertEquals('not exist', $model->token);
+    }
 }

@@ -12,6 +12,9 @@ use Core\Services\PhinxService;
 
 class InitController extends Controller
 {
+    protected $initService;
+    protected $superglobals;
+
     public function __construct()
     {
         parent::__construct();
@@ -40,7 +43,7 @@ class InitController extends Controller
     {
         InitService::create();
         $phinx = PhinxService::getManager();
-        $phinx->migrate($this->superglobals->getAppEnv());
+        $phinx->AppMigrate($this->superglobals->getAppEnv());
         echo 'La base de données a été créée avec succès';
     }
 

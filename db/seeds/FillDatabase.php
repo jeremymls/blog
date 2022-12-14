@@ -15,9 +15,19 @@ class FillDatabase extends AbstractSeed
      */
     public function run(): void
     {
+        echo "\nDatabase filling :".PHP_EOL;
         $faker = Faker\Factory::create('fr_FR');
         $users = [];
-        for ($i = 0; $i < 100; $i++) {
+        $users[] = [
+            'email'  => 'user@yopmail.fr',
+            'username' => 'user',
+            'password' => "2cccdc2687174d99b72adf3e151cdc42d77fd16d4de993972261d0cadf002406efeca3991a8bcb2d265d44c4e460a60c9eb357008733d9ba10ba52bce99e45ef",
+            'first' => "User_first",
+            'last' => "User_last",
+            'role' => "user",
+            'validated_email' => 1,
+        ];
+        for ($i = 0; $i < 98; $i++) {
             $users[] = [
                 'email' => $faker->email,
                 'username' => $faker->userName,
@@ -31,8 +41,8 @@ class FillDatabase extends AbstractSeed
             ];
         }
         $this->table('users')->insert($users)->save();
-        var_dump("100 users added");
-        
+        echo "100 users added".PHP_EOL;
+
         $categories = [];
         for ($i = 0; $i < 5; $i++) {
             $categories[] = [
@@ -41,7 +51,7 @@ class FillDatabase extends AbstractSeed
             ];
         }
         $this->table('categories')->insert($categories)->save();
-        var_dump("5 categories added");
+        echo "5 categories added".PHP_EOL;
 
         $posts = [];
         for ($i = 0; $i < 100; $i++) {
@@ -56,7 +66,7 @@ class FillDatabase extends AbstractSeed
             ];
         }
         $this->table('posts')->insert($posts)->save();
-        var_dump("100 posts added");
+        echo "100 posts added".PHP_EOL;
 
         $comments = [];
         for ($i = 0; $i < 5000; $i++) {
@@ -70,6 +80,7 @@ class FillDatabase extends AbstractSeed
             ];
         }
         $this->table('comments')->insert($comments)->save();
-        var_dump("5000 comments added");
+        echo "5000 comments added".PHP_EOL;
+        echo "Filled database".PHP_EOL;
     }
 }

@@ -33,18 +33,13 @@ class PhinxService
         self::getPhinxApplication()->doRun(new StringInput($cmd), new NullOutput());
     }
 
-    public function migrate($environment)
+    public function AppMigrate($environment)
     {
         $this->run("migrate -e $environment");
     }
 
-    public function seed($environment)
+    public function AppSeed($environment)
     {
         $this->run("seed:run -e $environment");
-    }
-
-    public function rollback($environment, $targetVersion = null)
-    {
-        $this->run("rollback -e $environment". $targetVersion ? " -t $targetVersion" : '');
     }
 }

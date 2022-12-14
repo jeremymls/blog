@@ -22,7 +22,7 @@ class PHPSession implements SessionInterface
 
     private function ensureStarted()
     {
-        if (session_status() === PHP_SESSION_NONE) {
+        if (session_status() === PHP_SESSION_NONE && php_sapi_name() !== 'cli') {
             session_start();
         }
     }

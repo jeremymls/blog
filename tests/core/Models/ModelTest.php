@@ -1,16 +1,17 @@
 <?php
 
-use Application\Models\Comment;
-use Application\Repositories\UserRepository;
 use Core\Models\Model;
+use Application\Models\Post;
 use PHPUnit\Framework\TestCase;
+use Application\Models\Category;
+use Application\Repositories\CategoryRepository;
 
 class ModelTest extends TestCase
 {
     public function testClass()
     {
         $model = new Model();
-        $this->assertInstanceOf(Core\Models\Model::class, $model);
+        $this->assertInstanceOf(Model::class, $model);
     }
 
     public function testGetSetId()
@@ -34,20 +35,11 @@ class ModelTest extends TestCase
         $this->assertEquals('01/01/2021 à 00:00', $model->getFrenchCreationDate());
     }
 
-    // public function testWith()
-    // {
-    //     $comment = new Comment();
-    //     $comment->setId(22);
-    //     $comment->with('author', UserRepository::class);
-    //     var_dump($comment);
-    //     $this->assertInstanceOf(Application\Models\User::class, $comment->author);
-    // }
-
-    // public function testWithExpirationToken()
-    // {
-    //     $model = new Core\Models\Model();
-    //     $model->setId(1);
-    //     $model->withExpirationToken();
-    //     $this->assertEquals('expired', $model->token);
-    // }
+    public function testWith()
+    {
+        $post = new Post();
+        $post->category = "1";
+        $post->with('category', CategoryRepository::class);
+        $this->assertInstanceOf(Category::class, $post->category);
+    }
 }

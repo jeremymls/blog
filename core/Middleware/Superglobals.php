@@ -167,6 +167,11 @@ class Superglobals
         return $this->_ASSETS . $path;
     }
 
+    public function setAppEnv($app_env)
+    {
+        $this->_ENV['APP_ENV'] = $app_env;
+    }
+
     public function getAppEnv()
     {
         return $this->getEnv('APP_ENV');

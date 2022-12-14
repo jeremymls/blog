@@ -43,7 +43,7 @@ class UserSession extends PHPSession
 
     public function getUserParam($param)
     {
-        $user = $this->get("user");
+        $user = $this->getUser();
         if ($user) {
             return $user->$param;
         }
