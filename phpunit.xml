@@ -1,11 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<phpunit bootstrap="vendor/autoload.php" colors="true">
-    <testsuites>
-        <testsuite name="Unit">
-            <file>tests/StartTest.php</file>
-            <directory>tests/core</directory>
-            <directory>tests/src</directory>
-            <file>tests/EndTest.php</file>
-        </testsuite>
-    </testsuites>
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">src</directory>
+      <directory suffix=".php">core</directory>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="Start">
+      <file>tests/StartTest/ChangeEnvTest.php</file>
+      <file>tests/StartTest/CreateDbTest.php</file>
+      <file>tests/StartTest/AuthAdminTest.php</file>
+      <file>tests/StartTest/SeedTest.php</file>
+    </testsuite>
+    <testsuite name="Unit">
+      <directory>tests/core</directory>
+      <directory>tests/src</directory>
+    </testsuite>
+    <testsuite name="End">
+      <file>tests/EndTest.php</file>
+    </testsuite>
+  </testsuites>
 </phpunit>

@@ -9,6 +9,11 @@ class ConfigTest extends TestCase
     {
         $config = new Config();
         $this->assertInstanceOf(Config::class, $config);
+        $this->assertObjectHasAttribute('name', $config);
+        $this->assertObjectHasAttribute('value', $config);
+        $this->assertObjectHasAttribute('description', $config);
+        $this->assertObjectHasAttribute('type', $config);
+        $this->assertObjectHasAttribute('default_value', $config);
     }
 
     public function testTableName()

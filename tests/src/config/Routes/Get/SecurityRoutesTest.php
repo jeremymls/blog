@@ -56,4 +56,14 @@ class SecurityRoutesTest extends BaseTest
         $this->assertEquals($this->host . 'login', $response_url);
     }
 
+    // User logged
+    public function testCallUserProfilRouteLogged()
+    {
+        $this->login();
+        $response = $this->client->request('GET', $this->host . 'profil');
+        $statusCode = $response->getStatusCode();
+        $this->assertEquals(200, $statusCode);
+        $response_url = $response->getInfo('url');
+        $this->assertEquals($this->host . 'profil', $response_url);
+    }
 }
