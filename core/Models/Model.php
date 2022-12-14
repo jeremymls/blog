@@ -2,9 +2,6 @@
 
 namespace Core\Models;
 
-use Core\Repositories\TokenRepository;
-use DateTime;
-
 class Model
 {
     static string $id;
@@ -38,20 +35,5 @@ class Model
         $id = $this->$field;
         $repository = new $repository();
         $this->$field = $repository->findOne($id);
-    }
-
-    public function withExpirationToken()
-    {
-        $tokenRepository = new TokenRepository();
-        $token = $tokenRepository->findAll("WHERE user_id = ?", [self::$id]);
-        if (count($token) > 0) {
-            if (new DateTime($token[0]->expiration_date)>new DateTime()) {
-                $this->token = $token[0]->expiration_date;
-            } else {
-                $this->token = 'expired';
-            }
-        } else {
-            $this->token = 'not exist';
-        }
     }
 }
