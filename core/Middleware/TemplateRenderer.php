@@ -6,6 +6,7 @@ class TemplateRenderer
     protected $basepath;
     protected $templating;
     protected $parameters = array();
+    protected $stylesheetpath;
 
     public function __construct($templating, $basepath, $stylesheetpath)
     {

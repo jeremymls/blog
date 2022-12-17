@@ -8,6 +8,9 @@ use Application\Services\PostService;
 
 class HomeController extends Controller
 {
+    private $postService;
+    private $homeService;
+
     public function __construct()
     {
         parent::__construct();

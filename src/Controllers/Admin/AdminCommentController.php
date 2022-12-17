@@ -7,6 +7,8 @@ use Application\Services\CommentService;
 
 class AdminCommentController extends AdminController
 {
+    private $commentService;
+
     public function __construct()
     {
         parent::__construct();

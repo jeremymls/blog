@@ -8,6 +8,8 @@ use Application\Repositories\UserRepository;
 
 class TokenRepository extends Repository
 {
+    protected $model;
+
     public function __construct()
     {
         parent::__construct();

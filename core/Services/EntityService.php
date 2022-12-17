@@ -5,6 +5,12 @@ use stdClass;
 
 class EntityService extends Service
 {
+    protected $modelName;
+    protected $repository;
+    protected $model;
+    protected $flashServices;
+    protected $superglobals;
+
     public function __construct()
     {
         parent::__construct();

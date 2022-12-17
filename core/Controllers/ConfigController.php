@@ -8,6 +8,9 @@ use Core\Services\Encryption;
 
 class ConfigController extends AdminController
 {
+    protected $configService;
+    protected $flashService;
+
     public function __construct()
     {
         parent::__construct();

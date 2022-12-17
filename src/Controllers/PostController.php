@@ -11,6 +11,9 @@ use Core\Services\FlashService;
 
 class PostController extends Controller
 {
+    private $postService;
+    private $commentService;
+
     public function __construct()
     {
         parent::__construct();

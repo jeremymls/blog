@@ -8,7 +8,8 @@ class FlashService
 {
     private static $instances = [];
     private $sessionKey = 'flash';
-    
+    protected $session;
+
     public function __construct()
     {
         $this->session = PHPSession::getInstance();
@@ -23,32 +24,32 @@ class FlashService
         return self::$instances[$cls];
     }
 
-    public function success(string $title, string $message)
+    public function success(string $title, string $message): void
     {
-        return $this->send('success', $title, $message);
+        $this->send('success', $title, $message);
     }
 
-    public function danger(string $title, string $message)
+    public function danger(string $title, string $message): void
     {
-        return $this->send('danger', $title, $message);
+        $this->send('danger', $title, $message);
     }
 
-    public function info(string $title, string $message)
+    public function info(string $title, string $message): void
     {
-        return $this->send('info', $title, $message);
+        $this->send('info', $title, $message);
     }
 
-    public function warning(string $title, string $message)
+    public function warning(string $title, string $message): void
     {
-        return $this->send('warning', $title, $message);
+        $this->send('warning', $title, $message);
     }
 
-    public function template(string $template)
+    public function template(string $template): void
     {
-        return $this->send($template);
+        $this->send($template);
     }
-    
-    private function send(string $type, string $title = "", string $message = "")
+
+    private function send(string $type, string $title = "", string $message = ""): void
     {
         $flash = $this->session->get($this->sessionKey, []);
         $flash[] = [

@@ -8,6 +8,8 @@ use Application\Services\PostService;
 
 class AdminCategoryController extends AdminController
 {
+    private $categoryService;
+
     public function __construct()
     {
         parent::__construct();

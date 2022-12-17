@@ -7,6 +7,8 @@ use Core\Router\Router;
 
 class Routes
 {
+    protected $router;
+
     public function __construct()
     {
         $this->router = new Router($this->url());

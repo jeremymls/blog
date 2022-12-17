@@ -7,6 +7,11 @@ use Core\Middleware\Superglobals;
 
 class Service
 {
+    protected $flashServices;
+    protected $pagination;
+    protected $superglobals;
+    protected $model;
+
     public function __construct()
     {
         $this->flashServices = FlashService::getInstance();

@@ -9,6 +9,10 @@ use Core\Repositories\ConfigRepository;
 
 class ConfigService extends EntityService
 {
+    protected $configRepository;
+    protected $model;
+    protected $configs;
+
     public function __construct()
     {
         parent::__construct();

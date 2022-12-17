@@ -6,6 +6,7 @@ use Core\Middleware\Session\PHPSession;
 class CsrfService
 {
     private static $instances = [];
+    protected $session;
 
     public function __construct()
     {

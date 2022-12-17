@@ -6,6 +6,8 @@ use Core\Middleware\Superglobals;
 
 class InitRepository extends Repository
 {
+    protected $connection;
+
     public function __construct()
     {
         parent::__construct();

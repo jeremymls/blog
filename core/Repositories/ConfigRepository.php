@@ -7,6 +7,10 @@ use Core\Models\Config;
 
 class ConfigRepository extends Repository
 {
+    protected $dbName;
+    protected $model;
+    protected $connection;
+
     public function __construct()
     {
         parent::__construct();

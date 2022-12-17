@@ -7,6 +7,8 @@ use Application\Services\PostService;
 
 class AdminPostController extends AdminController
 {
+    private $postService;
+
     public function __construct()
     {
         parent::__construct();

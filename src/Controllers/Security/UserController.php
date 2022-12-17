@@ -8,6 +8,8 @@ use Core\Services\TokenService;
 
 class UserController extends Controller
 {
+    private $userService;
+
     public function __construct()
     {
         parent::__construct();
@@ -21,10 +23,10 @@ class UserController extends Controller
         $this->twig->display('security/profil.twig', $params);
     }
 
-    public function register($userId = null)
+    public function register()
     {
         if ($this->isPost()) {
-            $this->userService->register($this->superglobals->getPost(), $userId);
+            $this->userService->register($this->superglobals->getPost());
             $this->redirectWithTimeout('profil');
         } else {
             $this->twig->display('security/action.twig', ['action' => 'register',]);
@@ -85,9 +87,9 @@ class UserController extends Controller
         $this->twig->display('security/edit_password.twig', $params);
     }
 
-    public function delete_picture($identifier = null)
+    public function delete_picture()
     {
-        $this->userService->delete_picture($identifier);
+        $this->userService->delete_picture();
         $this->superglobals->redirect('profil');
     }
 

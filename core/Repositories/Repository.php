@@ -11,6 +11,10 @@ use Core\Services\Encryption;
 
 class Repository
 {
+    protected $superglobals;
+    protected $connection;
+    protected $model;
+
     public function __construct()
     {
         $this->superglobals = Superglobals::getInstance();

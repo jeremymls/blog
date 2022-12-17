@@ -14,6 +14,10 @@ use stdClass;
 
 class UserService extends EntityService
 {
+    private $userSession;
+    private $tokenService;
+    private $mailService;
+    private $configService;
 
     public function __construct()
     {

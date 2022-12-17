@@ -8,6 +8,9 @@ use PHPMailer\PHPMailer\SMTP;
 
 class MailService
 {
+    protected $mail;
+    protected $configService;
+
     public function __construct()
     {
         $this->configService = new ConfigService();

@@ -8,6 +8,8 @@ use Core\Middleware\Session\UserSession;
 
 class CommentController extends Controller
 {
+    private $commentService;
+
     public function __construct()
     {
         parent::__construct();

@@ -21,6 +21,10 @@ require_once 'src/config/default.php';
 abstract class Controller
 {
     protected $twig;
+    protected $pagination;
+    protected $superglobals;
+    protected $userSession;
+    protected $session;
 
     public function __construct()
     {

@@ -7,6 +7,8 @@ use Application\Services\UserService;
 
 class AdminUserController extends AdminController
 {
+    private $userService;
+
     public function __construct()
     {
         parent::__construct();
