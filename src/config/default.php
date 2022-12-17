@@ -1,7 +1,7 @@
 <?php
 
 const CONFIGS = [
-    'cs_site_name' =>               ['JM Projets','Nom du site'],
+    'cs_site_name' =>               ['Nouveau site','Nom du site'],
     'cs_address' =>                 ['','Adresse Postale'],
     'cs_slogan' =>                  ['','Slogan'],
     'cs_logo' =>                    [null,'Logo du site','image'],
