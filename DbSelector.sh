@@ -34,8 +34,8 @@ function choose_from_menu() {
     printf -v $outvar "${options[$cur]}"
 }
 
-LINE=`grep -n DB_NAME .env.exemple | cut -d ':' -f1`
-DB_NAME=`sed -n $LINE'p' .env.exemple | cut -d '=' -f2`
+LINE=`grep -n DB_NAME .env | cut -d ':' -f1`
+DB_NAME=`sed -n $LINE'p' .env | cut -d '=' -f2`
 
 clear
 echo -e "\e[1;36mDB_NAME: \e[1;32m$DB_NAME\e[0m"
