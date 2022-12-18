@@ -237,6 +237,7 @@
         {% endif %}
         {% if (config.type == 'image') %}
             $('#image').show();
+            $('#picture').removeAttr('disabled');
         {% endif %}
 
         {# SHOW SELECTED CONTENT #}

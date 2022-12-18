@@ -82,12 +82,16 @@
             <td>{{ config.name| slice(3,1) | upper ~ config.name | slice(4) | replace({'_': ' '})}}</td>
             <td>
                 {% if config.type == "color" %}
-                <div style="margin:auto;background-color:{{ config.value }};height:3rem;width:10rem;border:1px solid black;border-radius:5px;"></div>
+                    {% if config.value == "transparent" %}
+                        <div>Transparent</div>
+                    {% else %}
+                        <div style="margin:auto;background-color:{{ config.value }};height:3rem;width:10rem;border:1px solid black;border-radius:5px;"></div>
+                    {% endif %}
                 {% else %}
-                {{ utils.content_converter(config.value, config.name, af_home_contact_title) }}
+                    {{ utils.content_converter(config.value, config.name) }}
                 {% endif %}
             </td>
-            <td>{{ config.description }}</td>
+            <td>{{ config.description | nl2br }}</td>
             <td class="action">
                 <div class="row">
                     <a href="{{ getPath('admin:config:update', {'id': config.identifier}) }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Modifier</a>

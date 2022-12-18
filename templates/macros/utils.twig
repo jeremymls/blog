@@ -131,27 +131,27 @@
 {% endmacro %}
 
 {# Convert content #}
-{% macro content_converter(content, configName, contactTitle) %}
+{% macro content_converter(content, configName) %}
     <div {% if (configName | slice(0, 15) == "af_home_content") %}class="home_content text-center"{% endif %}>
-    {% if content | first == "<" %}
-    {{ content | raw }}
-    {% elseif content | slice(0, 2) == "[%" %}
-    {% set macroName = content | slice(2) | slice(0, -2) %}
-        {% if macroName == "contact" %}
-            {{ _self.contact(contactTitle) }}
+        {% if content | first == "<" %}
+            {{ content | raw }}
+        {% elseif content | slice(0, 2) == "[%" %}
+            {% set macroName = content | slice(2) | slice(0, -2) %}
+            {% if macroName == "contact" %}
+                {{ _self.contact(af_home_contact_title) }}
+            {% elseif macroName == "reseaux" %}
+                {{ _self.social_networks() }}
+            {% elseif macroName == "contact+reseaux" %}
+                {{ _self.contact(af_home_contact_title) }}
+                {{ _self.social_networks() }}
+            {% endif %}
+        {% elseif content | slice(0, 11) == "data:image/" %}
+            <img class='convertedContentImage' src="{{ content }}" width="100%" alt="image">
+        {% elseif content == "" %}
+            <i class="fa fa-ban"></i> Vide
+        {% else %}
+            {{ content }}
         {% endif %}
-        {% if macroName == "reseaux" %}
-            {{ _self.social_networks() }}
-        {% endif %}
-        {% if macroName == "contact+reseaux" %}
-            {{ _self.contact(contactTitle) }}
-            {{ _self.social_networks() }}
-        {% endif %}
-    {% elseif content | slice(0, 11) == "data:image/" %}
-    <img class='convertedContentImage' src="{{ content }}" width="100%" alt="image">
-    {% else %}
-    {{ content }}
-    {% endif %}
     </div>
     <style>
         .home_content {
