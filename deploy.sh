@@ -250,6 +250,15 @@ if [ "${MIGRATE^^}" = "Y" ]; then
     break_point
 fi
 
+# CSS variables colors
+echo -e ":root{
+    --theme-primary: #81260a;
+    --theme-primary-darken: #5c1d08;
+    --theme-success: #dd9b0d;
+    --theme-success-darken: #b37d0a;
+    --theme-success-fade: #dd9b0dee;
+}" > assets/css/styles.css
+
 clear
 echo -e "${GREEN}Configuration terminée.\n${BLUE}Rendez-vous sur ${WHITE}${SITE_URL}${BLUE} pour personnaliser votre site.${NC}\n"
 exit
