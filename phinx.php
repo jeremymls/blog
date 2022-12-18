@@ -1,7 +1,7 @@
 <?php
 
 use Core\Middleware\Superglobals;
-$phinxInit = true;
+$noRunRoutes = true;
 require 'index.php';
 $superglobals = Superglobals::getInstance();
 $dbProd = $superglobals->getDatabase('PROD');

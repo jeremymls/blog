@@ -8,7 +8,7 @@ use Symfony\Component\HttpClient\CachingHttpClient;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpKernel\HttpCache\Store;
 
-$phinxInit = true;
+$noRunRoutes = true;
 require_once('index.php');
 if (session_status() === PHP_SESSION_NONE) session_start();
 class BaseTest extends TestCase

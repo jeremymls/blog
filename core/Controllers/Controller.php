@@ -73,6 +73,11 @@ abstract class Controller
         });
         $twig->addFunction($getGetFunc);
 
+        $getEnv = new \Twig\TwigFunction('getEnv', function () use ($superglobals) {
+            return $superglobals->getAppEnv();
+        });
+        $twig->addFunction($getEnv);
+
         // User Session functions
         $getUserParamFunc = new \Twig\TwigFunction('getUserParam', function ($param) use ($userSession) {
             return $userSession->getUserParam($param);
