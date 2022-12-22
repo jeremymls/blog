@@ -42,9 +42,18 @@ class InitController extends Controller
     public function create()
     {
         InitService::create();
-        $phinx = PhinxService::getManager();
-        $phinx->AppMigrate($this->superglobals->getAppEnv());
+        InitService::migration($this->superglobals->getAppEnv());
         echo 'La base de données a été créée avec succès';
+    }
+
+    public function seed($env)
+    {
+        if ($_POST["seedKey"] == 'r*Bvd2dMpTdGYjwaG^BAw$hADm8gb#KggKxNh9fGv^e6PdU74n') {
+            InitService::seed($env);
+            echo 'La base de données a été peuplée avec succès';
+        } else {
+            echo 'La clé de peuplement est incorrecte';
+        }
     }
 
     public function init_tables()

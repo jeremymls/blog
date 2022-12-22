@@ -2,10 +2,11 @@
 
 use Application\config\Routes;
 use Core\Controllers\ErrorExceptionController;
+use Dotenv\Dotenv;
 
 require_once 'vendor/autoload.php';
 if (!defined('ROOT')) define('ROOT', __DIR__);
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv::createMutable(__DIR__);
 $dotenv->load();
 try {
 $dotenv->required([

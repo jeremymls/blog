@@ -116,6 +116,7 @@ class Routes
         $this->router->get('new', 'Init@new@core', 'new');
         $this->router->post('create_bdd', 'Init@create@core', 'create_bdd');
         $this->router->get('delete_bdd', 'Init@delete@core', 'delete_bdd');
+        $this->router->post('seed/:env', 'Init@seed@core', 'seed');
     }
 
     public function run()
