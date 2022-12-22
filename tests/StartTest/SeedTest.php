@@ -14,7 +14,15 @@ class SeedTest extends BaseTest
     public function testSeedDatabase()
     {
         sleep(3);
-        PhinxService::getManager()->AppSeed('TEST');
+        $response = $this->client->request('POST', $this->host . 'seed/TEST', [
+            'body' => [
+                'seedKey' => 'r*Bvd2dMpTdGYjwaG^BAw$hADm8gb#KggKxNh9fGv^e6PdU74n'
+            ]
+        ]);
+        $statusCode = $response->getStatusCode();
+        if ($statusCode == 200) {
+            echo "Seed database success".PHP_EOL;
+        }
 
         $response = $this->client->request('GET', $this->host . 'posts/5');
         $statusCode = $response->getStatusCode();

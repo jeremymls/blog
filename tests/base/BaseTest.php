@@ -13,9 +13,9 @@ require_once('index.php');
 if (session_status() === PHP_SESSION_NONE) session_start();
 class BaseTest extends TestCase
 {
-    public $host = 'http://blog.jrm.test/';
     protected $client;
     protected $superglobals;
+    protected $host;
 
     public function __construct()
     {
@@ -23,6 +23,7 @@ class BaseTest extends TestCase
         $this->client = HttpClient::create();
         $this->mockBuild();
         $this->superglobals = Superglobals::getInstance();
+        $this->host = $this->superglobals->getHost();
     }
 
     private function mockBuild()
