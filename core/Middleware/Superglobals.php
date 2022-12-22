@@ -197,4 +197,9 @@ class Superglobals
         }
         return null;
     }
+
+    public function getHost()
+    {
+        return $this->_PATH.'/';
+    }
 }
