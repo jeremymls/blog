@@ -42,6 +42,9 @@ class ConfigController extends AdminController
                     $this->configService->renderColor($this->twig);
                 }
             }
+            if($this->superglobals->getGet('anchor') != ""){
+                $this->superglobals->setCookie('anchor',$this->superglobals->getGet('anchor'));
+            }
             $this->session->redirectLastUrl();
         }
         $params = $this->configService->get($id);

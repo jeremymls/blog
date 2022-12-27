@@ -143,6 +143,19 @@ class Superglobals
         $this->_POST[$key] = $value;
     }
 
+    public function setCookie($key, $value)
+    {
+        setcookie($key, $value, time() + 3, '/');
+    }
+
+    public function getCookie($key)
+    {
+        if (isset($_COOKIE[$key])) {
+            return $_COOKIE[$key];
+        }
+        return null;
+    }
+
     public function isExistPicture($entityTable = null)
     {
         // return (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE && $entityTable != "tokens");

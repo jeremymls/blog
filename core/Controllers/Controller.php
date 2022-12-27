@@ -73,6 +73,11 @@ abstract class Controller
         });
         $twig->addFunction($getGetFunc);
 
+        $getCookieFunc = new \Twig\TwigFunction('getCookie', function (string $key) use ($superglobals) {
+            return $superglobals->getCookie($key);
+        });
+        $twig->addFunction($getCookieFunc);
+
         $getEnv = new \Twig\TwigFunction('getEnv', function () use ($superglobals) {
             return $superglobals->getAppEnv();
         });
