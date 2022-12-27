@@ -202,6 +202,9 @@ class Repository
     private function removeObsoleteProperties($entity)
     {
         foreach ($entity as $key => $value) {
+            if ($key == "password") {
+                $entity->setPassword($value);
+            }
             if (!array_key_exists($key, $this->getModel())) {
                 unset($entity->$key);
             }

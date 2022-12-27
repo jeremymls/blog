@@ -6,6 +6,7 @@ class Model
 {
     static string $id;
     static string $created_at;
+    private string $csrf_token;
     // static string $updated_at;
     // static string $deleted_at;
 

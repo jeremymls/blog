@@ -167,7 +167,7 @@ class UserService extends EntityService
         if (!$user->comparePassword($user->password, $input['currentPassword'])) {
             throw new \Exception('Ce n\'est le bon mot de passe actuel.');
         }
-        $newPass = new stdClass();
+        $newPass = new User();
         $newPass->password = $input['password'];
         $newPass->csrf_token = $input['csrf_token'];
         $success = $this->repository->update($id, $newPass);
@@ -251,7 +251,7 @@ class UserService extends EntityService
     {
         $user = $this->repository->findOne($this->userSession->getUserParam("identifier"));
         $user->withExpirationToken();
-        if ($user->token == "expired") {
+        if ($user->getToken() == "expired") {
             $token = $this->tokenService->createToken($user->identifier);
             $this->sendConfirmationEmail($user->email, $user->first, $token);
         } else {

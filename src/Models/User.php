@@ -18,6 +18,7 @@ class User extends Model
     public string $role;
     public string $validated_email;
     public string $picture;
+    private string $token;
 
     public function getFillable(): array
     {
@@ -58,5 +59,10 @@ class User extends Model
         } else {
             $this->token = 'not exist';
         }
+    }
+
+    public function getToken()
+    {
+        return $this->token;
     }
 }

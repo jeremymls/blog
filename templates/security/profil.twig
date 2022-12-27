@@ -26,8 +26,10 @@
                                     {{ user.email }}
                                     {% if user.validated_email is empty %}
                                         <p class="label label-default"><i class="fa fa-hourglass-half" aria-hidden="true"></i> Non-validée</p>
-                                        {% if user.token == "expired"  %}
+                                        {% if user.getToken() == "expired"  %}
                                             <div><a class="btn btn-danger btn-sm" href="{{ getPath('confirm_again') }}">Renvoyer l'e-mail de confirmation</a></div>
+                                        {% elseif user.getToken() == "not exist"  %}
+                                            <div><a class="btn btn-danger btn-sm" href="{{ getPath('confirm_again') }}">Envoyer l'e-mail de confirmation</a></div>
                                         {% else %}
                                             <p><em><small>Un mail de confirmation a déjà été envoyé! <br> Vérifier vos mails (notament les indésirables),<br> sinon contacter l'administrateur <a href="mailto:{{ cs_owner_email }}">{{ cs_owner_name }}</a></small></em></p>
                                         {% endif %}
