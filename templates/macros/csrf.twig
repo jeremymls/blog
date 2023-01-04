@@ -5,5 +5,5 @@
 
 {# buttton #}
 {% macro button_delete(path) %}
-<a href="{{ path }}?csrf_token={{ getCsrf() }}" class="btn btn-danger confirm"><i class="fa fa-trash"></i> Supprimer</a>
+<a data-target={{ path }} data-csrf={{ getCsrf() }} class="btn btn-danger ajax-delete"><i class="fa fa-trash"></i> Supprimer</a>
 {% endmacro %}

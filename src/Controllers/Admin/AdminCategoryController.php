@@ -43,6 +43,6 @@ class AdminCategoryController extends AdminController
     public function delete(string $identifier)
     {
         $this->categoryService->delete($identifier);
-        $this->superglobals->redirect('admin:categories');
+        echo 'done';
     }
 }

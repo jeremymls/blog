@@ -47,7 +47,7 @@ class Routes
         $this->router->post('profil/edit/mail', 'Security\User@edit_mail');
         $this->router->get('profil/edit/password', 'Security\User@edit_password', 'profil:edit:password');
         $this->router->post('profil/edit/password', 'Security\User@edit_password');
-        $this->router->get('profil/delete/image', 'Security\User@delete_picture', 'profil:delete:image');
+        $this->router->post('profil/delete/image', 'Security\User@delete_picture', 'profil:delete:image');
         $this->router->get('profil/register', 'Security\User@register', 'register');
         $this->router->post('profil/register', 'Security\User@register');
         $this->router->get('profil/:id', 'Security\User@show', 'profil:id');
@@ -73,20 +73,20 @@ class Routes
         $this->router->post('admin/category/add', 'Admin\AdminCategory@add');
         $this->router->get('admin/category/update/:id', 'Admin\AdminCategory@update', 'admin:category:update');
         $this->router->post('admin/category/update/:id', 'Admin\AdminCategory@update');
-        $this->router->get('admin/category/delete/:id', 'Admin\AdminCategory@delete', 'admin:category:delete');
+        $this->router->post('admin/category/delete/:id', 'Admin\AdminCategory@delete', 'admin:category:delete');
         // AdminPost
         $this->router->get('admin/posts', 'Admin\AdminPost@index', 'admin:posts');
         $this->router->get('admin/posts/add', 'Admin\AdminPost@add', 'admin:post:add');
         $this->router->post('admin/posts/add', 'Admin\AdminPost@add');
         $this->router->get('admin/posts/update/:id', 'Admin\AdminPost@update', 'admin:post:update');
         $this->router->post('admin/posts/update/:id', 'Admin\AdminPost@update');
-        $this->router->get('admin/posts/delete/picture/:id', 'Admin\AdminPost@delete_picture', 'admin:post:delete:picture');
-        $this->router->get('admin/posts/delete/:id', 'Admin\AdminPost@delete', 'admin:post:delete');
+        $this->router->post('admin/posts/delete/picture/:id', 'Admin\AdminPost@delete_picture', 'admin:post:delete:picture');
+        $this->router->post('admin/posts/delete/:id', 'Admin\AdminPost@delete', 'admin:post:delete');
         $this->router->get('admin/posts/:category', 'Admin\AdminPost@index', 'admin:posts:category');
         $this->router->get('admin/posts/:category/:nbr_show', 'Admin\AdminPost@index', 'admin:posts:category:nbr_show');
         // AdminComment
         $this->router->get('admin/comments/moderate/:action/:id', 'Admin\AdminComment@moderate', 'admin:comment:moderate');
-        $this->router->get('admin/comments/delete/:id', 'Admin\AdminComment@delete');
+        // $this->router->get('admin/comments/delete/:id', 'Admin\AdminComment@delete');
         $this->router->get('admin/comments/:filter', 'Admin\AdminComment@index', 'admin:comments:filter');
         $this->router->post('admin/comments/:filter', 'Admin\AdminComment@multiple_moderation');
         $this->router->get('admin/comments/:filter/:nbr_show', 'Admin\AdminComment@index');
@@ -96,14 +96,14 @@ class Routes
         // AdminUser
         $this->router->get('admin/users', 'Admin\AdminUser@index', 'admin:users');
         $this->router->get('admin/users/:nbr_show', 'Admin\AdminUser@index');
-        $this->router->get('admin/users/delete/:id', 'Admin\AdminUser@delete', 'admin:user:delete');
+        $this->router->post('admin/users/delete/:id', 'Admin\AdminUser@delete', 'admin:user:delete');
         $this->router->get('admin/users/role/:id', 'Admin\AdminUser@role', 'admin:user:role');
         $this->router->post('admin/users/role/:id', 'Admin\AdminUser@role');
         // Core //
         // AdminConfig
         $this->router->get('admin/config/update/:id', 'Config@update@core', 'admin:config:update');
         $this->router->post('admin/config/update/:id', 'Config@update@core');
-        $this->router->get('admin/config/delete/:value', 'Config@delete_value@core', 'admin:config:delete:value');
+        $this->router->post('admin/config/delete/:value', 'Config@delete_value@core', 'admin:config:delete:value');
         $this->router->get('admin/configs/list/:prefix', 'Config@list@core', 'admin:configs:list');
         $this->router->get('admin/configs', 'Config@index@core', 'admin:configs');
         // AdminDoc
@@ -115,7 +115,7 @@ class Routes
         $this->router->get('init/tables', 'Init@init_tables@core', 'init:tables');
         $this->router->get('new', 'Init@new@core', 'new');
         $this->router->post('create_bdd', 'Init@create@core', 'create_bdd');
-        $this->router->get('delete_bdd', 'Init@delete@core', 'delete_bdd');
+        $this->router->post('delete_bdd', 'Init@delete@core', 'delete_bdd');
         $this->router->post('seed/:env', 'Init@seed@core', 'seed');
     }
 

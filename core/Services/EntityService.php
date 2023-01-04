@@ -80,8 +80,17 @@ class EntityService extends Service
         $entity = new stdClass;
         if ($delete == "delete") {
             $entity->deleted = 1;
+            $this->flashServices->danger(
+                $this->getFrenchName(true, "N") .' supprimé'. $this->getFrenchGenderTermination(),
+                $this->getFrenchName(true) ." #$identifier a bien été supprimé". $this->getFrenchGenderTermination()
+            );
         } elseif ($delete == "restore") {
             $entity->deleted = 0;
+            $entity->moderate = 0;
+            $this->flashServices->success(
+                $this->getFrenchName(true, "N") .' restauré'. $this->getFrenchGenderTermination(),
+                $this->getFrenchName(true) ." #$identifier a bien été restauré et sera à nouveau soumis à modération"
+            );
         }
         $entity->csrf_token = $this->superglobals->getGet("csrf_token");
         $this->repository->update($identifier, $entity);

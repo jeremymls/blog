@@ -42,11 +42,47 @@ $(document).ready(function () {
     });
 
     $('.delete-pic').click(function (e) {
-            e.preventDefault();
-            var target = $(this).data('target');
-            if (confirm("Voulez-vous vraiment supprimer cette image?")) {
-                window.location.href = target
-            };
+        e.preventDefault();
+        var target = $(this).data('target');
+        var csrf = $(this).data('csrf');
+        if (confirm("Voulez-vous vraiment supprimer cette image?")) {
+            $.ajax({
+                url: target,
+                type: 'post',
+                data: {
+                    'csrf_token': csrf
+                },
+                success: function (result) {
+                    if (result == 'done') {
+                        location.reload();
+                    } else {
+                        alert("Une erreur est survenue. Réessayer")
+                    }
+                }
+            });
+        };
+    });
 
+    // todo: delete this
+    $('.ajax-delete').click(function (e) {
+        e.preventDefault();
+        var target = $(this).data('target');
+        var csrf = $(this).data('csrf');
+        if (confirm("Voulez-vous vraiment supprimer cet élément?")) {
+            $.ajax({
+                url: target,
+                type: 'post',
+                data: {
+                    'csrf_token': csrf
+                },
+                success: function (result) {
+                    if (result == 'done') {
+                        location.reload();
+                    } else {
+                        alert("Une erreur est survenue. Réessayer")
+                    }
+                }
+            });
+        }
     });
 });

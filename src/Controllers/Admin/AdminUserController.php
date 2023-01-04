@@ -25,7 +25,7 @@ class AdminUserController extends AdminController
     public function delete(string $identifier)
     {
         $this->userService->delete($identifier);
-        $this->superglobals->redirect('admin:users');
+        echo 'done';
     }
 
     public function role(string $identifier)

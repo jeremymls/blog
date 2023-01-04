@@ -99,7 +99,16 @@
     $(document).ready(function(){
         $('#btnOverview').click(function(){
             if (confirm("Voulez-vous vraiment supprimer votre image de profil?")){
-                window.location.href="{{ getPath('profil:delete:image') }}";
+                $.ajax({
+                    url: "{{ getPath('profil:delete:image') }}",
+                    type: "POST",
+                    data: {'csrf_token': '{{ getCsrf() }}'},
+                    success: function(data){
+                        if (data == "done"){
+                            location.reload();
+                        }
+                    }
+                });
             };
         });
     });

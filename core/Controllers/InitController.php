@@ -88,7 +88,11 @@ class InitController extends Controller
 
     public function delete()
     {
-        $this->initService->delete();
-        $this->superglobals->redirect('home');
+        if ($this->superglobals->getPost('secret') != $this->superglobals->getSecretKey()) {
+            echo 'error';
+        } else {
+            $this->initService->delete();
+            echo 'done';
+        }
     }
 }

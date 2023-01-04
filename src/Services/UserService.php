@@ -182,7 +182,10 @@ class UserService extends EntityService
 
     public function delete_picture()
     {
-        $success = $this->repository->update($this->userSession->getUserParam("identifier"), ['picture' => null]);
+        $entity = new User();
+        $entity->picture = "";
+        $entity->csrf_token = $this->superglobals->getPost('csrf_token');
+        $success = $this->repository->update($this->userSession->getUserParam("identifier"), $entity);
         if (!$success) {
             throw new \Exception("Impossible de supprimer la photo de profil");
         }

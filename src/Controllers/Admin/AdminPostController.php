@@ -17,8 +17,14 @@ class AdminPostController extends AdminController
 
     public function index($category = "all", $nbr_show=5)
     {
-        $option = $category !== "all" ? "WHERE category = ?" : "";
-        $optionsData = $category !== "all" ? [$category] : [];
+        $option = "";
+        $optionsData = [];
+        if ($category === "NC") {
+            $option = "WHERE category IS NULL";
+        } elseif ($category !== "all") {
+            $option = "WHERE category = ?";
+            $optionsData = [$category];
+        }
         $params = $this->postService->getAll($option, $optionsData);
         $params = $this->pagination->paginate($params, 'posts', $nbr_show);
         $params['categoryId'] = $category ?? "all";
@@ -47,12 +53,12 @@ class AdminPostController extends AdminController
     public function delete(string $identifier)
     {
         $this->postService->delete($identifier);
-        $this->superglobals->redirect('admin:posts');
+        echo 'done';
     }
 
     public function delete_picture($identifier)
     {
         $this->postService->delete_post_picture($identifier);
-        $this->superglobals->redirectLastUrl();
+        echo 'done';
     }
 }

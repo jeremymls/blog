@@ -90,7 +90,7 @@ class UserController extends Controller
     public function delete_picture()
     {
         $this->userService->delete_picture();
-        $this->superglobals->redirect('profil');
+        echo 'done';
     }
 
     public function forget_password()

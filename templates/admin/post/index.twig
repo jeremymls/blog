@@ -23,7 +23,7 @@
                                     {% for category in categories %}
                                     <a href="{{ getPath('admin:posts:category:nbr_show', {"category": category.identifier, "nbr_show": nbr_show}) }}" type="button" class="btn btn-{% if categoryId == category.identifier %}primary{% else %}default{% endif %}">{{ category.name }}</a>
                                     {% endfor %}
-                                    <a href="{{ getPath('admin:posts:category:nbr_show', {"category": "0", "nbr_show": nbr_show}) }}" type="button" class="btn btn-{% if categoryId == "0" %}primary{% else %}default{% endif %}">Non classé</a>
+                                    <a href="{{ getPath('admin:posts:category:nbr_show', {"category": "NC", "nbr_show": nbr_show}) }}" type="button" class="btn btn-{% if categoryId == "NC" %}primary{% else %}default{% endif %}">Non classé</a>
                                 </div>
                             </form>
                         </div>
@@ -44,7 +44,7 @@
                                     <td class="div-pic">
                                         {% if post.picture is not empty %}
                                             <img class="img-thumbnail" width="200px" src="{{ post.picture }}" alt='{{ post.title }} picture'>
-                                            <button data-target="{{ getPath('admin:post:delete:picture', {'id': post.identifier}) }}" class="btn btn-danger btn-xs delete-pic"><i class="fa fa-trash"></i></button>
+                                            <button data-csrf="{{ getCsrf() }}" data-target="{{ getPath('admin:post:delete:picture', {'id': post.identifier}) }}" class="btn btn-danger btn-xs delete-pic"><i class="fa fa-trash"></i></button>
                                         {% endif %}
                                     </td>
                                     <td>

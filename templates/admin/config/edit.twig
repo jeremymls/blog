@@ -28,7 +28,7 @@
                                 <label for="picture">Image
                                     <div id="divOverview">
                                         <img id="thumbnailOverview" class="thumbnailOverview" src="{% if value is not empty and value | slice(0, 11) == "data:image/" %}{{ value }}{% else %}{{ asset('img/post.png') }}{% endif %}" alt="">
-                                        <button id="btnOverview" data-id="{{ id }}" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                        <button id="btnOverview" data-csrf="{{ getCsrf() }}" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                     </div>
                                 </label>
                                 <input type="file" name="value" id="picture" class="form-control picture" accept=".gif,.jpg,.jpeg,.png,.webp">
@@ -211,9 +211,24 @@
     </script>
     <script>
         {# DELETE IMAGE #}
-        $('#btnOverview').click(function(){
+        $('#btnOverview').click(function(e){
+            e.preventDefault();
+            var target = "{{ getPath('admin:config:delete:value', {value: config.identifier}) }}";
+            var csrf = "{{ getCsrf() }}";
             if (confirm("Voulez-vous vraiment supprimer cette image?")){
-                window.location.href="{{ getPath('admin:config:delete:value', {value: config.identifier}) }}";
+                $.ajax({
+                    url: target,
+                    type: 'post',
+                    data: { 'csrf_token': csrf },
+                    success: function (result) {
+                        console.log(result);
+                        if (result == 'done') {
+                            location.reload();
+                        } else {
+                            alert("Une erreur est survenue. Réessayer")
+                        }
+                    }
+                });
             };
         });
     </script>

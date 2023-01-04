@@ -124,7 +124,7 @@ class Repository
 
     public function delete($identifier): bool
     {
-        $this->checkCrsf($this->superglobals->getGet('csrf_token'));
+        $this->checkCrsf($this->superglobals->getPost('csrf_token'));
         $statement = $this->connection->prepare(
             'DELETE FROM ' . $this->model::TABLE . ' WHERE id=?'
         );

@@ -160,7 +160,10 @@ class ConfigService extends EntityService
 
     public function delete_value($id)
     {
-        $success = $this->repository->update($id, ['value' => null]);
+        $entity = new Config;
+        $entity->value = null;
+        $entity->csrf_token = $this->superglobals->getPost('csrf_token');
+        $success = $this->repository->update($id, $entity);
         if (!$success) {
             throw new \Exception("Impossible de supprimer cette valeur.");
         }
@@ -168,7 +171,6 @@ class ConfigService extends EntityService
             'Configuration modifiée',
             'La valeur a bien été supprimée.'
         );
-        $this->superglobals->redirect("admin:config:update",["id"=> $id]);
     }
 
     public function renderColor($twig)

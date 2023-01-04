@@ -16,7 +16,10 @@ class PostService extends EntityService
 
     public function delete_post_picture($identifier)
     {
-        $success = $this->repository->update($identifier, ['picture' => null]);
+        $entity = new Post();
+        $entity->picture = "";
+        $entity->csrf_token = $this->superglobals->getPost('csrf_token');
+        $success = $this->repository->update($identifier, $entity);
         if (!$success) {
             throw new \Exception("Impossible de supprimer la photo de profil");
         }

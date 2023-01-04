@@ -190,6 +190,11 @@ class Superglobals
         return $this->getEnv('APP_ENV');
     }
 
+    public function getSecretKey()
+    {
+        return $this->getEnv('SECRET_KEY');
+    }
+
     public function getDatabase($app_env = null)
     {
         if (!$app_env) {
