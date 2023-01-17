@@ -5,18 +5,39 @@ namespace Core\Router;
 use Core\Middleware\Session\PHPSession;
 use Core\Middleware\Superglobals;
 
+/**
+ * Route
+ * 
+ * Manage a route
+ */
 class Route
 {
     private $path;
     private $callable;
     private $matches = [];
 
+    /**
+     * __construct
+     * 
+     * Create a new route
+     *
+     * @param  mixed $path Path
+     * @param  mixed $callable Callable
+     */
     public function __construct($path, $callable)
     {
         $this->path = trim($path, '/');
         $this->callable = $callable;
     }
 
+    /**
+     * match
+     * 
+     * Check if the route match with the url
+     *
+     * @param  mixed $url Url
+     * @return bool
+     */
     public function match($url)
     {
         $url = trim($url, '/');
@@ -30,6 +51,13 @@ class Route
         return true;
     }
 
+    /**
+     * call
+     * 
+     * Call the route
+     *
+     * @return mixed
+     */
     public function call()
     {
         if (is_string($this->callable)) {
@@ -64,6 +92,14 @@ class Route
         }
     }
 
+    /**
+     * getUrl
+     * 
+     * Get the url of the route
+     *
+     * @param  mixed $params Params
+     * @return string Url
+     */
     public function getUrl($params)
     {
         $path = $this->path;

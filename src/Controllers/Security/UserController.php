@@ -6,16 +6,32 @@ use Core\Controllers\Controller;
 use Application\Services\UserService;
 use Core\Services\TokenService;
 
+/**
+ * UserController
+ * 
+ * User Controller
+ */
 class UserController extends Controller
 {
     private $userService;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
         $this->userService = new UserService();
     }
 
+    /**
+     * show
+     * 
+     * Display the user profil
+     * if admin, display the user profil
+     *
+     * @param  mixed $identifier the user identifier
+     */
     public function show($identifier = null)
     {
         $params = $this->userService->getData($identifier);
@@ -23,6 +39,11 @@ class UserController extends Controller
         $this->twig->display('security/profil.twig', $params);
     }
 
+    /**
+     * register
+     * 
+     * Register form
+     */
     public function register()
     {
         if ($this->isPost()) {
@@ -33,6 +54,11 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * update
+     * 
+     * Update form
+     */
     public function update()
     {
         $userId = $this->superglobals->getGet('userId');
@@ -45,6 +71,11 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * login
+     * 
+     * Login form
+     */
     public function login($anchor = null)
     {
         if ($this->isPost()) {
@@ -55,18 +86,37 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * logout
+     * 
+     * Logout
+     */
     public function logout()
     {
         $this->userService->logout();
         $this->superglobals->redirect('login');
     }
 
+    /**
+     * confirmation
+     * 
+     * Confirme the user email
+     *
+     * @param  string $token
+     */
     public function confirmation(string $token)
     {
         $this->userService->confirmation($token);
         $this->redirectWithTimeout('profil');
     }
 
+    /**
+     * edit_mail
+     * 
+     * Edit the user email
+     *
+     * @param  mixed $identifier
+     */
     public function edit_mail($identifier = null)
     {
         if ($this->isPost()) {
@@ -77,6 +127,13 @@ class UserController extends Controller
         $this->twig->display('security/edit_mail.twig', $params);
     }
 
+    /**
+     * edit_password
+     * 
+     * Edit the user password
+     *
+     * @param  mixed $identifier
+     */
     public function edit_password($identifier = null)
     {
         if ($this->isPost()) {
@@ -87,12 +144,22 @@ class UserController extends Controller
         $this->twig->display('security/edit_password.twig', $params);
     }
 
+    /**
+     * edit_picture
+     * 
+     * Edit the user picture
+     */
     public function delete_picture()
     {
         $this->userService->delete_picture();
         echo 'done';
     }
 
+    /**
+     * forget_password
+     * 
+     * Forget password form
+     */
     public function forget_password()
     {
         if ($this->isPost()) {
@@ -103,6 +170,13 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * reset_password
+     * 
+     * Reset password form
+     *
+     * @param  string $token
+     */
     public function reset_password($token)
     {
         $tokenService = new TokenService();
@@ -117,18 +191,35 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * confirm_again
+     * 
+     * Send again the confirmation email
+     */
     public function confirm_again()
     {
         $this->userService->confirm_again();
         $this->redirectWithTimeout('profil');
     }
 
-    // AJAX
+    /**
+     * checkUsername
+     * 
+     * Check if the username is available (AJAX)
+     */
     public function checkUsername()
     {
         $this->userService->checkUsername($this->superglobals->getPost('username'));
     }
 
+    /**
+     * redirectWithTimeout
+     * 
+     * Redirect with a timeout
+     * 
+     * @param  string $pathName the path name to redirect to
+     * @param  string $anchor the anchor to redirect to
+     */
     public function redirectWithTimeout(string $pathName = null, $anchor = null)
     {
         $url = isset($pathName) ? $this->superglobals->getPath($pathName) : $this->session->getLastUrl($anchor);

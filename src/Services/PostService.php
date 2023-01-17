@@ -5,15 +5,27 @@ namespace Application\Services;
 use Application\Models\Post;
 use Core\Services\EntityService;
 
+/**
+ * PostService
+ * 
+ * Post Service
+ */
 class PostService extends EntityService
 {
-
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
         $this->model = new Post();
     }
 
+    /**
+     * delete_post_picture
+     *
+     * @param  mixed $identifier
+     */
     public function delete_post_picture($identifier)
     {
         $entity = new Post();

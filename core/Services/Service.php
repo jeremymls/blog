@@ -5,6 +5,11 @@ namespace Core\Services;
 use Core\Middleware\Pagination;
 use Core\Middleware\Superglobals;
 
+/**
+ * Service
+ * 
+ * Base service class
+ */
 class Service
 {
     protected $flashServices;
@@ -12,6 +17,9 @@ class Service
     protected $superglobals;
     protected $model;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         $this->flashServices = FlashService::getInstance();
@@ -19,6 +27,13 @@ class Service
         $this->superglobals = Superglobals::getInstance();
     }
 
+    /**
+     * getRepository
+     * 
+     * Get the repository of the service
+     * 
+     * @return object The repository of the service
+     */
     public function getRepository()
     {
         $class = get_class($this);
@@ -27,6 +42,13 @@ class Service
         return new $class();
     }
 
+    /**
+     * getModel
+     * 
+     * Get the model of the service
+     * 
+     * @return object The model of the service
+     */
     public function getModel()
     {
         $class = get_class($this);
@@ -35,6 +57,13 @@ class Service
         return new $class();
     }
 
+    /**
+     * getModelName
+     * 
+     * Get the name of the model of the service
+     * 
+     * @return string The name of the model of the service
+     */
     public function getModelName() : string
     {
         $str = get_class($this->getModel());
@@ -45,6 +74,8 @@ class Service
     }
 
     /**
+     * getFrenchName
+     * 
      * Return the french name of the model, with the correct article and plural form
      * 
      * ***
@@ -100,6 +131,13 @@ class Service
         return $str;
     }
 
+    /**
+     * getFrenchGenderTermination
+     * 
+     * Return the termination to use for the french name of the model
+     * 
+     * @return string The french gender termination (e or nothing)
+     */
     public function getFrenchGenderTermination() : string
     {
         require_once 'src/config/translations.php';
@@ -112,6 +150,16 @@ class Service
         return $str;
     }
 
+    /**
+     * validateForm
+     * 
+     * Validate an entity from his model
+     * 
+     * @param array $input
+     * @param array $requiredFields
+     * @throws \Exception
+     * @return mixed
+     */
     public function validateForm(array $input, array $requiredFields = [])
     {
         $conditions = [];

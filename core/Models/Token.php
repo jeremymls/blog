@@ -2,6 +2,9 @@
 
 namespace Core\Models;
 
+/**
+ * Token model
+ */
 class Token extends Model
 {
     const TABLE = 'tokens';

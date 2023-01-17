@@ -4,23 +4,40 @@ namespace Application\Controllers\Admin;
 
 use Application\Services\CategoryService;
 use Core\Controllers\AdminController;
-use Application\Services\PostService;
 
+/**
+ * AdminCategoryController
+ * 
+ * Admin Category Controller
+ */
 class AdminCategoryController extends AdminController
 {
     private $categoryService;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
         $this->categoryService = new CategoryService();
     }
 
+    /**
+     * index
+     * 
+     * Display the categories admin list
+     */
     public function index()
     {
         $this->twig->display('admin/category/index.twig');
     }
 
+    /**
+     * add
+     * 
+     * Add category form
+     */
     public function add()
     {
         if ($this->isPost()) {
@@ -30,6 +47,13 @@ class AdminCategoryController extends AdminController
         $this->twig->display('admin/category/action.twig', ['action' => 'add',]);
     }
 
+    /**
+     * update
+     * 
+     * Update category form
+     *
+     * @param  mixed $identifier
+     */
     public function update(string $identifier)
     {
         if ($this->isPost()) {
@@ -40,6 +64,13 @@ class AdminCategoryController extends AdminController
         $this->twig->display('admin/category/action.twig', $params);
     }
 
+    /**
+     * delete
+     * 
+     * Delete category
+     *
+     * @param  mixed $identifier
+     */
     public function delete(string $identifier)
     {
         $this->categoryService->delete($identifier);

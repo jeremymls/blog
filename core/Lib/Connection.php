@@ -5,18 +5,16 @@ namespace Core\Lib;
 use Core\Middleware\Session\PHPSession;
 use Core\Middleware\Superglobals;
 
-class Singleton
+class Connection
 {
     private static $instances = [];
     public static ?\PDO $database = null;
 
-    public function __construct()
-    {
-    }
-
     /**
-     * This is the static method that controls the access to the singleton
-     * instance. On the first run, it creates a singleton object and places it
+     * Singleton
+     *
+     * This is the static method that controls the access to the Connexion
+     * instance. On the first run, it creates a Connexion object and places it
      * into the static field. On subsequent runs, it returns the client existing
      * object stored in the static field.
      *
@@ -29,10 +27,16 @@ class Singleton
         if (!isset(self::$instances[$cls])) {
             self::$instances[$cls] = self::newConnection();
         }
-
         return self::$instances[$cls];
     }
 
+    /**
+     * newConnection
+     *
+     * This function creates a new connection to the database
+     *
+     * @return \PDO
+     */
     private static function newConnection(): \PDO
     {
         if (self::$database === null) {
@@ -53,6 +57,7 @@ class Singleton
         }
         return self::$database;
     }
+
     /**
      * Singletons should not be cloneable.
      */

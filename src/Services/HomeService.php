@@ -8,14 +8,29 @@ use Core\Services\MailService;
 use Core\Services\ConfigService;
 use Core\Services\CsrfService;
 
+/**
+ * HomeService
+ * 
+ * Home Service
+ */
 class HomeService extends Service
 {
-
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * sendContactMail
+     * 
+     * Send contact mail
+     *
+     * @param  mixed $data
+     * @return void
+     */
     public function sendContactMail($data)
     {
         $csrfService = CsrfService::getInstance();
@@ -47,5 +62,4 @@ class HomeService extends Service
             false
         );
     }
-
 }

@@ -5,13 +5,28 @@ namespace Core\Middleware;
 use Core\Middleware\Session\UserSession;
 use Core\Services\FlashService;
 
+/**
+ * Security
+ * 
+ * Middleware to check if the user is logged in and if he is an admin
+ */
 class Security
-{
+{    
+    /**
+     * __construct
+     * 
+     * Launch the isGranted method
+     */
     public function __construct()
     {
         $this->isGranted();
     }
-
+    
+    /**
+     * isGranted
+     * 
+     * Check if the user is logged in and if he is an admin
+     */
     private function isGranted()
     {
         $userSession = UserSession::getInstance();

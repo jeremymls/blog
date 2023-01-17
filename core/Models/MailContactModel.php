@@ -2,6 +2,9 @@
 
 namespace Core\Models;
 
+/**
+ * MailContact Model
+ */
 class MailContactModel extends Model
 {
     public $name;

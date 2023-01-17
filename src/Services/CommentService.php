@@ -6,14 +6,30 @@ use Application\Models\Comment;
 use Core\Services\EntityService;
 use stdClass;
 
+/**
+ * CommentService
+ * 
+ * Comment Service
+ */
 class CommentService extends EntityService
 {
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
         $this->model = new Comment();
     }
 
+    /**
+     * getCommentsFiltered
+     * 
+     * Get comments filtered by status
+     *
+     * @param  mixed $filter
+     * @return array
+     */
     public function getCommentsFiltered($filter)
     {
         $option = "";
@@ -32,7 +48,6 @@ class CommentService extends EntityService
             break;
         }
         $params = $this->getAll($option);
-
         $params['comments'] = array_filter($params['comments'], function ($comment) {
             return $comment->author->role != 'admin';
         });
@@ -42,6 +57,16 @@ class CommentService extends EntityService
         return $params;
     }
 
+    /**
+     * moderate
+     * 
+     * Moderate a comment
+     *
+     * @param  string $action
+     * @param  string $identifier
+     * @param  bool $showFlash
+     * @param  mixed $csrf_token
+     */
     public function moderate($action, $identifier, $showFlash = true, $csrf_token = null)
     {
         switch ($action) {
@@ -61,6 +86,13 @@ class CommentService extends EntityService
         $this->update($identifier, $entity, $flashMsg, false, $showFlash);
     }
 
+    /**
+     * multiple_moderation
+     * 
+     * Moderate multiple comments
+     *
+     * @param  mixed $input
+     */
     public function multiple_moderation($input)
     {
         switch ($input['btnSubmit']) {

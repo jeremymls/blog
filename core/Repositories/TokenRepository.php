@@ -6,16 +6,30 @@ use Core\Models\Token;
 use Application\Models\User;
 use Application\Repositories\UserRepository;
 
+/**
+ * TokenRepository
+ */
 class TokenRepository extends Repository
 {
     protected $model;
-
+    
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
         $this->model = new Token();
     }
 
+    /**
+     * getUserByToken
+     * 
+     * Get the user by token
+     *
+     * @param  string $token Token
+     * @return User User
+     */
     public function getUserByToken(string $token): User
     {
         $statement = $this->getSelectStatementByModel("WHERE token = ?", [$token]);
