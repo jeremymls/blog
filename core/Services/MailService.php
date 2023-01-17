@@ -6,17 +6,30 @@ use Core\Services\FlashService;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
+/**
+ * MailService
+ * 
+ * Send emails
+ */
 class MailService
 {
     protected $mail;
     protected $configService;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         $this->configService = new ConfigService();
         $this->mail = $this->getMailConfig();
     }
 
+    /**
+     * getMailConfig
+     * 
+     * Get the mail configuration
+     */
     private function getMailConfig()
     {
         $mail = new PHPMailer();
@@ -41,10 +54,20 @@ class MailService
         $mail->setFrom(
             $this->configService->getByName("mb_user"), 
             utf8_decode($this->configService->getByName("cs_site_name"))
-        );      
+        );
         return $mail;
     }
 
+    /**
+     * sendEmail
+     * 
+     * Send an email
+     *
+     * @param  array $config
+     * @param  array $mail_images
+     * @param  bool $signature
+     * @param  string $alt_body
+     */
     public function sendEmail(array $config, array $mail_images=[], bool $signature = true, string $alt_body = null)
     {
         $this->mail->addReplyTo($config['reply_to']['email'], $config['reply_to']['name']);                 //Set an alternative reply-to address

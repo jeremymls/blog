@@ -5,12 +5,18 @@ namespace Core\Repositories;
 use Core\Middleware\Superglobals;
 use Core\Models\Config;
 
+/**
+ * ConfigRepository
+ */
 class ConfigRepository extends Repository
 {
     protected $dbName;
     protected $model;
     protected $connection;
-
+    
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
@@ -18,6 +24,13 @@ class ConfigRepository extends Repository
         $this->dbName = Superglobals::getInstance()->getDatabase()['name'];
     }
 
+    /**
+     * create_config_table
+     * 
+     * Create the config table
+     *
+     * @param  string $table
+     */
     public function create_config_table($table)
     {
         $sql = "CREATE TABLE IF NOT EXISTS " . $table . " (
@@ -33,6 +46,13 @@ class ConfigRepository extends Repository
         $statement->execute();
     }
 
+    /**
+     * getTables
+     * 
+     * Get all tables from the database
+     *
+     * @return mixed
+     */
     public function getTables()
     {
         $tables = [];

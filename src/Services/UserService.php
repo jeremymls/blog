@@ -12,6 +12,11 @@ use Core\Services\EntityService;
 use Core\Services\TokenService;
 use stdClass;
 
+/**
+ * UserService
+ * 
+ * User Service
+ */
 class UserService extends EntityService
 {
     private $userSession;
@@ -19,6 +24,9 @@ class UserService extends EntityService
     private $mailService;
     private $configService;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
@@ -29,6 +37,13 @@ class UserService extends EntityService
         $this->configService = new ConfigService();
     }
 
+    /**
+     * register
+     * 
+     * Register a new user
+     * 
+     * @param  array $input
+     */
     public function register(array $input)
     {
         if ($input['password'] !== $input['passwordConfirm']) {
@@ -46,6 +61,14 @@ class UserService extends EntityService
         }
     }
 
+    /**
+     * getData
+     * 
+     * Get the user data
+     * 
+     * @param  mixed $id
+     * @return mixed
+     */
     public function getData($id)
     {
         if ($id != null && $this->userSession->isAdmin()) {
@@ -72,6 +95,14 @@ class UserService extends EntityService
         }
     }
 
+    /**
+     * updateUser
+     * 
+     * Update the user data
+     * 
+     * @param  array $input
+     * @param  mixed $userId
+     */
     public function updateUser(array $input, $userId = null)
     {
         $id = $userId ?? $this->userSession->getUserParam("identifier");
@@ -88,6 +119,13 @@ class UserService extends EntityService
         }
     }
 
+    /**
+     * login
+     * 
+     * Login the user
+     * 
+     * @param  array $input
+     */
     public function login(array $input)
     {
         ['identifiant' => $identifiant, 'password' => $password] = $input;
@@ -102,6 +140,11 @@ class UserService extends EntityService
         );
     }
 
+    /**
+     * logout
+     * 
+     * Logout the user
+     */
     public function logout()
     {
         $this->userSession->delete('user');
@@ -111,6 +154,13 @@ class UserService extends EntityService
         ); 
     }
 
+    /**
+     * confirmation
+     * 
+     * Confirmation of the user email
+     * 
+     * @param  string $token
+     */
     public function confirmation($token)
     {
         $params = $this->tokenService->getUserByToken($token);
@@ -134,6 +184,13 @@ class UserService extends EntityService
         }
     }
 
+    /**
+     * edit_mail
+     * 
+     * Edit the user email
+     * 
+     * @param  array $input
+     */
     public function edit_mail($input)
     {
         if ($input['email'] !== $input['retape']) {
@@ -157,6 +214,13 @@ class UserService extends EntityService
         $this->userSession->setUserParam("email", $input['email']);
     }
 
+    /**
+     * edit_password
+     * 
+     * Edit the user password
+     * 
+     * @param  array $input
+     */
     public function edit_password(array $input)
     {
         if ($input['password'] !== $input['passwordConfirm']) {
@@ -180,6 +244,11 @@ class UserService extends EntityService
         );
     }
 
+    /**
+     * delete_picture
+     * 
+     * Delete the user picture
+     */
     public function delete_picture()
     {
         $entity = new User();
@@ -196,6 +265,13 @@ class UserService extends EntityService
         $this->userSession->setUserParam("picture", "");
     }
 
+    /**
+     * forget_password
+     * 
+     * Send an email to the user to reset his password
+     * 
+     * @param  array $input
+     */
     public function forget_password(array $input)
     {
         $user = $this->repository->getUserByUsername($input['email']);
@@ -229,6 +305,14 @@ class UserService extends EntityService
         );
     }
 
+    /**
+     * reset_password
+     * 
+     * Reset the user password
+     * 
+     * @param  mixed $user
+     * @param  array $post
+     */
     public function reset_password($user, $post)
     {
         if ($post['password'] !== $post['passwordConfirm']) {
@@ -250,6 +334,11 @@ class UserService extends EntityService
         );
     }
 
+    /**
+     * confirm
+     * 
+     * Confirm the user account
+     */
     public function confirm_again()
     {
         $user = $this->repository->findOne($this->userSession->getUserParam("identifier"));
@@ -265,6 +354,13 @@ class UserService extends EntityService
         }
     }
 
+    /**
+     * checkUsername
+     * 
+     * Check if the username is available
+     * 
+     * @param  string $username
+     */
     public function checkUsername($username)
     {
         if ($this->userSession->isUser() && ($username == $this->userSession->getUserParam("username") || $username == $this->userSession->getUserParam("email"))) {
@@ -279,6 +375,15 @@ class UserService extends EntityService
         }
     }
 
+    /**
+     * sendConfirmationEmail
+     * 
+     * Send an email to confirm the user account
+     * 
+     * @param  mixed $email
+     * @param  mixed $first
+     * @param  mixed $token
+     */
     public function sendConfirmationEmail($email , $first, $token)
     {
         $url = $this->superglobals->getPath('confirmation', ['token' => $token]);

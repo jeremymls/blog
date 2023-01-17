@@ -7,20 +7,36 @@ use Core\Middleware\TemplateRenderer;
 use Core\Models\Config;
 use Core\Repositories\ConfigRepository;
 
+/**
+ * ConfigService
+ * 
+ * Service for Config
+ */
 class ConfigService extends EntityService
 {
     protected $configRepository;
     protected $model;
     protected $configs;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
         $this->configRepository = new ConfigRepository();
         $this->model = new Config();
-        $this->configs = $this->getConfigsObject();
     }
 
+    /**
+     * init
+     * 
+     * Check if 
+     * * the database is initialized
+     * * the configs are initialized
+     * 
+     * @return array Array of missing tables and configs
+     */
     public function init()
     {
         $params['missing_tables'] = $this->checkMissingTables();
@@ -32,22 +48,46 @@ class ConfigService extends EntityService
         return $params;
     }
 
+    /**
+     * getOwnerMailContact
+     * 
+     * Get the owner mail contact
+     * 
+     * @return array Array of owner name and email
+     */
     public function getOwnerMailContact()
     {
+        $configs = $this->getConfigsObject();
         return [
-            'name' => $this->configs['cs_owner_name']->value, 
-            'email' => $this->configs['cs_owner_email']->value];
+            'name' => $configs['cs_owner_name']->value, 
+            'email' => $configs['cs_owner_email']->value];
     }
 
+    /**
+     * getMailConfig
+     * 
+     * Get the mail config
+     * 
+     * @return array Array of mail config
+     */
     public function getMailConfig()
     {
+        $configs = $this->getConfigsObject();
         return [
-            'Host' => $this->configs['mb_host']->value,
-            'Username' => $this->configs['mb_user']->value,
-            'Password' => $this->configs['mb_pass']->value,
+            'Host' => $configs['mb_host']->value,
+            'Username' => $configs['mb_user']->value,
+            'Password' => $configs['mb_pass']->value,
         ];
     }
 
+    /**
+     * getByName
+     * 
+     * Get a config by name
+     * 
+     * @param string $name Name of the config
+     * @return string Value of the config
+     */
     public function getByName($name)
     {
         $config = $this->configRepository->findBy('name = ?', [$name]);
@@ -57,6 +97,14 @@ class ConfigService extends EntityService
         return $config->value;
     }
 
+    /**
+     * getSortedParameters
+     * 
+     * Get the parameters sorted by prefix and add the title
+     * 
+     * @param  mixed $prefix
+     * @return array Array of parameters
+     */
     public function getSortedParameters($prefix)
     {
         $params = $this->getAll("where name like ?", [$prefix . '_%'], "", 'name', 'ASC');
@@ -84,12 +132,18 @@ class ConfigService extends EntityService
         return $params;
     }
 
+    /**
+     * initConfigs
+     * 
+     * Init missing configs
+     */
     public function initConfigs()
     {
         include_once ROOT . '/src/config/default.php';
         // $configs = $this->getAll()['configs'];
         $list = [];
-        foreach ($this->configs as $config) {
+        $configs = $this->getConfigsObject();
+        foreach ($configs as $config) {
             $list[] = $config->name;
         }
         foreach (CONFIGS as $key => $config) {
@@ -109,6 +163,13 @@ class ConfigService extends EntityService
         }
     }
 
+    /**
+     * getDefaultsConfigs
+     * 
+     * Get the default configs
+     * 
+     * @return array Array of default configs
+     */
     public function getDefaultsConfigs()
     {
         include_once ROOT . '/src/config/default.php';
@@ -118,16 +179,31 @@ class ConfigService extends EntityService
         return $defaults_configs;
     }
 
+    /**
+     * checkMissingConfigs
+     * 
+     * Check missing configs
+     * 
+     * @return array Array of missing configs
+     */
     public function checkMissingConfigs()
     {
         include_once ROOT . '/src/config/default.php';
         $list = [];
-        foreach ($this->configs as $config) {
+        $configs = $this->getConfigsObject();
+        foreach ($configs as $config) {
             $list[] = $config->name;
         }
         return array_diff($this->getDefaultsConfigs(), $list);
     }
 
+    /**
+     * checkMissingTables
+     * 
+     * Check missing tables
+     * 
+     * @return array Array of missing tables
+     */
     public function checkMissingTables()
     {
         $models_files = scandir("./src/Models");
@@ -143,11 +219,25 @@ class ConfigService extends EntityService
         return $missing_tables;
     }
 
+    /**
+     * create_config_table
+     * 
+     * Create a config table
+     * 
+     * @param string $table Name of the table
+     */
     public function create_config_table($table)
     {
         $this->configRepository->create_config_table($table);
     }
 
+    /**
+     * getConfigsObject
+     * 
+     * Get the configs as an object
+     * 
+     * @return array Array of configs
+     */
     private function getConfigsObject()
     {
         $configs = $this->getAll()['configs'];
@@ -158,6 +248,13 @@ class ConfigService extends EntityService
         return $configs_object;
     }
 
+    /**
+     * delete_value
+     * 
+     * Delete a value
+     * 
+     * @param  mixed $id Id of the config
+     */
     public function delete_value($id)
     {
         $entity = new Config;
@@ -173,6 +270,13 @@ class ConfigService extends EntityService
         );
     }
 
+    /**
+     * renderColor
+     * 
+     * Render the color CSS file
+     * 
+     * @param  mixed $twig Twig instance
+     */
     public function renderColor($twig)
     {
         $params = $this->getAll("where name LIKE 'af_color%'");
@@ -183,6 +287,13 @@ class ConfigService extends EntityService
         $renderer->render();
     }
 
+    /**
+     * change_env
+     * 
+     * Change the environment
+     * 
+     * @param  string $environment Environment
+     */
     public static function change_env($environment)
     {
         if (!in_array($environment, ['DEV', 'PROD', 'TEST'])) {

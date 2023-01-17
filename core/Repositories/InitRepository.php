@@ -4,15 +4,28 @@ namespace Core\Repositories;
 
 use Core\Middleware\Superglobals;
 
+/**
+ * InitRepository
+ * 
+ * Manage the database creation
+ */
 class InitRepository extends Repository
 {
     protected $connection;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * create_database
+     * 
+     * Create the database
+     */
     public static function create_database()
     {
         $superglobals = Superglobals::getInstance();
@@ -23,20 +36,14 @@ class InitRepository extends Repository
         $statement->execute();
     }
 
-    public function create_tables()
-    {
-        $filePath = "docs/sql/blog.sql";
-        if (file_exists($filePath)) {
-            $sql = file_get_contents($filePath);
-            $statement = $this->connection->prepare($sql);
-            $statement->execute();
-        } else {
-            throw new \Exception("Le fichier $filePath n'existe pas");
-        }
-    }
-
+    /**
+     * delete_database
+     * 
+     * Delete the database
+     */
     public function delete_database()
     {
+        // todo : revoir la sécurité
         $superglobals = Superglobals::getInstance();
         $dbData = $superglobals->getDatabase();
         $bdd = new \PDO('mysql:host=' . $dbData['host'] . ';dbname=mysql;charset=utf8', $dbData['user'], $dbData['pass']);

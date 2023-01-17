@@ -4,6 +4,11 @@ namespace Application\Models;
 
 use Core\Models\Model;
 
+/**
+ * Post
+ * 
+ * Post model
+ */
 class Post extends Model
 {
     const TABLE = 'posts';

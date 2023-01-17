@@ -5,9 +5,17 @@ namespace Core\Services;
 use Core\Models\Token;
 use Core\Repositories\TokenRepository;
 
+/**
+ * TokenService
+ * 
+ * Manage the tokens
+ */
 class TokenService extends EntityService
 {
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
@@ -15,6 +23,15 @@ class TokenService extends EntityService
         // $this->repository = new TokenRepository();
     }
 
+    /**
+     * createToken
+     * 
+     * Create a token
+     * 
+     * @param string $user_id The user id
+     * 
+     * @return string The token
+     */
     public function createToken(string $user_id)
     {
         $token = bin2hex(random_bytes(32));
@@ -33,6 +50,15 @@ class TokenService extends EntityService
         return $token->token;
     }
 
+    /**
+     * getUserByToken
+     * 
+     * Get the user by the token
+     * 
+     * @param string $token The token
+     * 
+     * @return array Params with the user
+     */
     public function getUserByToken($token)
     {
         $params = $this->getBy('token = ?', [$token]);

@@ -2,25 +2,38 @@
 
 namespace Core\Repositories;
 
-use Core\Lib\Singleton;
+use Core\Lib\Connection;
 use Core\Middleware\Session\PHPSession;
 use Core\Middleware\Superglobals;
 use Core\Models\Token;
 use Core\Services\CsrfService;
 use Core\Services\Encryption;
 
+/**
+ * Repository base class
+ */
 class Repository
 {
     protected $superglobals;
     protected $connection;
     protected $model;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         $this->superglobals = Superglobals::getInstance();
-        $this->connection = Singleton::getConnection();
+        $this->connection = Connection::getConnection();
     }
 
+    /**
+     * checkCrsf
+     * 
+     * Check the CSRF token
+     *
+     * @param  mixed $csrf_token
+     */
     private function checkCrsf($csrf_token)
     {
         $csrfService = CsrfService::getInstance();
@@ -29,6 +42,14 @@ class Repository
         }
     }
 
+    /**
+     * add
+     * 
+     * Add an entity to the database
+     *
+     * @param  mixed $entity
+     * @return bool
+     */
     public function add($entity): bool
     {
         if (get_class($entity)!= Token::class) {
@@ -60,6 +81,14 @@ class Repository
         return ($affectedLines > 0);
     }
 
+    /**
+     * findOne
+     * 
+     * Find one entity by its identifier
+     *
+     * @param  mixed $identifier
+     * @return mixed The entity
+     */
     public function findOne($identifier)
     {
         $statement = $this->getSelectStatementByModel("WHERE id = ?", [$identifier]);
@@ -71,6 +100,15 @@ class Repository
         return $entity;
     }
 
+    /**
+     * findBy
+     * 
+     * Find one entity by a specific option
+     *
+     * @param  string $option The option to use
+     * @param  array $optionData The data to use with the option
+     * @return mixed The entity
+     */
     public function findBy(string $option, array $optionData=[])
     {
         $statement = $this->getSelectStatementByModel("WHERE " . $option, $optionData);
@@ -79,6 +117,20 @@ class Repository
         return $entity;
     }
 
+    /**
+     * findAll
+     * 
+     * Find all entities
+     * 
+     * Can be filtered by an option and ordered by a specific column
+     *
+     * @param  string $option The option to use
+     * @param  array $optionsData The data to use with the option
+     * @param  string $limit The limit to use
+     * @param  string $order The column to order by
+     * @param  string $direction The direction to order by
+     * @return mixed The entities
+     */
     public function findAll(string $option = "", array $optionsData = [], string $limit = "", string $order = null, $direction = "DESC")
     {
         $statement = $this->getSelectStatementByModel(
@@ -96,6 +148,15 @@ class Repository
         return $entities;
     }
 
+    /**
+     * update
+     * 
+     * Update an entity
+     *
+     * @param  mixed $identifier The identifier of the entity
+     * @param  mixed $entity The entity
+     * @return bool
+     */
     public function update($identifier, $entity): bool
     {
         $this->checkCrsf($entity->csrf_token);
@@ -122,6 +183,14 @@ class Repository
         return ($affectedLines > 0);
     }
 
+    /**
+     * delete
+     * 
+     * Delete an entity
+     *
+     * @param  mixed $identifier The identifier of the entity
+     * @return bool
+     */
     public function delete($identifier): bool
     {
         $this->checkCrsf($this->superglobals->getPost('csrf_token'));
@@ -133,11 +202,27 @@ class Repository
         return ($affectedLines > 0);
     }
 
+    /**
+     * getModel
+     * 
+     * Get the model of the entity
+     *
+     * @return mixed
+     */
     public function getModel()
     {
         return get_class_vars(get_class($this->model));
     }
 
+    /**
+     * getSelectStatementByModel
+     * 
+     * Get a select statement by a model
+     *
+     * @param  string $options
+     * @param  array $optionsData
+     * @return mixed
+     */
     public function getSelectStatementByModel(string $options, array $optionsData = [])
     {
         $this->checkTableExistence();
@@ -153,10 +238,12 @@ class Repository
     }
 
     /**
-     * It creates an entity from a row of a database
+     * createEntity
+     * 
+     * Create an entity from a row of a database
      *
-     * @param  mixed $row data
-     * @return object An object of the class that is being called.
+     * @param  mixed $row The row of the database
+     * @return object The entity
      */
     public function createEntity($row): object
     {
@@ -199,6 +286,14 @@ class Repository
         return $entity;
     }
 
+    /**
+     * removeObsoleteProperties
+     * 
+     * Remove obsolete properties from an entity
+     *
+     * @param  mixed $entity The entity to clean
+     * @return mixed The cleaned entity
+     */
     private function removeObsoleteProperties($entity)
     {
         foreach ($entity as $key => $value) {
@@ -212,6 +307,14 @@ class Repository
         return $entity;
     }
 
+    /**
+     * getPicture
+     * 
+     * Get a picture from a form
+     *
+     * @param  string $key The key of the picture
+     * @return string The base64 picture
+     */
     public function getPicture($key = "picture")
     {
         $base64="";
@@ -237,22 +340,23 @@ class Repository
         return $base64;
     }
 
+    /**
+     * checkTableExistence
+     * 
+     * Check if the table exists
+     */
     private function checkTableExistence()
     {
-        if (!PHPSession::getInstance()->get("is_table")){
-            $sql = "SELECT * 
-            FROM INFORMATION_SCHEMA.TABLES 
+            $sql = "SELECT *
+            FROM INFORMATION_SCHEMA.TABLES
             WHERE TABLE_SCHEMA = ?
             AND TABLE_NAME = ?";
             $statement = $this->connection->prepare($sql);
             $statement->execute([$this->superglobals->getDatabase()['name'], $this->model::TABLE]);
             $row = $statement->fetch();
-            if($row) {
-                PHPSession::getInstance()->set("is_table", true);
-            } else {
+            if(!$row) {
                 PHPSession::getInstance()->set("safe_mode", true);
                 $this->superglobals->redirect('init');
-            } 
-        }
+            }
     }
 }

@@ -28,7 +28,7 @@
 							<h1 class="name">Initialisation du site</h1>
 							<hr class="star-light">
 							<span class="skills">
-								Votre site n'est pas correctement configuré. Vérifier votre base de données
+								<p>Votre site n'est pas correctement configuré. Vérifier la base de données</p>
 								<a id="retour" href="{{ getPath('home') }}" ><i class="fa fa-home" aria-hidden="true"></i></a>
 							</span>
 						</div>
@@ -72,19 +72,12 @@
 															Initialiser la table configs
 														</a>
 													</div>
-                                                {% elseif loop.index == 1 or (loop.index == 2 and first == "configs")
-												%}
-													<div class="row">
-														<a href="{{ getPath('init:tables') }}" class="btn btn-primary">
-															<i class="fa fa-refresh" aria-hidden="true"></i>
-															Initialiser toutes les tables
-														</a>
-													</div>
                                                 {% else %}
                                                         <div class="row">
                                                             <p>
                                                             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                                            Veuillez initialiser les tables
+                                                            Veuillez créer la table {{ config }} manuellement
+                                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                                             </p>
                                                         </div>
                                                 {% endif %}

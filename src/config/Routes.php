@@ -5,22 +5,42 @@ namespace Application\config;
 use Core\Middleware\Superglobals;
 use Core\Router\Router;
 
+/**
+ * Routes
+ * 
+ * Define all routes of the application
+ */
 class Routes
 {
     protected $router;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         $this->router = new Router($this->url());
         $this->setRoutes();
     }
 
+    /**
+     * url
+     * 
+     * Get the url from the GET superglobal
+     * 
+     * @return string The url
+     */
     private function url()
     {
         $url = Superglobals::getInstance()->getGet('url');
         return $url ?? '/';
     }
 
+    /**
+     * setRoutes
+     * 
+     * Define all routes of the application
+     */
     private function setRoutes()
     {
         // FRONTEND //
@@ -110,20 +130,30 @@ class Routes
         $this->router->get('admin/docs', 'Doc@index@core', 'admin:docs');
         // Init
         $this->router->get('init', 'Init@init@core', 'init');
-        $this->router->post('init', 'Init@init_missing_configs@core', 'init:missing_configs');
         $this->router->get('init/configs', 'Init@init_configs@core', 'init:configs');
-        $this->router->get('init/tables', 'Init@init_tables@core', 'init:tables');
         $this->router->get('new', 'Init@new@core', 'new');
         $this->router->post('create_bdd', 'Init@create@core', 'create_bdd');
         $this->router->post('delete_bdd', 'Init@delete@core', 'delete_bdd');
         $this->router->post('seed/:env', 'Init@seed@core', 'seed');
     }
 
+    /**
+     * Run the router
+     */
     public function run()
     {
         $this->router->run();
     }
 
+    /**
+     * getUrl
+     * 
+     * get the url of a route by name and params if needed
+     * 
+     * @param string $name
+     * @param array $params
+     * @return string
+     */
     public function getUrl($name, $params = [])
     {
         return $this->router->url($name, $params);

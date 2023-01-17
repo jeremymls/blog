@@ -9,11 +9,19 @@ use Application\Services\PostService;
 use Core\Middleware\Superglobals;
 use Core\Services\FlashService;
 
+/**
+ * PostController
+ * 
+ * Post Controller
+ */
 class PostController extends Controller
 {
     private $postService;
     private $commentService;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
@@ -21,6 +29,13 @@ class PostController extends Controller
         $this->commentService = new CommentService();
     }
 
+    /**
+     * index
+     * 
+     * Display the posts list
+     *
+     * @param  mixed $category
+     */
     public function index($category = null)
     {
         $option = $category !== null ? "WHERE category = ?" : "";
@@ -38,6 +53,13 @@ class PostController extends Controller
         $this->twig->display('post/index.twig', $params);
     }
 
+    /**
+     * show
+     * 
+     * Display a post
+     *
+     * @param  mixed $identifier
+     */
     public function show(string $identifier )
     {
         $params = $this->multiParams([
@@ -48,6 +70,11 @@ class PostController extends Controller
         $this->twig->display('post/show.twig', $params);
     }
 
+    /**
+     * categories
+     * 
+     * Display the categories list
+     */
     public function categories()
     {
         $this->twig->display('post/categories.twig');

@@ -6,16 +6,31 @@ use Core\Controllers\Controller;
 use Application\Services\CommentService;
 use Core\Middleware\Session\UserSession;
 
+/**
+ * CommentController
+ * 
+ * Comment Controller
+ */
 class CommentController extends Controller
 {
     private $commentService;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
         $this->commentService = new CommentService();
     }
 
+    /**
+     * add
+     * 
+     * Add a comment
+     *
+     * @param  string $post
+     */
     public function add(string $post)
     {
         $this->commentService->add(
@@ -29,6 +44,13 @@ class CommentController extends Controller
         $this->superglobals->redirect('post', ['id' => $post], "commentList");
     }
 
+    /**
+     * update
+     * 
+     * Update a comment
+     *
+     * @param  string $identifier
+     */
     public function update(string $identifier)
     {
         if ($this->isPost()) {
@@ -44,7 +66,13 @@ class CommentController extends Controller
         $this->twig->display('post/update_comment.twig', $params);
     }
 
-    // AJAX
+    /**
+     * delete
+     * 
+     * Soft delete a comment (AJAX)
+     *
+     * @param  string $delete
+     */
     public function ajax($delete)
     {
         if ($this->isPost()) {

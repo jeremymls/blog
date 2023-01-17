@@ -2,6 +2,9 @@
 
 namespace Core\Models;
 
+/**
+ * Config model
+ */
 class Config extends Model
 {
     const TABLE = 'configs';

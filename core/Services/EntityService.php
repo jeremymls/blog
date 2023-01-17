@@ -3,6 +3,11 @@ namespace Core\Services;
 
 use stdClass;
 
+/**
+ * EntityService
+ * 
+ * CRUD operations on entities
+ */
 class EntityService extends Service
 {
     protected $modelName;
@@ -11,6 +16,9 @@ class EntityService extends Service
     protected $flashServices;
     protected $superglobals;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
@@ -18,6 +26,15 @@ class EntityService extends Service
         $this->repository = $this->getRepository();
     }
 
+    /**
+     * add
+     * 
+     * Add an entity to the database
+     *
+     * @param  mixed $input The data to add
+     * @param  array $options
+     * @param  mixed $flashMsg The message to display in the flash
+     */
     public function add($input, $options=[],$flashMsg = null)
     {
         if (count($options) > 0) {
@@ -34,6 +51,14 @@ class EntityService extends Service
         );
     }
 
+    /**
+     * get
+     * 
+     * Get an entity from the database by its id
+     *
+     * @param  mixed $identifier
+     * @return array
+     */
     public function get($identifier)
     {
         $params[$this->modelName] = $this->getRepository()->findOne($identifier);
@@ -43,6 +68,15 @@ class EntityService extends Service
         return $params;
     }
 
+    /**
+     * getBy
+     * 
+     * Get an entity from the database by a specific option
+     *
+     * @param  string $option
+     * @param  array $optionData
+     * @return array
+     */
     public function getBy(string $option, array $optionData=[])
     {
         $params[$this->modelName] = $this->getRepository()->findBy($option, $optionData);
@@ -51,8 +85,19 @@ class EntityService extends Service
         }
         return $params;
     }
-    
 
+    /**
+     * getAll
+     * 
+     * Get all entities from the database
+     * 
+     * @param  string $option The option to filter the query
+     * @param  array $optionsData The data to filter the query
+     * @param  string $limit The limit of the query
+     * @param  string $order The column to order by
+     * @param  string $direction DESC or ASC
+     * @return array
+     */
     public function getAll(string $option = "", array $optionsData = [], string $limit = "", string $order = null, string $direction = "DESC")
     {
         $modelName = (substr($this->modelName, -1) === "y") ? (substr($this->modelName, 0, -1). "ies") : $this->modelName . "s";
@@ -60,6 +105,17 @@ class EntityService extends Service
         return $params;
     }
 
+    /**
+     * update
+     * 
+     * Update an entity in the database
+     * 
+     * @param  mixed $identifier The id of the entity to update
+     * @param  mixed $input The data to update
+     * @param  string $flashMsg The message to display in the flash
+     * @param  bool $modelValidation If the data should be validated by the model
+     * @param  bool $showFlash If the flash should be displayed
+     */
     public function update($identifier, $input, $flashMsg = "", $modelValidation= true, $showFlash = true)
     {
         $entity = $modelValidation ? $this->validateForm($input): $input;
@@ -75,29 +131,47 @@ class EntityService extends Service
         }
     }
 
+    /**
+     * delete_ajax
+     * 
+     * Soft delete an entity in the database
+     *
+     * @param  mixed $identifier
+     * @param  string $delete The action to perform (delete or restore)
+     * @return bool True if the operation was successful
+     */
     public function delete_ajax($identifier, $delete)
     {
         $entity = new stdClass;
         if ($delete == "delete") {
             $entity->deleted = 1;
+        } elseif ($delete == "restore") {
+            $entity->deleted = 0;
+            $entity->moderate = 0;
+        }
+        $entity->csrf_token = $this->superglobals->getGet("csrf_token");
+        $this->repository->update($identifier, $entity);
+        if ($delete == "delete") {
             $this->flashServices->danger(
                 $this->getFrenchName(true, "N") .' supprimé'. $this->getFrenchGenderTermination(),
                 $this->getFrenchName(true) ." #$identifier a bien été supprimé". $this->getFrenchGenderTermination()
             );
         } elseif ($delete == "restore") {
-            $entity->deleted = 0;
-            $entity->moderate = 0;
             $this->flashServices->success(
                 $this->getFrenchName(true, "N") .' restauré'. $this->getFrenchGenderTermination(),
                 $this->getFrenchName(true) ." #$identifier a bien été restauré et sera à nouveau soumis à modération"
             );
         }
-        $entity->csrf_token = $this->superglobals->getGet("csrf_token");
-        $this->repository->update($identifier, $entity);
         return true;
     }
 
-
+    /**
+     * delete
+     * 
+     * Delete an entity in the database
+     *
+     * @param  mixed $identifier
+     */
     public function delete($identifier)
     {
         $success = $this->getRepository()->delete($identifier);
