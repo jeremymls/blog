@@ -5,6 +5,7 @@
         xmlns="https://www.phpdoc.org"
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/phpDocumentor/phpDocumentor/master/data/xsd/phpdoc.xsd"
 >
+    <title></title>
     <paths>
         <output>docs/api</output>
         <cache>docs/cache</cache>
@@ -13,8 +14,13 @@
         <api>
             <source dsn=".">
                 <path>core</path>
-                <path>src</path>
+                <path>src/config/Routes.php</path>
+                <path>src/Controllers</path>
+                <path>src/Models</path>
+                <path>src/Repositories</path>
+                <path>src/Services</path>
             </source>
         </api>
     </version>
+    <setting name="template.color" value="brown"/>
 </phpdocumentor>
