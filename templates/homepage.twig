@@ -59,7 +59,14 @@
                         </a>
                     </div>
                 </div>
-                <a class="btn btn-lg btn-primary" href="{{ getPath('posts') }}" role="button">VOIR TOUS LES POSTS</a>
+                {% if categories | length == 0 %}
+                    <a class="btn btn-lg btn-primary" href="{{ getPath('posts') }}" role="button">TOUS LES ARTICLES</a>
+                {% elseif categories | length == 1 %}
+                    <a class="btn btn-lg btn-primary" href="{{ getPath('post:id', {'id':categories[0].identifier}) }}" role="button">{{ categories[0].name }}</a>
+                {% else %}
+                    <a class="btn btn-lg btn-primary" href="{{ getPath('posts:categories') }}" role="button">CATEGORIES</a>
+                    <a class="btn btn-lg btn-primary" href="{{ getPath('posts') }}" role="button">TOUS LES ARTICLES</a>
+                {% endif %}
             </div>
         </div>
     </section>

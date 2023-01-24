@@ -27,19 +27,29 @@
 				<li class="page-scroll">
 					<a href="{{ getPath('home') }}"><i class="fa fa-home" aria-hidden="true"></i> Accueil</a>
 				</li>
-				<li class="dropdown">
-					<a id="categories_drop" href="#" class="dropdown-toggle desktop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fa fa-folder" aria-hidden="true"></i> Catégories <span class="caret"></span>
-					</a>
-					<ul class="dropdown-menu">
-						{% for category in categories %}
-						<li class="page-scroll"><a href="{{ getPath('post:id', {'id':category.identifier}) }}"><i class="fa fa-folder-open" aria-hidden="true"></i> {{ category.name }}</a></li>
-						{% endfor %}
-						<li role="separator" class="divider"></li>
-						<li class="page-scroll"><a href="{{ getPath('posts:categories') }}"><i class="fa fa-sitemap" aria-hidden="true"></i> Voir les Catégories</a></li>
+                {% if categories | length == 0 %}
+					<li class="page-scroll">
 						<li class="page-scroll"><a href="{{ getPath('posts') }}"><i class="fa fa-files-o" aria-hidden="true"></i> Tous les articles</a></li>
-					</ul>
-				</li>
+					</li>
+                {% elseif categories | length == 1 %}
+					<li class="page-scroll">
+						<li class="page-scroll"><a href="{{ getPath('post:id', {'id':categories[0].identifier}) }}"><i class="fa fa-folder-open" aria-hidden="true"></i> {{ categories[0].name }}</a></li>
+					</li>
+				{% else %}
+					<li class="dropdown">
+						<a id="categories_drop" href="#" class="dropdown-toggle desktop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-folder" aria-hidden="true"></i> Catégories <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							{% for category in categories %}
+							<li class="page-scroll"><a href="{{ getPath('post:id', {'id':category.identifier}) }}"><i class="fa fa-folder-open" aria-hidden="true"></i> {{ category.name }}</a></li>
+							{% endfor %}
+							<li role="separator" class="divider"></li>
+							<li class="page-scroll"><a href="{{ getPath('posts:categories') }}"><i class="fa fa-sitemap" aria-hidden="true"></i> Voir les Catégories</a></li>
+							<li class="page-scroll"><a href="{{ getPath('posts') }}"><i class="fa fa-files-o" aria-hidden="true"></i> Tous les articles</a></li>
+						</ul>
+					</li>
+				{% endif %}
 				{% if isLogged() %}
 					<li class="dropdown desktop">
 						<a id="initiales" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
