@@ -1,12 +1,30 @@
 <?php
+
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Core
+ * @package  Core\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Core\Services;
 
 use Core\Middleware\Session\PHPSession;
 
 /**
  * CsrfService
- * 
+ *
  * Manage the CSRF token
+ *
+ * @category Core
+ * @package  Core\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class CsrfService
 {
@@ -23,6 +41,8 @@ class CsrfService
 
     /**
      * Singleton
+     *
+     * @return CsrfService
      */
     public static function getInstance()
     {
@@ -34,8 +54,8 @@ class CsrfService
     }
 
     /**
-     * getToken
-     * 
+     * Get Token
+     *
      * Get the token
      *
      * @return string Token
@@ -46,8 +66,8 @@ class CsrfService
     }
 
     /**
-     * generateToken
-     * 
+     * Generate Token
+     *
      * Generate a new token
      *
      * @return string Token
@@ -62,11 +82,12 @@ class CsrfService
     }
 
     /**
-     * checkToken
-     * 
+     * Check Token
+     *
      * Check if the token is valid
      *
-     * @param  string $token Token
+     * @param string $token Token
+     *
      * @return bool
      */
     public function checkToken($token)

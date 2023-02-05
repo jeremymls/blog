@@ -1,10 +1,32 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Core
+ * @package  Core\Lib\Connection
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Core\Lib;
 
 use Core\Middleware\Session\PHPSession;
 use Core\Middleware\Superglobals;
 
+/**
+ * Connection
+ *
+ * Manage the connection to the database
+ *
+ * @category Core
+ * @package  Core\Lib\Connection
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
 class Connection
 {
     private static $instances = [];
@@ -20,6 +42,8 @@ class Connection
      *
      * This implementation lets you subclass the Singleton class while keeping
      * just one instance of each subclass around.
+     *
+     * @return \PDO
      */
     public static function getConnection(): \PDO
     {
@@ -31,7 +55,7 @@ class Connection
     }
 
     /**
-     * newConnection
+     * New Connection
      *
      * This function creates a new connection to the database
      *
@@ -43,14 +67,26 @@ class Connection
             $superglobals = Superglobals::getInstance();
             $dbData = $superglobals->getDatabase();
             try {
-                self::$database = new \PDO('mysql:host=' . $dbData['host'] . ';dbname=' . $dbData['name'] . ';charset=utf8', $dbData['user'], $dbData['pass']); // todo: Port
-                self::$database->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+                self::$database = new \PDO(
+                    'mysql:host='
+                    . $dbData['host']
+                    . ';dbname='
+                    . $dbData['name']
+                    . ';charset=utf8',
+                    $dbData['user'],
+                    $dbData['pass']
+                ); // todo: Port
+                self::$database->setAttribute(
+                    \PDO::ATTR_ERRMODE,
+                    \PDO::ERRMODE_EXCEPTION
+                );
             } catch (\PDOException $e) {
                 if ($e->getCode() == 1049) {
                     PHPSession::getInstance()->set('safe_mode', true);
                     $superglobals->redirect('new');
                 }
-                echo 'Erreur de connexion à la base de données : ' . $e->getMessage();
+                echo 'Erreur de connexion à la base de données : '
+                . $e->getMessage();
                 // 1049 = database not found
                 // 1045 = bad credentials
             }
@@ -60,13 +96,17 @@ class Connection
 
     /**
      * Singletons should not be cloneable.
+     *
+     * @return void
      */
     protected function __clone()
-    { 
+    {
     }
 
     /**
      * Singletons should not be restorable from strings.
+     *
+     * @return void
      */
     public function __wakeup()
     {

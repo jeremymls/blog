@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Core
+ * @package  Core\Repositories
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Core\Repositories;
 
 use Core\Middleware\Superglobals;
@@ -7,13 +18,19 @@ use Core\Models\Config;
 
 /**
  * ConfigRepository
+ *
+ * @category Core
+ * @package  Core\Repositories
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class ConfigRepository extends Repository
 {
     protected $dbName;
     protected $model;
     protected $connection;
-    
+
     /**
      * __construct
      */
@@ -25,13 +42,15 @@ class ConfigRepository extends Repository
     }
 
     /**
-     * create_config_table
-     * 
+     * Create Config Table
+     *
      * Create the config table
      *
-     * @param  string $table
+     * @param string $table Table name
+     *
+     * @return void
      */
-    public function create_config_table($table)
+    public function createConfigTable($table)
     {
         $sql = "CREATE TABLE IF NOT EXISTS " . $table . " (
             id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -47,8 +66,8 @@ class ConfigRepository extends Repository
     }
 
     /**
-     * getTables
-     * 
+     * Get Tables
+     *
      * Get all tables from the database
      *
      * @return mixed
@@ -56,7 +75,9 @@ class ConfigRepository extends Repository
     public function getTables()
     {
         $tables = [];
-        $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = ?";
+        $sql = "SELECT table_name
+            FROM information_schema.tables
+            WHERE table_schema = ?";
         $statement = $this->connection->prepare($sql);
         $statement->execute([$this->dbName]);
         while (($row = $statement->fetch())) {

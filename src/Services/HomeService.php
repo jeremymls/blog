@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Application
+ * @package  Application\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Application\Services;
 
 use Core\Models\MailContactModel;
@@ -10,8 +21,14 @@ use Core\Services\CsrfService;
 
 /**
  * HomeService
- * 
+ *
  * Home Service
+ *
+ * @category Application
+ * @package  Application\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class HomeService extends Service
 {
@@ -24,11 +41,12 @@ class HomeService extends Service
     }
 
     /**
-     * sendContactMail
-     * 
+     * Send Contact Mail
+     *
      * Send contact mail
      *
-     * @param  mixed $data
+     * @param mixed $data Data
+     *
      * @return void
      */
     public function sendContactMail($data)

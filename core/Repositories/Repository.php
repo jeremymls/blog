@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Core
+ * @package  Core\Repositories
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Core\Repositories;
 
 use Core\Lib\Connection;
@@ -11,6 +22,12 @@ use Core\Services\Encryption;
 
 /**
  * Repository base class
+ *
+ * @category Core
+ * @package  Core\Repositories
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class Repository
 {
@@ -28,11 +45,13 @@ class Repository
     }
 
     /**
-     * checkCrsf
-     * 
+     * Check CSRF
+     *
      * Check the CSRF token
      *
-     * @param  mixed $csrf_token
+     * @param mixed $csrf_token CSRF token
+     *
+     * @return void
      */
     private function checkCrsf($csrf_token)
     {
@@ -43,16 +62,17 @@ class Repository
     }
 
     /**
-     * add
-     * 
+     * Add
+     *
      * Add an entity to the database
      *
-     * @param  mixed $entity
+     * @param mixed $entity Entity
+     *
      * @return bool
      */
     public function add($entity): bool
     {
-        if (get_class($entity)!= Token::class) {
+        if (get_class($entity) != Token::class) {
             $this->checkCrsf($entity->csrf_token);
         }
         $this->removeObsoleteProperties($entity);
@@ -65,14 +85,14 @@ class Repository
             $sql .= "picture, ";
         }
         foreach ($entity as $key => $value) {
-            $values[] = $value=="" ? null : $value;
+            $values[] = $value == "" ? null : $value;
             $sql .= $key . ", ";
         }
         $sql .= "created_at) VALUES (";
         if ($this->superglobals->isExistPicture($entity::TABLE)) {
             $sql .= "?, ";
         }
-        foreach ($entity as  $key => $val) {
+        foreach ($entity as $key => $val) {
             $sql .= "?, ";
         }
         $sql .= "NOW())";
@@ -82,12 +102,13 @@ class Repository
     }
 
     /**
-     * findOne
-     * 
+     * Find One
+     *
      * Find one entity by its identifier
      *
-     * @param  mixed $identifier
-     * @return mixed The entity
+     * @param mixed $identifier ID
+     *
+     * @return mixed Entity
      */
     public function findOne($identifier)
     {
@@ -101,38 +122,48 @@ class Repository
     }
 
     /**
-     * findBy
-     * 
+     * Find By
+     *
      * Find one entity by a specific option
      *
-     * @param  string $option The option to use
-     * @param  array $optionData The data to use with the option
-     * @return mixed The entity
+     * @param string $option     The option to use
+     * @param array  $optionData The data to use with the option
+     *
+     * @return mixed Array of entities
      */
-    public function findBy(string $option, array $optionData=[])
+    public function findBy(string $option, array $optionData = [])
     {
-        $statement = $this->getSelectStatementByModel("WHERE " . $option, $optionData);
+        $statement = $this->getSelectStatementByModel(
+            "WHERE " . $option,
+            $optionData
+        );
         $row = $statement->fetch();
         $entity = $this->createEntity($row);
         return $entity;
     }
 
     /**
-     * findAll
-     * 
+     * Find All
+     *
      * Find all entities
-     * 
+     *
      * Can be filtered by an option and ordered by a specific column
      *
-     * @param  string $option The option to use
-     * @param  array $optionsData The data to use with the option
-     * @param  string $limit The limit to use
-     * @param  string $order The column to order by
-     * @param  string $direction The direction to order by
+     * @param string $option      The option to use
+     * @param array  $optionsData The data to use with the option
+     * @param string $limit       The limit to use
+     * @param string $order       The column to order by
+     * @param string $direction   The direction to order by
+     *
      * @return mixed The entities
      */
-    public function findAll(string $option = "", array $optionsData = [], string $limit = "", string $order = null, $direction = "DESC")
-    {
+    public function findAll(
+        string $option = "",
+        array $optionsData = [],
+        string $limit = "",
+        string $order = null,
+        $direction = "DESC"
+    ) {
         $statement = $this->getSelectStatementByModel(
             $option .
             " ORDER BY " . ($order ? $order : 'created_at') . " " .
@@ -149,12 +180,13 @@ class Repository
     }
 
     /**
-     * update
-     * 
+     * Update
+     *
      * Update an entity
      *
-     * @param  mixed $identifier The identifier of the entity
-     * @param  mixed $entity The entity
+     * @param mixed $identifier The identifier of the entity
+     * @param mixed $entity     The entity
+     *
      * @return bool
      */
     public function update($identifier, $entity): bool
@@ -167,7 +199,8 @@ class Repository
             $values[] = $value;
             $sql .= $key . " = ?, ";
         }
-        // if (count($_FILES) > 0 && isset($_FILES['picture']['error']) && $_FILES['picture']['error'] !== 4) {
+        // if (count($_FILES) > 0 && isset($_FILES['picture']['error'])
+        // && $_FILES['picture']['error'] !== 4) {
         if ($this->superglobals->isExistPicture()) {
             $fileName = array_keys($_FILES)[0];
             $base64 = $this->getPicture($fileName);
@@ -184,11 +217,12 @@ class Repository
     }
 
     /**
-     * delete
-     * 
+     * Delete
+     *
      * Delete an entity
      *
-     * @param  mixed $identifier The identifier of the entity
+     * @param mixed $identifier The identifier of the entity
+     *
      * @return bool
      */
     public function delete($identifier): bool
@@ -203,8 +237,8 @@ class Repository
     }
 
     /**
-     * getModel
-     * 
+     * Get Model
+     *
      * Get the model of the entity
      *
      * @return mixed
@@ -215,16 +249,19 @@ class Repository
     }
 
     /**
-     * getSelectStatementByModel
-     * 
+     * Get Select Statement By Model
+     *
      * Get a select statement by a model
      *
-     * @param  string $options
-     * @param  array $optionsData
+     * @param string $options     The options to use
+     * @param array  $optionsData The options data
+     *
      * @return mixed
      */
-    public function getSelectStatementByModel(string $options, array $optionsData = [])
-    {
+    public function getSelectStatementByModel(
+        string $options,
+        array $optionsData = []
+    ) {
         $this->checkTableExistence();
         $sql = "SELECT ";
         foreach ($this->getModel() as $key => $value) {
@@ -238,18 +275,19 @@ class Repository
     }
 
     /**
-     * createEntity
-     * 
+     * Create Entity
+     *
      * Create an entity from a row of a database
      *
-     * @param  mixed $row The row of the database
-     * @return object The entity
+     * @param mixed $row The row of the database
+     *
+     * @return object
      */
     public function createEntity($row): object
     {
         $entity = new $this->model();
         foreach ($this->getModel() as $key => $value) {
-            if (!isset($row[$key]) && $key != "id" && $key != "created_at" ) {
+            if (!isset($row[$key]) && $key != "id" && $key != "created_at") {
                 $entity->$key = false;
             }
             if (isset($row[$key])) {
@@ -259,26 +297,39 @@ class Repository
                 } elseif ($key == "created_at") {
                     $entity->setCreatedAt($row[$key]);
                     $entity->frenchCreationDate = $entity->getFrenchCreationDate();
-                } elseif ($key == "value" && isset($row["name"]) && (substr($row["name"], 0, 3) == "mb_"|| substr($row["name"], 0, 3) == "sd_")) {
-                    $entity->$key = $row[$key]? Encryption::decrypt($row[$key]) : ""; // decrypt mail config
+                } elseif (
+                    $key == "value"
+                    && isset($row["name"])
+                    && (substr($row["name"], 0, 3) == "mb_"
+                    || substr($row["name"], 0, 3) == "sd_")
+                ) {
+                    // decrypt mail config
+                    $entity->$key = $row[$key]
+                    ? Encryption::decrypt($row[$key])
+                    : "";
                 } else {
-                    $entity->$key = $row[$key]? $row[$key] : "";
+                    $entity->$key = $row[$key] ? $row[$key] : "";
                 }
             }
         }
         // USERNAME
-        if (isset($entity->username) || isset($entity->last) || isset($entity->first)) {
+        if (
+            isset($entity->username)
+            || isset($entity->last)
+            || isset($entity->first)
+        ) {
             if ($entity->username == "" || $entity->username == 'NULL') {
                 $entity->isUsername = false;
                 $entity->username = $entity->first . ' ' . $entity->last;
-                $entity->initials = substr($entity->first, 0, 1).substr($entity->last, 0, 1);
+                $entity->initials = substr($entity->first, 0, 1)
+                . substr($entity->last, 0, 1);
             } else {
                 $entity->isUsername = true;
                 $entity->initials = $entity->username;
             }
         }
         // Check if the entity has links
-        if (in_array("getLinks",get_class_methods($entity))) {
+        if (in_array("getLinks", get_class_methods($entity))) {
             foreach ($entity->getLinks() as $field => $repository) {
                 $entity->with($field, "Application\\Repositories\\" . $repository);
             }
@@ -287,11 +338,12 @@ class Repository
     }
 
     /**
-     * removeObsoleteProperties
-     * 
+     * Remove Obsolete Properties
+     *
      * Remove obsolete properties from an entity
      *
-     * @param  mixed $entity The entity to clean
+     * @param mixed $entity The entity to clean
+     *
      * @return mixed The cleaned entity
      */
     private function removeObsoleteProperties($entity)
@@ -308,32 +360,39 @@ class Repository
     }
 
     /**
-     * getPicture
-     * 
+     * Get Picture
+     *
      * Get a picture from a form
      *
-     * @param  string $key The key of the picture
+     * @param string $key The key of the picture
+     *
      * @return string The base64 picture
      */
     public function getPicture($key = "picture")
     {
-        $base64="";
+        $base64 = "";
         $file_exts = array('gif', 'jpeg', 'png', 'webp');
         $picture = $this->superglobals->getPicture($key);
-        $file_ext = strtolower(substr($picture['type'],  strpos($picture['type'], '/') + 1));
+        $file_ext = strtolower(
+            substr($picture['type'], strpos($picture['type'], '/') + 1)
+        );
         $file_size = $picture['size'];
         $file_temp = $picture['tmp_name'];
         $file_max_size = 512000;
         $errors = "";
         if (!in_array($file_ext, $file_exts)) {
-            $errors .= 'Extension du fichier non autorisée : ' . implode(',', $file_exts)."<br>";
+            $errors .= 'Extension du fichier non autorisée : '
+            . implode(',', $file_exts) . "<br>";
         }
         if ($file_size > (int) $file_max_size || $file_size === 0) {
-            $errors .= 'Fichier trop lourd : ' . ($file_max_size / 1024) . ' Ko maximum';
+            $errors .= 'Fichier trop lourd : '
+            . ($file_max_size / 1024)
+            . ' Ko maximum';
         }
         if (empty($errors)) {
             $bin = file_get_contents($file_temp);
-            $base64 = 'data:image/' . $file_ext . ';base64,' .   base64_encode($bin);
+            $base64 = 'data:image/' . $file_ext
+            . ';base64,' .   base64_encode($bin);
         } else {
             throw new \Exception($errors);
         }
@@ -341,9 +400,11 @@ class Repository
     }
 
     /**
-     * checkTableExistence
-     * 
+     * Check Table Existence
+     *
      * Check if the table exists
+     *
+     * @return void
      */
     private function checkTableExistence()
     {
@@ -352,11 +413,16 @@ class Repository
             WHERE TABLE_SCHEMA = ?
             AND TABLE_NAME = ?";
             $statement = $this->connection->prepare($sql);
-            $statement->execute([$this->superglobals->getDatabase()['name'], $this->model::TABLE]);
+            $statement->execute(
+                [
+                    $this->superglobals->getDatabase()['name'],
+                    $this->model::TABLE
+                ]
+            );
             $row = $statement->fetch();
-            if(!$row) {
-                PHPSession::getInstance()->set("safe_mode", true);
-                $this->superglobals->redirect('init');
-            }
+        if (!$row) {
+            PHPSession::getInstance()->set("safe_mode", true);
+            $this->superglobals->redirect('init');
+        }
     }
 }

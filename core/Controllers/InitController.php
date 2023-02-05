@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Core
+ * @package  Core\Controllers
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Core\Controllers;
 
 use Core\Middleware\Security;
@@ -12,8 +23,14 @@ use Core\Services\PhinxService;
 
 /**
  * InitController
- * 
+ *
  * This controller is used to initialize the database
+ *
+ * @category Core
+ * @package  Core\Controllers
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class InitController extends Controller
 {
@@ -22,8 +39,8 @@ class InitController extends Controller
 
     /**
      * Constructor
-     * 
-     * The function is a constructor function that 
+     *
+     * The function is a constructor function that
      * * calls the parent constructor function
      * * calls the grantAccess function
      * * creates a new instance of the InitService class
@@ -36,33 +53,47 @@ class InitController extends Controller
     }
 
     /**
-     * grantAccess
-     * 
+     * Grant Access
+     *
      * If the session variable 'safe_mode' is true, then grant access
      * otherwise, run the Security class
+     *
+     * @return void
      */
     private static function grantAccess()
     {
-        if (PHPSession::getInstance()->get('safe_mode') != true) 
+        if (PHPSession::getInstance()->get('safe_mode') != true) {
             new Security();
+        }
     }
 
     /**
-     * new
-     * 
+     * New
+     *
      * It displays a form to create a new database
+     *
+     * @return void
      */
     public function new()
     {
         $dbData = Superglobals::getInstance()->getDatabase();
-        $sql = "CREATE DATABASE IF NOT EXISTS " . $dbData['name']; // todo: add instructions
-        $this->twig->display('admin/config/new.twig', ['sql' => $sql,'bdd_name' => $dbData['name']]);
+        // todo: add instructions
+        $sql = "CREATE DATABASE IF NOT EXISTS " . $dbData['name'];
+        $this->twig->display(
+            'admin/config/new.twig',
+            [
+                'sql' => $sql,
+                'bdd_name' => $dbData['name']
+            ]
+        );
     }
-    
+
     /**
-     * create
-     * 
+     * Create
+     *
      * It creates a database, then it migrates it.
+     *
+     * @return void
      */
     public function create()
     {
@@ -72,15 +103,19 @@ class InitController extends Controller
     }
 
     /**
-     * seed
-     * 
+     * Seed
+     *
      * If the seedKey is correct, then seed the database
-     * 
+     *
      * @param string $env The environment you want to seed.
+     *
+     * @return void
      */
     public function seed($env)
     {
-        if ($_POST["seedKey"] == 'r*Bvd2dMpTdGYjwaG^BAw$hADm8gb#KggKxNh9fGv^e6PdU74n') { // todo: à revoir
+        $seed_key = 'r*Bvd2dMpTdGYjwaG^BAw$hADm8gb#KggKxNh9fGv^e6PdU74n';
+        // todo: à revoir
+        if ($_POST["seedKey"] == $seed_key) {
             InitService::seed($env);
             echo 'La base de données a été peuplée avec succès';
         } else {
@@ -89,9 +124,11 @@ class InitController extends Controller
     }
 
     /**
-     * init
-     * 
+     * Init
+     *
      * Displays the init.twig template
+     *
+     * @return void
      */
     public function init()
     {
@@ -101,28 +138,37 @@ class InitController extends Controller
     }
 
     /**
-     * init_configs
-     * 
-     * It creates configs table if it doesn't exist, then it initializes the missing configs
+     * Init Configs
+     *
+     * It creates configs table if it doesn't exist,
+     * then it initializes the missing configs
      * and it redirects to the home page
+     *
+     * @return void
      */
-    public function init_configs()
+    public function initConfigs()
     {
         $configService = new ConfigService();
-        $configService->create_config_table('configs');
+        $configService->createConfigTable('configs');
         $configService->initConfigs();
-        FlashService::getInstance()->success("Configuration initialisée", "La configuration a été initialisée avec succès");
+        FlashService::getInstance()->success(
+            "Configuration initialisée",
+            "La configuration a été initialisée avec succès"
+        );
         $this->superglobals->redirect('home');
     }
 
     /**
-     * delete
-     * 
+     * Delete
+     *
      * If the secret key is correct, then it deletes the database
+     *
+     * @return void
      */
     public function delete()
     {
-        if ($this->superglobals->getPost('secret') != $this->superglobals->getSecretKey()) {
+        $secret = $this->superglobals->getPost('secret');
+        if ($secret != $this->superglobals->getSecretKey()) {
             echo 'error';
         } else {
             $this->initService->delete();

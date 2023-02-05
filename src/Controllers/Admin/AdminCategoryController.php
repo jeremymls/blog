@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Application
+ * @package  Application\Controllers\Admin
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Application\Controllers\Admin;
 
 use Application\Services\CategoryService;
@@ -7,8 +18,14 @@ use Core\Controllers\AdminController;
 
 /**
  * AdminCategoryController
- * 
+ *
  * Admin Category Controller
+ *
+ * @category Application
+ * @package  Application\Controllers\Admin
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class AdminCategoryController extends AdminController
 {
@@ -24,9 +41,11 @@ class AdminCategoryController extends AdminController
     }
 
     /**
-     * index
-     * 
+     * Index
+     *
      * Display the categories admin list
+     *
+     * @return void
      */
     public function index()
     {
@@ -34,9 +53,11 @@ class AdminCategoryController extends AdminController
     }
 
     /**
-     * add
-     * 
+     * Add
+     *
      * Add category form
+     *
+     * @return void
      */
     public function add()
     {
@@ -48,16 +69,21 @@ class AdminCategoryController extends AdminController
     }
 
     /**
-     * update
-     * 
+     * Update
+     *
      * Update category form
      *
-     * @param  mixed $identifier
+     * @param mixed $identifier the category identifier
+     *
+     * @return void
      */
     public function update(string $identifier)
     {
         if ($this->isPost()) {
-            $this->categoryService->update($identifier, $this->superglobals->getPost());
+            $this->categoryService->update(
+                $identifier,
+                $this->superglobals->getPost()
+            );
             $this->superglobals->redirect('admin:categories');
         }
         $params = $this->categoryService->get($identifier);
@@ -65,11 +91,13 @@ class AdminCategoryController extends AdminController
     }
 
     /**
-     * delete
-     * 
-     * Delete category
+     * Delete
      *
-     * @param  mixed $identifier
+     * Delete category in AJAX
+     *
+     * @param mixed $identifier the category identifier
+     *
+     * @return void
      */
     public function delete(string $identifier)
     {

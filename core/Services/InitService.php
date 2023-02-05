@@ -1,17 +1,33 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Core
+ * @package  Core\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Core\Services;
 
-use Core\Models\Config;
 use Core\Repositories\InitRepository;
 
 /**
  * InitService
- * 
+ *
  * Create, migrate and seed the database
+ *
+ * @category Core
+ * @package  Core\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class InitService extends Service
-{    
+{
     /**
      * __construct
      */
@@ -21,44 +37,56 @@ class InitService extends Service
     }
 
     /**
-     * create
-     * 
+     * Create
+     *
      * Create the database
+     *
+     * @return void
      */
     public static function create()
     {
-        InitRepository::create_database();
+        InitRepository::createDatabase();
     }
 
     /**
-     * migrate
-     * 
+     * Migrate
+     *
      * Migrate the database
+     *
+     * @param string $env Environment
+     *
+     * @return void
      */
     public static function migration($env)
     {
         $phinx = PhinxService::getManager();
-        $phinx->AppMigrate($env);
+        $phinx->appMigrate($env);
     }
 
     /**
-     * seed
-     * 
+     * Seed
+     *
      * Seed the database
+     *
+     * @param string $env Environment
+     *
+     * @return void
      */
     public static function seed($env)
     {
         $phinx = PhinxService::getManager();
-        $phinx->AppSeed($env);
+        $phinx->appSeed($env);
     }
 
     /**
-     * delete
-     * 
+     * Delete
+     *
      * Delete the database
+     *
+     * @return void
      */
     public function delete()
     {
-        $this->getRepository()->delete_database();
+        $this->getRepository()->deleteDatabase();
     }
 }

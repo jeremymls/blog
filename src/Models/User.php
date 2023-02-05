@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Application
+ * @package  Application\Models
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Application\Models;
 
 use Core\Models\Model;
@@ -8,12 +19,18 @@ use DateTime;
 
 /**
  * User
- * 
+ *
  * User model
+ *
+ * @category Application
+ * @package  Application/Models
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class User extends Model
 {
-    const TABLE = 'users';
+    public const TABLE = 'users';
 
     public string $username;
     public string $password;
@@ -25,6 +42,13 @@ class User extends Model
     public string $picture;
     private string $token;
 
+    /**
+     * Get Fillable
+     *
+     * Return the fillable fields
+     *
+     * @return array
+     */
     public function getFillable(): array
     {
         return [
@@ -37,11 +61,13 @@ class User extends Model
     }
 
     /**
-     * setPassword
-     * 
+     * Set Password
+     *
      * Set the password with the hash password
-     * 
-     * @param  string $password
+     *
+     * @param string $password Password
+     *
+     * @return void
      */
     public function setPassword($password)
     {
@@ -49,12 +75,13 @@ class User extends Model
     }
 
     /**
-     * comparePassword
-     * 
+     * Compare Password
+     *
      * Compare the password with the password in the database
-     * 
-     * @param  string $passwordBDD
-     * @param  string $passwordPOST
+     *
+     * @param string $passwordBDD  Password in the database
+     * @param string $passwordPOST Password in the form
+     *
      * @return bool
      */
     public function comparePassword($passwordBDD, $passwordPOST)
@@ -63,11 +90,12 @@ class User extends Model
     }
 
     /**
-     * hashPassword
-     * 
+     * Hash Password
+     *
      * Hash the password
-     * 
-     * @param  string $password
+     *
+     * @param string $password Password
+     *
      * @return string
      */
     private static function hashPassword($password)
@@ -76,16 +104,18 @@ class User extends Model
     }
 
     /**
-     * withExpirationToken
-     * 
+     * With Expiration Token
+     *
      * Check if the token exist and if it's expired and set it
+     *
+     * @return void
      */
     public function withExpirationToken()
     {
         $tokenRepository = new TokenRepository();
         $token = $tokenRepository->findAll("WHERE user_id = ?", [self::$id]);
         if (count($token) > 0) {
-            if (new DateTime($token[0]->expiration_date)>new DateTime()) {
+            if (new DateTime($token[0]->expiration_date) > new DateTime()) {
                 $this->token = $token[0]->expiration_date;
             } else {
                 $this->token = 'expired';
@@ -96,10 +126,10 @@ class User extends Model
     }
 
     /**
-     * getToken
-     * 
+     * Get Token
+     *
      * Return the token
-     * 
+     *
      * @return string
      */
     public function getToken()

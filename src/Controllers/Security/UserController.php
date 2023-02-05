@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Application
+ * @package  Application\Controllers\Security
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Application\Controllers\Security;
 
 use Core\Controllers\Controller;
@@ -8,8 +19,14 @@ use Core\Services\TokenService;
 
 /**
  * UserController
- * 
+ *
  * User Controller
+ *
+ * @category Application
+ * @package  Application\Controllers\Security
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class UserController extends Controller
 {
@@ -25,12 +42,14 @@ class UserController extends Controller
     }
 
     /**
-     * show
-     * 
+     * Show
+     *
      * Display the user profil
      * if admin, display the user profil
      *
-     * @param  mixed $identifier the user identifier
+     * @param mixed $identifier the user identifier
+     *
+     * @return void
      */
     public function show($identifier = null)
     {
@@ -40,9 +59,11 @@ class UserController extends Controller
     }
 
     /**
-     * register
-     * 
+     * Register
+     *
      * Register form
+     *
+     * @return void
      */
     public function register()
     {
@@ -55,9 +76,11 @@ class UserController extends Controller
     }
 
     /**
-     * update
-     * 
+     * Update
+     *
      * Update form
+     *
+     * @return void
      */
     public function update()
     {
@@ -72,9 +95,13 @@ class UserController extends Controller
     }
 
     /**
-     * login
-     * 
+     * Login
+     *
      * Login form
+     *
+     * @param string $anchor anchor
+     *
+     * @return void
      */
     public function login($anchor = null)
     {
@@ -87,9 +114,11 @@ class UserController extends Controller
     }
 
     /**
-     * logout
-     * 
      * Logout
+     *
+     * Logout the user
+     *
+     * @return void
      */
     public function logout()
     {
@@ -98,11 +127,13 @@ class UserController extends Controller
     }
 
     /**
-     * confirmation
-     * 
+     * Confirmation
+     *
      * Confirme the user email
      *
-     * @param  string $token
+     * @param string $token the token
+     *
+     * @return void
      */
     public function confirmation(string $token)
     {
@@ -111,16 +142,18 @@ class UserController extends Controller
     }
 
     /**
-     * edit_mail
-     * 
+     * Edit Mail
+     *
      * Edit the user email
      *
-     * @param  mixed $identifier
+     * @param mixed $identifier the user identifier
+     *
+     * @return void
      */
-    public function edit_mail($identifier = null)
+    public function editMail($identifier = null)
     {
         if ($this->isPost()) {
-            $this->userService->edit_mail($this->superglobals->getPost());
+            $this->userService->editMail($this->superglobals->getPost());
             $this->redirectWithTimeout('profil');
         }
         $params = $this->userService->getData($identifier);
@@ -128,16 +161,18 @@ class UserController extends Controller
     }
 
     /**
-     * edit_password
-     * 
+     * Edit Password
+     *
      * Edit the user password
      *
-     * @param  mixed $identifier
+     * @param mixed $identifier the user identifier
+     *
+     * @return void
      */
-    public function edit_password($identifier = null)
+    public function editPassword($identifier = null)
     {
         if ($this->isPost()) {
-            $this->userService->edit_password($this->superglobals->getPost());
+            $this->userService->editPassword($this->superglobals->getPost());
             $this->redirectWithTimeout('profil');
         }
         $params = $this->userService->getData($identifier);
@@ -145,45 +180,54 @@ class UserController extends Controller
     }
 
     /**
-     * edit_picture
-     * 
-     * Edit the user picture
+     * Delete Picture
+     *
+     * Delete the user picture in AJAX
+     *
+     * @return void
      */
-    public function delete_picture()
+    public function deletePicture()
     {
-        $this->userService->delete_picture();
+        $this->userService->deletePicture();
         echo 'done';
     }
 
     /**
-     * forget_password
-     * 
+     * Forget Password
+     *
      * Forget password form
+     *
+     * @return void
      */
-    public function forget_password()
+    public function forgetPassword()
     {
         if ($this->isPost()) {
-            $this->userService->forget_password($this->superglobals->getPost());
-        $this->redirectWithTimeout('login');
+            $this->userService->forgetPassword($this->superglobals->getPost());
+            $this->redirectWithTimeout('login');
         } else {
             $this->twig->display('security/forget_password.twig', []);
         }
     }
 
     /**
-     * reset_password
-     * 
+     * Reset Password
+     *
      * Reset password form
      *
-     * @param  string $token
+     * @param string $token the token
+     *
+     * @return void
      */
-    public function reset_password($token)
+    public function resetPassword($token)
     {
         $tokenService = new TokenService();
         $params = $tokenService->getUserByToken($token);
         if (isset($params['user'])) {
             if ($this->isPost()) {
-                $this->userService->reset_password($params['user'], $this->superglobals->getPost());
+                $this->userService->resetPassword(
+                    $params['user'],
+                    $this->superglobals->getPost()
+                );
                 $this->redirectWithTimeout('login');
             } else {
                 $this->twig->display('security/reset_password.twig', $params);
@@ -192,20 +236,24 @@ class UserController extends Controller
     }
 
     /**
-     * confirm_again
-     * 
+     * Confirm Again
+     *
      * Send again the confirmation email
+     *
+     * @return void
      */
-    public function confirm_again()
+    public function confirmAgain()
     {
-        $this->userService->confirm_again();
+        $this->userService->confirmAgain();
         $this->redirectWithTimeout('profil');
     }
 
     /**
-     * checkUsername
-     * 
+     * Check Username
+     *
      * Check if the username is available (AJAX)
+     *
+     * @return void
      */
     public function checkUsername()
     {
@@ -213,16 +261,20 @@ class UserController extends Controller
     }
 
     /**
-     * redirectWithTimeout
-     * 
+     * Redirect With Timeout
+     *
      * Redirect with a timeout
-     * 
-     * @param  string $pathName the path name to redirect to
-     * @param  string $anchor the anchor to redirect to
+     *
+     * @param string $pathName the path name to redirect to
+     * @param string $anchor   the anchor to redirect to
+     *
+     * @return void
      */
     public function redirectWithTimeout(string $pathName = null, $anchor = null)
     {
-        $url = isset($pathName) ? $this->superglobals->getPath($pathName) : $this->session->getLastUrl($anchor);
+        $url = isset($pathName)
+        ? $this->superglobals->getPath($pathName)
+        : $this->session->getLastUrl($anchor);
         $this->twig->display('security/redirect.twig', ['target' => $url]);
     }
 }

@@ -1,37 +1,57 @@
 <?php
+
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Core
+ * @package  Core\Middleware
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Core\Middleware;
 
 use Application\config\Routes;
 
 /**
  * Superglobals
- * 
+ *
  * Manage the superglobals
+ *
+ * @category Core
+ * @package  Core\Middleware
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class Superglobals
 {
     private static $instances = [];
-    private $_SERVER;
-    private $_GET;
-    private $_POST;
-    private $_METHOD;
-    private $_REFERER;
-    private $_ENV;
-    private $_PATH;
-    private $_ASSETS;
+    private $SERVER;
+    private $GET;
+    private $POST;
+    private $METHOD;
+    private $REFERER;
+    private $ENV;
+    private $PATH;
+    private $ASSETS;
 
     /**
      * __construct
      *
-     * Launch the define_superglobals method
+     * Launch the defineSuperglobals method
      */
     public function __construct()
     {
-        $this->define_superglobals();
+        $this->defineSuperglobals();
     }
 
     /**
      * Singleton
+     *
+     * @return Superglobals
      */
     public static function getInstance(): Superglobals
     {
@@ -43,55 +63,62 @@ class Superglobals
     }
 
     /**
-     * define_superglobals
-     * 
+     * Define Superglobals
+     *
      * Define the superglobals
+     *
+     * @return void
      */
-    private function define_superglobals()
+    private function defineSuperglobals()
     {
-        $this->_SERVER = (isset($_SERVER)) ? $_SERVER : null;
-        $this->_GET = (isset($_GET)) ? $_GET : null;
-        $this->_POST = (isset($_POST)) ? $_POST : null;
-        $this->_ENV = (isset($_ENV)) ? $_ENV : null;
-        $this->_PATH = (isset($this->_ENV['SITE_URL'])) ? $this->_ENV['SITE_URL'] : null;
-        $this->_ASSETS = (isset($this->_ENV['ASSETS_PATH'])) ? $this->_ENV['ASSETS_PATH'] : null;
-        $this->_METHOD = (isset($_SERVER['REQUEST_METHOD'])) ? $_SERVER['REQUEST_METHOD'] : null;
-        $this->_REFERER = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : $this->_PATH;
+        $this->SERVER = (isset($_SERVER)) ? $_SERVER : null;
+        $this->GET = (isset($_GET)) ? $_GET : null;
+        $this->POST = (isset($_POST)) ? $_POST : null;
+        $this->ENV = (isset($_ENV)) ? $_ENV : null;
+        $this->PATH = (isset($this->ENV['SITE_URL']))
+        ? $this->ENV['SITE_URL'] : null;
+        $this->ASSETS = (isset($this->ENV['ASSETS_PATH']))
+        ? $this->ENV['ASSETS_PATH'] : null;
+        $this->METHOD = (isset($this->SERVER['REQUEST_METHOD']))
+        ? $this->SERVER['REQUEST_METHOD'] : null;
+        $this->REFERER = (isset($this->SERVER['HTTP_REFERER']))
+        ? $this->SERVER['HTTP_REFERER'] : $this->PATH;
     }
 
     /**
-     * getMethod
-     * 
+     * Get Method
+     *
      * Get the request method
      *
      * @return string|null The request method
      */
     public function getMethod()
     {
-        return $this->_METHOD;
+        return $this->METHOD;
     }
 
     /**
-     * getPath
-     * 
+     * Get Path
+     *
      * Get the path of the current request or the path of a named route
      *
-     * @param  string $name The name of the route
-     * @param  array $params The parameters of the route
-     * @return string The path
+     * @param string $name   The name of the route
+     * @param array  $params The parameters of the route
+     *
+     * @return string
      */
     public function getPath($name = null, $params = [])
     {
         if ($name) {
             $routes = new Routes();
-            return $this->_PATH . "/" .$routes->getUrl($name, $params);
+            return $this->PATH . "/" . $routes->getUrl($name, $params);
         }
-        return $this->_PATH . "/" . trim($_SERVER['REQUEST_URI'], '/');
+        return $this->PATH . "/" . trim($_SERVER['REQUEST_URI'], '/'); // todo: a revoir ($_server)
     }
 
     /**
-     * getPathWithoutGet
-     * 
+     * Get Path Without Get
+     *
      * Get the path of the current request without the GET parameters
      *
      * @return string The path
@@ -102,13 +129,15 @@ class Superglobals
     }
 
     /**
-     * redirect
-     * 
+     * Redirect
+     *
      * Redirect to a named route
      *
-     * @param  string $name The name of the route
-     * @param  array $params The parameters of the route
-     * @param  string|null $anchor The anchor
+     * @param string      $name   The name of the route
+     * @param array       $params The parameters of the route
+     * @param string|null $anchor The anchor
+     *
+     * @return void
      */
     public function redirect($name, $params = [], $anchor = null)
     {
@@ -120,9 +149,11 @@ class Superglobals
     }
 
     /**
-     * redirectLastUrl
-     * 
+     * Redirect Last Url
+     *
      * Redirect to the last url
+     *
+     * @return void
      */
     public function redirectLastUrl()
     {
@@ -130,67 +161,70 @@ class Superglobals
     }
 
     /**
-     * getPathReferer
-     * 
+     * Get Path Referer
+     *
      * Get the path of the last url
      *
      * @return string|null The path of the last url
      */
     public function getPathReferer()
     {
-        return $this->_REFERER;
+        return $this->REFERER;
     }
 
     /**
-     * getGet
-     * 
+     * Get Get
+     *
      * Get the value of a GET parameter or all the GET parameters
      *
-     * @param  string|null $key The key of the GET parameter
+     * @param string|null $key The key of the GET parameter
+     *
      * @return mixed The value of the GET parameter or all the GET parameters
      */
     public function getGet($key = null)
     {
         if ($key) {
-            if (array_key_exists($key, $this->_GET)) {
-                return $this->_GET[$key];
+            if (array_key_exists($key, $this->GET)) {
+                return $this->GET[$key];
             }
             return null;
         }
-        return $this->_GET;
+        return $this->GET;
     }
 
     /**
-     * getPost
-     * 
+     * Get Post
+     *
      * Get the value of a POST parameter or all the POST parameters
-     * 
-     * @param  string|null $key The key of the POST parameter
+     *
+     * @param string|null $key The key of the POST parameter
+     *
      * @return mixed The value of the POST parameter or all the POST parameters
      */
     public function getPost($key = null)
     {
         if ($key) {
-            if (array_key_exists($key, $this->_POST)) {
-                return $this->_POST[$key];
+            if (array_key_exists($key, $this->POST)) {
+                return $this->POST[$key];
             }
             return null;
         }
-        return $this->_POST;
+        return $this->POST;
     }
 
     /**
-     * getPrefix
-     * 
+     * Get Prefix
+     *
      * Get the prefix of a POST parameter
-     * 
-     * @param  string $key The key of the POST parameter
+     *
+     * @param string $key The key of the POST parameter
+     *
      * @return string|null The prefix of the POST parameter
      */
     public function getPrefix($key)
     {
-        if (array_key_exists($key, $this->_POST)) {
-            return substr($this->_POST[$key], 0, 3);
+        if (array_key_exists($key, $this->POST)) {
+            return substr($this->POST[$key], 0, 3);
         }
         $this->getPost($key);
         $prefix = $this->getGet('prefix');
@@ -201,25 +235,29 @@ class Superglobals
     }
 
     /**
-     * setPost
-     * 
+     * Set Post
+     *
      * Set the value of a POST parameter
      *
-     * @param  string $key The key of the POST parameter
-     * @param  mixed $value The value of the POST parameter
+     * @param string $key   The key of the POST parameter
+     * @param mixed  $value The value of the POST parameter
+     *
+     * @return void
      */
     public function setPost($key, $value)
     {
-        $this->_POST[$key] = $value;
+        $this->POST[$key] = $value;
     }
 
     /**
-     * setCookie
-     * 
+     * Set Cookie
+     *
      * Set a cookie with a 3 seconds expiration time
      *
-     * @param  string $key The key of the cookie
-     * @param  mixed $value The value of the cookie
+     * @param string $key   The key of the cookie
+     * @param mixed  $value The value of the cookie
+     *
+     * @return void
      */
     public function setCookie($key, $value)
     {
@@ -227,11 +265,12 @@ class Superglobals
     }
 
     /**
-     * getCookie
-     * 
+     * Get Cookie
+     *
      * Get the value of a cookie
      *
-     * @param  string $key The key of the cookie
+     * @param string $key The key of the cookie
+     *
      * @return string|null The value of the cookie
      */
     public function getCookie($key)
@@ -243,30 +282,35 @@ class Superglobals
     }
 
     /**
-     * isExistPicture
-     * 
+     * Is Exist Picture
+     *
      * Check if an image is ready to upload
      *
-     * @param  ?string $entityTable The name of the entity table
+     * @param ?string $entityTable The name of the entity table
+     *
      * @return bool True if an image is ready to upload, false otherwise
      */
     public function isExistPicture($entityTable = null)
     {
-        // return (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE && $entityTable != "tokens");
+        // return (isset($_FILES['picture'])
+            // && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE
+            // && $entityTable != "tokens");
         return (
-            count($_FILES) > 0 && 
+            count($_FILES) > 0 &&
             $entityTable != "tokens" &&
-            ((isset($_FILES['picture']['error']) && $_FILES['picture']['error'] !== 4) ||
+            ((isset($_FILES['picture']['error'])
+            && $_FILES['picture']['error'] !== 4) ||
             (isset($_FILES['value']['error']) && $_FILES['value']['error'] !== 4))
         );
     }
 
     /**
-     * getPicture
-     * 
+     * Get Picture
+     *
      * Get the picture to upload
      *
-     * @param  string $key The key of the picture
+     * @param string $key The key of the picture
+     *
      * @return mixed The picture to upload
      */
     public function getPicture($key = 'picture')
@@ -278,33 +322,36 @@ class Superglobals
     }
 
     /**
-     * asset
-     * 
+     * Asset
+     *
      * Get the path of an asset
      *
-     * @param  string $path The path of the asset
+     * @param string $path The path of the asset
+     *
      * @return string The path of the asset
      */
     public function asset($path)
     {
-        return $this->_ASSETS . $path;
+        return $this->ASSETS . $path;
     }
 
     /**
-     * setAppEnv
-     * 
+     * Set App Env
+     *
      * Set the environment of the application
      *
-     * @param  string $app_env The environment of the application
+     * @param string $app_env The environment of the application
+     *
+     * @return void
      */
     public function setAppEnv($app_env)
     {
-        $this->_ENV['APP_ENV'] = $app_env;
+        $this->ENV['APP_ENV'] = $app_env;
     }
 
     /**
-     * getAppEnv
-     * 
+     * Get App Env
+     *
      * Get the environment of the application
      *
      * @return string The environment of the application
@@ -315,8 +362,8 @@ class Superglobals
     }
 
     /**
-     * getSecretKey
-     * 
+     * Get Secret Key
+     *
      * Get the secret key of the application
      *
      * @return string The secret key of the application
@@ -327,11 +374,12 @@ class Superglobals
     }
 
     /**
-     * getDatabase
-     * 
+     * Get Database
+     *
      * Get the database configuration
      *
-     * @param  string $app_env The environment of the application
+     * @param string $app_env The environment of the application
+     *
      * @return mixed The database configuration
      */
     public function getDatabase($app_env = null)
@@ -348,30 +396,31 @@ class Superglobals
     }
 
     /**
-     * getEnv
-     * 
+     * Get Env
+     *
      * Get the value of an environment variable
      *
-     * @param  string $key The key of the environment variable
+     * @param string $key The key of the environment variable
+     *
      * @return string|null The value of the environment variable
      */
     private function getEnv($key)
     {
-        if (array_key_exists($key, $this->_ENV)) {
-            return $this->_ENV[$key];
+        if (array_key_exists($key, $this->ENV)) {
+            return $this->ENV[$key];
         }
         return null;
     }
 
     /**
-     * getHost
-     * 
+     * Get Host
+     *
      * Get the host of the application
      *
      * @return string The host of the application
      */
     public function getHost()
     {
-        return $this->_PATH.'/';
+        return $this->PATH . '/';
     }
 }

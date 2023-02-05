@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jeremy Monlouis
+ * php version 7.4.3
+ *
+ * @category Router
+ * @package  Core\Router
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Core\Router;
 
 use Core\Controllers\ErrorExceptionController;
@@ -8,20 +19,25 @@ use Exception;
 
 /**
  * Router
- * 
+ *
  * Manage the routes
+ *
+ * @category Router
+ * @package  Core\Router
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class Router
 {
-
-    private $url;
+    public $url;
     private $routes = [];
     private $namedRoutes = [];
 
     /**
      * __construct
      *
-     * @param  mixed $url
+     * @param mixed $url Url
      */
     public function __construct($url)
     {
@@ -29,13 +45,14 @@ class Router
     }
 
     /**
-     * get
-     * 
+     * Get
+     *
      * Add a GET route
-     * 
-     * @param  mixed $path
-     * @param  mixed $callable
-     * @param  mixed $name
+     *
+     * @param string $path     The path
+     * @param string $callable The callable 'Controller@Method'
+     * @param string $name     The name
+     *
      * @return Route
      */
     public function get($path, $callable, $name = null)
@@ -44,13 +61,14 @@ class Router
     }
 
     /**
-     * post
-     * 
+     * Post
+     *
      * Add a POST route
      *
-     * @param  mixed $path
-     * @param  mixed $callable
-     * @param  mixed $name
+     * @param string $path     The path
+     * @param string $callable The callable 'Controller@Method'
+     * @param string $name     The name
+     *
      * @return Route
      */
     public function post($path, $callable, $name = null)
@@ -59,34 +77,35 @@ class Router
     }
 
     /**
-     * add
-     * 
+     * Add
+     *
      * Add a route
      *
-     * @param  mixed $path
-     * @param  mixed $callable
-     * @param  mixed $name
-     * @param  mixed $method
+     * @param string $path     The path
+     * @param string $callable The callable 'Controller@Method'
+     * @param string $name     The name
+     * @param string $method   The method (GET, POST)
+     *
      * @return Route
      */
     private function add($path, $callable, $name, $method)
     {
         $route = new Route($path, $callable);
         $this->routes[$method][] = $route;
-        if(is_string($callable) && $name === null) {
+        if (is_string($callable) && $name === null) {
             $name = $callable;
         }
-        if($name) {
+        if ($name) {
             $this->namedRoutes[$name] = $route;
         }
         return $route;
     }
 
     /**
-     * run
-     * 
+     * Run
+     *
      * Run the router
-     * 
+     *
      * @return mixed
      */
     public function run()
@@ -101,25 +120,32 @@ class Router
                     return $route->call();
                 }
             }
-            throw new Exception("La page que vous recherchez n'existe pas.<br>( /".$this->url." )", 404);
+            throw new Exception(
+                "La page que vous recherchez n'existe pas.<br>( /" . $this->url . " )",
+                404
+            );
         } catch (Exception $e) {
             (new ErrorExceptionController())->execute($e);
         }
     }
 
     /**
-     * url
-     * 
-     * Get the url of a route by name
+     * Url
      *
-     * @param  mixed $name
-     * @param  mixed $params
-     * @return string Url
+     * Check if the route exists and return the path
+     *
+     * @param mixed $name   The name
+     * @param mixed $params The params
+     *
+     * @return string
      */
     public function url($name, $params = [])
     {
-        if(!isset($this->namedRoutes[$name])) {
-            throw new Exception("Le nom de route que vous recherchez n'existe pas.", 404);
+        if (!isset($this->namedRoutes[$name])) {
+            throw new Exception(
+                "Le nom de route que vous recherchez n'existe pas.",
+                404
+            );
         }
         return $this->namedRoutes[$name]->getUrl($params);
     }

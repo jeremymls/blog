@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Application
+ * @package  Application\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Application\Services;
 
 use Application\Models\User;
@@ -14,8 +25,14 @@ use stdClass;
 
 /**
  * UserService
- * 
+ *
  * User Service
+ *
+ * @category Application
+ * @package  Application\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class UserService extends EntityService
 {
@@ -38,11 +55,13 @@ class UserService extends EntityService
     }
 
     /**
-     * register
-     * 
+     * Register
+     *
      * Register a new user
-     * 
-     * @param  array $input
+     *
+     * @param array $input User data
+     *
+     * @return void
      */
     public function register(array $input)
     {
@@ -62,29 +81,34 @@ class UserService extends EntityService
     }
 
     /**
-     * getData
-     * 
+     * Get Data
+     *
      * Get the user data
-     * 
-     * @param  mixed $id
+     *
+     * @param mixed $id User id
+     *
      * @return mixed
      */
     public function getData($id)
     {
         if ($id != null && $this->userSession->isAdmin()) {
             $id = (int) $id;
-        } else if ($this->userSession->isUser()) {
+        } elseif ($this->userSession->isUser()) {
             $id = $this->userSession->getUserParam("identifier");
         }
         if ($id) {
             $params = $this->get($id);
             $params['user']->withExpirationToken();
             $commentRepository = new CommentRepository();
-            $params['comments'] = $commentRepository->findAll("WHERE author = ?", [$id]);
+            $params['comments'] = $commentRepository->findAll(
+                "WHERE author = ?",
+                [$id]
+            );
             $params['commentsCount'] = count($params['comments']);
             $params['commentsPendingCount'] = count(
                 array_filter(
-                    $params['comments'], function ($obj) {
+                    $params['comments'],
+                    function ($obj) {
                         return $obj->moderate == 0;
                     }
                 )
@@ -96,20 +120,22 @@ class UserService extends EntityService
     }
 
     /**
-     * updateUser
-     * 
+     * Update User
+     *
      * Update the user data
-     * 
-     * @param  array $input
-     * @param  mixed $userId
+     *
+     * @param array $input  User data
+     * @param mixed $userId User id
+     *
+     * @return void
      */
     public function updateUser(array $input, $userId = null)
     {
         $id = $userId ?? $this->userSession->getUserParam("identifier");
         $this->update(
-            $id, 
+            $id,
             $input,
-            'L\'utilisateur '. $input['email'] .' a bien été modifié'
+            'L\'utilisateur ' . $input['email'] . ' a bien été modifié'
         );
         if ($this->userSession->isAdmin() && isset($userId)) {
             $this->superglobals->redirect('admin:users');
@@ -120,11 +146,13 @@ class UserService extends EntityService
     }
 
     /**
-     * login
-     * 
+     * Login
+     *
      * Login the user
-     * 
-     * @param  array $input
+     *
+     * @param array $input User data
+     *
+     * @return void
      */
     public function login(array $input)
     {
@@ -141,9 +169,11 @@ class UserService extends EntityService
     }
 
     /**
-     * logout
-     * 
+     * Logout
+     *
      * Logout the user
+     *
+     * @return void
      */
     public function logout()
     {
@@ -151,15 +181,17 @@ class UserService extends EntityService
         $this->flashServices->danger(
             'Déconnexion',
             'Vous êtes déconnecté(e) !'
-        ); 
+        );
     }
 
     /**
-     * confirmation
-     * 
+     * Confirmation
+     *
      * Confirmation of the user email
-     * 
-     * @param  string $token
+     *
+     * @param string $token Token
+     *
+     * @return void
      */
     public function confirmation($token)
     {
@@ -185,13 +217,15 @@ class UserService extends EntityService
     }
 
     /**
-     * edit_mail
-     * 
+     * Edit Mail
+     *
      * Edit the user email
-     * 
-     * @param  array $input
+     *
+     * @param array $input User data
+     *
+     * @return void
      */
-    public function edit_mail($input)
+    public function editMail($input)
     {
         if ($input['email'] !== $input['retape']) {
             throw new \Exception('Les adresses ne correspondent pas.');
@@ -200,9 +234,15 @@ class UserService extends EntityService
         $user->email = $input['email'];
         $user->validated_email = 0;
         $user->csrf_token = $input['csrf_token'];
-        $success = $this->repository->update($this->userSession->getUserParam("identifier"),$user);
+        $success = $this->repository->update(
+            $this->userSession->getUserParam("identifier"),
+            $user
+        );
         if (!$success) {
-            throw new \Exception("Impossible de modifier l'e-mail <br>Cette adresse est peut-être déjà utilisée");
+            throw new \Exception(
+                "Impossible de modifier l'e-mail <br>
+                Cette adresse est peut-être déjà utilisée"
+            );
         }
         $this->flashServices->success(
             'E-mail modifiée',
@@ -215,19 +255,21 @@ class UserService extends EntityService
     }
 
     /**
-     * edit_password
-     * 
+     * Edit Password
+     *
      * Edit the user password
-     * 
-     * @param  array $input
+     *
+     * @param array $input User data
+     *
+     * @return void
      */
-    public function edit_password(array $input)
+    public function editPassword(array $input)
     {
         if ($input['password'] !== $input['passwordConfirm']) {
             throw new \Exception('Les mots de passe ne correspondent pas.');
         }
         $id = $this->userSession->getUserParam("identifier");
-        $user = $this->repository->findOne($id);        
+        $user = $this->repository->findOne($id);
         if (!$user->comparePassword($user->password, $input['currentPassword'])) {
             throw new \Exception('Ce n\'est le bon mot de passe actuel.');
         }
@@ -245,16 +287,21 @@ class UserService extends EntityService
     }
 
     /**
-     * delete_picture
-     * 
+     * Delete Picture
+     *
      * Delete the user picture
+     *
+     * @return void
      */
-    public function delete_picture()
+    public function deletePicture()
     {
         $entity = new User();
         $entity->picture = "";
         $entity->csrf_token = $this->superglobals->getPost('csrf_token');
-        $success = $this->repository->update($this->userSession->getUserParam("identifier"), $entity);
+        $success = $this->repository->update(
+            $this->userSession->getUserParam("identifier"),
+            $entity
+        );
         if (!$success) {
             throw new \Exception("Impossible de supprimer la photo de profil");
         }
@@ -266,54 +313,75 @@ class UserService extends EntityService
     }
 
     /**
-     * forget_password
-     * 
+     * Forget Password
+     *
      * Send an email to the user to reset his password
-     * 
-     * @param  array $input
+     *
+     * @param array $input User data
+     *
+     * @return void
      */
-    public function forget_password(array $input)
+    public function forgetPassword(array $input)
     {
         $user = $this->repository->getUserByUsername($input['email']);
         if ($user->email == null) {
             throw new \Exception("Cet utilisateur n'existe pas");
         }
-        $checkToken = $this->tokenService->getAll('where user_id = ?', [$user->identifier], "", null, "ASC")['tokens'];
-        if (count($checkToken) > 0 && $checkToken[0]->expiration_date > date("Y-m-d H:i:s")) {
-            throw new \Exception("Un mail de réinitialisation a déjà été envoyé à cette adresse.<br> Veuillez vérifier vos spams ou réessayer dans 30mn.");
+        $checkToken = $this->tokenService->getAll(
+            'where user_id = ?',
+            [$user->identifier],
+            "",
+            null,
+            "ASC"
+        )['tokens'];
+        if (
+            count($checkToken) > 0
+            && $checkToken[0]->expiration_date > date("Y-m-d H:i:s")
+        ) {
+            throw new \Exception(
+                "Un mail de réinitialisation a déjà été envoyé à cette adresse.<br>
+                Veuillez vérifier vos spams ou réessayer dans 30mn."
+            );
         } else {
             $token = $this->tokenService->createToken($user->identifier);
         }
-        $url = $this->superglobals->getPath('reset_password', ['token' => $token]);
+        $url = $this->superglobals->getPath('resetPassword', ['token' => $token]);
         $this->mailService->sendEmail(
             [
-            'reply_to' => $this->configService->getOwnerMailContact(),
-            'recipient' => [
-                'name' => $user->username,
-                'email' => $user->email
+                'reply_to' => $this->configService->getOwnerMailContact(),
+                'recipient' => [
+                    'name' => $user->username,
+                    'email' => $user->email
+                ],
+                'subject' => 'Mot de passe oublié',
+                'template' => 'forget',
+                'template_data' => [
+                    'url' => $url,
+                    'name' => $user->username,
+                ],
+                'success_message' => 'Un e-mail vous a été envoyé
+                pour réinitialiser votre mot de passe <br>
+                Veuillez cliquer sur le lien contenu dans le mail
+                pour réinitialiser votre mot de passe (expire après 30mn).'
             ],
-            'subject' => 'Mot de passe oublié',
-            'template' => 'forget',
-            'template_data' => [
-                'url' => $url,
-                'name' => $user->username,
-            ],
-            'success_message' => 'Un e-mail vous a été envoyé pour réinitialiser votre mot de passe <br> Veuillez cliquer sur le lien contenu dans le mail pour réinitialiser votre mot de passe (expire après 30mn).',], 
             [],
             true,
-            "Si vous ne parvenez pas à lire ce message, veuillez copier/coller le lien suivant dans votre navigateur: $url"
+            "Si vous ne parvenez pas à lire ce message,
+            veuillez copier/coller le lien suivant dans votre navigateur: $url"
         );
     }
 
     /**
-     * reset_password
-     * 
+     * Reset Password
+     *
      * Reset the user password
-     * 
-     * @param  mixed $user
-     * @param  array $post
+     *
+     * @param mixed $user User
+     * @param array $post User data
+     *
+     * @return void
      */
-    public function reset_password($user, $post)
+    public function resetPassword($user, $post)
     {
         if ($post['password'] !== $post['passwordConfirm']) {
             throw new \Exception('Les mots de passe ne correspondent pas.');
@@ -335,13 +403,16 @@ class UserService extends EntityService
     }
 
     /**
-     * confirm
-     * 
+     * Confirm
+     *
      * Confirm the user account
+     *
+     * @return void
      */
-    public function confirm_again()
+    public function confirmAgain()
     {
-        $user = $this->repository->findOne($this->userSession->getUserParam("identifier"));
+        $user = $this->repository
+            ->findOne($this->userSession->getUserParam("identifier"));
         $user->withExpirationToken();
         if ($user->getToken() == "expired") {
             $token = $this->tokenService->createToken($user->identifier);
@@ -349,21 +420,28 @@ class UserService extends EntityService
         } else {
             $this->flashServices->warning(
                 'Confirmation de compte',
-                'Un lien a déjà été envoyé <br> Vous ne pouvez pas faire plus d\'une demande en moins de 30mn!'
+                'Un lien a déjà été envoyé <br>
+                Vous ne pouvez pas faire plus d\'une demande en moins de 30mn!'
             );
         }
     }
 
     /**
-     * checkUsername
-     * 
+     * Check Username
+     *
      * Check if the username is available
-     * 
-     * @param  string $username
+     *
+     * @param string $username Username
+     *
+     * @return void
      */
     public function checkUsername($username)
     {
-        if ($this->userSession->isUser() && ($username == $this->userSession->getUserParam("username") || $username == $this->userSession->getUserParam("email"))) {
+        if (
+            $this->userSession->isUser()
+            && ($username == $this->userSession->getUserParam("username")
+            || $username == $this->userSession->getUserParam("email"))
+        ) {
             echo "already";
         } else {
             $user = $this->repository->getUserByUsername($username);
@@ -376,35 +454,43 @@ class UserService extends EntityService
     }
 
     /**
-     * sendConfirmationEmail
-     * 
+     * Send Confirmation Email
+     *
      * Send an email to confirm the user account
-     * 
-     * @param  mixed $email
-     * @param  mixed $first
-     * @param  mixed $token
+     *
+     * @param mixed $email User email
+     * @param mixed $first User first name
+     * @param mixed $token Token
+     *
+     * @return void
      */
-    public function sendConfirmationEmail($email , $first, $token)
+    public function sendConfirmationEmail($email, $first, $token)
     {
         $url = $this->superglobals->getPath('confirmation', ['token' => $token]);
         $this->mailService->sendEmail(
             [
-            'reply_to' => $this->configService->getOwnerMailContact(),
-            'recipient' => [
-                'name' => $first,
-                'email' => $email
+                'reply_to' => $this->configService->getOwnerMailContact(),
+                'recipient' => [
+                    'name' => $first,
+                    'email' => $email
+                ],
+                'subject' => 'Validation de votre compte',
+                'template' => 'activate',
+                'template_data' => [
+                    'name' => $first,
+                    'url' => $url,
+                    'cs_site_name' => $this->configService->getByName(
+                        "cs_site_name"
+                    )
+                ],
+                'success_message' => 'Un mail de confirmation vous a été envoyé. <br>
+                Veuillez cliquer sur le lien contenu dans le mail
+                pour valider votre compte (expire après 30mn).'
             ],
-            'subject' => 'Validation de votre compte',
-            'template' => 'activate',
-            'template_data' => [
-                'name' => $first,
-                'url' => $url,
-                'cs_site_name' => $this->configService->getByName("cs_site_name")
-            ],
-            'success_message' => 'Un mail de confirmation vous a été envoyé. <br>Veuillez cliquer sur le lien contenu dans le mail pour valider votre compte (expire après 30mn).'],
             [],
             true,
-            "Si vous ne parvenez pas à lire ce message, veuillez copier/coller le lien suivant dans votre navigateur: $url"
+            "Si vous ne parvenez pas à lire ce message,
+            veuillez copier/coller le lien suivant dans votre navigateur: $url"
         );
     }
 }

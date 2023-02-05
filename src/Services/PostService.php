@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Application
+ * @package  Application\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Application\Services;
 
 use Application\Models\Post;
@@ -7,8 +18,14 @@ use Core\Services\EntityService;
 
 /**
  * PostService
- * 
+ *
  * Post Service
+ *
+ * @category Application
+ * @package  Application\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class PostService extends EntityService
 {
@@ -22,11 +39,13 @@ class PostService extends EntityService
     }
 
     /**
-     * delete_post_picture
+     * Delete Post Picture
      *
-     * @param  mixed $identifier
+     * @param mixed $identifier Identifier
+     *
+     * @return void
      */
-    public function delete_post_picture($identifier)
+    public function deletePostPicture($identifier)
     {
         $entity = new Post();
         $entity->picture = "";
