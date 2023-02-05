@@ -23,23 +23,23 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Controllers\\ConfigController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
-            "summary": "index",
+            "summary": "Index",
             "url": "classes/Core-Controllers-ConfigController.html#method_index"
         },                {
             "fqsen": "\\Core\\Controllers\\ConfigController\u003A\u003Alist\u0028\u0029",
             "name": "list",
-            "summary": "list",
+            "summary": "List",
             "url": "classes/Core-Controllers-ConfigController.html#method_list"
         },                {
             "fqsen": "\\Core\\Controllers\\ConfigController\u003A\u003Aupdate\u0028\u0029",
             "name": "update",
-            "summary": "update",
+            "summary": "Update",
             "url": "classes/Core-Controllers-ConfigController.html#method_update"
         },                {
-            "fqsen": "\\Core\\Controllers\\ConfigController\u003A\u003Adelete_value\u0028\u0029",
-            "name": "delete_value",
-            "summary": "delete_value",
-            "url": "classes/Core-Controllers-ConfigController.html#method_delete_value"
+            "fqsen": "\\Core\\Controllers\\ConfigController\u003A\u003AdeleteValue\u0028\u0029",
+            "name": "deleteValue",
+            "summary": "Delete\u0020Value",
+            "url": "classes/Core-Controllers-ConfigController.html#method_deleteValue"
         },                {
             "fqsen": "\\Core\\Controllers\\ConfigController\u003A\u003A\u0024configService",
             "name": "configService",
@@ -63,22 +63,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Controllers\\Controller\u003A\u003AgetTwig\u0028\u0029",
             "name": "getTwig",
-            "summary": "getTwig",
+            "summary": "Get\u0020Twig",
             "url": "classes/Core-Controllers-Controller.html#method_getTwig"
         },                {
             "fqsen": "\\Core\\Controllers\\Controller\u003A\u003AgetSiteConfigs\u0028\u0029",
             "name": "getSiteConfigs",
-            "summary": "getSiteConfigs",
+            "summary": "Get\u0020Site\u0020Configs",
             "url": "classes/Core-Controllers-Controller.html#method_getSiteConfigs"
         },                {
             "fqsen": "\\Core\\Controllers\\Controller\u003A\u003AmultiParams\u0028\u0029",
             "name": "multiParams",
-            "summary": "multiParams",
+            "summary": "Multi\u0020Params",
             "url": "classes/Core-Controllers-Controller.html#method_multiParams"
         },                {
             "fqsen": "\\Core\\Controllers\\Controller\u003A\u003AisPost\u0028\u0029",
             "name": "isPost",
-            "summary": "isPost",
+            "summary": "Is\u0020Post",
             "url": "classes/Core-Controllers-Controller.html#method_isPost"
         },                {
             "fqsen": "\\Core\\Controllers\\Controller\u003A\u003A\u0024twig",
@@ -118,7 +118,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Controllers\\DocController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
-            "summary": "index",
+            "summary": "Index",
             "url": "classes/Core-Controllers-DocController.html#method_index"
         },                {
             "fqsen": "\\Core\\Controllers\\ErrorExceptionController",
@@ -128,7 +128,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Controllers\\ErrorExceptionController\u003A\u003Aexecute\u0028\u0029",
             "name": "execute",
-            "summary": "execute",
+            "summary": "Execute",
             "url": "classes/Core-Controllers-ErrorExceptionController.html#method_execute"
         },                {
             "fqsen": "\\Core\\Controllers\\InitController",
@@ -143,37 +143,37 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Controllers\\InitController\u003A\u003AgrantAccess\u0028\u0029",
             "name": "grantAccess",
-            "summary": "grantAccess",
+            "summary": "Grant\u0020Access",
             "url": "classes/Core-Controllers-InitController.html#method_grantAccess"
         },                {
             "fqsen": "\\Core\\Controllers\\InitController\u003A\u003Anew\u0028\u0029",
             "name": "new",
-            "summary": "new",
+            "summary": "New",
             "url": "classes/Core-Controllers-InitController.html#method_new"
         },                {
             "fqsen": "\\Core\\Controllers\\InitController\u003A\u003Acreate\u0028\u0029",
             "name": "create",
-            "summary": "create",
+            "summary": "Create",
             "url": "classes/Core-Controllers-InitController.html#method_create"
         },                {
             "fqsen": "\\Core\\Controllers\\InitController\u003A\u003Aseed\u0028\u0029",
             "name": "seed",
-            "summary": "seed",
+            "summary": "Seed",
             "url": "classes/Core-Controllers-InitController.html#method_seed"
         },                {
             "fqsen": "\\Core\\Controllers\\InitController\u003A\u003Ainit\u0028\u0029",
             "name": "init",
-            "summary": "init",
+            "summary": "Init",
             "url": "classes/Core-Controllers-InitController.html#method_init"
         },                {
-            "fqsen": "\\Core\\Controllers\\InitController\u003A\u003Ainit_configs\u0028\u0029",
-            "name": "init_configs",
-            "summary": "init_configs",
-            "url": "classes/Core-Controllers-InitController.html#method_init_configs"
+            "fqsen": "\\Core\\Controllers\\InitController\u003A\u003AinitConfigs\u0028\u0029",
+            "name": "initConfigs",
+            "summary": "Init\u0020Configs",
+            "url": "classes/Core-Controllers-InitController.html#method_initConfigs"
         },                {
             "fqsen": "\\Core\\Controllers\\InitController\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "delete",
+            "summary": "Delete",
             "url": "classes/Core-Controllers-InitController.html#method_delete"
         },                {
             "fqsen": "\\Core\\Controllers\\InitController\u003A\u003A\u0024initService",
@@ -188,7 +188,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Lib\\Connection",
             "name": "Connection",
-            "summary": "",
+            "summary": "Connection",
             "url": "classes/Core-Lib-Connection.html"
         },                {
             "fqsen": "\\Core\\Lib\\Connection\u003A\u003AgetConnection\u0028\u0029",
@@ -198,7 +198,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Lib\\Connection\u003A\u003AnewConnection\u0028\u0029",
             "name": "newConnection",
-            "summary": "newConnection",
+            "summary": "New\u0020Connection",
             "url": "classes/Core-Lib-Connection.html#method_newConnection"
         },                {
             "fqsen": "\\Core\\Lib\\Connection\u003A\u003A__clone\u0028\u0029",
@@ -233,7 +233,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Middleware\\ConfirmMail\u003A\u003AvalidatedEmail\u0028\u0029",
             "name": "validatedEmail",
-            "summary": "validatedEmail",
+            "summary": "ValidatedEmail",
             "url": "classes/Core-Middleware-ConfirmMail.html#method_validatedEmail"
         },                {
             "fqsen": "\\Core\\Middleware\\Flash",
@@ -243,12 +243,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Middleware\\Flash\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "It\u0027s\u0020a\u0020constructor\u0020that\u0020instantiates\u0020objects\u0020and\u0020calls\u0020functions.",
+            "summary": "__construct",
             "url": "classes/Core-Middleware-Flash.html#method___construct"
         },                {
             "fqsen": "\\Core\\Middleware\\Flash\u003A\u003AsetFlashs\u0028\u0029",
             "name": "setFlashs",
-            "summary": "setFlashs",
+            "summary": "Set\u0020Flashs",
             "url": "classes/Core-Middleware-Flash.html#method_setFlashs"
         },                {
             "fqsen": "\\Core\\Middleware\\Pagination",
@@ -258,7 +258,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Middleware\\Pagination\u003A\u003Apaginate\u0028\u0029",
             "name": "paginate",
-            "summary": "paginate",
+            "summary": "Paginate",
             "url": "classes/Core-Middleware-Pagination.html#method_paginate"
         },                {
             "fqsen": "\\Core\\Middleware\\Security",
@@ -273,7 +273,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Middleware\\Security\u003A\u003AisGranted\u0028\u0029",
             "name": "isGranted",
-            "summary": "isGranted",
+            "summary": "Is\u0020Granted",
             "url": "classes/Core-Middleware-Security.html#method_isGranted"
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\PHPSession",
@@ -293,32 +293,32 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\PHPSession\u003A\u003AensureStarted\u0028\u0029",
             "name": "ensureStarted",
-            "summary": "ensureStarted",
+            "summary": "Ensure\u0020Started",
             "url": "classes/Core-Middleware-Session-PHPSession.html#method_ensureStarted"
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\PHPSession\u003A\u003Aget\u0028\u0029",
             "name": "get",
-            "summary": "get",
+            "summary": "Get",
             "url": "classes/Core-Middleware-Session-PHPSession.html#method_get"
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\PHPSession\u003A\u003Aset\u0028\u0029",
             "name": "set",
-            "summary": "set",
+            "summary": "Set",
             "url": "classes/Core-Middleware-Session-PHPSession.html#method_set"
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\PHPSession\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "delete",
+            "summary": "Delete",
             "url": "classes/Core-Middleware-Session-PHPSession.html#method_delete"
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\PHPSession\u003A\u003AredirectLastUrl\u0028\u0029",
             "name": "redirectLastUrl",
-            "summary": "redirectLastUrl",
+            "summary": "Redirect\u0020Last\u0020Url",
             "url": "classes/Core-Middleware-Session-PHPSession.html#method_redirectLastUrl"
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\PHPSession\u003A\u003AgetLastUrl\u0028\u0029",
             "name": "getLastUrl",
-            "summary": "getLastUrl",
+            "summary": "Get\u0020Last\u0020Url",
             "url": "classes/Core-Middleware-Session-PHPSession.html#method_getLastUrl"
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\PHPSession\u003A\u003A\u0024instances",
@@ -326,29 +326,9 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Core-Middleware-Session-PHPSession.html#property_instances"
         },                {
-            "fqsen": "\\Core\\Middleware\\Session\\SessionInterface",
-            "name": "SessionInterface",
-            "summary": "",
-            "url": "classes/Core-Middleware-Session-SessionInterface.html"
-        },                {
-            "fqsen": "\\Core\\Middleware\\Session\\SessionInterface\u003A\u003Aget\u0028\u0029",
-            "name": "get",
-            "summary": "",
-            "url": "classes/Core-Middleware-Session-SessionInterface.html#method_get"
-        },                {
-            "fqsen": "\\Core\\Middleware\\Session\\SessionInterface\u003A\u003Aset\u0028\u0029",
-            "name": "set",
-            "summary": "",
-            "url": "classes/Core-Middleware-Session-SessionInterface.html#method_set"
-        },                {
-            "fqsen": "\\Core\\Middleware\\Session\\SessionInterface\u003A\u003Adelete\u0028\u0029",
-            "name": "delete",
-            "summary": "",
-            "url": "classes/Core-Middleware-Session-SessionInterface.html#method_delete"
-        },                {
             "fqsen": "\\Core\\Middleware\\Session\\UserSession",
             "name": "UserSession",
-            "summary": "PHPSession",
+            "summary": "UserSession",
             "url": "classes/Core-Middleware-Session-UserSession.html"
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\UserSession\u003A\u003A__construct\u0028\u0029",
@@ -363,37 +343,37 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\UserSession\u003A\u003AisAdmin\u0028\u0029",
             "name": "isAdmin",
-            "summary": "isAdmin",
+            "summary": "Is\u0020Admin",
             "url": "classes/Core-Middleware-Session-UserSession.html#method_isAdmin"
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\UserSession\u003A\u003AisValidate\u0028\u0029",
             "name": "isValidate",
-            "summary": "isValidate",
+            "summary": "Is\u0020Validate",
             "url": "classes/Core-Middleware-Session-UserSession.html#method_isValidate"
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\UserSession\u003A\u003AisUser\u0028\u0029",
             "name": "isUser",
-            "summary": "isUser",
+            "summary": "Is\u0020User",
             "url": "classes/Core-Middleware-Session-UserSession.html#method_isUser"
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\UserSession\u003A\u003AgetUser\u0028\u0029",
             "name": "getUser",
-            "summary": "getUser",
+            "summary": "Get\u0020User",
             "url": "classes/Core-Middleware-Session-UserSession.html#method_getUser"
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\UserSession\u003A\u003AgetUserParam\u0028\u0029",
             "name": "getUserParam",
-            "summary": "getUserParam",
+            "summary": "Get\u0020User\u0020Param",
             "url": "classes/Core-Middleware-Session-UserSession.html#method_getUserParam"
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\UserSession\u003A\u003AsetUser\u0028\u0029",
             "name": "setUser",
-            "summary": "setUser",
+            "summary": "Set\u0020User",
             "url": "classes/Core-Middleware-Session-UserSession.html#method_setUser"
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\UserSession\u003A\u003AsetUserParam\u0028\u0029",
             "name": "setUserParam",
-            "summary": "setUserParam",
+            "summary": "Set\u0020User\u0020Param",
             "url": "classes/Core-Middleware-Session-UserSession.html#method_setUserParam"
         },                {
             "fqsen": "\\Core\\Middleware\\Session\\UserSession\u003A\u003A\u0024instances",
@@ -416,114 +396,114 @@ Search.appendIndex(
             "summary": "Singleton",
             "url": "classes/Core-Middleware-Superglobals.html#method_getInstance"
         },                {
-            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003Adefine_superglobals\u0028\u0029",
-            "name": "define_superglobals",
-            "summary": "define_superglobals",
-            "url": "classes/Core-Middleware-Superglobals.html#method_define_superglobals"
+            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AdefineSuperglobals\u0028\u0029",
+            "name": "defineSuperglobals",
+            "summary": "Define\u0020Superglobals",
+            "url": "classes/Core-Middleware-Superglobals.html#method_defineSuperglobals"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AgetMethod\u0028\u0029",
             "name": "getMethod",
-            "summary": "getMethod",
+            "summary": "Get\u0020Method",
             "url": "classes/Core-Middleware-Superglobals.html#method_getMethod"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AgetPath\u0028\u0029",
             "name": "getPath",
-            "summary": "getPath",
+            "summary": "Get\u0020Path",
             "url": "classes/Core-Middleware-Superglobals.html#method_getPath"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AgetPathWithoutGet\u0028\u0029",
             "name": "getPathWithoutGet",
-            "summary": "getPathWithoutGet",
+            "summary": "Get\u0020Path\u0020Without\u0020Get",
             "url": "classes/Core-Middleware-Superglobals.html#method_getPathWithoutGet"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003Aredirect\u0028\u0029",
             "name": "redirect",
-            "summary": "redirect",
+            "summary": "Redirect",
             "url": "classes/Core-Middleware-Superglobals.html#method_redirect"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AredirectLastUrl\u0028\u0029",
             "name": "redirectLastUrl",
-            "summary": "redirectLastUrl",
+            "summary": "Redirect\u0020Last\u0020Url",
             "url": "classes/Core-Middleware-Superglobals.html#method_redirectLastUrl"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AgetPathReferer\u0028\u0029",
             "name": "getPathReferer",
-            "summary": "getPathReferer",
+            "summary": "Get\u0020Path\u0020Referer",
             "url": "classes/Core-Middleware-Superglobals.html#method_getPathReferer"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AgetGet\u0028\u0029",
             "name": "getGet",
-            "summary": "getGet",
+            "summary": "Get\u0020Get",
             "url": "classes/Core-Middleware-Superglobals.html#method_getGet"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AgetPost\u0028\u0029",
             "name": "getPost",
-            "summary": "getPost",
+            "summary": "Get\u0020Post",
             "url": "classes/Core-Middleware-Superglobals.html#method_getPost"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AgetPrefix\u0028\u0029",
             "name": "getPrefix",
-            "summary": "getPrefix",
+            "summary": "Get\u0020Prefix",
             "url": "classes/Core-Middleware-Superglobals.html#method_getPrefix"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AsetPost\u0028\u0029",
             "name": "setPost",
-            "summary": "setPost",
+            "summary": "Set\u0020Post",
             "url": "classes/Core-Middleware-Superglobals.html#method_setPost"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AsetCookie\u0028\u0029",
             "name": "setCookie",
-            "summary": "setCookie",
+            "summary": "Set\u0020Cookie",
             "url": "classes/Core-Middleware-Superglobals.html#method_setCookie"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AgetCookie\u0028\u0029",
             "name": "getCookie",
-            "summary": "getCookie",
+            "summary": "Get\u0020Cookie",
             "url": "classes/Core-Middleware-Superglobals.html#method_getCookie"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AisExistPicture\u0028\u0029",
             "name": "isExistPicture",
-            "summary": "isExistPicture",
+            "summary": "Is\u0020Exist\u0020Picture",
             "url": "classes/Core-Middleware-Superglobals.html#method_isExistPicture"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AgetPicture\u0028\u0029",
             "name": "getPicture",
-            "summary": "getPicture",
+            "summary": "Get\u0020Picture",
             "url": "classes/Core-Middleware-Superglobals.html#method_getPicture"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003Aasset\u0028\u0029",
             "name": "asset",
-            "summary": "asset",
+            "summary": "Asset",
             "url": "classes/Core-Middleware-Superglobals.html#method_asset"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AsetAppEnv\u0028\u0029",
             "name": "setAppEnv",
-            "summary": "setAppEnv",
+            "summary": "Set\u0020App\u0020Env",
             "url": "classes/Core-Middleware-Superglobals.html#method_setAppEnv"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AgetAppEnv\u0028\u0029",
             "name": "getAppEnv",
-            "summary": "getAppEnv",
+            "summary": "Get\u0020App\u0020Env",
             "url": "classes/Core-Middleware-Superglobals.html#method_getAppEnv"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AgetSecretKey\u0028\u0029",
             "name": "getSecretKey",
-            "summary": "getSecretKey",
+            "summary": "Get\u0020Secret\u0020Key",
             "url": "classes/Core-Middleware-Superglobals.html#method_getSecretKey"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AgetDatabase\u0028\u0029",
             "name": "getDatabase",
-            "summary": "getDatabase",
+            "summary": "Get\u0020Database",
             "url": "classes/Core-Middleware-Superglobals.html#method_getDatabase"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AgetEnv\u0028\u0029",
             "name": "getEnv",
-            "summary": "getEnv",
+            "summary": "Get\u0020Env",
             "url": "classes/Core-Middleware-Superglobals.html#method_getEnv"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003AgetHost\u0028\u0029",
             "name": "getHost",
-            "summary": "getHost",
+            "summary": "Get\u0020Host",
             "url": "classes/Core-Middleware-Superglobals.html#method_getHost"
         },                {
             "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024instances",
@@ -531,45 +511,45 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Core-Middleware-Superglobals.html#property_instances"
         },                {
-            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024_SERVER",
-            "name": "_SERVER",
+            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024SERVER",
+            "name": "SERVER",
             "summary": "",
-            "url": "classes/Core-Middleware-Superglobals.html#property__SERVER"
+            "url": "classes/Core-Middleware-Superglobals.html#property_SERVER"
         },                {
-            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024_GET",
-            "name": "_GET",
+            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024GET",
+            "name": "GET",
             "summary": "",
-            "url": "classes/Core-Middleware-Superglobals.html#property__GET"
+            "url": "classes/Core-Middleware-Superglobals.html#property_GET"
         },                {
-            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024_POST",
-            "name": "_POST",
+            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024POST",
+            "name": "POST",
             "summary": "",
-            "url": "classes/Core-Middleware-Superglobals.html#property__POST"
+            "url": "classes/Core-Middleware-Superglobals.html#property_POST"
         },                {
-            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024_METHOD",
-            "name": "_METHOD",
+            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024METHOD",
+            "name": "METHOD",
             "summary": "",
-            "url": "classes/Core-Middleware-Superglobals.html#property__METHOD"
+            "url": "classes/Core-Middleware-Superglobals.html#property_METHOD"
         },                {
-            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024_REFERER",
-            "name": "_REFERER",
+            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024REFERER",
+            "name": "REFERER",
             "summary": "",
-            "url": "classes/Core-Middleware-Superglobals.html#property__REFERER"
+            "url": "classes/Core-Middleware-Superglobals.html#property_REFERER"
         },                {
-            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024_ENV",
-            "name": "_ENV",
+            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024ENV",
+            "name": "ENV",
             "summary": "",
-            "url": "classes/Core-Middleware-Superglobals.html#property__ENV"
+            "url": "classes/Core-Middleware-Superglobals.html#property_ENV"
         },                {
-            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024_PATH",
-            "name": "_PATH",
+            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024PATH",
+            "name": "PATH",
             "summary": "",
-            "url": "classes/Core-Middleware-Superglobals.html#property__PATH"
+            "url": "classes/Core-Middleware-Superglobals.html#property_PATH"
         },                {
-            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024_ASSETS",
-            "name": "_ASSETS",
+            "fqsen": "\\Core\\Middleware\\Superglobals\u003A\u003A\u0024ASSETS",
+            "name": "ASSETS",
             "summary": "",
-            "url": "classes/Core-Middleware-Superglobals.html#property__ASSETS"
+            "url": "classes/Core-Middleware-Superglobals.html#property_ASSETS"
         },                {
             "fqsen": "\\Core\\Middleware\\TemplateRenderer",
             "name": "TemplateRenderer",
@@ -583,12 +563,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Middleware\\TemplateRenderer\u003A\u003AsetParam\u0028\u0029",
             "name": "setParam",
-            "summary": "setParam",
+            "summary": "Set\u0020Param",
             "url": "classes/Core-Middleware-TemplateRenderer.html#method_setParam"
         },                {
             "fqsen": "\\Core\\Middleware\\TemplateRenderer\u003A\u003Arender\u0028\u0029",
             "name": "render",
-            "summary": "render",
+            "summary": "Render",
             "url": "classes/Core-Middleware-TemplateRenderer.html#method_render"
         },                {
             "fqsen": "\\Core\\Middleware\\TemplateRenderer\u003A\u003A\u0024basepath",
@@ -618,7 +598,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Models\\Config\u003A\u003AgetFillable\u0028\u0029",
             "name": "getFillable",
-            "summary": "getFillable",
+            "summary": "Get\u0020Fillable",
             "url": "classes/Core-Models-Config.html#method_getFillable"
         },                {
             "fqsen": "\\Core\\Models\\Config\u003A\u003ATABLE",
@@ -688,7 +668,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Models\\MailContactModel\u003A\u003AgetFillable\u0028\u0029",
             "name": "getFillable",
-            "summary": "getFillable",
+            "summary": "Get\u0020Fillable",
             "url": "classes/Core-Models-MailContactModel.html#method_getFillable"
         },                {
             "fqsen": "\\Core\\Models\\MailContactModel\u003A\u003A\u0024name",
@@ -718,32 +698,32 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Models\\Model\u003A\u003AsetId\u0028\u0029",
             "name": "setId",
-            "summary": "setId",
+            "summary": "Set\u0020Id",
             "url": "classes/Core-Models-Model.html#method_setId"
         },                {
             "fqsen": "\\Core\\Models\\Model\u003A\u003AsetCreatedAt\u0028\u0029",
             "name": "setCreatedAt",
-            "summary": "setCreatedAt",
+            "summary": "Set\u0020Created\u0020At",
             "url": "classes/Core-Models-Model.html#method_setCreatedAt"
         },                {
             "fqsen": "\\Core\\Models\\Model\u003A\u003AgetFrenchCreationDate\u0028\u0029",
             "name": "getFrenchCreationDate",
-            "summary": "getFrenchCreationDate",
+            "summary": "Get\u0020French\u0020Creation\u0020Date",
             "url": "classes/Core-Models-Model.html#method_getFrenchCreationDate"
         },                {
             "fqsen": "\\Core\\Models\\Model\u003A\u003Awith\u0028\u0029",
             "name": "with",
-            "summary": "with",
+            "summary": "With",
             "url": "classes/Core-Models-Model.html#method_with"
         },                {
             "fqsen": "\\Core\\Models\\Model\u003A\u003AgetFillable\u0028\u0029",
             "name": "getFillable",
-            "summary": "getFillable",
+            "summary": "Get\u0020Fillable",
             "url": "classes/Core-Models-Model.html#method_getFillable"
         },                {
             "fqsen": "\\Core\\Models\\Model\u003A\u003AgetLinks\u0028\u0029",
             "name": "getLinks",
-            "summary": "getLinks",
+            "summary": "Get\u0020Links",
             "url": "classes/Core-Models-Model.html#method_getLinks"
         },                {
             "fqsen": "\\Core\\Models\\Model\u003A\u003A\u0024id",
@@ -756,11 +736,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Core-Models-Model.html#property_created_at"
         },                {
-            "fqsen": "\\Core\\Models\\Model\u003A\u003A\u0024csrf_token",
-            "name": "csrf_token",
-            "summary": "",
-            "url": "classes/Core-Models-Model.html#property_csrf_token"
-        },                {
             "fqsen": "\\Core\\Models\\Token",
             "name": "Token",
             "summary": "Token\u0020model",
@@ -768,7 +743,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Models\\Token\u003A\u003AgetLinks\u0028\u0029",
             "name": "getLinks",
-            "summary": "getLinks",
+            "summary": "GetLinks",
             "url": "classes/Core-Models-Token.html#method_getLinks"
         },                {
             "fqsen": "\\Core\\Models\\Token\u003A\u003ATABLE",
@@ -801,14 +776,14 @@ Search.appendIndex(
             "summary": "__construct",
             "url": "classes/Core-Repositories-ConfigRepository.html#method___construct"
         },                {
-            "fqsen": "\\Core\\Repositories\\ConfigRepository\u003A\u003Acreate_config_table\u0028\u0029",
-            "name": "create_config_table",
-            "summary": "create_config_table",
-            "url": "classes/Core-Repositories-ConfigRepository.html#method_create_config_table"
+            "fqsen": "\\Core\\Repositories\\ConfigRepository\u003A\u003AcreateConfigTable\u0028\u0029",
+            "name": "createConfigTable",
+            "summary": "Create\u0020Config\u0020Table",
+            "url": "classes/Core-Repositories-ConfigRepository.html#method_createConfigTable"
         },                {
             "fqsen": "\\Core\\Repositories\\ConfigRepository\u003A\u003AgetTables\u0028\u0029",
             "name": "getTables",
-            "summary": "getTables",
+            "summary": "Get\u0020Tables",
             "url": "classes/Core-Repositories-ConfigRepository.html#method_getTables"
         },                {
             "fqsen": "\\Core\\Repositories\\ConfigRepository\u003A\u003A\u0024dbName",
@@ -836,15 +811,15 @@ Search.appendIndex(
             "summary": "__construct",
             "url": "classes/Core-Repositories-InitRepository.html#method___construct"
         },                {
-            "fqsen": "\\Core\\Repositories\\InitRepository\u003A\u003Acreate_database\u0028\u0029",
-            "name": "create_database",
-            "summary": "create_database",
-            "url": "classes/Core-Repositories-InitRepository.html#method_create_database"
+            "fqsen": "\\Core\\Repositories\\InitRepository\u003A\u003AcreateDatabase\u0028\u0029",
+            "name": "createDatabase",
+            "summary": "Create\u0020Database",
+            "url": "classes/Core-Repositories-InitRepository.html#method_createDatabase"
         },                {
-            "fqsen": "\\Core\\Repositories\\InitRepository\u003A\u003Adelete_database\u0028\u0029",
-            "name": "delete_database",
-            "summary": "delete_database",
-            "url": "classes/Core-Repositories-InitRepository.html#method_delete_database"
+            "fqsen": "\\Core\\Repositories\\InitRepository\u003A\u003AdeleteDatabase\u0028\u0029",
+            "name": "deleteDatabase",
+            "summary": "Delete\u0020Database",
+            "url": "classes/Core-Repositories-InitRepository.html#method_deleteDatabase"
         },                {
             "fqsen": "\\Core\\Repositories\\InitRepository\u003A\u003A\u0024connection",
             "name": "connection",
@@ -863,67 +838,67 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Repositories\\Repository\u003A\u003AcheckCrsf\u0028\u0029",
             "name": "checkCrsf",
-            "summary": "checkCrsf",
+            "summary": "Check\u0020CSRF",
             "url": "classes/Core-Repositories-Repository.html#method_checkCrsf"
         },                {
             "fqsen": "\\Core\\Repositories\\Repository\u003A\u003Aadd\u0028\u0029",
             "name": "add",
-            "summary": "add",
+            "summary": "Add",
             "url": "classes/Core-Repositories-Repository.html#method_add"
         },                {
             "fqsen": "\\Core\\Repositories\\Repository\u003A\u003AfindOne\u0028\u0029",
             "name": "findOne",
-            "summary": "findOne",
+            "summary": "Find\u0020One",
             "url": "classes/Core-Repositories-Repository.html#method_findOne"
         },                {
             "fqsen": "\\Core\\Repositories\\Repository\u003A\u003AfindBy\u0028\u0029",
             "name": "findBy",
-            "summary": "findBy",
+            "summary": "Find\u0020By",
             "url": "classes/Core-Repositories-Repository.html#method_findBy"
         },                {
             "fqsen": "\\Core\\Repositories\\Repository\u003A\u003AfindAll\u0028\u0029",
             "name": "findAll",
-            "summary": "findAll",
+            "summary": "Find\u0020All",
             "url": "classes/Core-Repositories-Repository.html#method_findAll"
         },                {
             "fqsen": "\\Core\\Repositories\\Repository\u003A\u003Aupdate\u0028\u0029",
             "name": "update",
-            "summary": "update",
+            "summary": "Update",
             "url": "classes/Core-Repositories-Repository.html#method_update"
         },                {
             "fqsen": "\\Core\\Repositories\\Repository\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "delete",
+            "summary": "Delete",
             "url": "classes/Core-Repositories-Repository.html#method_delete"
         },                {
             "fqsen": "\\Core\\Repositories\\Repository\u003A\u003AgetModel\u0028\u0029",
             "name": "getModel",
-            "summary": "getModel",
+            "summary": "Get\u0020Model",
             "url": "classes/Core-Repositories-Repository.html#method_getModel"
         },                {
             "fqsen": "\\Core\\Repositories\\Repository\u003A\u003AgetSelectStatementByModel\u0028\u0029",
             "name": "getSelectStatementByModel",
-            "summary": "getSelectStatementByModel",
+            "summary": "Get\u0020Select\u0020Statement\u0020By\u0020Model",
             "url": "classes/Core-Repositories-Repository.html#method_getSelectStatementByModel"
         },                {
             "fqsen": "\\Core\\Repositories\\Repository\u003A\u003AcreateEntity\u0028\u0029",
             "name": "createEntity",
-            "summary": "createEntity",
+            "summary": "Create\u0020Entity",
             "url": "classes/Core-Repositories-Repository.html#method_createEntity"
         },                {
             "fqsen": "\\Core\\Repositories\\Repository\u003A\u003AremoveObsoleteProperties\u0028\u0029",
             "name": "removeObsoleteProperties",
-            "summary": "removeObsoleteProperties",
+            "summary": "Remove\u0020Obsolete\u0020Properties",
             "url": "classes/Core-Repositories-Repository.html#method_removeObsoleteProperties"
         },                {
             "fqsen": "\\Core\\Repositories\\Repository\u003A\u003AgetPicture\u0028\u0029",
             "name": "getPicture",
-            "summary": "getPicture",
+            "summary": "Get\u0020Picture",
             "url": "classes/Core-Repositories-Repository.html#method_getPicture"
         },                {
             "fqsen": "\\Core\\Repositories\\Repository\u003A\u003AcheckTableExistence\u0028\u0029",
             "name": "checkTableExistence",
-            "summary": "checkTableExistence",
+            "summary": "Check\u0020Table\u0020Existence",
             "url": "classes/Core-Repositories-Repository.html#method_checkTableExistence"
         },                {
             "fqsen": "\\Core\\Repositories\\Repository\u003A\u003A\u0024superglobals",
@@ -953,7 +928,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Repositories\\TokenRepository\u003A\u003AgetUserByToken\u0028\u0029",
             "name": "getUserByToken",
-            "summary": "getUserByToken",
+            "summary": "Get\u0020User\u0020By\u0020Token",
             "url": "classes/Core-Repositories-TokenRepository.html#method_getUserByToken"
         },                {
             "fqsen": "\\Core\\Repositories\\TokenRepository\u003A\u003A\u0024model",
@@ -973,17 +948,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Router\\Route\u003A\u003Amatch\u0028\u0029",
             "name": "match",
-            "summary": "match",
+            "summary": "Match",
             "url": "classes/Core-Router-Route.html#method_match"
         },                {
             "fqsen": "\\Core\\Router\\Route\u003A\u003Acall\u0028\u0029",
             "name": "call",
-            "summary": "call",
+            "summary": "Call",
             "url": "classes/Core-Router-Route.html#method_call"
         },                {
             "fqsen": "\\Core\\Router\\Route\u003A\u003AgetUrl\u0028\u0029",
             "name": "getUrl",
-            "summary": "getUrl",
+            "summary": "Get\u0020Url",
             "url": "classes/Core-Router-Route.html#method_getUrl"
         },                {
             "fqsen": "\\Core\\Router\\Route\u003A\u003A\u0024path",
@@ -1013,22 +988,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Router\\Router\u003A\u003Aget\u0028\u0029",
             "name": "get",
-            "summary": "get",
+            "summary": "Get",
             "url": "classes/Core-Router-Router.html#method_get"
         },                {
             "fqsen": "\\Core\\Router\\Router\u003A\u003Apost\u0028\u0029",
             "name": "post",
-            "summary": "post",
+            "summary": "Post",
             "url": "classes/Core-Router-Router.html#method_post"
         },                {
             "fqsen": "\\Core\\Router\\Router\u003A\u003Aadd\u0028\u0029",
             "name": "add",
-            "summary": "add",
+            "summary": "Add",
             "url": "classes/Core-Router-Router.html#method_add"
         },                {
             "fqsen": "\\Core\\Router\\Router\u003A\u003Arun\u0028\u0029",
             "name": "run",
-            "summary": "run",
+            "summary": "Run",
             "url": "classes/Core-Router-Router.html#method_run"
         },                {
             "fqsen": "\\Core\\Router\\Router\u003A\u003A\u0024url",
@@ -1058,73 +1033,73 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Services\\ConfigService\u003A\u003Ainit\u0028\u0029",
             "name": "init",
-            "summary": "init",
+            "summary": "Init",
             "url": "classes/Core-Services-ConfigService.html#method_init"
         },                {
             "fqsen": "\\Core\\Services\\ConfigService\u003A\u003AgetOwnerMailContact\u0028\u0029",
             "name": "getOwnerMailContact",
-            "summary": "getOwnerMailContact",
+            "summary": "Get\u0020Owner\u0020Mail\u0020Contact",
             "url": "classes/Core-Services-ConfigService.html#method_getOwnerMailContact"
         },                {
             "fqsen": "\\Core\\Services\\ConfigService\u003A\u003AgetMailConfig\u0028\u0029",
             "name": "getMailConfig",
-            "summary": "getMailConfig",
+            "summary": "Get\u0020Mail\u0020Config",
             "url": "classes/Core-Services-ConfigService.html#method_getMailConfig"
         },                {
             "fqsen": "\\Core\\Services\\ConfigService\u003A\u003AgetByName\u0028\u0029",
             "name": "getByName",
-            "summary": "getByName",
+            "summary": "Get\u0020By\u0020Name",
             "url": "classes/Core-Services-ConfigService.html#method_getByName"
         },                {
             "fqsen": "\\Core\\Services\\ConfigService\u003A\u003AgetSortedParameters\u0028\u0029",
             "name": "getSortedParameters",
-            "summary": "getSortedParameters",
+            "summary": "Get\u0020Sorted\u0020Parameters",
             "url": "classes/Core-Services-ConfigService.html#method_getSortedParameters"
         },                {
             "fqsen": "\\Core\\Services\\ConfigService\u003A\u003AinitConfigs\u0028\u0029",
             "name": "initConfigs",
-            "summary": "initConfigs",
+            "summary": "Init\u0020Configs",
             "url": "classes/Core-Services-ConfigService.html#method_initConfigs"
         },                {
             "fqsen": "\\Core\\Services\\ConfigService\u003A\u003AgetDefaultsConfigs\u0028\u0029",
             "name": "getDefaultsConfigs",
-            "summary": "getDefaultsConfigs",
+            "summary": "Get\u0020Defaults\u0020Configs",
             "url": "classes/Core-Services-ConfigService.html#method_getDefaultsConfigs"
         },                {
             "fqsen": "\\Core\\Services\\ConfigService\u003A\u003AcheckMissingConfigs\u0028\u0029",
             "name": "checkMissingConfigs",
-            "summary": "checkMissingConfigs",
+            "summary": "Check\u0020Missing\u0020Configs",
             "url": "classes/Core-Services-ConfigService.html#method_checkMissingConfigs"
         },                {
             "fqsen": "\\Core\\Services\\ConfigService\u003A\u003AcheckMissingTables\u0028\u0029",
             "name": "checkMissingTables",
-            "summary": "checkMissingTables",
+            "summary": "Check\u0020Missing\u0020Tables",
             "url": "classes/Core-Services-ConfigService.html#method_checkMissingTables"
         },                {
-            "fqsen": "\\Core\\Services\\ConfigService\u003A\u003Acreate_config_table\u0028\u0029",
-            "name": "create_config_table",
-            "summary": "create_config_table",
-            "url": "classes/Core-Services-ConfigService.html#method_create_config_table"
+            "fqsen": "\\Core\\Services\\ConfigService\u003A\u003AcreateConfigTable\u0028\u0029",
+            "name": "createConfigTable",
+            "summary": "Create\u0020Config\u0020Table",
+            "url": "classes/Core-Services-ConfigService.html#method_createConfigTable"
         },                {
             "fqsen": "\\Core\\Services\\ConfigService\u003A\u003AgetConfigsObject\u0028\u0029",
             "name": "getConfigsObject",
-            "summary": "getConfigsObject",
+            "summary": "Get\u0020Configs\u0020Object",
             "url": "classes/Core-Services-ConfigService.html#method_getConfigsObject"
         },                {
-            "fqsen": "\\Core\\Services\\ConfigService\u003A\u003Adelete_value\u0028\u0029",
-            "name": "delete_value",
-            "summary": "delete_value",
-            "url": "classes/Core-Services-ConfigService.html#method_delete_value"
+            "fqsen": "\\Core\\Services\\ConfigService\u003A\u003AdeleteValue\u0028\u0029",
+            "name": "deleteValue",
+            "summary": "Delete\u0020Value",
+            "url": "classes/Core-Services-ConfigService.html#method_deleteValue"
         },                {
             "fqsen": "\\Core\\Services\\ConfigService\u003A\u003ArenderColor\u0028\u0029",
             "name": "renderColor",
-            "summary": "renderColor",
+            "summary": "Render\u0020Color",
             "url": "classes/Core-Services-ConfigService.html#method_renderColor"
         },                {
-            "fqsen": "\\Core\\Services\\ConfigService\u003A\u003Achange_env\u0028\u0029",
-            "name": "change_env",
-            "summary": "change_env",
-            "url": "classes/Core-Services-ConfigService.html#method_change_env"
+            "fqsen": "\\Core\\Services\\ConfigService\u003A\u003AchangeEnv\u0028\u0029",
+            "name": "changeEnv",
+            "summary": "Change\u0020ENV",
+            "url": "classes/Core-Services-ConfigService.html#method_changeEnv"
         },                {
             "fqsen": "\\Core\\Services\\ConfigService\u003A\u003A\u0024configRepository",
             "name": "configRepository",
@@ -1158,17 +1133,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Services\\CsrfService\u003A\u003AgetToken\u0028\u0029",
             "name": "getToken",
-            "summary": "getToken",
+            "summary": "Get\u0020Token",
             "url": "classes/Core-Services-CsrfService.html#method_getToken"
         },                {
             "fqsen": "\\Core\\Services\\CsrfService\u003A\u003AgenerateToken\u0028\u0029",
             "name": "generateToken",
-            "summary": "generateToken",
+            "summary": "Generate\u0020Token",
             "url": "classes/Core-Services-CsrfService.html#method_generateToken"
         },                {
             "fqsen": "\\Core\\Services\\CsrfService\u003A\u003AcheckToken\u0028\u0029",
             "name": "checkToken",
-            "summary": "checkToken",
+            "summary": "Check\u0020Token",
             "url": "classes/Core-Services-CsrfService.html#method_checkToken"
         },                {
             "fqsen": "\\Core\\Services\\CsrfService\u003A\u003A\u0024instances",
@@ -1188,17 +1163,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Services\\Encryption\u003A\u003Akey\u0028\u0029",
             "name": "key",
-            "summary": "key",
+            "summary": "Key",
             "url": "classes/Core-Services-Encryption.html#method_key"
         },                {
             "fqsen": "\\Core\\Services\\Encryption\u003A\u003Aencrypt\u0028\u0029",
             "name": "encrypt",
-            "summary": "encrypt",
+            "summary": "Encrypt",
             "url": "classes/Core-Services-Encryption.html#method_encrypt"
         },                {
             "fqsen": "\\Core\\Services\\Encryption\u003A\u003Adecrypt\u0028\u0029",
             "name": "decrypt",
-            "summary": "decrypt",
+            "summary": "Decrypt",
             "url": "classes/Core-Services-Encryption.html#method_decrypt"
         },                {
             "fqsen": "\\Core\\Services\\Encryption\u003A\u003A\u0024encrypt_method",
@@ -1218,37 +1193,37 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Services\\EntityService\u003A\u003Aadd\u0028\u0029",
             "name": "add",
-            "summary": "add",
+            "summary": "Add",
             "url": "classes/Core-Services-EntityService.html#method_add"
         },                {
             "fqsen": "\\Core\\Services\\EntityService\u003A\u003Aget\u0028\u0029",
             "name": "get",
-            "summary": "get",
+            "summary": "Get",
             "url": "classes/Core-Services-EntityService.html#method_get"
         },                {
             "fqsen": "\\Core\\Services\\EntityService\u003A\u003AgetBy\u0028\u0029",
             "name": "getBy",
-            "summary": "getBy",
+            "summary": "Get\u0020By",
             "url": "classes/Core-Services-EntityService.html#method_getBy"
         },                {
             "fqsen": "\\Core\\Services\\EntityService\u003A\u003AgetAll\u0028\u0029",
             "name": "getAll",
-            "summary": "getAll",
+            "summary": "Get\u0020All",
             "url": "classes/Core-Services-EntityService.html#method_getAll"
         },                {
             "fqsen": "\\Core\\Services\\EntityService\u003A\u003Aupdate\u0028\u0029",
             "name": "update",
-            "summary": "update",
+            "summary": "Update",
             "url": "classes/Core-Services-EntityService.html#method_update"
         },                {
-            "fqsen": "\\Core\\Services\\EntityService\u003A\u003Adelete_ajax\u0028\u0029",
-            "name": "delete_ajax",
-            "summary": "delete_ajax",
-            "url": "classes/Core-Services-EntityService.html#method_delete_ajax"
+            "fqsen": "\\Core\\Services\\EntityService\u003A\u003AdeleteAjax\u0028\u0029",
+            "name": "deleteAjax",
+            "summary": "Delete\u0020AJAX",
+            "url": "classes/Core-Services-EntityService.html#method_deleteAjax"
         },                {
             "fqsen": "\\Core\\Services\\EntityService\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "delete",
+            "summary": "Delete",
             "url": "classes/Core-Services-EntityService.html#method_delete"
         },                {
             "fqsen": "\\Core\\Services\\EntityService\u003A\u003A\u0024modelName",
@@ -1293,37 +1268,37 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Services\\FlashService\u003A\u003Asuccess\u0028\u0029",
             "name": "success",
-            "summary": "success",
+            "summary": "Success",
             "url": "classes/Core-Services-FlashService.html#method_success"
         },                {
             "fqsen": "\\Core\\Services\\FlashService\u003A\u003Adanger\u0028\u0029",
             "name": "danger",
-            "summary": "danger",
+            "summary": "Danger",
             "url": "classes/Core-Services-FlashService.html#method_danger"
         },                {
             "fqsen": "\\Core\\Services\\FlashService\u003A\u003Ainfo\u0028\u0029",
             "name": "info",
-            "summary": "info",
+            "summary": "Info",
             "url": "classes/Core-Services-FlashService.html#method_info"
         },                {
             "fqsen": "\\Core\\Services\\FlashService\u003A\u003Awarning\u0028\u0029",
             "name": "warning",
-            "summary": "warning",
+            "summary": "Warning",
             "url": "classes/Core-Services-FlashService.html#method_warning"
         },                {
             "fqsen": "\\Core\\Services\\FlashService\u003A\u003Atemplate\u0028\u0029",
             "name": "template",
-            "summary": "template",
+            "summary": "Template",
             "url": "classes/Core-Services-FlashService.html#method_template"
         },                {
             "fqsen": "\\Core\\Services\\FlashService\u003A\u003Asend\u0028\u0029",
             "name": "send",
-            "summary": "send",
+            "summary": "Send",
             "url": "classes/Core-Services-FlashService.html#method_send"
         },                {
             "fqsen": "\\Core\\Services\\FlashService\u003A\u003Aget\u0028\u0029",
             "name": "get",
-            "summary": "get",
+            "summary": "Get",
             "url": "classes/Core-Services-FlashService.html#method_get"
         },                {
             "fqsen": "\\Core\\Services\\FlashService\u003A\u003A\u0024instances",
@@ -1353,22 +1328,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Services\\InitService\u003A\u003Acreate\u0028\u0029",
             "name": "create",
-            "summary": "create",
+            "summary": "Create",
             "url": "classes/Core-Services-InitService.html#method_create"
         },                {
             "fqsen": "\\Core\\Services\\InitService\u003A\u003Amigration\u0028\u0029",
             "name": "migration",
-            "summary": "migrate",
+            "summary": "Migrate",
             "url": "classes/Core-Services-InitService.html#method_migration"
         },                {
             "fqsen": "\\Core\\Services\\InitService\u003A\u003Aseed\u0028\u0029",
             "name": "seed",
-            "summary": "seed",
+            "summary": "Seed",
             "url": "classes/Core-Services-InitService.html#method_seed"
         },                {
             "fqsen": "\\Core\\Services\\InitService\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "delete",
+            "summary": "Delete",
             "url": "classes/Core-Services-InitService.html#method_delete"
         },                {
             "fqsen": "\\Core\\Services\\MailService",
@@ -1383,12 +1358,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Services\\MailService\u003A\u003AgetMailConfig\u0028\u0029",
             "name": "getMailConfig",
-            "summary": "getMailConfig",
+            "summary": "Get\u0020Mail\u0020Config",
             "url": "classes/Core-Services-MailService.html#method_getMailConfig"
         },                {
             "fqsen": "\\Core\\Services\\MailService\u003A\u003AsendEmail\u0028\u0029",
             "name": "sendEmail",
-            "summary": "sendEmail",
+            "summary": "Send\u0020Email",
             "url": "classes/Core-Services-MailService.html#method_sendEmail"
         },                {
             "fqsen": "\\Core\\Services\\MailService\u003A\u003A\u0024mail",
@@ -1400,6 +1375,11 @@ Search.appendIndex(
             "name": "configService",
             "summary": "",
             "url": "classes/Core-Services-MailService.html#property_configService"
+        },                {
+            "fqsen": "\\Core\\Services\\MailService\u003A\u003A\u0024configStatus",
+            "name": "configStatus",
+            "summary": "",
+            "url": "classes/Core-Services-MailService.html#property_configStatus"
         },                {
             "fqsen": "\\Core\\Services\\PhinxService",
             "name": "PhinxService",
@@ -1413,23 +1393,23 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Services\\PhinxService\u003A\u003AgetPhinxApplication\u0028\u0029",
             "name": "getPhinxApplication",
-            "summary": "getPhinxApplication",
+            "summary": "Get\u0020Phinx\u0020Application",
             "url": "classes/Core-Services-PhinxService.html#method_getPhinxApplication"
         },                {
             "fqsen": "\\Core\\Services\\PhinxService\u003A\u003Arun\u0028\u0029",
             "name": "run",
-            "summary": "run",
+            "summary": "Run",
             "url": "classes/Core-Services-PhinxService.html#method_run"
         },                {
-            "fqsen": "\\Core\\Services\\PhinxService\u003A\u003AAppMigrate\u0028\u0029",
-            "name": "AppMigrate",
-            "summary": "AppMigrate",
-            "url": "classes/Core-Services-PhinxService.html#method_AppMigrate"
+            "fqsen": "\\Core\\Services\\PhinxService\u003A\u003AappMigrate\u0028\u0029",
+            "name": "appMigrate",
+            "summary": "App\u0020Migrate",
+            "url": "classes/Core-Services-PhinxService.html#method_appMigrate"
         },                {
-            "fqsen": "\\Core\\Services\\PhinxService\u003A\u003AAppSeed\u0028\u0029",
-            "name": "AppSeed",
-            "summary": "AppSeed",
-            "url": "classes/Core-Services-PhinxService.html#method_AppSeed"
+            "fqsen": "\\Core\\Services\\PhinxService\u003A\u003AappSeed\u0028\u0029",
+            "name": "appSeed",
+            "summary": "App\u0020Seed",
+            "url": "classes/Core-Services-PhinxService.html#method_appSeed"
         },                {
             "fqsen": "\\Core\\Services\\PhinxService\u003A\u003A\u0024instances",
             "name": "instances",
@@ -1448,32 +1428,32 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Services\\Service\u003A\u003AgetRepository\u0028\u0029",
             "name": "getRepository",
-            "summary": "getRepository",
+            "summary": "Get\u0020Repository",
             "url": "classes/Core-Services-Service.html#method_getRepository"
         },                {
             "fqsen": "\\Core\\Services\\Service\u003A\u003AgetModel\u0028\u0029",
             "name": "getModel",
-            "summary": "getModel",
+            "summary": "Get\u0020Model",
             "url": "classes/Core-Services-Service.html#method_getModel"
         },                {
             "fqsen": "\\Core\\Services\\Service\u003A\u003AgetModelName\u0028\u0029",
             "name": "getModelName",
-            "summary": "getModelName",
+            "summary": "Get\u0020Model\u0020Name",
             "url": "classes/Core-Services-Service.html#method_getModelName"
         },                {
             "fqsen": "\\Core\\Services\\Service\u003A\u003AgetFrenchName\u0028\u0029",
             "name": "getFrenchName",
-            "summary": "getFrenchName",
+            "summary": "Get\u0020French\u0020Name",
             "url": "classes/Core-Services-Service.html#method_getFrenchName"
         },                {
             "fqsen": "\\Core\\Services\\Service\u003A\u003AgetFrenchGenderTermination\u0028\u0029",
             "name": "getFrenchGenderTermination",
-            "summary": "getFrenchGenderTermination",
+            "summary": "Get\u0020French\u0020Gender\u0020Termination",
             "url": "classes/Core-Services-Service.html#method_getFrenchGenderTermination"
         },                {
             "fqsen": "\\Core\\Services\\Service\u003A\u003AvalidateForm\u0028\u0029",
             "name": "validateForm",
-            "summary": "validateForm",
+            "summary": "Validate\u0020Form",
             "url": "classes/Core-Services-Service.html#method_validateForm"
         },                {
             "fqsen": "\\Core\\Services\\Service\u003A\u003A\u0024flashServices",
@@ -1508,12 +1488,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Core\\Services\\TokenService\u003A\u003AcreateToken\u0028\u0029",
             "name": "createToken",
-            "summary": "createToken",
+            "summary": "Create\u0020Token",
             "url": "classes/Core-Services-TokenService.html#method_createToken"
         },                {
             "fqsen": "\\Core\\Services\\TokenService\u003A\u003AgetUserByToken\u0028\u0029",
             "name": "getUserByToken",
-            "summary": "getUserByToken",
+            "summary": "Get\u0020User\u0020By\u0020Token",
             "url": "classes/Core-Services-TokenService.html#method_getUserByToken"
         },                {
             "fqsen": "\\Application\\config\\Routes",
@@ -1528,12 +1508,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\config\\Routes\u003A\u003Aurl\u0028\u0029",
             "name": "url",
-            "summary": "url",
+            "summary": "Url",
             "url": "classes/Application-config-Routes.html#method_url"
         },                {
             "fqsen": "\\Application\\config\\Routes\u003A\u003AsetRoutes\u0028\u0029",
             "name": "setRoutes",
-            "summary": "setRoutes",
+            "summary": "Set\u0020Routes",
             "url": "classes/Application-config-Routes.html#method_setRoutes"
         },                {
             "fqsen": "\\Application\\config\\Routes\u003A\u003Arun\u0028\u0029",
@@ -1543,7 +1523,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\config\\Routes\u003A\u003AgetUrl\u0028\u0029",
             "name": "getUrl",
-            "summary": "getUrl",
+            "summary": "Get\u0020Url",
             "url": "classes/Application-config-Routes.html#method_getUrl"
         },                {
             "fqsen": "\\Application\\config\\Routes\u003A\u003A\u0024router",
@@ -1563,22 +1543,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminCategoryController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
-            "summary": "index",
+            "summary": "Index",
             "url": "classes/Application-Controllers-Admin-AdminCategoryController.html#method_index"
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminCategoryController\u003A\u003Aadd\u0028\u0029",
             "name": "add",
-            "summary": "add",
+            "summary": "Add",
             "url": "classes/Application-Controllers-Admin-AdminCategoryController.html#method_add"
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminCategoryController\u003A\u003Aupdate\u0028\u0029",
             "name": "update",
-            "summary": "update",
+            "summary": "Update",
             "url": "classes/Application-Controllers-Admin-AdminCategoryController.html#method_update"
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminCategoryController\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "delete",
+            "summary": "Delete",
             "url": "classes/Application-Controllers-Admin-AdminCategoryController.html#method_delete"
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminCategoryController\u003A\u003A\u0024categoryService",
@@ -1598,23 +1578,23 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminCommentController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
-            "summary": "index",
+            "summary": "Index",
             "url": "classes/Application-Controllers-Admin-AdminCommentController.html#method_index"
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminCommentController\u003A\u003Amoderate\u0028\u0029",
             "name": "moderate",
-            "summary": "moderate",
+            "summary": "Moderate",
             "url": "classes/Application-Controllers-Admin-AdminCommentController.html#method_moderate"
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminCommentController\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "delete",
+            "summary": "Delete",
             "url": "classes/Application-Controllers-Admin-AdminCommentController.html#method_delete"
         },                {
-            "fqsen": "\\Application\\Controllers\\Admin\\AdminCommentController\u003A\u003Amultiple_moderation\u0028\u0029",
-            "name": "multiple_moderation",
-            "summary": "multiple_moderation",
-            "url": "classes/Application-Controllers-Admin-AdminCommentController.html#method_multiple_moderation"
+            "fqsen": "\\Application\\Controllers\\Admin\\AdminCommentController\u003A\u003AmultipleModeration\u0028\u0029",
+            "name": "multipleModeration",
+            "summary": "Multiple\u0020Moderation",
+            "url": "classes/Application-Controllers-Admin-AdminCommentController.html#method_multipleModeration"
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminCommentController\u003A\u003A\u0024commentService",
             "name": "commentService",
@@ -1633,28 +1613,28 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminPostController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
-            "summary": "index",
+            "summary": "Index",
             "url": "classes/Application-Controllers-Admin-AdminPostController.html#method_index"
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminPostController\u003A\u003Aadd\u0028\u0029",
             "name": "add",
-            "summary": "add",
+            "summary": "Add",
             "url": "classes/Application-Controllers-Admin-AdminPostController.html#method_add"
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminPostController\u003A\u003Aupdate\u0028\u0029",
             "name": "update",
-            "summary": "update",
+            "summary": "Update",
             "url": "classes/Application-Controllers-Admin-AdminPostController.html#method_update"
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminPostController\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "delete",
+            "summary": "Delete",
             "url": "classes/Application-Controllers-Admin-AdminPostController.html#method_delete"
         },                {
-            "fqsen": "\\Application\\Controllers\\Admin\\AdminPostController\u003A\u003Adelete_picture\u0028\u0029",
-            "name": "delete_picture",
-            "summary": "delete_picture",
-            "url": "classes/Application-Controllers-Admin-AdminPostController.html#method_delete_picture"
+            "fqsen": "\\Application\\Controllers\\Admin\\AdminPostController\u003A\u003AdeletePicture\u0028\u0029",
+            "name": "deletePicture",
+            "summary": "Delete\u0020Picture",
+            "url": "classes/Application-Controllers-Admin-AdminPostController.html#method_deletePicture"
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminPostController\u003A\u003A\u0024postService",
             "name": "postService",
@@ -1673,17 +1653,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminUserController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
-            "summary": "index",
+            "summary": "Index",
             "url": "classes/Application-Controllers-Admin-AdminUserController.html#method_index"
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminUserController\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "delete",
+            "summary": "Delete",
             "url": "classes/Application-Controllers-Admin-AdminUserController.html#method_delete"
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminUserController\u003A\u003Arole\u0028\u0029",
             "name": "role",
-            "summary": "role",
+            "summary": "Role",
             "url": "classes/Application-Controllers-Admin-AdminUserController.html#method_role"
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\AdminUserController\u003A\u003A\u0024userService",
@@ -1698,7 +1678,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Controllers\\Admin\\DashboardController\u003A\u003Aexecute\u0028\u0029",
             "name": "execute",
-            "summary": "execute",
+            "summary": "Execute",
             "url": "classes/Application-Controllers-Admin-DashboardController.html#method_execute"
         },                {
             "fqsen": "\\Application\\Controllers\\CommentController",
@@ -1713,17 +1693,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Controllers\\CommentController\u003A\u003Aadd\u0028\u0029",
             "name": "add",
-            "summary": "add",
+            "summary": "Add",
             "url": "classes/Application-Controllers-CommentController.html#method_add"
         },                {
             "fqsen": "\\Application\\Controllers\\CommentController\u003A\u003Aupdate\u0028\u0029",
             "name": "update",
-            "summary": "update",
+            "summary": "Update",
             "url": "classes/Application-Controllers-CommentController.html#method_update"
         },                {
             "fqsen": "\\Application\\Controllers\\CommentController\u003A\u003Aajax\u0028\u0029",
             "name": "ajax",
-            "summary": "delete",
+            "summary": "Delete",
             "url": "classes/Application-Controllers-CommentController.html#method_ajax"
         },                {
             "fqsen": "\\Application\\Controllers\\CommentController\u003A\u003A\u0024commentService",
@@ -1743,12 +1723,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Controllers\\HomeController\u003A\u003Aexecute\u0028\u0029",
             "name": "execute",
-            "summary": "execute",
+            "summary": "Execute",
             "url": "classes/Application-Controllers-HomeController.html#method_execute"
         },                {
             "fqsen": "\\Application\\Controllers\\HomeController\u003A\u003Asend\u0028\u0029",
             "name": "send",
-            "summary": "send",
+            "summary": "Send",
             "url": "classes/Application-Controllers-HomeController.html#method_send"
         },                {
             "fqsen": "\\Application\\Controllers\\HomeController\u003A\u003A\u0024postService",
@@ -1773,17 +1753,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Controllers\\PostController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
-            "summary": "index",
+            "summary": "Index",
             "url": "classes/Application-Controllers-PostController.html#method_index"
         },                {
             "fqsen": "\\Application\\Controllers\\PostController\u003A\u003Ashow\u0028\u0029",
             "name": "show",
-            "summary": "show",
+            "summary": "Show",
             "url": "classes/Application-Controllers-PostController.html#method_show"
         },                {
             "fqsen": "\\Application\\Controllers\\PostController\u003A\u003Acategories\u0028\u0029",
             "name": "categories",
-            "summary": "categories",
+            "summary": "Categories",
             "url": "classes/Application-Controllers-PostController.html#method_categories"
         },                {
             "fqsen": "\\Application\\Controllers\\PostController\u003A\u003A\u0024postService",
@@ -1808,72 +1788,72 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003Ashow\u0028\u0029",
             "name": "show",
-            "summary": "show",
+            "summary": "Show",
             "url": "classes/Application-Controllers-Security-UserController.html#method_show"
         },                {
             "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003Aregister\u0028\u0029",
             "name": "register",
-            "summary": "register",
+            "summary": "Register",
             "url": "classes/Application-Controllers-Security-UserController.html#method_register"
         },                {
             "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003Aupdate\u0028\u0029",
             "name": "update",
-            "summary": "update",
+            "summary": "Update",
             "url": "classes/Application-Controllers-Security-UserController.html#method_update"
         },                {
             "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003Alogin\u0028\u0029",
             "name": "login",
-            "summary": "login",
+            "summary": "Login",
             "url": "classes/Application-Controllers-Security-UserController.html#method_login"
         },                {
             "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003Alogout\u0028\u0029",
             "name": "logout",
-            "summary": "logout",
+            "summary": "Logout",
             "url": "classes/Application-Controllers-Security-UserController.html#method_logout"
         },                {
             "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003Aconfirmation\u0028\u0029",
             "name": "confirmation",
-            "summary": "confirmation",
+            "summary": "Confirmation",
             "url": "classes/Application-Controllers-Security-UserController.html#method_confirmation"
         },                {
-            "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003Aedit_mail\u0028\u0029",
-            "name": "edit_mail",
-            "summary": "edit_mail",
-            "url": "classes/Application-Controllers-Security-UserController.html#method_edit_mail"
+            "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003AeditMail\u0028\u0029",
+            "name": "editMail",
+            "summary": "Edit\u0020Mail",
+            "url": "classes/Application-Controllers-Security-UserController.html#method_editMail"
         },                {
-            "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003Aedit_password\u0028\u0029",
-            "name": "edit_password",
-            "summary": "edit_password",
-            "url": "classes/Application-Controllers-Security-UserController.html#method_edit_password"
+            "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003AeditPassword\u0028\u0029",
+            "name": "editPassword",
+            "summary": "Edit\u0020Password",
+            "url": "classes/Application-Controllers-Security-UserController.html#method_editPassword"
         },                {
-            "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003Adelete_picture\u0028\u0029",
-            "name": "delete_picture",
-            "summary": "edit_picture",
-            "url": "classes/Application-Controllers-Security-UserController.html#method_delete_picture"
+            "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003AdeletePicture\u0028\u0029",
+            "name": "deletePicture",
+            "summary": "Delete\u0020Picture",
+            "url": "classes/Application-Controllers-Security-UserController.html#method_deletePicture"
         },                {
-            "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003Aforget_password\u0028\u0029",
-            "name": "forget_password",
-            "summary": "forget_password",
-            "url": "classes/Application-Controllers-Security-UserController.html#method_forget_password"
+            "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003AforgetPassword\u0028\u0029",
+            "name": "forgetPassword",
+            "summary": "Forget\u0020Password",
+            "url": "classes/Application-Controllers-Security-UserController.html#method_forgetPassword"
         },                {
-            "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003Areset_password\u0028\u0029",
-            "name": "reset_password",
-            "summary": "reset_password",
-            "url": "classes/Application-Controllers-Security-UserController.html#method_reset_password"
+            "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003AresetPassword\u0028\u0029",
+            "name": "resetPassword",
+            "summary": "Reset\u0020Password",
+            "url": "classes/Application-Controllers-Security-UserController.html#method_resetPassword"
         },                {
-            "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003Aconfirm_again\u0028\u0029",
-            "name": "confirm_again",
-            "summary": "confirm_again",
-            "url": "classes/Application-Controllers-Security-UserController.html#method_confirm_again"
+            "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003AconfirmAgain\u0028\u0029",
+            "name": "confirmAgain",
+            "summary": "Confirm\u0020Again",
+            "url": "classes/Application-Controllers-Security-UserController.html#method_confirmAgain"
         },                {
             "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003AcheckUsername\u0028\u0029",
             "name": "checkUsername",
-            "summary": "checkUsername",
+            "summary": "Check\u0020Username",
             "url": "classes/Application-Controllers-Security-UserController.html#method_checkUsername"
         },                {
             "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003AredirectWithTimeout\u0028\u0029",
             "name": "redirectWithTimeout",
-            "summary": "redirectWithTimeout",
+            "summary": "Redirect\u0020With\u0020Timeout",
             "url": "classes/Application-Controllers-Security-UserController.html#method_redirectWithTimeout"
         },                {
             "fqsen": "\\Application\\Controllers\\Security\\UserController\u003A\u003A\u0024userService",
@@ -1888,7 +1868,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Models\\Category\u003A\u003AgetFillable\u0028\u0029",
             "name": "getFillable",
-            "summary": "getFillable",
+            "summary": "Get\u0020Fillable",
             "url": "classes/Application-Models-Category.html#method_getFillable"
         },                {
             "fqsen": "\\Application\\Models\\Category\u003A\u003ATABLE",
@@ -1908,12 +1888,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Models\\Comment\u003A\u003AgetLinks\u0028\u0029",
             "name": "getLinks",
-            "summary": "getLinks",
+            "summary": "Get\u0020Links",
             "url": "classes/Application-Models-Comment.html#method_getLinks"
         },                {
             "fqsen": "\\Application\\Models\\Comment\u003A\u003AgetFillable\u0028\u0029",
             "name": "getFillable",
-            "summary": "getFillable",
+            "summary": "Get\u0020Fillable",
             "url": "classes/Application-Models-Comment.html#method_getFillable"
         },                {
             "fqsen": "\\Application\\Models\\Comment\u003A\u003ATABLE",
@@ -1953,12 +1933,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Models\\Post\u003A\u003AgetFillable\u0028\u0029",
             "name": "getFillable",
-            "summary": "getFillable",
+            "summary": "Get\u0020Fillable",
             "url": "classes/Application-Models-Post.html#method_getFillable"
         },                {
             "fqsen": "\\Application\\Models\\Post\u003A\u003AgetLinks\u0028\u0029",
             "name": "getLinks",
-            "summary": "getLinks",
+            "summary": "Get\u0020Links",
             "url": "classes/Application-Models-Post.html#method_getLinks"
         },                {
             "fqsen": "\\Application\\Models\\Post\u003A\u003ATABLE",
@@ -2003,32 +1983,32 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Models\\User\u003A\u003AgetFillable\u0028\u0029",
             "name": "getFillable",
-            "summary": "getFillable",
+            "summary": "Get\u0020Fillable",
             "url": "classes/Application-Models-User.html#method_getFillable"
         },                {
             "fqsen": "\\Application\\Models\\User\u003A\u003AsetPassword\u0028\u0029",
             "name": "setPassword",
-            "summary": "setPassword",
+            "summary": "Set\u0020Password",
             "url": "classes/Application-Models-User.html#method_setPassword"
         },                {
             "fqsen": "\\Application\\Models\\User\u003A\u003AcomparePassword\u0028\u0029",
             "name": "comparePassword",
-            "summary": "comparePassword",
+            "summary": "Compare\u0020Password",
             "url": "classes/Application-Models-User.html#method_comparePassword"
         },                {
             "fqsen": "\\Application\\Models\\User\u003A\u003AhashPassword\u0028\u0029",
             "name": "hashPassword",
-            "summary": "hashPassword",
+            "summary": "Hash\u0020Password",
             "url": "classes/Application-Models-User.html#method_hashPassword"
         },                {
             "fqsen": "\\Application\\Models\\User\u003A\u003AwithExpirationToken\u0028\u0029",
             "name": "withExpirationToken",
-            "summary": "withExpirationToken",
+            "summary": "With\u0020Expiration\u0020Token",
             "url": "classes/Application-Models-User.html#method_withExpirationToken"
         },                {
             "fqsen": "\\Application\\Models\\User\u003A\u003AgetToken\u0028\u0029",
             "name": "getToken",
-            "summary": "getToken",
+            "summary": "Get\u0020Token",
             "url": "classes/Application-Models-User.html#method_getToken"
         },                {
             "fqsen": "\\Application\\Models\\User\u003A\u003ATABLE",
@@ -2123,7 +2103,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Repositories\\UserRepository\u003A\u003AgetUserByUsername\u0028\u0029",
             "name": "getUserByUsername",
-            "summary": "getUserByUsername",
+            "summary": "Get\u0020User\u0020By\u0020Username",
             "url": "classes/Application-Repositories-UserRepository.html#method_getUserByUsername"
         },                {
             "fqsen": "\\Application\\Services\\CategoryService",
@@ -2148,18 +2128,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Services\\CommentService\u003A\u003AgetCommentsFiltered\u0028\u0029",
             "name": "getCommentsFiltered",
-            "summary": "getCommentsFiltered",
+            "summary": "Get\u0020Comments\u0020Filtered",
             "url": "classes/Application-Services-CommentService.html#method_getCommentsFiltered"
         },                {
             "fqsen": "\\Application\\Services\\CommentService\u003A\u003Amoderate\u0028\u0029",
             "name": "moderate",
-            "summary": "moderate",
+            "summary": "Moderate",
             "url": "classes/Application-Services-CommentService.html#method_moderate"
         },                {
-            "fqsen": "\\Application\\Services\\CommentService\u003A\u003Amultiple_moderation\u0028\u0029",
-            "name": "multiple_moderation",
-            "summary": "multiple_moderation",
-            "url": "classes/Application-Services-CommentService.html#method_multiple_moderation"
+            "fqsen": "\\Application\\Services\\CommentService\u003A\u003AmultipleModeration\u0028\u0029",
+            "name": "multipleModeration",
+            "summary": "Multiple\u0020Moderation",
+            "url": "classes/Application-Services-CommentService.html#method_multipleModeration"
         },                {
             "fqsen": "\\Application\\Services\\HomeService",
             "name": "HomeService",
@@ -2173,7 +2153,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Services\\HomeService\u003A\u003AsendContactMail\u0028\u0029",
             "name": "sendContactMail",
-            "summary": "sendContactMail",
+            "summary": "Send\u0020Contact\u0020Mail",
             "url": "classes/Application-Services-HomeService.html#method_sendContactMail"
         },                {
             "fqsen": "\\Application\\Services\\PostService",
@@ -2186,10 +2166,10 @@ Search.appendIndex(
             "summary": "__construct",
             "url": "classes/Application-Services-PostService.html#method___construct"
         },                {
-            "fqsen": "\\Application\\Services\\PostService\u003A\u003Adelete_post_picture\u0028\u0029",
-            "name": "delete_post_picture",
-            "summary": "delete_post_picture",
-            "url": "classes/Application-Services-PostService.html#method_delete_post_picture"
+            "fqsen": "\\Application\\Services\\PostService\u003A\u003AdeletePostPicture\u0028\u0029",
+            "name": "deletePostPicture",
+            "summary": "Delete\u0020Post\u0020Picture",
+            "url": "classes/Application-Services-PostService.html#method_deletePostPicture"
         },                {
             "fqsen": "\\Application\\Services\\UserService",
             "name": "UserService",
@@ -2203,72 +2183,72 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Services\\UserService\u003A\u003Aregister\u0028\u0029",
             "name": "register",
-            "summary": "register",
+            "summary": "Register",
             "url": "classes/Application-Services-UserService.html#method_register"
         },                {
             "fqsen": "\\Application\\Services\\UserService\u003A\u003AgetData\u0028\u0029",
             "name": "getData",
-            "summary": "getData",
+            "summary": "Get\u0020Data",
             "url": "classes/Application-Services-UserService.html#method_getData"
         },                {
             "fqsen": "\\Application\\Services\\UserService\u003A\u003AupdateUser\u0028\u0029",
             "name": "updateUser",
-            "summary": "updateUser",
+            "summary": "Update\u0020User",
             "url": "classes/Application-Services-UserService.html#method_updateUser"
         },                {
             "fqsen": "\\Application\\Services\\UserService\u003A\u003Alogin\u0028\u0029",
             "name": "login",
-            "summary": "login",
+            "summary": "Login",
             "url": "classes/Application-Services-UserService.html#method_login"
         },                {
             "fqsen": "\\Application\\Services\\UserService\u003A\u003Alogout\u0028\u0029",
             "name": "logout",
-            "summary": "logout",
+            "summary": "Logout",
             "url": "classes/Application-Services-UserService.html#method_logout"
         },                {
             "fqsen": "\\Application\\Services\\UserService\u003A\u003Aconfirmation\u0028\u0029",
             "name": "confirmation",
-            "summary": "confirmation",
+            "summary": "Confirmation",
             "url": "classes/Application-Services-UserService.html#method_confirmation"
         },                {
-            "fqsen": "\\Application\\Services\\UserService\u003A\u003Aedit_mail\u0028\u0029",
-            "name": "edit_mail",
-            "summary": "edit_mail",
-            "url": "classes/Application-Services-UserService.html#method_edit_mail"
+            "fqsen": "\\Application\\Services\\UserService\u003A\u003AeditMail\u0028\u0029",
+            "name": "editMail",
+            "summary": "Edit\u0020Mail",
+            "url": "classes/Application-Services-UserService.html#method_editMail"
         },                {
-            "fqsen": "\\Application\\Services\\UserService\u003A\u003Aedit_password\u0028\u0029",
-            "name": "edit_password",
-            "summary": "edit_password",
-            "url": "classes/Application-Services-UserService.html#method_edit_password"
+            "fqsen": "\\Application\\Services\\UserService\u003A\u003AeditPassword\u0028\u0029",
+            "name": "editPassword",
+            "summary": "Edit\u0020Password",
+            "url": "classes/Application-Services-UserService.html#method_editPassword"
         },                {
-            "fqsen": "\\Application\\Services\\UserService\u003A\u003Adelete_picture\u0028\u0029",
-            "name": "delete_picture",
-            "summary": "delete_picture",
-            "url": "classes/Application-Services-UserService.html#method_delete_picture"
+            "fqsen": "\\Application\\Services\\UserService\u003A\u003AdeletePicture\u0028\u0029",
+            "name": "deletePicture",
+            "summary": "Delete\u0020Picture",
+            "url": "classes/Application-Services-UserService.html#method_deletePicture"
         },                {
-            "fqsen": "\\Application\\Services\\UserService\u003A\u003Aforget_password\u0028\u0029",
-            "name": "forget_password",
-            "summary": "forget_password",
-            "url": "classes/Application-Services-UserService.html#method_forget_password"
+            "fqsen": "\\Application\\Services\\UserService\u003A\u003AforgetPassword\u0028\u0029",
+            "name": "forgetPassword",
+            "summary": "Forget\u0020Password",
+            "url": "classes/Application-Services-UserService.html#method_forgetPassword"
         },                {
-            "fqsen": "\\Application\\Services\\UserService\u003A\u003Areset_password\u0028\u0029",
-            "name": "reset_password",
-            "summary": "reset_password",
-            "url": "classes/Application-Services-UserService.html#method_reset_password"
+            "fqsen": "\\Application\\Services\\UserService\u003A\u003AresetPassword\u0028\u0029",
+            "name": "resetPassword",
+            "summary": "Reset\u0020Password",
+            "url": "classes/Application-Services-UserService.html#method_resetPassword"
         },                {
-            "fqsen": "\\Application\\Services\\UserService\u003A\u003Aconfirm_again\u0028\u0029",
-            "name": "confirm_again",
-            "summary": "confirm",
-            "url": "classes/Application-Services-UserService.html#method_confirm_again"
+            "fqsen": "\\Application\\Services\\UserService\u003A\u003AconfirmAgain\u0028\u0029",
+            "name": "confirmAgain",
+            "summary": "Confirm",
+            "url": "classes/Application-Services-UserService.html#method_confirmAgain"
         },                {
             "fqsen": "\\Application\\Services\\UserService\u003A\u003AcheckUsername\u0028\u0029",
             "name": "checkUsername",
-            "summary": "checkUsername",
+            "summary": "Check\u0020Username",
             "url": "classes/Application-Services-UserService.html#method_checkUsername"
         },                {
             "fqsen": "\\Application\\Services\\UserService\u003A\u003AsendConfirmationEmail\u0028\u0029",
             "name": "sendConfirmationEmail",
-            "summary": "sendConfirmationEmail",
+            "summary": "Send\u0020Confirmation\u0020Email",
             "url": "classes/Application-Services-UserService.html#method_sendConfirmationEmail"
         },                {
             "fqsen": "\\Application\\Services\\UserService\u003A\u003A\u0024userSession",
