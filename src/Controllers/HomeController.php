@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Application
+ * @package  Application\Controllers
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Application\Controllers;
 
 use Application\Services\HomeService;
@@ -8,8 +19,14 @@ use Application\Services\PostService;
 
 /**
  * HomeController
- * 
+ *
  * Home Controller
+ *
+ * @category Application
+ * @package  Application\Controllers
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class HomeController extends Controller
 {
@@ -27,9 +44,11 @@ class HomeController extends Controller
     }
 
     /**
-     * execute
-     * 
+     * Execute
+     *
      * Display the home page
+     *
+     * @return void
      */
     public function execute()
     {
@@ -38,9 +57,11 @@ class HomeController extends Controller
     }
 
     /**
-     * send
-     * 
+     * Send
+     *
      * Send a contact mail
+     *
+     * @return void
      */
     public function send()
     {

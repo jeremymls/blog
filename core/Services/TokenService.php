@@ -1,18 +1,33 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Core
+ * @package  Core\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Core\Services;
 
 use Core\Models\Token;
-use Core\Repositories\TokenRepository;
 
 /**
  * TokenService
- * 
+ *
  * Manage the tokens
+ *
+ * @category Core
+ * @package  Core\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class TokenService extends EntityService
 {
-
     /**
      * __construct
      */
@@ -24,12 +39,10 @@ class TokenService extends EntityService
     }
 
     /**
-     * createToken
-     * 
-     * Create a token
-     * 
+     * Create Token
+     *
      * @param string $user_id The user id
-     * 
+     *
      * @return string The token
      */
     public function createToken(string $user_id)
@@ -51,12 +64,12 @@ class TokenService extends EntityService
     }
 
     /**
-     * getUserByToken
-     * 
+     * Get User By Token
+     *
      * Get the user by the token
-     * 
+     *
      * @param string $token The token
-     * 
+     *
      * @return array Params with the user
      */
     public function getUserByToken($token)
@@ -64,7 +77,10 @@ class TokenService extends EntityService
         $params = $this->getBy('token = ?', [$token]);
         $token = $params['token'];
         if ($token->expiration_date < date("Y-m-d H:i:s")) {
-            throw new \Exception("Le token est expiré ! <br> Veuillez renouveler la demande", 999);
+            throw new \Exception(
+                "Le token est expiré ! <br> Veuillez renouveler la demande",
+                999
+            );
         }
         $params["user"] = $token->user_id;
         return $params;

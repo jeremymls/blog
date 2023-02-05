@@ -1,12 +1,30 @@
 <?php
+
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Core
+ * @package  Core\Middleware\Session
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Core\Middleware\Session;
 
 /**
  * PHPSession
- * 
+ *
  * Manage the PHP session
+ *
+ * @category Core
+ * @package  Core\Middleware\Session
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
-class PHPSession implements SessionInterface
+class PHPSession
 {
     private static $instances = [];
 
@@ -22,8 +40,10 @@ class PHPSession implements SessionInterface
 
     /**
      * Singleton
+     *
+     * @return PHPSession
      */
-    public static function getInstance() 
+    public static function getInstance()
     {
         $cls = static::class;
         if (!isset(self::$instances[$cls])) {
@@ -33,9 +53,11 @@ class PHPSession implements SessionInterface
     }
 
     /**
-     * ensureStarted
-     * 
+     * Ensure Started
+     *
      * Start the session if it is not started yet and if we are not in CLI mode
+     *
+     * @return void
      */
     private function ensureStarted()
     {
@@ -45,12 +67,13 @@ class PHPSession implements SessionInterface
     }
 
     /**
-     * get
-     * 
+     * Get
+     *
      * Get a value from the session
      *
-     * @param  string $key The key of the value to get
-     * @param  mixed $default The default value to return if the key is not found
+     * @param string $key     The key of the value to get
+     * @param mixed  $default The default value to return if the key is not found
+     *
      * @return mixed The value or the default value
      */
     public function get(string $key, $default = null)
@@ -62,12 +85,13 @@ class PHPSession implements SessionInterface
     }
 
     /**
-     * set
-     * 
+     * Set
+     *
      * Set a value in the session
      *
-     * @param  string $key The key of the value to set
-     * @param  mixed $value The value to set
+     * @param string $key   The key of the value to set
+     * @param mixed  $value The value to set
+     *
      * @return mixed The value or the default value
      */
     public function set(string $key, $value)
@@ -76,11 +100,13 @@ class PHPSession implements SessionInterface
     }
 
     /**
-     * delete
-     * 
+     * Delete
+     *
      * Delete a value from the session
      *
-     * @param  string $key
+     * @param string $key The key of the value to delete
+     *
+     * @return void
      */
     public function delete(string $key)
     {
@@ -88,11 +114,13 @@ class PHPSession implements SessionInterface
     }
 
     /**
-     * redirectLastUrl
-     * 
+     * Redirect Last Url
+     *
      * Redirect the user to the last page they were on
      *
-     * @param  string|null $anchor
+     * @param string|null $anchor The anchor to add to the url
+     *
+     * @return void
      */
     public function redirectLastUrl($anchor = null)
     {
@@ -100,11 +128,12 @@ class PHPSession implements SessionInterface
     }
 
     /**
-     * getLastUrl
-     * 
+     * Get Last Url
+     *
      * Get the last page the user was before starting an action
      *
-     * @param  string|null $anchor
+     * @param string|null $anchor The anchor to add to the url
+     *
      * @return string
      */
     public function getLastUrl($anchor = null)

@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Application
+ * @package  Application\Controllers\Admin
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Application\Controllers\Admin;
 
 use Core\Controllers\AdminController;
@@ -7,8 +18,14 @@ use Application\Services\PostService;
 
 /**
  * AdminPostController
- * 
+ *
  * Admin Post Controller
+ *
+ * @category Application
+ * @package  Application\Controllers\Admin
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class AdminPostController extends AdminController
 {
@@ -24,14 +41,16 @@ class AdminPostController extends AdminController
     }
 
     /**
-     * index
-     * 
+     * Index
+     *
      * Display the posts admin list
      *
-     * @param  mixed $category
-     * @param  mixed $nbr_show
+     * @param mixed $category the category identifier
+     * @param mixed $nbr_show the number of posts to show
+     *
+     * @return void
      */
-    public function index($category = "all", $nbr_show=5)
+    public function index($category = "all", $nbr_show = 5)
     {
         $option = "";
         $optionsData = [];
@@ -48,9 +67,11 @@ class AdminPostController extends AdminController
     }
 
     /**
-     * add
-     * 
+     * Add
+     *
      * Add a post
+     *
+     * @return void
      */
     public function add()
     {
@@ -62,11 +83,13 @@ class AdminPostController extends AdminController
     }
 
     /**
-     * update
-     * 
+     * Update
+     *
      * Update a post
      *
-     * @param  string $identifier
+     * @param string $identifier post identifier
+     *
+     * @return void
      */
     public function update(string $identifier)
     {
@@ -79,11 +102,13 @@ class AdminPostController extends AdminController
     }
 
     /**
-     * delete
-     * 
-     * Delete a post
+     * Delete
      *
-     * @param  string $identifier
+     * Delete a post in AJAX
+     *
+     * @param string $identifier post identifier
+     *
+     * @return void
      */
     public function delete(string $identifier)
     {
@@ -92,15 +117,17 @@ class AdminPostController extends AdminController
     }
 
     /**
-     * delete_picture
-     * 
-     * Delete a post picture
+     * Delete Picture
      *
-     * @param  string $identifier post identifier
+     * Delete a post picture in AJAX
+     *
+     * @param string $identifier post identifier
+     *
+     * @return void
      */
-    public function delete_picture($identifier)
+    public function deletePicture($identifier)
     {
-        $this->postService->delete_post_picture($identifier);
+        $this->postService->deletePostPicture($identifier);
         echo 'done';
     }
 }

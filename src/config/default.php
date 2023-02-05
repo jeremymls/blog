@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Application
+ * @package  Application\config
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
+/* A constant array that contains the default values of the configurations */
 const CONFIGS = [
     'cs_site_name' =>               ['Nouveau site','Nom du site'],
     'cs_address' =>                 ['','Adresse Postale'],
@@ -27,15 +39,48 @@ const CONFIGS = [
     'af_color_secondary_darken' =>  ['#b37d0a','Couleur secondaire foncée','color'],
     'af_slider_display' =>          ['ON','Afficher le slider','switch'],
     'af_slider_background_image' => [null,'Image de fond du slider','image'],
-    'af_slider_background_color' => ['transparent','Couleur de fond du slider','color'],
-    'af_slider_background_size' =>  ['cover',"Taille de l'image de fond du slider:\ncover, contain, auto",'select'],
-    'af_slider_background_repeat' =>['no-repeat',"Répétition de l'image de fond du slider:\nno-repeat, repeat, repeat-x, repeat-y",'select'],
-    'af_contact_form_display' =>    ['OFF','Afficher le formulaire de contact (ON/OFF)','switch'],
+    'af_slider_background_color' => [
+                                        'transparent',
+                                        'Couleur de fond du slider',
+                                        'color'
+                                    ],
+    'af_slider_background_size' =>  [
+                                        'cover',
+                                        "Taille de l'image de fond du slider:\n
+                                        cover, contain, auto",
+                                        'select'
+                                    ],
+    'af_slider_background_repeat' => [
+                                        'no-repeat',
+                                        "Répétition de l'image de fond du slider:\n
+                                        no-repeat, repeat, repeat-x, repeat-y",
+                                        'select'
+                                    ],
+    'af_contact_form_display' =>    [
+                                        'OFF',
+                                        'Afficher le formulaire de contact (ON/OFF)',
+                                        'switch'
+                                    ],
     'af_home_content_title' =>      [null,'Titre de la section "A propos"'],
-    'af_home_content_1' =>          [null,'Contenu n°1 de la page d\'accueil','editor'],
-    'af_home_content_2' =>          [null,'Contenu n°2 de la page d\'accueil','editor'],
-    'af_home_content_3' =>          [null,'Contenu n°3 de la page d\'accueil','editor'],
-    'af_home_contact_title' =>      ["Contactez-moi :",'Titre de la section "Contact"'],
+    'af_home_content_1' =>          [
+                                        null,
+                                        'Contenu n°1 de la page d\'accueil',
+                                        'editor'
+                                    ],
+    'af_home_content_2' =>          [
+                                        null,
+                                        'Contenu n°2 de la page d\'accueil',
+                                        'editor'
+                                    ],
+    'af_home_content_3' =>          [
+                                        null,
+                                        'Contenu n°3 de la page d\'accueil',
+                                        'editor'
+                                    ],
+    'af_home_contact_title' =>      [
+                                        "Contactez-moi :",
+                                        'Titre de la section "Contact"'
+                                    ],
     'sd_google_analytics_key' =>    [null,'Clé Google Analytics'],
     'sd_recaptcha_site_key' =>      [null,'Clé du site reCaptcha'],
 ];

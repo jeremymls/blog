@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Core
+ * @package  Core\Controllers
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Core\Controllers;
 
 use Application\Services\CategoryService;
@@ -16,12 +27,16 @@ use Twig\Extra\String\StringExtension;
 use Twig\Loader\FilesystemLoader;
 use Core\Services\CsrfService;
 
-require_once 'src/config/default.php';
-
 /**
  * Controller
- * 
+ *
  * The base controller
+ *
+ * @category Core
+ * @package  Core\Controllers
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 abstract class Controller
 {
@@ -47,20 +62,23 @@ abstract class Controller
     }
 
     /**
-     * getTwig
-     * 
+     * Get Twig
+     *
      * It adds functions to the twig template engine
      *
-     * @param  Superglobals $superglobals
-     * @param  UserSession $userSession
-     * 
+     * @param Superglobals $superglobals Superglobals instance
+     * @param UserSession  $userSession  UserSession instance
+     *
      * @return Environment $twig
      */
-    private static function getTwig(Superglobals $superglobals, UserSession $userSession)
-    {
+    private static function getTwig(
+        Superglobals $superglobals,
+        UserSession $userSession
+    ) {
         $loader = new FilesystemLoader(ROOT . '/templates');
         $twig = new Environment(
-            $loader, [
+            $loader,
+            [
             'debug' => true,
             ]
         );
@@ -70,101 +88,151 @@ abstract class Controller
         /**
          * GLOBALS TWIG VARIABLES
          */
-        $twig->addGlobal('empty_picture', $superglobals->getInstance()->asset('img/picture.png'));
-        $twig->addGlobal('empty_profil_picture', $superglobals->getInstance()->asset('img/profile.png'));
+        $twig->addGlobal(
+            'empty_picture',
+            $superglobals->getInstance()->asset('img/picture.png')
+        );
+        $twig->addGlobal(
+            'empty_profil_picture',
+            $superglobals->getInstance()->asset('img/profile.png')
+        );
 
         /**
          * FONCTIONS TWIG
          */
-        $getUrlFunc = new \Twig\TwigFunction('getPath', function ($name = null, $params = []) use ($superglobals) {
-            return $superglobals->getPath($name, $params);
-        });
+        $getUrlFunc = new \Twig\TwigFunction(
+            'getPath',
+            function ($name = null, $params = []) use ($superglobals) {
+                return $superglobals->getPath($name, $params);
+            }
+        );
         $twig->addFunction($getUrlFunc);
 
-        $removeGetUrlFunc = new \Twig\TwigFunction('getPathWithoutGet', function () use ($superglobals) {
-            return $superglobals->getPathWithoutGet();
-        });
+        $removeGetUrlFunc = new \Twig\TwigFunction(
+            'getPathWithoutGet',
+            function () use ($superglobals) {
+                return $superglobals->getPathWithoutGet();
+            }
+        );
         $twig->addFunction($removeGetUrlFunc);
 
-        $getGetFunc = new \Twig\TwigFunction('get', function (string $key) use ($superglobals) {
-            return $superglobals->getGet($key);
-        });
+        $getGetFunc = new \Twig\TwigFunction(
+            'get',
+            function (string $key) use ($superglobals) {
+                return $superglobals->getGet($key);
+            }
+        );
         $twig->addFunction($getGetFunc);
 
-        $getCookieFunc = new \Twig\TwigFunction('getCookie', function (string $key) use ($superglobals) {
-            return $superglobals->getCookie($key);
-        });
+        $getCookieFunc = new \Twig\TwigFunction(
+            'getCookie',
+            function (string $key) use ($superglobals) {
+                return $superglobals->getCookie($key);
+            }
+        );
         $twig->addFunction($getCookieFunc);
 
-        $getEnv = new \Twig\TwigFunction('getEnv', function () use ($superglobals) {
-            return $superglobals->getAppEnv();
-        });
+        $getEnv = new \Twig\TwigFunction(
+            'getEnv',
+            function () use ($superglobals) {
+                return $superglobals->getAppEnv();
+            }
+        );
         $twig->addFunction($getEnv);
 
-        $getSecret = new \Twig\TwigFunction('getSecret', function () use ($superglobals) {
-            return $superglobals->getSecretKey();
-        });
+        $getSecret = new \Twig\TwigFunction(
+            'getSecret',
+            function () use ($superglobals) {
+                return $superglobals->getSecretKey();
+            }
+        );
         $twig->addFunction($getSecret);
 
         // User Session functions
-        $getUserParamFunc = new \Twig\TwigFunction('getUserParam', function ($param) use ($userSession) {
-            return $userSession->getUserParam($param);
-        });
+        $getUserParamFunc = new \Twig\TwigFunction(
+            'getUserParam',
+            function ($param) use ($userSession) {
+                return $userSession->getUserParam($param);
+            }
+        );
         $twig->addFunction($getUserParamFunc);
 
-        $isLoggedFunc = new \Twig\TwigFunction('isLogged', function () use ($userSession) {
-            return $userSession->isUser();
-        });
+        $isLoggedFunc = new \Twig\TwigFunction(
+            'isLogged',
+            function () use ($userSession) {
+                return $userSession->isUser();
+            }
+        );
         $twig->addFunction($isLoggedFunc);
 
-        $isAdminFunc = new \Twig\TwigFunction('isAdmin', function () use ($userSession) {
-            return $userSession->isAdmin();
-        });
+        $isAdminFunc = new \Twig\TwigFunction(
+            'isAdmin',
+            function () use ($userSession) {
+                return $userSession->isAdmin();
+            }
+        );
         $twig->addFunction($isAdminFunc);
 
-        $isValideFunc = new \Twig\TwigFunction('isValidate', function () use ($userSession) {
-            return $userSession->isValidate();
-        });
+        $isValideFunc = new \Twig\TwigFunction(
+            'isValidate',
+            function () use ($userSession) {
+                return $userSession->isValidate();
+            }
+        );
         $twig->addFunction($isValideFunc);
 
         // Asset function
-        $assetFunc = new \Twig\TwigFunction('asset', function (string $path) use ($superglobals) {
-            return $superglobals->asset($path);
-        });
+        $assetFunc = new \Twig\TwigFunction(
+            'asset',
+            function (string $path) use ($superglobals) {
+                return $superglobals->asset($path);
+            }
+        );
         $twig->addFunction($assetFunc);
 
         // Csrf functions
-        $csrfTokenFunc = new \Twig\TwigFunction('getCsrf', function () {
-            return CsrfService::getInstance()->generateToken();
-        });
+        $csrfTokenFunc = new \Twig\TwigFunction(
+            'getCsrf',
+            function () {
+                return CsrfService::getInstance()->generateToken();
+            }
+        );
         $twig->addFunction($csrfTokenFunc);
 
         return $twig;
     }
 
     /**
-     * getSiteConfigs
-     * 
-     * It gets all the configs from the database and adds them to the twig global variables.
+     * Get Site Configs
      *
-     * @param  Superglobals $superglobals
-     * @param  PHPSession $session
+     * It gets all the configs from the database
+     * and adds them to the twig global variables.
+     *
+     * @param Superglobals $superglobals Superglobals instance
+     * @param PHPSession   $session      PHPSession instance
+     *
+     * @return void
      */
     private function getSiteConfigs(Superglobals $superglobals, PHPSession $session)
     {
         $url = $superglobals->getPath();
-        if (!in_array($url, [
-            $superglobals->getPath("login"), 
-            $superglobals->getPath("new"), 
-            $superglobals->getPath("init"), 
-            $superglobals->getPath("create_bdd"), 
-            $superglobals->getPath("init:configs"), 
-        ])) {
+        if (
+            !in_array(
+                $url,
+                [
+                $superglobals->getPath("login"),
+                $superglobals->getPath("new"),
+                $superglobals->getPath("init"),
+                $superglobals->getPath("create_bdd"),
+                $superglobals->getPath("init:configs"),
+                ]
+            )
+        ) {
             $configService = new ConfigService();
             if (count($configService->checkMissingConfigs()) > 0) {
                 $session->set("safe_mode", true);
                 $this->superglobals->redirect('init');
-            }else{
+            } else {
                 $session->set("safe_mode", false);
             }
             $categoryService = new CategoryService();
@@ -181,11 +249,12 @@ abstract class Controller
     }
 
     /**
-     * multiParams
-     * 
+     * Multi Params
+     *
      * It takes an array of arrays, and merges them into a single array
      *
-     * @param  array $params The array of arrays
+     * @param array $params The array of arrays
+     *
      * @return array $params The merged array
      */
     public function multiParams(array $params)
@@ -195,8 +264,8 @@ abstract class Controller
     }
 
     /**
-     * isPost
-     * 
+     * Is Post
+     *
      * This function returns the method of the superglobals object (POST, GET, etc.)
      * else it returns false.
      *

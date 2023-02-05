@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Core
+ * @package  Core\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Core\Services;
 
 use Core\Middleware\Superglobals;
@@ -9,8 +20,14 @@ use Core\Repositories\ConfigRepository;
 
 /**
  * ConfigService
- * 
+ *
  * Service for Config
+ *
+ * @category Core
+ * @package  Core\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class ConfigService extends EntityService
 {
@@ -29,18 +46,18 @@ class ConfigService extends EntityService
     }
 
     /**
-     * init
-     * 
-     * Check if 
+     * Init
+     *
+     * Check if
      * * the database is initialized
      * * the configs are initialized
-     * 
+     *
      * @return array Array of missing tables and configs
      */
     public function init()
     {
         $params['missing_tables'] = $this->checkMissingTables();
-        if (in_array('configs', $params['missing_tables']) ) {
+        if (in_array('configs', $params['missing_tables'])) {
             $params['missing_configs'] = $this->getDefaultsConfigs();
         } else {
             $params['missing_configs'] = $this->checkMissingConfigs();
@@ -49,25 +66,25 @@ class ConfigService extends EntityService
     }
 
     /**
-     * getOwnerMailContact
-     * 
+     * Get Owner Mail Contact
+     *
      * Get the owner mail contact
-     * 
+     *
      * @return array Array of owner name and email
      */
     public function getOwnerMailContact()
     {
         $configs = $this->getConfigsObject();
         return [
-            'name' => $configs['cs_owner_name']->value, 
+            'name' => $configs['cs_owner_name']->value,
             'email' => $configs['cs_owner_email']->value];
     }
 
     /**
-     * getMailConfig
-     * 
+     * Get Mail Config
+     *
      * Get the mail config
-     * 
+     *
      * @return array Array of mail config
      */
     public function getMailConfig()
@@ -81,11 +98,12 @@ class ConfigService extends EntityService
     }
 
     /**
-     * getByName
-     * 
+     * Get By Name
+     *
      * Get a config by name
-     * 
+     *
      * @param string $name Name of the config
+     *
      * @return string Value of the config
      */
     public function getByName($name)
@@ -98,16 +116,23 @@ class ConfigService extends EntityService
     }
 
     /**
-     * getSortedParameters
-     * 
+     * Get Sorted Parameters
+     *
      * Get the parameters sorted by prefix and add the title
-     * 
-     * @param  mixed $prefix
+     *
+     * @param mixed $prefix Prefix of the parameters
+     *
      * @return array Array of parameters
      */
     public function getSortedParameters($prefix)
     {
-        $params = $this->getAll("where name like ?", [$prefix . '_%'], "", 'name', 'ASC');
+        $params = $this->getAll(
+            "where name like ?",
+            [$prefix . '_%'],
+            "",
+            'name',
+            'ASC'
+        );
         switch ($prefix) {
             case 'cs':
                 $params['title'] = 'du site';
@@ -133,9 +158,11 @@ class ConfigService extends EntityService
     }
 
     /**
-     * initConfigs
-     * 
+     * Init Configs
+     *
      * Init missing configs
+     *
+     * @return void
      */
     public function initConfigs()
     {
@@ -164,10 +191,10 @@ class ConfigService extends EntityService
     }
 
     /**
-     * getDefaultsConfigs
-     * 
+     * Get Defaults Configs
+     *
      * Get the default configs
-     * 
+     *
      * @return array Array of default configs
      */
     public function getDefaultsConfigs()
@@ -180,10 +207,10 @@ class ConfigService extends EntityService
     }
 
     /**
-     * checkMissingConfigs
-     * 
+     * Check Missing Configs
+     *
      * Check missing configs
-     * 
+     *
      * @return array Array of missing configs
      */
     public function checkMissingConfigs()
@@ -198,21 +225,26 @@ class ConfigService extends EntityService
     }
 
     /**
-     * checkMissingTables
-     * 
+     * Check Missing Tables
+     *
      * Check missing tables
-     * 
+     *
      * @return array Array of missing tables
      */
     public function checkMissingTables()
     {
         $models_files = scandir("./src/Models");
         $models_files = array_merge($models_files, scandir("./core/Models"));
-        $models_files = array_diff($models_files, array('.', '..', 'Model.php', 'Error.php', 'MailContactModel.php'));
+        $models_files = array_diff(
+            $models_files,
+            array('.', '..', 'Model.php', 'Error.php', 'MailContactModel.php')
+        );
         $models = [];
-        foreach($models_files as $model_file){
-            $str=strtolower(str_replace(".php", "", $model_file));
-            $models[] = (substr($str, -1) == "y") ? (substr($str,0, -1) . "ies"): $str . "s";
+        foreach ($models_files as $model_file) {
+            $str = strtolower(str_replace(".php", "", $model_file));
+            $models[] = (substr($str, -1) == "y")
+            ? (substr($str, 0, -1)
+            . "ies") : $str . "s";
         }
         $tables = $this->configRepository->getTables();
         $missing_tables = array_diff($models, $tables);
@@ -220,22 +252,24 @@ class ConfigService extends EntityService
     }
 
     /**
-     * create_config_table
-     * 
+     * Create Config Table
+     *
      * Create a config table
-     * 
+     *
      * @param string $table Name of the table
+     *
+     * @return void
      */
-    public function create_config_table($table)
+    public function createConfigTable($table)
     {
-        $this->configRepository->create_config_table($table);
+        $this->configRepository->createConfigTable($table);
     }
 
     /**
-     * getConfigsObject
-     * 
+     * Get Configs Object
+     *
      * Get the configs as an object
-     * 
+     *
      * @return array Array of configs
      */
     private function getConfigsObject()
@@ -249,15 +283,17 @@ class ConfigService extends EntityService
     }
 
     /**
-     * delete_value
-     * 
+     * Delete Value
+     *
      * Delete a value
-     * 
-     * @param  mixed $id Id of the config
+     *
+     * @param mixed $id Id of the config
+     *
+     * @return void
      */
-    public function delete_value($id)
+    public function deleteValue($id)
     {
-        $entity = new Config;
+        $entity = new Config();
         $entity->value = null;
         $entity->csrf_token = $this->superglobals->getPost('csrf_token');
         $success = $this->repository->update($id, $entity);
@@ -271,16 +307,22 @@ class ConfigService extends EntityService
     }
 
     /**
-     * renderColor
-     * 
+     * Render Color
+     *
      * Render the color CSS file
-     * 
-     * @param  mixed $twig Twig instance
+     *
+     * @param mixed $twig Twig instance
+     *
+     * @return void
      */
     public function renderColor($twig)
     {
         $params = $this->getAll("where name LIKE 'af_color%'");
-        $renderer = new TemplateRenderer($twig, $_SERVER['DOCUMENT_ROOT'], 'assets/styles.css.twig'); // todo: à revoir 
+        $renderer = new TemplateRenderer(
+            $twig,
+            $_SERVER['DOCUMENT_ROOT'],
+            'assets/styles.css.twig'
+        ); // todo: à revoir pour la doc
         foreach ($params['configs'] as $param) {
             $renderer->setParam($param->name, $param->value);
         }
@@ -288,13 +330,15 @@ class ConfigService extends EntityService
     }
 
     /**
-     * change_env
-     * 
+     * Change ENV
+     *
      * Change the environment
-     * 
-     * @param  string $environment Environment
+     *
+     * @param string $environment Environment
+     *
+     * @return void
      */
-    public static function change_env($environment)
+    public static function changeEnv($environment)
     {
         if (!in_array($environment, ['DEV', 'PROD', 'TEST'])) {
             throw new \Exception("L'environnement $environment n'existe pas.");

@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jeremy Monlouis
+ * php version 7.4.3
+ *
+ * @category Router
+ * @package  Core\Router
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Core\Router;
 
 use Core\Middleware\Session\PHPSession;
@@ -7,8 +18,14 @@ use Core\Middleware\Superglobals;
 
 /**
  * Route
- * 
+ *
  * Manage a route
+ *
+ * @category Router
+ * @package  Core\Router
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class Route
 {
@@ -18,11 +35,11 @@ class Route
 
     /**
      * __construct
-     * 
+     *
      * Create a new route
      *
-     * @param  mixed $path Path
-     * @param  mixed $callable Callable
+     * @param mixed $path     Path
+     * @param mixed $callable Callable
      */
     public function __construct($path, $callable)
     {
@@ -31,11 +48,12 @@ class Route
     }
 
     /**
-     * match
-     * 
+     * Match
+     *
      * Check if the route match with the url
      *
-     * @param  mixed $url Url
+     * @param mixed $url Url
+     *
      * @return bool
      */
     public function match($url)
@@ -52,8 +70,8 @@ class Route
     }
 
     /**
-     * call
-     * 
+     * Call
+     *
      * Call the route
      *
      * @return mixed
@@ -70,20 +88,26 @@ class Route
                 $session->delete('last_url');
                 $session->delete('temp_last_url');
             }
-            if ($params[1] == 'update' || 
-                $params[1] == 'login'
+            if (
+                $params[1] == 'update'
+                || $params[1] == 'login'
             ) {
                 if ($temp === null) {
                     $session->set('temp_last_url', 1);
                     if (!$session->get('last_url')) {
-                        $session->set('last_url', Superglobals::getInstance()->getPathReferer());
+                        $session->set(
+                            'last_url',
+                            Superglobals::getInstance()->getPathReferer()
+                        );
                     }
                 }
             }
             if (count($params) == 3) {
                 $controller = "Core\\Controllers\\" . $params[0] . "Controller";
             } else {
-                $controller = "Application\\Controllers\\" . $params[0] . "Controller";
+                $controller = "Application\\Controllers\\"
+                . $params[0]
+                . "Controller";
             }
             $controller = new $controller();
             return call_user_func_array([$controller, $params[1]], $this->matches);
@@ -93,11 +117,12 @@ class Route
     }
 
     /**
-     * getUrl
-     * 
+     * Get Url
+     *
      * Get the url of the route
      *
-     * @param  mixed $params Params
+     * @param mixed $params Params
+     *
      * @return string Url
      */
     public function getUrl($params)

@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Created by Jérémy MONLOUIS
+ * php version 7.4.3
+ *
+ * @category Core
+ * @package  Core\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
+ */
+
 namespace Core\Services;
 
 use Phinx\Console\PhinxApplication;
@@ -8,8 +19,14 @@ use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * PhinxService
- * 
+ *
  * Run Phinx commands
+ *
+ * @category Core
+ * @package  Core\Services
+ * @author   Jérémy MONLOUIS <contact@jeremy-monlouis.fr>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/jeremymls/blog
  */
 class PhinxService
 {
@@ -17,7 +34,7 @@ class PhinxService
 
     /**
      * Singleton
-     * 
+     *
      * @return PhinxService
      */
     public static function getManager(): PhinxService
@@ -30,10 +47,10 @@ class PhinxService
     }
 
     /**
-     * getPhinxApplication
-     * 
      * Get Phinx Application
-     * 
+     *
+     * Get Phinx Application
+     *
      * @return PhinxApplication
      */
     public static function getPhinxApplication(): PhinxApplication
@@ -46,37 +63,43 @@ class PhinxService
     }
 
     /**
-     * run
-     * 
+     * Run
+     *
      * Run Phinx command
-     * 
-     * @param string $cmd
+     *
+     * @param string $cmd The command to run
+     *
+     * @return void
      */
-    private function run($cmd) : void
+    private function run($cmd): void
     {
         self::getPhinxApplication()->doRun(new StringInput($cmd), new NullOutput());
     }
 
     /**
-     * AppMigrate
-     * 
+     * App Migrate
+     *
      * Run Phinx migrate command
-     * 
-     * @param string $environment
+     *
+     * @param string $environment The environment to run the command
+     *
+     * @return void
      */
-    public function AppMigrate($environment)
+    public function appMigrate($environment)
     {
         $this->run("migrate -e $environment");
     }
 
     /**
-     * AppSeed
-     * 
+     * App Seed
+     *
      * Run Phinx seed command
-     * 
-     * @param string $environment
+     *
+     * @param string $environment The environment to run the command
+     *
+     * @return void
      */
-    public function AppSeed($environment)
+    public function appSeed($environment)
     {
         $this->run("seed:run -e $environment");
     }
