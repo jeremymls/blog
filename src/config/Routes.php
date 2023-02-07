@@ -62,6 +62,8 @@ class Routes
      */
     private function setRoutes()
     {
+        // ERROR 403 //
+        $this->router->get('403.php', 'ErrorException@accessDenied@core', '403');
         // FRONTEND //
         // Home
         $this->router->get('/index.php', 'Home@execute', 'home');

@@ -50,4 +50,14 @@ class ErrorExceptionController extends Controller
         http_response_code($error->code);
         $this->twig->display('error.twig', ['error' => $error,]);
     }
+
+    /**
+     * Access Denied
+     *
+     * @return void
+     */
+    public function accessDenied()
+    {
+        $this->twig->display('403.twig');
+    }
 }
