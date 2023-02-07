@@ -85,8 +85,7 @@ class Connection
                     PHPSession::getInstance()->set('safe_mode', true);
                     $superglobals->redirect('new');
                 }
-                echo 'Erreur de connexion à la base de données : '
-                . $e->getMessage();
+                throw $e;
                 // 1049 = database not found
                 // 1045 = bad credentials
             }

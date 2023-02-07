@@ -93,7 +93,7 @@ class AdminCategoryController extends AdminController
     /**
      * Delete
      *
-     * Delete category in AJAX
+     * Delete category
      *
      * @param mixed $identifier the category identifier
      *
@@ -102,6 +102,5 @@ class AdminCategoryController extends AdminController
     public function delete(string $identifier)
     {
         $this->categoryService->delete($identifier);
-        echo 'done';
     }
 }

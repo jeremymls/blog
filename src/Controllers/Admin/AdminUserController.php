@@ -68,7 +68,6 @@ class AdminUserController extends AdminController
     public function delete(string $identifier)
     {
         $this->userService->delete($identifier);
-        echo 'done';
     }
 
     /**

@@ -87,14 +87,14 @@ $(".confirm").click(function(e){
             type: 'post',
             data: {
                 'secret': "{{ getSecret() }}"
-            },
-            success: function (result) {
-                if (result == 'done') {
-                    location.href = "{{ getPath('home') }}";
-                } else {
-                    alert("Une erreur est survenue. Réessayer")
-                }
             }
+        })
+        .done(function(data) {
+            alert('La base de données a bien été supprimée');
+            location.href = "{{ getPath('home') }}";
+        })
+        .fail(function(jqXHR) {
+            alert('Une erreur est survenue');
         });
     }
 });

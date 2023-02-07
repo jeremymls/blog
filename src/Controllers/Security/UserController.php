@@ -189,7 +189,6 @@ class UserController extends Controller
     public function deletePicture()
     {
         $this->userService->deletePicture();
-        echo 'done';
     }
 
     /**

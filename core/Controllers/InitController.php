@@ -99,7 +99,6 @@ class InitController extends Controller
     {
         InitService::create();
         InitService::migration($this->superglobals->getAppEnv());
-        echo 'La base de données a été créée avec succès';
     }
 
     /**
@@ -114,12 +113,13 @@ class InitController extends Controller
     public function seed($env)
     {
         $seed_key = 'r*Bvd2dMpTdGYjwaG^BAw$hADm8gb#KggKxNh9fGv^e6PdU74n';
-        // todo: à revoir
-        if ($_POST["seedKey"] == $seed_key) {
+        // todo: à revoir (aide: ligne 169)
+        if (isset($_POST["seedKey"]) && $_POST["seedKey"] == $seed_key) {
             InitService::seed($env);
-            echo 'La base de données a été peuplée avec succès';
+            // echo 'La base de données a été peuplée avec succès';
         } else {
-            echo 'La clé de peuplement est incorrecte';
+            throw new \Exception('La clé de peuplement est incorrecte');
+            // echo 'La clé de peuplement est incorrecte';
         }
     }
 
@@ -169,10 +169,9 @@ class InitController extends Controller
     {
         $secret = $this->superglobals->getPost('secret');
         if ($secret != $this->superglobals->getSecretKey()) {
-            echo 'error';
+            throw new \Exception();
         } else {
             $this->initService->delete();
-            echo 'done';
         }
     }
 }
