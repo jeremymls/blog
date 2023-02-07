@@ -64,6 +64,8 @@ class Routes
     {
         // FRONTEND //
         // Home
+        $this->router->get('/index.php', 'Home@execute', 'home');
+        $this->router->post('/index.php', 'Home@send');
         $this->router->get('/', 'Home@execute', 'home');
         $this->router->post('/', 'Home@send');
         // Post
