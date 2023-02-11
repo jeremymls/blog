@@ -270,7 +270,8 @@ class Routes
         $this->router->get('admin/docs', 'Doc@index@core', 'admin:docs');
         // Init
         $this->router->get('init', 'Init@init@core', 'init');
-        $this->router->get('init/configs', 'Init@initConfigs@core', 'init:configs');
+        $this->router->get('init/configs', 'Init@initConfigs@core', 'init:configs'); // ! à supprimer
+        $this->router->post('init/configs', 'Init@initConfigs@core', 'init:configs');
         $this->router->get('new', 'Init@new@core', 'new');
         $this->router->post('create_bdd', 'Init@create@core', 'create_bdd');
         $this->router->post('delete_bdd', 'Init@delete@core', 'delete_bdd');
