@@ -10,10 +10,11 @@ Il est personnalisable, et il est possible de créer des articles, des commentai
 ## Configuration conseillée
 
 Le projet a été développé sur un serveur local avec les versions suivantes :
->- Apache 2.4.52
->- PHP 7.4.26
->- [MySQL](https://openclassrooms.com/fr/courses/918836-concevez-votre-site-web-avec-php-et-mysql/913893-mettez-en-place-une-base-de-donnees-avec-phpmyadmin) 5.1.1
->- [Composer](https://getcomposer.org/) 2.3.7
+
+> - Apache 2.4.52
+> - PHP 7.4.26
+> - [MySQL](https://openclassrooms.com/fr/courses/918836-concevez-votre-site-web-avec-php-et-mysql/913893-mettez-en-place-une-base-de-donnees-avec-phpmyadmin) 5.1.1
+> - [Composer](https://getcomposer.org/) 2.3.7
 
 <!-- Le projet a été déployé sur un VPS avec les versions suivantes :
 >- Apache 2.4.52
@@ -23,9 +24,10 @@ Le projet a été développé sur un serveur local avec les versions suivantes :
 
 ## Base de données
 
-- Par défaut, l'application utilise une base de données MySQL dénommée `blog`, accessible à un utilisateur `root` dont le mot de passe est `password`. 
+- Par défaut, l'application utilise une base de données MySQL dénommée `blog`, accessible à un utilisateur `root` dont le mot de passe est `password`.
 - Vous pouvez modifier ces paramètres dans le fichier `.env` situé à la racine `/` du projet.
-``` php
+
+```php
 DB_HOST // adresse du serveur MySQL
 DB_NAME // nom de la base de données
 DB_USER // nom d'utilisateur
@@ -35,17 +37,20 @@ DB_PASS // mot de passe
 ## Installation
 
 - Cloner le dépôt Git
-``` bash
+
+```bash
 git clone https://github.com/jeremymls/blog.git
 ```
 
 - Installer Composer
-``` bash
+
+```bash
 curl -sS https://getcomposer.org/installer | php
 ```
 
 - Lancer deploy.sh
-``` bash
+
+```bash
 ./deploy.sh
 ```
 
@@ -53,7 +58,8 @@ curl -sS https://getcomposer.org/installer | php
 
 Une fois installé, vous pouvez accéder à l'application via votre navigateur web.
 Vous pouvez vous connecter et accéder à l'administration avec les identifiants suivants :
-``` bash
+
+```bash
 Identifiant :  admin
 Mot de passe : jmp2022
 ```

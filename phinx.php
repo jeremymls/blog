@@ -2,7 +2,7 @@
 
 use Core\Middleware\Superglobals;
 $noRunRoutes = true;
-require 'index.php';
+include 'index.php';
 $superglobals = Superglobals::getInstance();
 $dbProd = $superglobals->getDatabase('PROD');
 $dbDev = $superglobals->getDatabase('DEV');

@@ -51,14 +51,11 @@ $(document).ready(function () {
                 type: 'post',
                 data: {
                     'csrf_token': csrf
-                },
-                success: function (result) {
-                    if (result == 'done') {
-                        location.reload();
-                    } else {
-                        alert("Une erreur est survenue. Réessayer")
-                    }
                 }
+            }).done(function () {
+                location.reload();
+            }).fail(function () {
+                alert("Une erreur est survenue. Réessayer")
             });
         };
     });

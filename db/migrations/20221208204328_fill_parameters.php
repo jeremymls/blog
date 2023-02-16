@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once 'src/config/default.php';
+include_once 'src/config/default.php';
 
 use Phinx\Migration\AbstractMigration;
 

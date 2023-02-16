@@ -9,7 +9,7 @@ use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpKernel\HttpCache\Store;
 
 $noRunRoutes = true;
-require_once('index.php');
+include_once('index.php');
 if (session_status() === PHP_SESSION_NONE) session_start();
 class BaseTest extends TestCase
 {

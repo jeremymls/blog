@@ -127,6 +127,5 @@ class AdminPostController extends AdminController
     public function deletePicture($identifier)
     {
         $this->postService->deletePostPicture($identifier);
-        echo 'done';
     }
 }
