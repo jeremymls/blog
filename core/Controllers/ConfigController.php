@@ -127,6 +127,5 @@ class ConfigController extends AdminController
     public function deleteValue($identifier)
     {
         $this->configService->deleteValue($identifier);
-        echo 'done';
     }
 }

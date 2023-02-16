@@ -106,7 +106,6 @@ class CommentController extends Controller
             $id = $this->superglobals->getPost('commentId');
             if ($id) {
                 $this->commentService->deleteAjax($id, $delete);
-                echo 'done';
             } else {
                 throw new \Exception("Identifiant de commentaire manquant");
             }

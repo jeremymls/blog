@@ -32,8 +32,6 @@ class Superglobals
     private $SERVER;
     private $GET;
     private $POST;
-    private $METHOD;
-    private $REFERER;
     private $ENV;
     private $PATH;
     private $ASSETS;
@@ -79,10 +77,6 @@ class Superglobals
         ? $this->ENV['SITE_URL'] : null;
         $this->ASSETS = (isset($this->ENV['ASSETS_PATH']))
         ? $this->ENV['ASSETS_PATH'] : null;
-        $this->METHOD = (isset($this->SERVER['REQUEST_METHOD']))
-        ? $this->SERVER['REQUEST_METHOD'] : null;
-        $this->REFERER = (isset($this->SERVER['HTTP_REFERER']))
-        ? $this->SERVER['HTTP_REFERER'] : $this->PATH;
     }
 
     /**
@@ -94,7 +88,7 @@ class Superglobals
      */
     public function getMethod()
     {
-        return $this->METHOD;
+        return $this->getServer("REQUEST_METHOD");
     }
 
     /**
@@ -113,7 +107,7 @@ class Superglobals
             $routes = new Routes();
             return $this->PATH . "/" . $routes->getUrl($name, $params);
         }
-        return $this->PATH . "/" . trim($_SERVER['REQUEST_URI'], '/'); // todo: a revoir ($_server)
+        return $this->PATH . "/" . trim($this->getServer('REQUEST_URI'), '/');
     }
 
     /**
@@ -169,7 +163,7 @@ class Superglobals
      */
     public function getPathReferer()
     {
-        return $this->REFERER;
+        return $this->getServer("HTTP_REFERER");
     }
 
     /**
@@ -279,6 +273,26 @@ class Superglobals
             return $_COOKIE[$key];
         }
         return null;
+    }
+
+    /**
+     * Get Server
+     *
+     * Get the value of a server parameter or all the server parameters
+     *
+     * @param string|null $key The key of the server parameter
+     *
+     * @return mixed The value of the server parameter or all the server parameters
+     */
+    public function getServer($key = null)
+    {
+        if ($key) {
+            if (array_key_exists($key, $this->SERVER)) {
+                return $this->SERVER[$key];
+            }
+            return null;
+        }
+        return $this->SERVER;
     }
 
     /**

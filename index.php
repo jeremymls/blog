@@ -1,7 +1,7 @@
 <?php
 
-require_once 'vendor/autoload.php';
-require_once 'src/config/default.php';
+include_once 'vendor/autoload.php';
+include_once 'src/config/default.php';
 
 use Application\config\Routes;
 use Core\Controllers\ErrorExceptionController;

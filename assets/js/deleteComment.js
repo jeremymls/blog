@@ -19,19 +19,15 @@ function delete_ajax(element, action) {
     const validation = confirm(sentence);
     if (validation) {
         $.ajax({
-            url: '/comment/ajax/' + action + '?csrf_token=' + csrf,
+            url: '/comment/ajax/' + action + '?csrf_token=' + csrf, // todo: name route
             type: 'post',
             data: {
                 'commentId': id
-            },
-            success: function(result) {
-                if (result == 'done') {
-                    const panel = $(button).parent().parent().parent();
-                    location.reload();
-                } else {
-                    alert("Une erreur est survenue. Réessayer plus tard")
-                }
             }
+        }).done(function () {
+            location.reload();
+        }).fail(function () {
+            alert("Une erreur est survenue. Réessayer plus tard")
         });
     }
 }
