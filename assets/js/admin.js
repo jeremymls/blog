@@ -60,7 +60,6 @@ $(document).ready(function () {
         };
     });
 
-    // todo: delete this
     $('.ajax-delete').click(function (e) {
         e.preventDefault();
         var target = $(this).data('target');

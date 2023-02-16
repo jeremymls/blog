@@ -75,7 +75,7 @@ class Connection
                     . ';charset=utf8',
                     $dbData['user'],
                     $dbData['pass']
-                ); // todo: Port
+                );
                 self::$database->setAttribute(
                     \PDO::ATTR_ERRMODE,
                     \PDO::ERRMODE_EXCEPTION
