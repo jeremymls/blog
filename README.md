@@ -36,6 +36,20 @@ DB_PASS // mot de passe
 
 ## Installation
 
+Configuration du VirtualHost Apache :
+
+```apache
+Options -Indexes +FollowSymLinks
+ErrorDocument 403 /403.php
+Require all granted
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
+```
+
 - Cloner le dépôt Git
 
 ```bash

@@ -167,7 +167,6 @@ class ConfigService extends EntityService
     public function initConfigs()
     {
         include_once ROOT . '/src/config/default.php';
-        // $configs = $this->getAll()['configs'];
         $list = [];
         $configs = $this->getConfigsObject();
         foreach ($configs as $config) {

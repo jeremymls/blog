@@ -91,7 +91,7 @@ class UserService extends EntityService
      */
     public function getData($id)
     {
-        if ($id != null && $this->userSession->isAdmin()) {
+        if ($id !== null && $this->userSession->isAdmin()) {
             $id = (int) $id;
         } elseif ($this->userSession->isUser()) {
             $id = $this->userSession->getUserParam("identifier");
@@ -108,7 +108,7 @@ class UserService extends EntityService
             $params['commentsPendingCount'] = count(
                 array_filter(
                     $params['comments'],
-                    function ($obj) {
+                    function (mixed $obj) {
                         return $obj->moderate == 0;
                     }
                 )
@@ -200,7 +200,7 @@ class UserService extends EntityService
         $validation = new stdClass();
         $validation->validated_email = 1;
         $validation->csrf_token = CsrfService::getInstance()->generateToken();
-        if ($user->validated_email == "" || $user->validated_email == null) {
+        if ($user->validated_email === "" || $user->validated_email === null) {
             $this->update($user->identifier, $validation, "", false, false);
             $user->validated_email = "1";
             $this->userSession->setUser($user);
@@ -324,7 +324,7 @@ class UserService extends EntityService
     public function forgetPassword(array $input)
     {
         $user = $this->repository->getUserByUsername($input['email']);
-        if ($user->email == null) {
+        if ($user->email === null) {
             throw new \Exception("Cet utilisateur n'existe pas");
         }
         $checkToken = $this->tokenService->getAll(
