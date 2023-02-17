@@ -78,7 +78,6 @@ class MailService
         //TCP port to connect to
         //use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
         $mail->Port       = 465;
-        // $mail->SMTPDebug = SMTP::DEBUG_CONNECTION;
         $mail->SMTPOptions = array(
             'ssl' => array(
             'verify_peer' => false,
@@ -88,7 +87,7 @@ class MailService
         );
         $mail->setFrom(
             $this->configService->getByName("mb_user"),
-            utf8_decode($this->configService->getByName("cs_site_name")) // todo : replace name by ??
+            utf8_decode($this->configService->getByName("cs_site_name")) 
         );
         return $mail;
     }

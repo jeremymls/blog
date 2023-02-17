@@ -62,7 +62,7 @@ class InitController extends Controller
      */
     private static function grantAccess()
     {
-        if (PHPSession::getInstance()->get('safe_mode') != true) {
+        if (PHPSession::getInstance()->get('safe_mode') !== true) {
             new Security();
         }
     }
@@ -77,7 +77,6 @@ class InitController extends Controller
     public function new()
     {
         $dbData = Superglobals::getInstance()->getDatabase();
-        // todo: add instructions
         $sql = "CREATE DATABASE IF NOT EXISTS " . $dbData['name'];
         $this->twig->display(
             'admin/config/new.twig',
@@ -113,13 +112,10 @@ class InitController extends Controller
     public function seed($env)
     {
         $seed_key = 'r*Bvd2dMpTdGYjwaG^BAw$hADm8gb#KggKxNh9fGv^e6PdU74n';
-        // todo: à revoir (aide: ligne 169)
         if (isset($_POST["seedKey"]) && $_POST["seedKey"] == $seed_key) {
             InitService::seed($env);
-            // echo 'La base de données a été peuplée avec succès';
         } else {
             throw new \Exception('La clé de peuplement est incorrecte');
-            // echo 'La clé de peuplement est incorrecte';
         }
     }
 

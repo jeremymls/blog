@@ -7,6 +7,9 @@
 	<a id="retour" href="{{ getPath('admin:configs:list',{'prefix': config.name |split("_")|first }) }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
 {% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ asset('css/admin/configs.css') }}">
+{% endblock %}
 {% block main %}
     <script src="/vendor/tinymce/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
@@ -129,44 +132,6 @@
             </div>
         </div>
     </section>
-
-    <style>
-        #template_div {
-            position: relative;
-            border: thick double #ccc;
-            padding: 10px;
-            background: #dd9b0d;
-            margin: 4rem 0 2rem 0;
-        }
-        #template_overview_title {
-            position: absolute;
-            border: thick double #ccc;
-            top: -3rem;
-            background: whitesmoke;
-            border-radius: 15px;
-            padding: 1rem 2rem;
-            font-weight: bold;
-        }
-        #template_overview {
-            color: #fff;
-        }
-        #template_overview a{
-                color: #81260a;
-            }
-        main {
-            background-color: whitesmoke !important;
-        }
-        #divOverview {
-            position: relative;
-        }
-        #divOverview > button {
-            position: absolute;
-            top: 0;
-            right: 0;
-            margin: .5rem;
-            border-radius: 50%;
-        }
-    </style>
 {% endblock %}
 {% block script %}
     <script src="{{ asset('js/picture.js') }}"></script>
@@ -200,38 +165,7 @@
             $("#value").prop("disabled", false);
         });
     </script>
-    <script>
-        {# DELETE FIELD #}
-        $('.emptyOne').each(function() {
-            $(this).click(function(e) {
-                e.preventDefault();
-                $(this).parent().find('textarea').val('');
-            });
-        });
-    </script>
-    <script>
-        {# DELETE IMAGE #}
-        $('#btnOverview').click(function(e){
-            e.preventDefault();
-            var target = "{{ getPath('admin:config:delete:value', {value: config.identifier}) }}";
-            var csrf = "{{ getCsrf() }}";
-            if (confirm("Voulez-vous vraiment supprimer cette image?")){
-                $.ajax({
-                    url: target,
-                    type: 'post',
-                    data: { 'csrf_token': csrf },
-                    success: function (result) {
-                        console.log(result);
-                        if (result == 'done') {
-                            location.reload();
-                        } else {
-                            alert("Une erreur est survenue. Réessayer")
-                        }
-                    }
-                });
-            };
-        });
-    </script>
+    <script src="{{ asset('js/config.js') }}"></script>
     <script>
         {# HIDE USELESS FIELD #}
         $('#no_content').hide();
@@ -254,60 +188,5 @@
             $('#image').show();
             $('#picture').removeAttr('disabled');
         {% endif %}
-
-        {# SHOW SELECTED CONTENT #}
-        $('#type').change(function(){
-            $('#no_content').prop('disabled', true);
-            $('#mytextarea').prop('disabled', true);
-            $('.tox-tinymce').hide();
-            $('#picture').prop('disabled', true);
-            $('#image').hide();
-            $('#select_template').prop('disabled', true);
-            $('#template').hide();
-            switch ($(this).val()) {
-                case 'content':
-                    $('.tox-tinymce').show();
-                    $('#mytextarea').prop('disabled', false);
-                    break;
-                case 'image':
-                    $('#image').show();
-                    $('#picture').prop('disabled', false);
-                    break;
-                case 'template':
-                    $('#template').show();
-                    $('#select_template').prop('disabled', false);
-                    break;
-                default:
-                    $('#no_content').prop('disabled', false);
-                    break;
-            }
-        });
-
-        {# CHANGE TEMPLATE OVERVIEW #}
-        $('document').ready(function(){
-        changeTemplateOverview($('#select_template').val());
-        });
-        $('#select_template').change(function(){
-            changeTemplateOverview($(this).val());
-        });
-        const template_contact = '<h3>Titre</h3><ul class="list-unstyled"><li><i class="fa fa-map-marker fa-fw"></i> 1 rue de la libération 75000 PARIS</li><li><i class="fa fa-phone fa-fw"></i> <a>0123456789</a></li><li><i class="fa fa-envelope-o fa-fw"></i> <a>votre@adresse.fr</a></li><li class="page-scroll"><a>Formulaire de contact</a></li></ul>';
-        const template_reseaux = '<ul class="list-inline"><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-github"></i></a></li><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a></li><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-instagram"></i></a></li><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a></li><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a></li><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-youtube"></i></a></li><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble"></i></a></li><li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-google-plus"></i></a></li></ul>';
-        const template_contact_reseaux = template_contact + template_reseaux;
-        function changeTemplateOverview(template) {
-            switch (template) {
-                case '[%contact%]':
-                    $('#template_overview').html(template_contact);
-                    break;
-                case '[%reseaux%]':
-                    $('#template_overview').html(template_reseaux);
-                    break;
-                case '[%contact+reseaux%]':
-                    $('#template_overview').html(template_contact_reseaux);
-                    break;
-                default:
-                    $('#template_overview').html('Selectionnez un template pour voir un aperçu');
-                    break;
-            }
-        }
     </script>
 {% endblock %}

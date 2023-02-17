@@ -13,7 +13,6 @@
 
 namespace Core\Middleware;
 
-// todo : move this to services
 /**
  * Pagination
  *

@@ -1,4 +1,6 @@
 {
+    "name": "application/jmprojets",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Application\\": "src/",

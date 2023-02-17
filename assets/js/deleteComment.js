@@ -19,7 +19,7 @@ function delete_ajax(element, action) {
     const validation = confirm(sentence);
     if (validation) {
         $.ajax({
-            url: '/comment/ajax/' + action + '?csrf_token=' + csrf, // todo: name route
+            url: '/comment/ajax/' + action + '?csrf_token=' + csrf,
             type: 'post',
             data: {
                 'commentId': id
