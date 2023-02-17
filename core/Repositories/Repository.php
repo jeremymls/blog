@@ -189,12 +189,13 @@ class Repository
      *
      * @return bool
      */
-    public function update(mixed $identifier, mixed $entity): bool
+    public function update(string $identifier, object $entity): bool
     {
         $this->checkCrsf($entity->csrf_token);
         $this->removeObsoleteProperties($entity);
         $values = [];
-        $sql = "UPDATE " . $this->model::TABLE . " SET ";
+        $table = $this->model::TABLE;
+        $sql = str_replace(":table", $table, "UPDATE :table SET ");
         foreach ($entity as $key => $value) {
             $values[] = $value;
             $sql .= $key . " = ?, ";
@@ -346,7 +347,7 @@ class Repository
      *
      * @return mixed The cleaned entity
      */
-    private function removeObsoleteProperties(mixed $entity)
+    private function removeObsoleteProperties(object $entity)
     {
         foreach ($entity as $key => $value) {
             if ($key == "password") {

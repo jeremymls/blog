@@ -12,6 +12,7 @@
       <file>tests/StartTest/CreateDbTest.php</file>
       <file>tests/StartTest/AuthAdminTest.php</file>
       <file>tests/StartTest/SeedTest.php</file>
+      <exclude>tests/base/*</exclude>
     </testsuite>
     <testsuite name="Unit">
       <directory>tests/core</directory>

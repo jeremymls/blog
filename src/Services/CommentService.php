@@ -68,7 +68,7 @@ class CommentService extends EntityService
         $params = $this->getAll($option);
         $params['comments'] = array_filter(
             $params['comments'],
-            function (mixed $comment) {
+            function (Comment $comment) {
                 return $comment->author->role != 'admin';
             }
         );

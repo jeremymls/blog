@@ -13,6 +13,7 @@
 
 namespace Application\Services;
 
+use Application\Models\Comment;
 use Application\Models\User;
 use Application\Repositories\CommentRepository;
 use Core\Middleware\Session\UserSession;
@@ -108,8 +109,8 @@ class UserService extends EntityService
             $params['commentsPendingCount'] = count(
                 array_filter(
                     $params['comments'],
-                    function (mixed $obj) {
-                        return $obj->moderate == 0;
+                    function (Comment $comment) {
+                        return $comment->moderate == 0;
                     }
                 )
             );
