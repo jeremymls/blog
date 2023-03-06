@@ -87,7 +87,7 @@ class MailService
         );
         $mail->setFrom(
             $this->configService->getByName("mb_user"),
-            utf8_decode($this->configService->getByName("cs_site_name")) 
+            utf8_decode($this->configService->getByName("cs_site_name"))
         );
         return $mail;
     }

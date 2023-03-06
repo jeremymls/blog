@@ -70,7 +70,7 @@ class Repository
      *
      * @return bool
      */
-    public function add(mixed $entity): bool
+    public function add(object $entity): bool
     {
         if (get_class($entity) != Token::class) {
             $this->checkCrsf($entity->csrf_token);
