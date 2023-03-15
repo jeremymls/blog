@@ -104,7 +104,7 @@ class AdminPostController extends AdminController
     /**
      * Delete
      *
-     * Delete a post in AJAX
+     * Delete a post
      *
      * @param string $identifier post identifier
      *
@@ -113,7 +113,6 @@ class AdminPostController extends AdminController
     public function delete(string $identifier)
     {
         $this->postService->delete($identifier);
-        echo 'done';
     }
 
     /**
@@ -128,6 +127,5 @@ class AdminPostController extends AdminController
     public function deletePicture($identifier)
     {
         $this->postService->deletePostPicture($identifier);
-        echo 'done';
     }
 }

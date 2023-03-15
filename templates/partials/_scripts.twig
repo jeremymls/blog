@@ -20,8 +20,8 @@
 <!-- Theme JavaScript -->
 <script src="{{ asset('js/freelancer.min.js') }}"></script>
 
-{% if sd_google_analytics_key != "" %}
 <!-- Google tag (gtag.js) -->
+{% if sd_google_analytics_key != "" %}
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ sd_google_analytics_key }}"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
@@ -41,3 +41,20 @@
         });
     });
 </script>
+
+<!-- Cookies -->
+{% if sd_axeptio_key != "" %}
+<script>
+	window.axeptioSettings = {
+        clientId: "{{ sd_axeptio_key }}"
+    };
+
+    (function (d, s) {
+        var t = d.getElementsByTagName(s)[0],
+        e = d.createElement(s);
+        e.async = true;
+        e.src = "//static.axept.io/sdk.js";
+        t.parentNode.insertBefore(e, t);
+    })(document, "script");
+</script>
+{% endif %}

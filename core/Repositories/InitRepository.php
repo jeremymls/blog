@@ -68,7 +68,6 @@ class InitRepository extends Repository
      */
     public function deleteDatabase()
     {
-        // todo : revoir la sécurité
         $superglobals = Superglobals::getInstance();
         $dbData = $superglobals->getDatabase();
         $bdd = new \PDO(
@@ -79,5 +78,8 @@ class InitRepository extends Repository
         $sql = "DROP DATABASE IF EXISTS " . $dbData['name'];
         $statement = $bdd->prepare($sql);
         $statement->execute();
+        if ($statement->rowCount() == 0) {
+            throw new \Exception();
+        }
     }
 }

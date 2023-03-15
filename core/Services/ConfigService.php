@@ -167,7 +167,6 @@ class ConfigService extends EntityService
     public function initConfigs()
     {
         include_once ROOT . '/src/config/default.php';
-        // $configs = $this->getAll()['configs'];
         $list = [];
         $configs = $this->getConfigsObject();
         foreach ($configs as $config) {
@@ -320,9 +319,9 @@ class ConfigService extends EntityService
         $params = $this->getAll("where name LIKE 'af_color%'");
         $renderer = new TemplateRenderer(
             $twig,
-            $_SERVER['DOCUMENT_ROOT'],
+            $this->superglobals->getServer('DOCUMENT_ROOT'),
             'assets/styles.css.twig'
-        ); // todo: à revoir pour la doc
+        );
         foreach ($params['configs'] as $param) {
             $renderer->setParam($param->name, $param->value);
         }

@@ -35,7 +35,6 @@ class TokenService extends EntityService
     {
         parent::__construct();
         $this->model = new Token();
-        // $this->repository = new TokenRepository();
     }
 
     /**

@@ -51,19 +51,15 @@ $(document).ready(function () {
                 type: 'post',
                 data: {
                     'csrf_token': csrf
-                },
-                success: function (result) {
-                    if (result == 'done') {
-                        location.reload();
-                    } else {
-                        alert("Une erreur est survenue. Réessayer")
-                    }
                 }
+            }).done(function () {
+                location.reload();
+            }).fail(function () {
+                alert("Une erreur est survenue. Réessayer")
             });
         };
     });
 
-    // todo: delete this
     $('.ajax-delete').click(function (e) {
         e.preventDefault();
         var target = $(this).data('target');

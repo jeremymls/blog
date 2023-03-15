@@ -1,0 +1,35 @@
+#template_div {
+    position: relative;
+    border: thick double #ccc;
+    padding: 10px;
+    background: #dd9b0d;
+    margin: 4rem 0 2rem 0;
+}
+#template_overview_title {
+    position: absolute;
+    border: thick double #ccc;
+    top: -3rem;
+    background: whitesmoke;
+    border-radius: 15px;
+    padding: 1rem 2rem;
+    font-weight: bold;
+}
+#template_overview {
+    color: #fff;
+}
+#template_overview a{
+        color: #81260a;
+    }
+main {
+    background-color: whitesmoke !important;
+}
+#divOverview {
+    position: relative;
+}
+#divOverview > button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: .5rem;
+    border-radius: 50%;
+}

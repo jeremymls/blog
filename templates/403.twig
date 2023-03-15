@@ -1,0 +1,25 @@
+{% extends "/base.twig" %}
+{% block nav %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block title %}Interdit!! 403{% endblock %}
+{% block subtitle %}
+	<a id="retour" href="{{ getPath('home') }}" ><i class="fa fa-home" aria-hidden="true"></i></a>
+{% endblock %}
+
+{% block main %}
+<section>
+	<div class="container">
+		<div class="alert alert-danger" role="alert">
+            <p class="text-center">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <strong>Accès refusé !!</strong>
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </p>
+            <p class="text-center">
+                Vous n'avez pas les droits pour accéder à cette ressource.
+            </p>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

@@ -102,12 +102,11 @@
                 $.ajax({
                     url: "{{ getPath('profil:delete:image') }}",
                     type: "POST",
-                    data: {'csrf_token': '{{ getCsrf() }}'},
-                    success: function(data){
-                        if (data == "done"){
-                            location.reload();
-                        }
-                    }
+                    data: {'csrf_token': '{{ getCsrf() }}'}
+                }).done(function(){
+                    location.reload();
+                }).fail(function(){
+                    alert("Une erreur est survenue, veuillez réessayer plus tard.");
                 });
             };
         });

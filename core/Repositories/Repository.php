@@ -70,7 +70,7 @@ class Repository
      *
      * @return bool
      */
-    public function add($entity): bool
+    public function add(object $entity): bool
     {
         if (get_class($entity) != Token::class) {
             $this->checkCrsf($entity->csrf_token);
@@ -133,8 +133,9 @@ class Repository
      */
     public function findBy(string $option, array $optionData = [])
     {
+        $option = "WHERE $option";
         $statement = $this->getSelectStatementByModel(
-            "WHERE " . $option,
+            $option,
             $optionData
         );
         $row = $statement->fetch();
@@ -189,12 +190,12 @@ class Repository
      *
      * @return bool
      */
-    public function update($identifier, $entity): bool
+    public function update(string $identifier, object $entity): bool
     {
         $this->checkCrsf($entity->csrf_token);
         $this->removeObsoleteProperties($entity);
         $values = [];
-        $sql = "UPDATE " . $this->model::TABLE . " SET ";
+        $sql = str_replace(":table", $this->model::TABLE, "UPDATE :table SET ");
         foreach ($entity as $key => $value) {
             $values[] = $value;
             $sql .= $key . " = ?, ";
@@ -228,9 +229,9 @@ class Repository
     public function delete($identifier): bool
     {
         $this->checkCrsf($this->superglobals->getPost('csrf_token'));
-        $statement = $this->connection->prepare(
-            'DELETE FROM ' . $this->model::TABLE . ' WHERE id=?'
-        );
+        $sql = "DELETE FROM :table WHERE id = ?";
+        $sql = str_replace(":table", $this->model::TABLE, $sql);
+        $statement = $this->connection->prepare($sql);
         $affectedLines = $statement->execute([$identifier]);
         $affectedLines = $statement->rowCount();
         return ($affectedLines > 0);
@@ -268,7 +269,8 @@ class Repository
             $sql .= $key . ", ";
         }
         $sql = substr($sql, 0, -2);
-        $sql .= " FROM " . $this->model::TABLE . " " . $options;
+        $sql .= " FROM :table $options";
+        $sql = str_replace(":table", $this->model::TABLE, $sql);
         $statement = $this->connection->prepare($sql);
         $statement->execute($optionsData);
         return $statement;
@@ -346,7 +348,7 @@ class Repository
      *
      * @return mixed The cleaned entity
      */
-    private function removeObsoleteProperties($entity)
+    private function removeObsoleteProperties(object $entity)
     {
         foreach ($entity as $key => $value) {
             if ($key == "password") {

@@ -119,7 +119,7 @@
 												<td class="action">
 													<div class="row">
                                                         {% if "configs" not in missing_tables %}
-														<form method="post" >
+														<form method="post" action="{{ getPath('init:configs') }}">
 															<input type="hidden" name="csrf_token" value="{{ getCsrf() }}">
 															<button type="submit" class="btn btn-primary">
 																Initialiser
