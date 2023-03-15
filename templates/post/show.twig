@@ -26,12 +26,12 @@
 		{% if post.chapo %}
 		<h2>Résumé</h2>
 			<div id="postContent">
-				<p>{{ post.chapo | nl2br }}</p>
+				<p>{{ post.chapo }}</p>
 			</div>
 		{% endif %}
 		<h2>Description</h2>
 		<div>
-			<p>{{ post.content | nl2br }}</p>
+			<p>{{ post.content | raw }}</p>
 		</div>
 		{% if post.url != "" %}
 		<h2>Aperçu</h2>
