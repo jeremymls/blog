@@ -33,7 +33,7 @@
 		<div>
 			<p>{{ post.content | nl2br }}</p>
 		</div>
-		{% if post.url is not empty %}
+		{% if post.url != "" %}
 		<h2>Aperçu</h2>
 		<div id="section-preview" class="row text-center">
 			<div class="col-sm-12 preview-item">
