@@ -29,14 +29,19 @@
                         <div class="col-md-6 text-right">{{ utils.nbp(nbr_show) }}</div>
                     </div>
                     {{ utils.pagination(nbPage) }}
-                    <div role="tabpanel" class="tab-pane active" id="date">
+                    <div role="tabpanel" class="tab-pane active" id="moderation">
                         <form method="post">
-                        {{ utils.actionBtn("Commentaires") }}
                         {% if comments|length > 0 %}
+                        <div class="btn-group btn-check-all" data-toggle="buttons">
+                            <label class="btn btn-primary">
+                                <input class="checkAll" type="checkbox" autocomplete="off"> Tout cocher
+                            </label>
+                        </div>
+                        {{ utils.actionBtn("Commentaires") }}
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th><input id="checkAll" type="checkbox"/></th>
+                                    <th><input class="checkAll" type="checkbox"/></th>
                                     <th class="text-center">Modération</th>
                                     <th></th>
                                     <th>Auteur</th>
@@ -61,6 +66,7 @@
                                         <td>
                                             <input class="checkbox" type="checkbox" name="comment[]" value="{{ comment.identifier }}" />
                                         </td>
+                                        <td class="mod-col">Modération</td>
                                         <td class="text-center">
                                         {% if comment.moderate == null %}
                                             <i class="fa fa-hourglass-half fa-2x" style="color:orange;" aria-hidden="true"></i>
@@ -74,9 +80,13 @@
                                         <div id="divOverview" class="user" style="width: 4rem;">
                                             <img id="thumbnailOverview" src={% if comment.author.picture is empty %}"{{ asset('img/profile.png') }}"{% else %}{{ comment.author.picture }}{% endif %} class="img-responsive" alt="{{ user.first }} {{ user.last }}">
                                         </div></td>
+                                        <td class="mod-col">Auteur</td>
                                         <td>{{ comment.author.username }}</td>
+                                        <td class="mod-col">Commentaire</td>
                                         <td>{{ comment.comment | u.truncate(200, '...')}}</td>
+                                        <td class="mod-col">Publication</td>
                                         <td>{{ comment.post.title | u.truncate(25, '...')}}</td>
+                                        <td class="mod-col">Date de création</td>
                                         <td>{{ comment.frenchCreationDate }}</td>
                                         <td class="text-center">
                                             {# <button type="button" class="btn btn-danger" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#confirmCommentDelete"><i class="fa fa-trash" aria-hidden="true"></i></button> #}
@@ -93,7 +103,7 @@
                                                 </a>
                                             {% endif %}
                                         </td>
-                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-content="{{ comment.comment }}" data-post="{{ comment.post.title }}" data-postid="{{ comment.post.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#commentPreview"><i class="fa fa-eye"></i></button></td>
+                                        <td class="text-center"><button type="button" class="btn btn-primary" data-toggle="modal" data-identifier="{{ comment.identifier }}" data-content="{{ comment.comment }}" data-post="{{ comment.post.title }}" data-postid="{{ comment.post.identifier }}" data-title="de {{ comment.author.username }} (id:{{ comment.identifier }})" data-target="#commentPreview"><i class="fa fa-eye"></i></button></td>
                                     </tr>
                                 {% endfor %}
                             </tbody>

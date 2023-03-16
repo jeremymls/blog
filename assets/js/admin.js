@@ -14,7 +14,7 @@ $(document).ready(function () {
     });
 
     // Check/uncheck all checkboxes
-    $('#checkAll').change(function () {
+    $('.checkAll').change(function () {
         if ($(this).is(':checked')) {
             $('.checkbox').prop('checked', true);
             $('.multiAction').show();

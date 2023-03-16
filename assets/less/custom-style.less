@@ -212,16 +212,21 @@
         }
     }
 }
+.mod-col { display: none;}
 @media screen and (max-width: 768px) {
+    .btn-check-all {
+        display: flex;
+        margin-bottom: 1rem;
+    }
     #nbr_show {
         display: inline;
         width: auto;
     }
-    #BO_table {
+    #BO_table , #moderation {
         p, dt, dd{
             font-size: 2rem;
         }
-        a {
+        a, button {
             font-size: 2rem;
             margin: 0 1rem;
             width: none !important;
@@ -242,6 +247,8 @@
             }
             td {
                 border: 0;
+                width: 100%;
+                text-align: center !important;
                 dl {
                     text-align: center !important;
                     dt { 
@@ -254,6 +261,34 @@
                 }
             }
         }
+    }
+    #moderation {
+        font-size: 2rem;
+        .checkbox {
+            width: 2.5rem;
+            height: 2.5rem;
+            margin: 1rem 0 0 1rem;
+        }
+        tr {
+            margin-bottom: 1rem;
+            td {
+                width: 100%;
+                padding-top: 0;
+                padding-bottom: 1rem;
+            }
+        }
+        .mod-col {
+            display: block;
+            padding-bottom: 0;
+            font-weight: bold;
+        }
+        #divOverview {
+            width: 100px !important;
+        }
+    }
+    .multiAction {
+        display: flex;
+        flex-direction: column;
     }
 }
 
