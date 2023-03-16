@@ -116,7 +116,7 @@
     {% endif %}
     <ul class="list-unstyled">
         {% if cs_address %}
-            <li><i class="fa fa-map-marker fa-fw"></i> {{ cs_address }}</li>
+            <li><i class="fa fa-map-marker fa-fw"></i> {{ cs_address| nl2br}}</li>
         {% endif %}
         {% if cs_owner_phone %}
             <li><i class="fa fa-phone fa-fw"></i> <a href="tel:{{ cs_owner_phone }}">{{ cs_owner_phone }}</a></li>
