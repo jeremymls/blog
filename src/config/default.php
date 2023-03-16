@@ -84,6 +84,7 @@ const CONFIGS = [
     'sd_google_analytics_key' =>    [null,'Clé Google Analytics'],
     'sd_recaptcha_site_key' =>      [null,'Clé du site reCaptcha'],
     'sd_axeptio_key' =>            [null,'Clé Cookies Axeptio'],
+    'sd_google_tag_key' =>            [null,'Clé Google Tag Manager'],
 ];
 
 const MODELS = [
