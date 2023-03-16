@@ -83,15 +83,21 @@
                 </div>
             </div>
             {% endif %}
-            <div class="row">
+            <div id="home-content" class="row">
                 <div class="col-md-5 col-lg-push-5 col-lg-2  text-center">
-                    {{ utils.content_converter(af_home_content_1) }}
+                    {% if af_home_content_1 != ""%}
+                        {{ utils.content_converter(af_home_content_1) }}
+                    {% endif %}
                 </div>
                 <div id="intro" class="col-md-6 col-lg-pull-2 col-lg-5 text-center">
-                    {{ utils.content_converter(af_home_content_2) }}
+                    {% if af_home_content_2 != ""%}
+                        {{ utils.content_converter(af_home_content_2) }}
+                    {% endif %}
                 </div>
                 <div class="col-lg-5 text-center">
-                    {{ utils.content_converter(af_home_content_3) }}
+                    {% if af_home_content_3 != ""%}
+                        {{ utils.content_converter(af_home_content_3) }}
+                    {% endif %}
                 </div>
             </div>
         </div>
