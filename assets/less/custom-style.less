@@ -101,7 +101,7 @@
         font-size: 1rem !important;
     }
     p, dt, dd{
-        font-size: 0.8em !important;
+        font-size: 0.8em;
     }
 }
 
@@ -208,6 +208,50 @@
             }
             .btn{
                 width: 90%;
+            }
+        }
+    }
+}
+@media screen and (max-width: 768px) {
+    #nbr_show {
+        display: inline;
+        width: auto;
+    }
+    #BO_table {
+        p, dt, dd{
+            font-size: 2rem;
+        }
+        a {
+            font-size: 2rem;
+            margin: 0 1rem;
+            width: none !important;
+        }
+        thead{
+            display: none;
+        }
+        tr {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            .action{
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-evenly;
+            }
+            td {
+                border: 0;
+                dl {
+                    text-align: center !important;
+                    dt { 
+                        margin-bottom: 0;
+                        line-height: 1;
+                    }
+                    dd {
+                        margin-bottom: 1rem;
+                    }
+                }
             }
         }
     }
