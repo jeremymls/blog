@@ -71,14 +71,15 @@ $(document).ready(function () {
                 data: {
                     'csrf_token': csrf
                 },
-                success: function (result) {
-                    if (result == 'done') {
-                        location.reload();
-                    } else {
-                        alert("Une erreur est survenue. Réessayer")
-                    }
-                }
+                // success: function (result) {
+                //     if (result == 'done') {
+                //         location.reload();
+                //     } else {
+                //         alert("Une erreur est survenue. Réessayer")
+                //     }
+                // }
             });
+            location.reload();
         }
     });
 });
