@@ -3,10 +3,21 @@
 <footer class="text-center">
     <div class="footer-above">
         <div class="container">
-            <div class="row">
-                <div class="footer-col col-md-4">
+            <div id="titles" class="row">
+                <div class="footer-col col-xs-12 col-sm-4 m-0">
                     <h3>Menu</h3>
+                </div>
+                <div class="footer-col col-xs-12 col-sm-4 m-0">
+                    <h3>Réseaux sociaux</h3>
+                </div>
+                <div class="footer-col col-xs-12 col-sm-4 m-0">
+                    <h3>Coordonnées</h3>
+                </div>
+            </div>
+            <div id="footer-content" class="row">
+                <div class="footer-col col-xs-12 col-sm-4">
                     <ul class="nav nav-pills nav-stacked">
+                        <h3>Menu</h3>
                         <li role="presentation"><a href="{{ getPath('home') }}">Accueil</a></li>
                         {% if categories | length == 0 %}
                             <li class="page-scroll">
@@ -14,7 +25,7 @@
                             </li>
                         {% elseif categories | length == 1 %}
                             <li class="page-scroll">
-                                <li class="page-scroll"><a href="{{ getPath('post:id', {'id':categories[0].identifier}) }}"><i class="fa fa-folder-open" aria-hidden="true"></i> {{ categories[0].name }}</a></li>
+                                <li class="page-scroll"><a href="{{ getPath('post:id', {'id':categories[0].identifier}) }}">{{ categories[0].name }}</a></li>
                             </li>
                         {% else %}
                             <li class="dropdown">
@@ -43,14 +54,16 @@
                             <li class="page-scroll"><a href="{{ getPath('login') }}">Connexion</a></li>
                             <li class="page-scroll"><a href="{{ getPath('register') }}">Inscription</a></li>
                         {% endif %}
+                        <li class="page-scroll"><a href="{{ getPath('mentions') }}">Mentions légales</a></li>
+                        <li class="page-scroll"><a href="{{ getPath('policy') }}">Politique de confidentialité</a></li>
                     </ul>
                 </div>
-                <div class="footer-col col-md-4">
-                    <h3>Réseaux sociaux</h3>
+                <h3 class="text-center">Réseaux sociaux</h3>
+                <div class="footer-col col-xs-12 col-sm-4">
                     {{ utils.social_networks() }}
                 </div>
-                <div class="footer-col col-md-4">
-                    <h3>Coordonnées</h3>
+                <h3>Coordonnées</h3>
+                <div id="footer-contact" class="footer-col col-xs-12 col-sm-4">
                     {{ utils.contact() }}
                 </div>
             </div>

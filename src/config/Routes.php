@@ -64,6 +64,10 @@ class Routes
     {
         // ERROR 403 //
         $this->router->get('403.php', 'ErrorException@accessDenied@core', '403');
+        // Mentions Légales //
+        $this->router->get('mentions', 'Home@mentions', 'mentions');
+        // Politique de confidentialité //
+        $this->router->get('politique', 'Home@policy', 'policy');
         // FRONTEND //
         // Home
         $this->router->get('/index.php', 'Home@execute', 'home');

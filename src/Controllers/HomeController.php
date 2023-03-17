@@ -70,4 +70,28 @@ class HomeController extends Controller
         }
         $this->superglobals->redirect('home');
     }
+
+    /**
+     * Mentions
+     *
+     * Display the legal mentions page
+     *
+     * @return void
+     */
+    public function mentions()
+    {
+        $this->twig->display('mentions.twig');
+    }
+
+    /**
+     * Policy
+     *
+     * Display the privacy policy page
+     *
+     * @return void
+     */
+    public function policy()
+    {
+        $this->twig->display('policy.twig');
+    }
 }

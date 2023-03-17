@@ -809,3 +809,56 @@ body{
 .affix{
     position: sticky !important;
 }
+
+footer {
+	color: white;
+	h3 {
+		margin-top: 0;
+		margin-bottom: 1rem;
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
+	}
+    #footer-content {
+        h3 {
+            margin: 2rem auto 1rem auto;
+            display: none;
+            font-size: 2rem !important;
+            @media screen and (max-width: 768px) {
+                display: block !important;
+            }
+        }
+        display: flex;
+        align-content: center;
+        flex-wrap: wrap;
+    }
+    .footer-col {
+        display: flex;
+        align-content: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        &#footer-contact {
+            li {
+                margin-bottom: 1.5rem;
+            }
+        }
+    }
+	.footer-above {
+		padding: 50px 0;
+		background-color: @theme-primary;
+	}
+	.footer-below {
+		padding: 1rem 0;
+		background-color: @theme-primary-darken;
+	}
+}
+
+#policy, #mentions {
+    h2 {
+        margin: 2rem 0 1rem 0;
+        font-size: 3rem;
+    }
+    p, ul, li {
+        font-size: 2rem;
+    }
+}
