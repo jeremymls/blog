@@ -473,6 +473,12 @@
     // box-shadow: 0 0 8px 1px @theme-primary;
     margin-bottom: 5rem;
     padding: 2rem;
+    @media screen and (max-width: 768px) {
+        padding: 1rem;
+        p {
+            margin-bottom: 0;
+        }
+    }
 }
 #postContent:hover{
     border: 2px solid transparent;

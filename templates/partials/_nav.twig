@@ -3,11 +3,13 @@
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header page-scroll">
 			<div id="navbar-header-right">
+				{% if isLogged() %}
 				<a id="avatar_mobile" class="mobile" href="{{ getPath('profil') }}">
 					<div id="divOverview" class="user" style="width: 3rem;">
 						<img id="thumbnailOverview" src={% if getUserParam("picture") is empty %}"{{ asset('img/profile.png') }}"{% else %}{{ getUserParam("picture") }}{% endif %} class="img-responsive" alt="{{  getUserParam("username") }}">
 					</div>
 				</a>
+				{% endif %}
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
 					<span class="sr-only">Toggle navigation</span>
 					{% if isLogged() %}
