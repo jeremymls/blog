@@ -167,7 +167,7 @@ class Routes
             'Admin\AdminCategory@update'
         );
         $this->router->post(
-            'admin/category/delete/:id',
+            'admin/category/delete',
             'Admin\AdminCategory@delete',
             'admin:category:delete'
         );
@@ -191,7 +191,7 @@ class Routes
             'admin:post:delete:picture'
         );
         $this->router->post(
-            'admin/posts/delete/:id',
+            'admin/posts/delete',
             'Admin\AdminPost@delete',
             'admin:post:delete'
         );

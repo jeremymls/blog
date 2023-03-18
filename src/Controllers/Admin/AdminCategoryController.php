@@ -95,12 +95,15 @@ class AdminCategoryController extends AdminController
      *
      * Delete category
      *
-     * @param mixed $identifier the category identifier
-     *
      * @return void
      */
-    public function delete(string $identifier)
+    public function delete()
     {
-        $this->categoryService->delete($identifier);
+        if ($this->isPost()) {
+            $this->categoryService->delete($this->superglobals->getPost('id'));
+            $this->superglobals->redirect('admin:categories');
+        } else {
+            throw new \Exception("Method not allowed", 405);
+        }
     }
 }

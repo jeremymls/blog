@@ -106,13 +106,16 @@ class AdminPostController extends AdminController
      *
      * Delete a post
      *
-     * @param string $identifier post identifier
-     *
      * @return void
      */
-    public function delete(string $identifier)
+    public function delete()
     {
-        $this->postService->delete($identifier);
+        if ($this->isPost()) {
+            $this->postService->delete($this->superglobals->getPost("id"));
+            $this->superglobals->redirect('admin:posts');
+        } else {
+            throw new \Exception("Method not allowed", 405);
+        }
     }
 
     /**
