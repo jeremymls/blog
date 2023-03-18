@@ -16,38 +16,36 @@
         <div class="row">
             {{ utils.pagination(nbPage) }}
             {% for post in posts %}
-                <div class="col">
-                    <div class="thumbnail thumbnail-custom">
-                        {% if category.name == "" %}
-                        <span class="label label-success">{{ post.category.name ?? "Non classé"}}</span>
-                        {% endif %}
-                        <div class="row text-center">
-                            <div class="{% if post.picture is not empty %}col-lg-8{% else %}col-lg-12{% endif %}">
-                                <div class="caption">
-                                    <div class="post_head">
-                                        <a href="{{ getPath('post', {"id": post.identifier}) }}"><h3>{{ post.title }} </h3></a>
-                                        <em>mis à jour le {{ post.frenchCreationDate }}</em>
-                                    </div>
-                                    {% if post.chapo %}
-                                        <p>{{ post.chapo | nl2br}}</p>
-                                    {% else %}
-                                        <p>{{ post.content |  u.truncate(200, '...', false) | raw }}</p>
-                                    {% endif %}
-                                    <p><a href="{{ getPath('post', {"id": post.identifier}) }}" class="btn btn-plus btn-primary" role="button">Voir plus</a></p>
+            <div class="col">
+                <div class="thumbnail thumbnail-custom">
+                    {% if category.name == "" %}
+                    <span class="label label-success">{{ post.category.name ?? "Non classé"}}</span>
+                    {% endif %}
+                    <div class="row text-center">
+                        <div class="{% if post.picture is not empty %}col-lg-8{% else %}col-lg-12{% endif %}">
+                            <div class="caption">
+                                <div class="post_head">
+                                    <a href="{{ getPath('post', {"id": post.identifier}) }}"><h3>{{ post.title }} </h3></a>
+                                    <em>mis à jour le {{ post.frenchCreationDate }}</em>
                                 </div>
+                                {% if post.chapo %}
+                                <p>{{ post.chapo | nl2br}}</p>
+                                {% endif %}
+                                <p><a href="{{ getPath('post', {"id": post.identifier}) }}" class="btn btn-plus btn-primary" role="button">Voir plus</a></p>
                             </div>
-                            {% if post.picture is not empty %}
-                            <div class="col-xs-6 col-xs-offset-3 col-lg-4 col-lg-offset-0">
-                                <div class="row text-center">
-                                    <div class="col-sm-12">
-                                        <img src="{{ post.picture }}" alt="{{ post.title }} image" class="img-thumbnail">
-                                    </div>
-                                </div>
-                            </div>
-                            {% endif %}
                         </div>
+                        {% if post.picture is not empty %}
+                        <div class="col-xs-6 col-xs-offset-3 col-lg-4 col-lg-offset-0">
+                            <div class="row text-center">
+                                <div class="col-sm-12">
+                                    <img src="{{ post.picture }}" alt="{{ post.title }} image" class="img-thumbnail">
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
+            </div>
             {% endfor %}
             {{ utils.pagination(nbPage) }}
             {% if posts is empty %}
@@ -64,9 +62,7 @@
                     </div>
                 </div>
             </div>
-
             {% endif %}
-            
         </div>
     </section>
 {% endblock %}
