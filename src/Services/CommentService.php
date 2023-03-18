@@ -69,7 +69,9 @@ class CommentService extends EntityService
         $params['comments'] = array_filter(
             $params['comments'],
             function (Comment $comment) {
-                return $comment->author->role != 'admin';
+                if (isset($comment->author->role)) {
+                    return $comment->author->role != 'admin';
+                }
             }
         );
         if (!$params) {
