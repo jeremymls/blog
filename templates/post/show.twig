@@ -115,18 +115,22 @@
 				<div class="panel panel-default">
 					{% if not comment.deleted %}
 					<div class="panel-heading commentHeader">
-					<div style="display:flex; align-items:center;">
-						<div id="divOverview" class="user" style="width: 2rem; margin-right:1rem;">
-							<img id="thumbnailOverview" src={% if comment.author.picture is empty %}"{{ asset('img/profile.png') }}"{% else %}{{ comment.author.picture }}{% endif %} class="img-responsive" alt="{{ comment.author.username }}">
+						<div style="display:flex; align-items:center;">
+							<div id="divOverview" class="user" style="width: 2rem; margin-right:1rem;">
+								<img id="thumbnailOverview" src={% if comment.author.picture is empty %}"{{ asset('img/profile.png') }}"{% else %}{{ comment.author.picture }}{% endif %} class="img-responsive" alt="{{ comment.author.username }}">
+							</div>
+							<small><strong>{{ comment.author.username }}</strong> le {{comment.frenchCreationDate }}</small>  
 						</div>
-						<small><strong>{{ comment.author.username }}</strong> le {{comment.frenchCreationDate }}</small>  
-					</div>
-					{% if comment.author.identifier == getUserParam("identifier") %}
-					<div>
-						<a href="{{ getPath('comment:update', {'id':comment.identifier}) }}" class="btn btn-warning btn-xs" role="button"><i class="fa fa-edit" aria-hidden="true"></i></a>
-						<a data-id="{{ comment.identifier }}" data-csrf="{{ getCsrf() }}" class="btn btn-danger btn-xs delete-comment" role="button"><i class="fa fa-trash" aria-hidden="true"></i></a>
-					</div>
-					{% endif %}
+						{% if comment.author.identifier == getUserParam("identifier") %}
+						<div>
+							<a href="{{ getPath('comment:update', {'id':comment.identifier}) }}" class="btn btn-warning btn-xs" role="button"><i class="fa fa-edit" aria-hidden="true"></i></a>
+							<a data-id="{{ comment.identifier }}" data-csrf="{{ getCsrf() }}" class="btn btn-danger btn-xs delete-comment" role="button"><i class="fa fa-trash" aria-hidden="true"></i></a>
+						</div>
+						{% elseif isAdmin() %}
+							<div>
+								<a href="{{ getPath('admin:comment:moderate', {'action': '2', 'id': comment.identifier}) }}?csrf_token={{ getCsrf() }}" type="button" class="btn btn-danger confirm btn-xs"><i class="fa fa-times" aria-hidden="true"></i></a>
+							</div>
+						{% endif %}
 					</div>
 					<div class="panel-body">
 						<p>{{ comment.comment | nl2br }}</p>
@@ -147,5 +151,13 @@
 
 {% endblock %}
 {% block script %}
+<script>
+    // Confirm action
+    $('.confirm').click(function (e) {
+        if (!confirm("Voulez-vous vraiment effectuer cette action?")) {
+            e.preventDefault();
+        };
+    });
+</script>
 <script src="{{ asset('js/deleteComment.js') }}"></script>
 {% endblock %}
