@@ -31,7 +31,7 @@
                                     {% if post.chapo %}
                                         <p>{{ post.chapo | nl2br}}</p>
                                     {% else %}
-                                        <p>{{ post.content |  u.truncate(200, '...', false) | nl2br }}</p>
+                                        <p>{{ post.content |  u.truncate(200, '...', false) | raw }}</p>
                                     {% endif %}
                                     <p><a href="{{ getPath('post', {"id": post.identifier}) }}" class="btn btn-plus btn-primary" role="button">Voir plus</a></p>
                                 </div>
