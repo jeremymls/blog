@@ -76,7 +76,7 @@
             <th class="text-center">Actions</th>
         <tr>
     </thead>
-    <tbody>
+    <tbody id="configs-tbody">
         {% for config in configs %}
         <tr>
             <td>{{ config.name| slice(3,1) | upper ~ config.name | slice(4) | replace({'_': ' '})}}</td>

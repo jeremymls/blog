@@ -105,6 +105,9 @@ class UserController extends Controller
      */
     public function login($anchor = null)
     {
+        if ($this->userSession->isUser()) {
+            $this->superglobals->redirect('home');
+        }
         if ($this->isPost()) {
             $this->userService->login($this->superglobals->getPost());
             $this->redirectWithTimeout(null, $anchor);

@@ -80,7 +80,7 @@
 
 {# Réseaux sociaux #}
 {% macro social_networks() %}
-    <ul class="list-inline">
+    <ul class="list-inline contact-social-buttons">
         {% if rs_github %}
             <li><a href="{{ rs_github }}" target="_blank" class="btn-social btn-outline"><i class="fa fa-fw fa-github"></i></a></li>
         {% endif %}
@@ -112,9 +112,9 @@
 {# Coordonnées #}
 {% macro contact(title = false) %}
     {% if title %}
-        <h3>{{ title }}</h3>
+        <h3 class="contact-title">{{ title }}</h3>
     {% endif %}
-    <ul class="list-unstyled">
+    <ul class="list-unstyled contact-ul">
         {% if cs_address %}
             <li><i class="fa fa-map-marker fa-fw"></i> {{ cs_address| nl2br}}</li>
         {% endif %}
