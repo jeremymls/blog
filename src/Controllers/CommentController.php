@@ -52,14 +52,15 @@ class CommentController extends Controller
      */
     public function add(string $post)
     {
+        $msgFlash = $this->userSession->isAdmin() ? null : 'Votre commentaire sera publié après
+            <strong style="color:#f00;">validation</strong> par un administrateur.';
         $this->commentService->add(
             $this->superglobals->getPost(),
             [
                 'post' => $post,
                 'author' => UserSession::getInstance()->getUserParam("identifier")
             ],
-            'Votre commentaire sera publié après
-            <strong style="color:#f00;">validation</strong> par un administrateur.'
+            $msgFlash
         );
         $this->superglobals->redirect('post', ['id' => $post], "commentList");
     }
@@ -76,14 +77,15 @@ class CommentController extends Controller
     public function update(string $identifier)
     {
         if ($this->isPost()) {
+            $msgFlash = $this->userSession->isAdmin() ? null : 'Votre commentaire sera à nouveau
+                <strong style="color:#f00;">
+                    soumis à la modération
+                </strong> et publié';
             $this->superglobals->setPost('moderate', 0);
             $this->commentService->update(
                 $identifier,
                 $this->superglobals->getPost(),
-                'Votre commentaire sera à nouveau
-                <strong style="color:#f00;">
-                    soumis à la modération
-                </strong> et publié'
+                $msgFlash
             );
             $this->session->redirectLastUrl('commentList');
         }
